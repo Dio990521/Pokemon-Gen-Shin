@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccf30a480e3c804eb93a6076c1fd8ae, type: 3}
+  m_Name: "\u964D\u4F4E\u7279\u653B"
+  m_EditorClassIdentifier: 
+  moveName: "\u964D\u4F4E\u7279\u653B"
+  description: 
+  type: 0
+  power: 0
+  accuracy: 100
+  pp: 5
+  category: 2
+  effects:
+    boosts:
+    - stat: 2
+      boost: -1
+  target: 0

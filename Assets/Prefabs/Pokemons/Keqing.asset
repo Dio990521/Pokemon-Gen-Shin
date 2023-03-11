@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb18b30d351eac349aaee9ab0ca9cc7f, type: 3}
+  m_Name: Keqing
+  m_EditorClassIdentifier: 
+  pokemonName: "\u523B\u6674"
+  description: 
+  frontSprite: {fileID: 21300000, guid: 485815a63e27aaf458edce41119f3913, type: 3}
+  backSprite: {fileID: 21300000, guid: c5d9d7e8722188147b91f18f26e7b90f, type: 3}
+  type1: 5
+  type2: 8
+  maxHp: 180
+  attack: 90
+  defense: 55
+  spAttack: 90
+  spDefense: 80
+  speed: 110
+  learnableMoves:
+  - moveBase: {fileID: 11400000, guid: fcded30f3919d894ea6fbc34508a7f36, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 554e6e1f74b759e4eb87c5f4cc5a651c, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: 875531c1a8041c64b8cf43ecb91db99f, type: 2}
+    level: 1
+  - moveBase: {fileID: 11400000, guid: fb926c738d352a849a328dde2b17021d, type: 2}
+    level: 1
