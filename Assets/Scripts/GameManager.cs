@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera worldCamera;
 
     public GameState state;
+    private TrainerController trainer;
 
     public static GameManager Instance { get; private set; }
 
@@ -66,7 +67,7 @@ public class GameManager : MonoBehaviour
         state = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
-
+        this.trainer = trainer;
         PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
         PokemonParty trainerParty = trainer.GetComponent<PokemonParty>();
 
@@ -75,6 +76,12 @@ public class GameManager : MonoBehaviour
 
     private void EndBattle(bool won)
     {
+        if (trainer != null && won)
+        {
+            trainer.BattleLost();
+            trainer = null;
+        }
+
         AudioManager.instance.PlayMusic(BGM.LITTLEROOT_TOWN);
         state = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);

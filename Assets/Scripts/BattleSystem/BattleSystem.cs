@@ -47,13 +47,13 @@ public class BattleSystem : MonoBehaviour
     public Pokemon wildPokemon;
     public PokemonParty trainerParty;
 
-    private bool isTrainerBattler = false;
+    private bool isTrainerBattle = false;
     PlayerController player;
     TrainerController trainer;
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
     {
-        this.isTrainerBattler = false;
+        this.isTrainerBattle = false;
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
@@ -62,10 +62,10 @@ public class BattleSystem : MonoBehaviour
 
     public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty)
     {
-        AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        AudioManager.instance.PlayMusic(BGM.BATTLE_TRAINER);
         this.playerParty = playerParty;
         this.trainerParty = trainerParty;
-        this.isTrainerBattler = true;
+        this.isTrainerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
         trainer = trainerParty.GetComponent<TrainerController>();
         StartCoroutine(SetupBattle());
@@ -73,52 +73,52 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
+        playerUnit.HideHud();
+        enemyUnit.HideHud();
 
-        playerUnit.Clear();
-        enemyUnit.Clear();
-
-        if (!isTrainerBattler)
+        if (!isTrainerBattle)
         {
             // Wild Pokemon Battle
 
             // set up pokemons data
-            playerUnit.SetUp(playerParty.GetHealthyPokemon());
             enemyUnit.SetUp(wildPokemon);
+            playerUnit.UnitEnterAnimation();
+            enemyUnit.UnitEnterAnimation();
 
-            // set up move box
-            dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
             yield return dialogueBox.TypeDialogue($"野生的{enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
+            yield return new WaitForSeconds(4f);
         }
         else
         {
             // Trianer Battle
-            playerUnit.gameObject.SetActive(false);
-            enemyUnit.gameObject.SetActive(false);
-            playerImage.gameObject.SetActive(true);
-            trainerImage.gameObject.SetActive(true);
-            playerImage.sprite = player.Sprite;
+            
             trainerImage.sprite = trainer.Sprite;
+            playerUnit.UnitEnterAnimation();
+            enemyUnit.UnitEnterAnimation();
+
             yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
+            yield return new WaitForSeconds(4f);
 
             // Send out first pokemon of the trainer
-            trainerImage.gameObject.SetActive(false);
-            enemyUnit.gameObject.SetActive(true);
             var enemyPokemon = trainerParty.GetHealthyPokemon();
-            enemyUnit.SetUp(enemyPokemon);
+            enemyUnit.ChangeUnit(enemyPokemon);
             yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
+            yield return new WaitForSeconds(2f);
 
             // Send out first pokemon of the player
             playerImage.gameObject.SetActive(false);
             playerUnit.gameObject.SetActive(true);
-            var playerPokemon = trainerParty.GetHealthyPokemon();
-            playerUnit.SetUp(enemyPokemon);
-            yield return dialogueBox.TypeDialogue($"就决定是你了，{playerPokemon.PokemonBase.PokemonName}！");
-            dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
-
+            
         }
+        var playerPokemon = playerParty.GetHealthyPokemon();
+        playerUnit.ChangeUnit(playerPokemon);
+        yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
+        dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
+        yield return new WaitForSeconds(2f);
 
-        yield return new WaitForSeconds(4f);
-        
+        playerUnit.ShowHud();
+        enemyUnit.ShowHud();
+
         ActionSelection();
     }
 
@@ -127,8 +127,17 @@ public class BattleSystem : MonoBehaviour
         state = BattleState.BattleOver;
         if (won)
         {
-            AudioManager.instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
-            StartCoroutine(dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！"));
+            if (isTrainerBattle)
+            {
+                AudioManager.instance.PlayMusic(BGM.VICTORY_TRAINER);
+                StartCoroutine(dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！"));
+            }
+            else
+            {
+                AudioManager.instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
+                StartCoroutine(dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！"));
+            }
+            
         }
         playerParty.Pokemons.ForEach(p => p.OnBattleOver());
         yield return new WaitForSeconds(3f);
@@ -449,6 +458,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             CheckForBattleOver(sourceUnit);
+            yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
 
@@ -500,7 +510,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            if (!isTrainerBattler)
+            if (!isTrainerBattle)
             {
                 StartCoroutine(BattleOver(true));
             }

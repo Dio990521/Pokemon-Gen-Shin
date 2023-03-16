@@ -39,13 +39,16 @@ public class BattleUnit : MonoBehaviour
         unitSprite.sprite = isPlayerUnit? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
         unitSprite.color = originalColor;
         hud.SetData(selectedPokemon);
-        hud.gameObject.SetActive(true);
-        UnitEnterAnimation();
     }
 
-    public void Clear()
+    public void HideHud()
     {
         hud.gameObject.SetActive(false);
+    }
+
+    public void ShowHud()
+    {
+        hud.gameObject.SetActive(true);
     }
 
     public void ChangeUnit(Pokemon selectedPokemon)

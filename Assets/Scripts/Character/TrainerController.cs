@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-public class TrainerController : MonoBehaviour
+public class TrainerController : MonoBehaviour, InteractableObject
 {
     [SerializeField] private GameObject exclamation;
     [SerializeField] private Dialogue dialogue;
+    [SerializeField] private Dialogue dialogueAfterBattle;
     [SerializeField] private GameObject fov;
     [SerializeField] private Sprite sprite;
     [SerializeField] private string tainerName;
 
     private Character character;
+    private bool battleLost = false;
 
     public string TrainerName
     {
@@ -31,6 +33,31 @@ public class TrainerController : MonoBehaviour
     private void Start()
     {
         SetFovRotation(character.Animator.DefaultDirection);
+    }
+
+    public void Interact(Transform initiator)
+    {
+        character.LookTowards(initiator.position);
+
+        if (!battleLost)
+        {
+            StartCoroutine(DialogueManager.Instance.ShowDialogue(dialogue, () =>
+            {
+                GameManager.Instance.StartTrainerBattle(this);
+            }));
+        }
+        else
+        {
+            StartCoroutine(DialogueManager.Instance.ShowDialogue(dialogueAfterBattle));
+        }
+        
+
+    }
+
+    public void BattleLost()
+    {
+        battleLost = true;
+        fov.gameObject.SetActive(false);
     }
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
@@ -73,4 +100,6 @@ public class TrainerController : MonoBehaviour
 
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
     }
+
+
 }
