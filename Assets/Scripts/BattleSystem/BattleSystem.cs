@@ -13,6 +13,7 @@ public enum BattleState
     RunningTurn,
     Busy,
     PartyScreen,
+    AboutToUse,
     BattleOver
 }
 
@@ -40,6 +41,7 @@ public class BattleSystem : MonoBehaviour
     public int currentAction;
     public int currentMove;
     public int currentMember;
+    private bool aboutToUseChoice = true;
 
     public event Action<bool> OnBattleOver;
 
@@ -169,6 +171,10 @@ public class BattleSystem : MonoBehaviour
         {
             HandlePartyScreenSelection();
         }
+        else if (state == BattleState.AboutToUse)
+        {
+            HandleAboutToUse();
+        }
     }
 
     // Press Z to open the move box
@@ -231,6 +237,14 @@ public class BattleSystem : MonoBehaviour
         dialogueBox.EnableActionSelector(false);
         dialogueBox.EnableDialogueText(false);
         dialogueBox.EnableMoveSelector(true);
+    }
+
+    private IEnumerator AboutToUse(Pokemon newPokemon)
+    {
+        state = BattleState.Busy;
+        yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要让{newPokemon.PokemonBase.PokemonName}上场！\n是否要更换当前出战宝可梦？");
+        state = BattleState.AboutToUse;
+        dialogueBox.EnableChoiceBox(true);
     }
 
     private void OpenPartyScreen()
@@ -379,6 +393,23 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
+                if (damageDetails.Critical > 1f)
+                {
+                    AudioManager.instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                }
+
+                if (damageDetails.TypeEffectiveness > 1f)
+                {
+                    AudioManager.instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                }
+                else if (damageDetails.TypeEffectiveness < 1f)
+                {
+                    AudioManager.instance.PlaySE(SFX.LOW_ATTACK);
+                }
+                else
+                {
+                    AudioManager.instance.PlaySE(SFX.ATTACK);
+                }
                 yield return targetUnit.Hud.UpdateHp();
                 yield return ShowDamageDetials(damageDetails);
             }
@@ -520,7 +551,7 @@ public class BattleSystem : MonoBehaviour
                 if (nextPokemon != null)
                 {
                     // Send out next pokemon
-                    StartCoroutine(SendNextTrainerPokemon(nextPokemon));
+                    StartCoroutine(AboutToUse(nextPokemon));
                 }
                 else
                 {
@@ -540,17 +571,11 @@ public class BattleSystem : MonoBehaviour
 
         if (damageDetails.TypeEffectiveness> 1f)
         {
-            AudioManager.instance.PlaySE(SFX.EFFICIENT_ATTACK);
             yield return dialogueBox.TypeDialogue("牛逼！效果拔群！");
         } 
         else if (damageDetails.TypeEffectiveness < 1f)
         {
-            AudioManager.instance.PlaySE(SFX.LOW_ATTACK);
             yield return dialogueBox.TypeDialogue("呃，效果一般！");
-        }
-        else
-        {
-            AudioManager.instance.PlaySE(SFX.ATTACK);
         }
     }
 
@@ -608,8 +633,51 @@ public class BattleSystem : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
+            if (playerUnit.pokemon.Hp <= 0)
+            {
+                partyScreen.SetMessageText("必须要选一个宝可梦呀！");
+                return;
+            }
             partyScreen.gameObject.SetActive(false);
-            ActionSelection();
+
+            if (prevState == BattleState.AboutToUse)
+            {
+                prevState = null;
+                StartCoroutine(SendNextTrainerPokemon());
+            }
+            else
+            {
+                ActionSelection();
+            }
+            
+        }
+    }
+
+    private void HandleAboutToUse()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) 
+        {
+            aboutToUseChoice = !aboutToUseChoice;
+        }
+
+        dialogueBox.UpdateChoiceBox(aboutToUseChoice);
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            dialogueBox.EnableChoiceBox(false);
+            if (aboutToUseChoice)
+            {
+                prevState = BattleState.AboutToUse;
+                OpenPartyScreen();
+            }
+            else
+            {
+                StartCoroutine(SendNextTrainerPokemon());
+            }
+        }else if (Input.GetKeyDown(KeyCode.X))
+        {
+            dialogueBox.EnableChoiceBox(false);
+            StartCoroutine(SendNextTrainerPokemon());
         }
     }
 
@@ -627,14 +695,23 @@ public class BattleSystem : MonoBehaviour
         dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
 
-        state = BattleState.RunningTurn;
-    
+        if (prevState == null)
+        {
+            state = BattleState.RunningTurn;
+        }
+        else if (prevState == BattleState.AboutToUse)
+        {
+            prevState = null;
+            StartCoroutine(SendNextTrainerPokemon());
+        }
+        
     }
 
-    IEnumerator SendNextTrainerPokemon(Pokemon nextPokemon)
+    IEnumerator SendNextTrainerPokemon()
     {
         state = BattleState.Busy;
 
+        var nextPokemon = trainerParty.GetHealthyPokemon();
         enemyUnit.SetUp(nextPokemon);
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
         state = BattleState.RunningTurn;

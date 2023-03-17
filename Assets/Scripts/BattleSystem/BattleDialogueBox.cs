@@ -11,6 +11,7 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private GameObject actionSeletor;
     [SerializeField] private GameObject moveSelector;
     [SerializeField] private GameObject moveDetails;
+    [SerializeField] private GameObject choiceBox;
 
     [SerializeField] private List<Text> actionTexts;
     [SerializeField] private Image actionSelectorImage;
@@ -19,6 +20,8 @@ public class BattleDialogueBox : MonoBehaviour
 
     [SerializeField] private Text ppText;
     [SerializeField] private Text typeText;
+    [SerializeField] private Image yesSelector;
+    [SerializeField] private Image noSelector;
 
     public void SetDialogue(string dialogue)
     {
@@ -54,6 +57,11 @@ public class BattleDialogueBox : MonoBehaviour
         moveDetails.SetActive(isEnable);
     }
 
+    public void EnableChoiceBox(bool isEnable)
+    {
+        choiceBox.SetActive(isEnable);
+    }
+
     // Update the cursor when the player is choosing an action
     public void UpdateActionSelection(int selectedAction)
     {
@@ -71,6 +79,20 @@ public class BattleDialogueBox : MonoBehaviour
             case 3:
                 actionSelectorImage.transform.localPosition = new Vector2(366f, -22f);
                 break;
+        }
+    }
+
+    public void UpdateChoiceBox(bool yesSelected)
+    {
+        if (yesSelected)
+        {
+            yesSelector.gameObject.SetActive(true);
+            noSelector.gameObject.SetActive(false);
+        }
+        else
+        {
+            yesSelector.gameObject.SetActive(false);
+            noSelector.gameObject.SetActive(true);
         }
     }
 
