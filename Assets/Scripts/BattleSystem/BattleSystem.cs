@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ public class BattleSystem : MonoBehaviour
 
     [SerializeField] private Image playerImage;
     [SerializeField] private Image trainerImage;
+    [SerializeField] private GameObject pokeballSprite;
 
     public BattleState state;
     public BattleState? prevState;
@@ -59,6 +61,7 @@ public class BattleSystem : MonoBehaviour
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
+        player = playerParty.GetComponent<PlayerController>();
         StartCoroutine(SetupBattle());
     }
 
@@ -212,7 +215,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
-
+                StartCoroutine(RunTurns(BattleAction.UseItem));
             }
             else if (currentAction == 2)
             {
@@ -340,9 +343,15 @@ public class BattleSystem : MonoBehaviour
         {
             if (playerAction == BattleAction.SwitchPokemon)
             {
+                dialogueBox.EnableActionSelector(false);
                 var selectedPokemon = playerParty.Pokemons[currentMember];
                 state = BattleState.Busy;
                 yield return SwitchPokemon(selectedPokemon);
+            }
+            else if (playerAction == BattleAction.UseItem)
+            {
+                dialogueBox.EnableActionSelector(false);
+                yield return ThrowPokeball();
             }
 
             // Enemy Turn
@@ -707,7 +716,7 @@ public class BattleSystem : MonoBehaviour
         
     }
 
-    IEnumerator SendNextTrainerPokemon()
+    private IEnumerator SendNextTrainerPokemon()
     {
         state = BattleState.Busy;
 
@@ -715,6 +724,93 @@ public class BattleSystem : MonoBehaviour
         enemyUnit.SetUp(nextPokemon);
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
         state = BattleState.RunningTurn;
+    }
+
+    private IEnumerator ThrowPokeball()
+    {
+        state = BattleState.Busy;
+
+        if (isTrainerBattle)
+        {
+            yield return dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        yield return dialogueBox.TypeDialogue($"{player.PlayerName}扔出了精灵球！");
+
+        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
+        var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
+
+        // Animations
+        yield return pokeball.transform.DOJump(enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
+        yield return enemyUnit.PlayCaptureAnimation();
+        pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
+
+        int shakeCount = TryToCatchPokemon(enemyUnit.pokemon);
+
+        for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
+        {
+            yield return new WaitForSeconds(0.5f);
+            yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 10f), 0.8f).WaitForCompletion();
+        }
+
+        if (shakeCount == 4)
+        {
+            // Pokemon is caught
+            yield return dialogueBox.TypeDialogue($"抓到了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
+            yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
+
+            playerParty.AddPokemon(enemyUnit.pokemon);
+            yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
+
+            Destroy(pokeball);
+            yield return BattleOver(true);
+        }
+        else
+        {
+            // Pokemon broke out
+            yield return new WaitForSeconds(1f);
+            pokeball.DOFade(0, 0.2f);
+            yield return enemyUnit.PlayBreakOutAnimation();
+
+            if (shakeCount < 2)
+            {
+                yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}轻松地破球而出了！");
+            }
+            else
+            {
+                yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}艰难地破球而出了！");
+            }
+
+            Destroy(pokeball);
+            state = BattleState.RunningTurn;
+        }
+    }
+
+    private int TryToCatchPokemon(Pokemon pokemon)
+    {
+        float a = (3 * pokemon.MaxHp - 2 * pokemon.Hp) * pokemon.PokemonBase.CatchRate * ConditionsDB.GetStatusBonus(pokemon.Status) / (3 * pokemon.MaxHp);
+        
+        if (a >= 255)
+        {
+            return 4;
+        }
+
+        float b = 1048560 / Mathf.Sqrt(Mathf.Sqrt(16711680 / a));
+
+        int shakeCount = 0;
+        while (shakeCount < 4)
+        {
+            if (UnityEngine.Random.Range(0, 65535) >= b)
+            {
+                break;
+            }
+
+            ++shakeCount;
+        }
+
+        return shakeCount;
     }
 
 }

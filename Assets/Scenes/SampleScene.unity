@@ -175,6 +175,7 @@ MonoBehaviour:
   partyScreen: {fileID: 1869683269}
   playerImage: {fileID: 1600888645}
   trainerImage: {fileID: 2003184072}
+  pokeballSprite: {fileID: 3449555171695435578, guid: 494de4d86972647439d058bbc1baa735, type: 3}
   state: 0
   currentAction: 0
   currentMove: 0

@@ -58,7 +58,9 @@ public class GameManager : MonoBehaviour
 
         PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
         Pokemon wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
-        battleSystem.StartBattle(playerParty, wildPokemon);
+
+        var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
+        battleSystem.StartBattle(playerParty, wildPokemonCopy);
     }
 
     public void StartTrainerBattle(TrainerController trainer)
