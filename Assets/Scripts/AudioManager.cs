@@ -9,7 +9,9 @@ public enum SFX
     LOW_ATTACK,
     EFFICIENT_ATTACK,
     FAINTED,
-    BALL_OUT
+    BALL_OUT,
+    ESCAPE,
+    THROW_BALL
 }
 
 public enum BGM

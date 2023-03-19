@@ -55,6 +55,8 @@ public class BattleSystem : MonoBehaviour
     PlayerController player;
     TrainerController trainer;
 
+    int escapeAttempts;
+
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
     {
         this.isTrainerBattle = false;
@@ -107,7 +109,9 @@ public class BattleSystem : MonoBehaviour
             // Send out first pokemon of the trainer
             var enemyPokemon = trainerParty.GetHealthyPokemon();
             enemyUnit.ChangeUnit(enemyPokemon);
+            AudioManager.instance.PlaySE(SFX.BALL_OUT);
             yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
+            
             yield return new WaitForSeconds(2f);
 
             // Send out first pokemon of the player
@@ -118,12 +122,13 @@ public class BattleSystem : MonoBehaviour
         var playerPokemon = playerParty.GetHealthyPokemon();
         playerUnit.ChangeUnit(playerPokemon);
         yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
+        AudioManager.instance.PlaySE(SFX.BALL_OUT);
         dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
         yield return new WaitForSeconds(2f);
 
         playerUnit.ShowHud();
         enemyUnit.ShowHud();
-
+        escapeAttempts = 0;
         ActionSelection();
     }
 
@@ -227,7 +232,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 3)
             {
                 // Run
-
+                StartCoroutine(RunTurns(BattleAction.Run));
             }
         }
 
@@ -353,9 +358,13 @@ public class BattleSystem : MonoBehaviour
                 dialogueBox.EnableActionSelector(false);
                 yield return ThrowPokeball();
             }
+            else if (playerAction == BattleAction.Run)
+            {
+                yield return TryToEspace();
+            }
 
-            // Enemy Turn
-            var enemyMove = enemyUnit.pokemon.GetRandomMove();
+                // Enemy Turn
+                var enemyMove = enemyUnit.pokemon.GetRandomMove();
             yield return RunMove(enemyUnit, playerUnit, enemyMove);
             yield return RunAfterTurn(enemyUnit);
             if (state == BattleState.BattleOver) yield break;
@@ -703,6 +712,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.ChangeUnit(newPokemon);
         dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
+        AudioManager.instance.PlaySE(SFX.BALL_OUT);
 
         if (prevState == null)
         {
@@ -737,6 +747,7 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
+        AudioManager.instance.PlaySE(SFX.THROW_BALL);
         yield return dialogueBox.TypeDialogue($"{player.PlayerName}扔出了精灵球！");
 
         var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
@@ -744,6 +755,7 @@ public class BattleSystem : MonoBehaviour
 
         // Animations
         yield return pokeball.transform.DOJump(enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
+        AudioManager.instance.PlaySE(SFX.BALL_OUT);
         yield return enemyUnit.PlayCaptureAnimation();
         pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
 
@@ -774,14 +786,8 @@ public class BattleSystem : MonoBehaviour
             pokeball.DOFade(0, 0.2f);
             yield return enemyUnit.PlayBreakOutAnimation();
 
-            if (shakeCount < 2)
-            {
-                yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}轻松地破球而出了！");
-            }
-            else
-            {
-                yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}艰难地破球而出了！");
-            }
+            AudioManager.instance.PlaySE(SFX.BALL_OUT);
+            yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
             Destroy(pokeball);
             state = BattleState.RunningTurn;
@@ -811,6 +817,47 @@ public class BattleSystem : MonoBehaviour
         }
 
         return shakeCount;
+    }
+
+    private IEnumerator TryToEspace()
+    {
+        state = BattleState.Busy;
+
+        if (isTrainerBattle)
+        {
+            yield return dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        ++escapeAttempts;
+
+        int playerSpeed = playerUnit.pokemon.Speed;
+        int enemySpeed = enemyUnit.pokemon.Speed;
+
+        if (enemySpeed < playerSpeed)
+        {
+            AudioManager.instance.PlaySE(SFX.ESCAPE);
+            yield return dialogueBox.TypeDialogue($"成功逃跑了！");
+            yield return BattleOver(true);
+        }
+        else
+        {
+            float f = (playerSpeed * 128) / enemySpeed + 30 * escapeAttempts;
+            f = f % 256;
+
+            if (UnityEngine.Random.Range(0, 256) < f)
+            {
+                AudioManager.instance.PlaySE(SFX.ESCAPE);
+                yield return dialogueBox.TypeDialogue($"成功逃跑了！");
+                yield return BattleOver(true);
+            }
+            else
+            {
+                yield return dialogueBox.TypeDialogue($"逃跑失败了！");
+                state = BattleState.RunningTurn;
+            }
+        }
     }
 
 }
