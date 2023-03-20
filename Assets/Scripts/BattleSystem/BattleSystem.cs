@@ -447,13 +447,7 @@ public class BattleSystem : MonoBehaviour
 
             if (targetUnit.pokemon.Hp <= 0)
             {
-                AudioManager.instance.PlaySE(SFX.FAINTED);
-                targetUnit.PlayFaintAnimation();
-                yield return dialogueBox.TypeDialogue($"{targetUnit.pokemon.PokemonBase.PokemonName}\n倒下了！");
-
-                yield return new WaitForSeconds(1f);
-
-                CheckForBattleOver(targetUnit);
+                yield return HandlePokemonFainted(targetUnit);
             }
         }
         else
@@ -500,13 +494,7 @@ public class BattleSystem : MonoBehaviour
         yield return sourceUnit.Hud.UpdateHp();
         if (sourceUnit.pokemon.Hp <= 0)
         {
-            AudioManager.instance.PlaySE(SFX.FAINTED);
-            sourceUnit.PlayFaintAnimation();
-            yield return dialogueBox.TypeDialogue($"{sourceUnit.pokemon.PokemonBase.PokemonName}\n倒下了！");
-
-            yield return new WaitForSeconds(1f);
-
-            CheckForBattleOver(sourceUnit);
+            yield return HandlePokemonFainted(sourceUnit);
             yield return new WaitUntil(() => state == BattleState.RunningTurn);
         }
     }
@@ -541,6 +529,35 @@ public class BattleSystem : MonoBehaviour
             string message = pokemom.StatusChanges.Dequeue();
             yield return dialogueBox.TypeDialogue(message);
         }
+    }
+
+    private IEnumerator HandlePokemonFainted(BattleUnit faintedUnit)
+    {
+        AudioManager.instance.PlaySE(SFX.FAINTED);
+        faintedUnit.PlayFaintAnimation();
+        yield return dialogueBox.TypeDialogue($"{faintedUnit.pokemon.PokemonBase.PokemonName}\n倒下了！");
+
+        yield return new WaitForSeconds(1f);
+
+        if (!faintedUnit.IsPlayerUnit)
+        {
+            // Exp gain
+            int expYield = faintedUnit.pokemon.PokemonBase.ExpYield;
+            int enemyLevel = faintedUnit.pokemon.Level;
+            float trainerBonus = (isTrainerBattle) ? 1.5f : 1f;
+
+            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / 7);
+            playerUnit.pokemon.Exp += expGain;
+
+            yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}获得了\n{expGain}点经验值！");
+            yield return playerUnit.Hud.SetExpSmooth();
+
+            // Check level up
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        CheckForBattleOver(faintedUnit);
     }
 
     private void CheckForBattleOver(BattleUnit faintedUnit)

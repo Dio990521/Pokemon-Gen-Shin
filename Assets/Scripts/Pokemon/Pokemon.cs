@@ -27,6 +27,7 @@ public class Pokemon
     public PokemonBase PokemonBase { get { return pokemonBase; } }
     public int Level { get { return level; } }
     public int Hp { get; set; }
+    public int Exp { get; set; }
     public List<Move> Moves { get; set; }
     public Move CurrentMove { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
@@ -58,6 +59,7 @@ public class Pokemon
         CalculateStats();
 
         Hp = MaxHp;
+        Exp = pokemonBase.GetExpForLevel(Level);
         StatusChanges = new Queue<string>();
         ResetStatBoost();
         Status = null;

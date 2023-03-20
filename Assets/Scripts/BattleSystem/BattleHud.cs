@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class BattleHud : MonoBehaviour
     [SerializeField] private HpBar hpBar;
     [SerializeField] private Text statusText;
     [SerializeField] private Image statusBg;
+    [SerializeField] private GameObject expBar;
 
     private Pokemon battlePokemon;
 
@@ -20,6 +22,7 @@ public class BattleHud : MonoBehaviour
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         levelText.text = "LV." + battlePokemon.Level;
         hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
+        SetExp();
         SetStatusText();
         battlePokemon.OnStatusChanged += SetStatusText;
     }
@@ -38,6 +41,29 @@ public class BattleHud : MonoBehaviour
         }
     }
 
+    public void SetExp()
+    {
+        if (expBar == null) return;
+        float normalizedExp = GetNormalizedExp();
+        expBar.transform.localScale = new Vector3(normalizedExp, 1, 1);
+    }
+
+    private float GetNormalizedExp()
+    {
+        int currLevelExp = battlePokemon.PokemonBase.GetExpForLevel(battlePokemon.Level);
+        int nextLevelExp = battlePokemon.PokemonBase.GetExpForLevel(battlePokemon.Level + 1);
+
+        float normalizedExp = (float)(battlePokemon.Exp - currLevelExp) / (nextLevelExp - currLevelExp);
+        return Mathf.Clamp01(normalizedExp);
+    }
+
+    public IEnumerator SetExpSmooth()
+    {
+        if (expBar == null) yield break;
+        float normalizedExp = GetNormalizedExp();
+        yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+    }
+
     // update Hp bar when the pokemon get hurt
     public IEnumerator UpdateHp()
     {
@@ -46,7 +72,6 @@ public class BattleHud : MonoBehaviour
             yield return hpBar.SetHpSmooth((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.Hp);
             battlePokemon.HpChanged = false;
         }
-        
     }
 
 }
