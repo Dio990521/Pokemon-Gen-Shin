@@ -10,6 +10,7 @@ public class BattleUnit : MonoBehaviour
     private int level;
     [SerializeField] private bool isPlayerUnit;
     [SerializeField] private BattleHud hud;
+    [SerializeField] private Sprite defaultPlayerSprite;
 
     public Pokemon pokemon { get; set; }
 
@@ -38,8 +39,13 @@ public class BattleUnit : MonoBehaviour
         level = pokemon.Level;
         unitSprite.sprite = isPlayerUnit? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
         unitSprite.color = originalColor;
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        ResetAnimation();
         hud.SetData(selectedPokemon);
+    }
+
+    public void SetDefaultPlayerSprite()
+    {
+        unitSprite.sprite = defaultPlayerSprite;
     }
 
     public void HideHud()
@@ -59,8 +65,23 @@ public class BattleUnit : MonoBehaviour
         unitSprite.sprite = isPlayerUnit ? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
         unitSprite.color = originalColor;
         hud.SetData(selectedPokemon);
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        ResetAnimation();
         UnitChangeAnimation();
+    }
+
+    public void ResetAnimation()
+    {
+        unitSprite.transform.localScale = new Vector3(1f, 1f, 1f);
+        if (isPlayerUnit)
+        {
+            unitSprite.transform.localPosition = new Vector3(-228f, -215f, 0f);
+        }
+        else
+        {
+            unitSprite.transform.localPosition = new Vector3(275f, 131f, 0f);
+        }
+        var sequence = DOTween.Sequence();
+        sequence.Append(unitSprite.DOFade(1f, 0.01f));
     }
 
     public void UnitEnterAnimation()
@@ -133,7 +154,7 @@ public class BattleUnit : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
         sequence.Append(unitSprite.DOFade(0, 0.5f));
-        sequence.Join(transform.DOScale(new Vector3(0.3f, 0.3f, 1f), 0.5f));
+        sequence.Join(unitSprite.transform.DOScale(new Vector3(0.3f, 0.3f, 1f), 0.5f));
         yield return sequence.WaitForCompletion();
     }
 
@@ -141,7 +162,7 @@ public class BattleUnit : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
         sequence.Append(unitSprite.DOFade(1, 0.5f));
-        sequence.Join(transform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
+        sequence.Join(unitSprite.transform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
         yield return sequence.WaitForCompletion();
     }
 }

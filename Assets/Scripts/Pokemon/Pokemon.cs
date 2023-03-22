@@ -81,6 +81,16 @@ public class Pokemon
         MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + 10;
     }
 
+    public bool CheckForLevelUp()
+    {
+        if (Exp > pokemonBase.GetExpForLevel(level + 1))
+        {
+            ++level;
+            return true;
+        }
+        return false;
+    }
+
     // Reset all status to the default state
     private void ResetStatBoost()
     {

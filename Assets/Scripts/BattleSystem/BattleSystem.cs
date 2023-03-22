@@ -80,6 +80,7 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
+        playerUnit.SetDefaultPlayerSprite();
         playerUnit.HideHud();
         enemyUnit.HideHud();
 
@@ -88,6 +89,8 @@ public class BattleSystem : MonoBehaviour
             // Wild Pokemon Battle
 
             // set up pokemons data
+            playerUnit.ResetAnimation();
+            enemyUnit.ResetAnimation();
             enemyUnit.SetUp(wildPokemon);
             playerUnit.UnitEnterAnimation();
             enemyUnit.UnitEnterAnimation();
@@ -100,6 +103,8 @@ public class BattleSystem : MonoBehaviour
             // Trianer Battle
             
             trainerImage.sprite = trainer.Sprite;
+            playerUnit.ResetAnimation();
+            enemyUnit.ResetAnimation();
             playerUnit.UnitEnterAnimation();
             enemyUnit.UnitEnterAnimation();
 
@@ -360,6 +365,7 @@ public class BattleSystem : MonoBehaviour
             }
             else if (playerAction == BattleAction.Run)
             {
+                dialogueBox.EnableActionSelector(false);
                 yield return TryToEspace();
             }
 
@@ -553,6 +559,12 @@ public class BattleSystem : MonoBehaviour
             yield return playerUnit.Hud.SetExpSmooth();
 
             // Check level up
+            while (playerUnit.pokemon.CheckForLevelUp())
+            {
+                playerUnit.Hud.SetLevel();
+                yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}升级了！\n等级提升至{playerUnit.pokemon.Level}！");
+                yield return playerUnit.Hud.SetExpSmooth(true);
+            }
 
             yield return new WaitForSeconds(1f);
         }
