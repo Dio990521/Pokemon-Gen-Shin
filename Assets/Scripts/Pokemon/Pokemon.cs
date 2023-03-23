@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -50,7 +51,7 @@ public class Pokemon
             {
                 Moves.Add(new Move(move.MoveBase));
             }
-            if (Moves.Count >= 4)
+            if (Moves.Count >= PokemonBase.MaxNumOfMoves)
             {
                 break;
             }
@@ -86,9 +87,21 @@ public class Pokemon
         if (Exp > pokemonBase.GetExpForLevel(level + 1))
         {
             ++level;
+            CalculateStats();
             return true;
         }
         return false;
+    }
+
+    public LearnableMove GetLearnableMoveAtCurrentLevel()
+    {
+        return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
+    }
+
+    public void LearnMove(LearnableMove moveToLearn)
+    {
+        if (Moves.Count > PokemonBase.MaxNumOfMoves) return;
+        Moves.Add(new Move(moveToLearn.MoveBase));
     }
 
     // Reset all status to the default state

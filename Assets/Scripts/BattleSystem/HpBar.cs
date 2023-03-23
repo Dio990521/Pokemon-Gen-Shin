@@ -15,8 +15,11 @@ public class HpBar : MonoBehaviour
         transform.localScale = new Vector3(hpNormalized, 1f);
         this.maxHp = maxHp;
         this.curHp = curHp;
+
         if (hpText!= null)
         {
+            Debug.Log(curHp);
+            Debug.Log(maxHp);
             hpText.text = this.curHp.ToString() + " / " + this.maxHp.ToString();
         }
         
@@ -27,16 +30,10 @@ public class HpBar : MonoBehaviour
     {
         float curHp = transform.localScale.x;
         float changeAmt = curHp - newHp;
-        //int changeAmtInt = maxHp - curHpInt;
 
         while (curHp - newHp > Mathf.Epsilon)
         {
             curHp -= changeAmt * Time.deltaTime;
-            //if (hpText!= null)
-            //{
-            //    this.curHp -= Mathf.FloorToInt(changeAmtInt * Time.deltaTime);
-            //    hpText.text = this.curHp.ToString() + " / " + maxHp.ToString();
-            //}
             
             transform.localScale = new Vector3(curHp, 1f);
             yield return null;

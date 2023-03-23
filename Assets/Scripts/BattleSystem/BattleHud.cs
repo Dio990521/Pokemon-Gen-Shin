@@ -21,7 +21,6 @@ public class BattleHud : MonoBehaviour
         battlePokemon = pokemon;
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         SetLevel();
-        hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
         SetExp();
         SetStatusText();
         battlePokemon.OnStatusChanged += SetStatusText;
@@ -51,6 +50,7 @@ public class BattleHud : MonoBehaviour
     public void SetLevel()
     {
         levelText.text = "LV." + battlePokemon.Level;
+        hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
     }
 
     private float GetNormalizedExp()
