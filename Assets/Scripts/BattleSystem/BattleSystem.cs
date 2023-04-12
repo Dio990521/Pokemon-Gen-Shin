@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ public enum BattleState
     Busy,
     PartyScreen,
     AboutToUse,
+    MoveToForget,
     BattleOver
 }
 
@@ -37,6 +39,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private Image trainerImage;
     [SerializeField] private GameObject pokeballSprite;
+    [SerializeField] private MoveSelectionUi moveSelectionUi;
 
     public BattleState state;
     public BattleState? prevState;
@@ -56,6 +59,7 @@ public class BattleSystem : MonoBehaviour
     TrainerController trainer;
 
     int escapeAttempts;
+    MoveBase moveToLearn;
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
     {
@@ -188,6 +192,32 @@ public class BattleSystem : MonoBehaviour
         {
             HandleAboutToUse();
         }
+        else if (state == BattleState.MoveToForget)
+        {
+            Action<int> onMoveSelected = (moveIndex) =>
+            {
+                moveSelectionUi.gameObject.SetActive(false);
+                if (moveIndex == PokemonBase.MaxNumOfMoves)
+                {
+                    // Don't learn new move
+                    StartCoroutine(dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}放弃学习{moveToLearn.MoveName}！"));
+                }
+                else
+                {
+                    // Forget the selected move and learn new move
+                    var selevtedMove = playerUnit.pokemon.Moves[moveIndex].MoveBase;
+                    StartCoroutine(dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！"));
+                    playerUnit.pokemon.Moves[moveIndex] = new Move(moveToLearn);
+                }
+
+                moveToLearn = null;
+                state = BattleState.RunningTurn;
+            };
+
+            
+
+            moveSelectionUi.HandleMoveSelection(onMoveSelected);
+        }
     }
 
     // Press Z to open the move box
@@ -258,6 +288,16 @@ public class BattleSystem : MonoBehaviour
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要让{newPokemon.PokemonBase.PokemonName}上场！\n是否要更换当前出战宝可梦？");
         state = BattleState.AboutToUse;
         dialogueBox.EnableChoiceBox(true);
+    }
+
+    private IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    {
+        state = BattleState.Busy;
+        yield return dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
+        moveSelectionUi.gameObject.SetActive(true);
+        moveSelectionUi.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
+        moveToLearn = newMove;
+        state = BattleState.MoveToForget;
     }
 
     private void OpenPartyScreen()
@@ -576,7 +616,11 @@ public class BattleSystem : MonoBehaviour
                     }
                     else
                     {
-
+                        yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
+                        yield return dialogueBox.TypeDialogue($"但是{playerUnit.pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
+                        yield return ChooseMoveToForget(playerUnit.pokemon, newMove.MoveBase);
+                        yield return new WaitUntil(() => state != BattleState.MoveToForget);
+                        yield return new WaitForSeconds(2f);
                     }
                 }
                 

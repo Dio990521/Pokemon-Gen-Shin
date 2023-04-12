@@ -18,8 +18,6 @@ public class HpBar : MonoBehaviour
 
         if (hpText!= null)
         {
-            Debug.Log(curHp);
-            Debug.Log(maxHp);
             hpText.text = this.curHp.ToString() + " / " + this.maxHp.ToString();
         }
         
