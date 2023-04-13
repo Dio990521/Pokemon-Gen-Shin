@@ -8746,7 +8746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 137.28499, y: -153.83998}
+  m_AnchoredPosition: {x: 137.28499, y: -153.84}
   m_SizeDelta: {x: 259.67, y: 42.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &85659085
@@ -17437,8 +17437,7 @@ MonoBehaviour:
   - {fileID: 1687506369}
   - {fileID: 2126006208}
   moveForgetCursor: {fileID: 1146153373}
-  cursorOffset: 61.536
-  initYPos: -65.66
+  cursorOffset: 115
 --- !u!1 &294104705
 GameObject:
   m_ObjectHideFlags: 0
@@ -20800,7 +20799,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 65, y: -65.66}
-  m_SizeDelta: {x: 19.41, y: 31.82}
+  m_SizeDelta: {x: 19.410004, y: 31.820007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1146153373
 MonoBehaviour:

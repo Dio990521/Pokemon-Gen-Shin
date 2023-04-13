@@ -8,10 +8,14 @@ public class MoveSelectionUi : MonoBehaviour
 {
     [SerializeField] private List<Text> moveTexts;
     [SerializeField] private Image moveForgetCursor;
-    [SerializeField] private float cursorOffset = 61.536f;
-    [SerializeField] private float initYPos = -65.66f;
+    [SerializeField] private float cursorOffset = 72f;
 
-    private int currentSelection = 0;
+    private int currentSelection;
+
+    private void Start()
+    {
+        currentSelection = 0;
+    }
 
     public void SetMoveData(List<MoveBase> currentMoves, MoveBase newMove)
     {
@@ -35,7 +39,7 @@ public class MoveSelectionUi : MonoBehaviour
         }
 
         currentSelection = Mathf.Clamp(currentSelection, 0, PokemonBase.MaxNumOfMoves);
-        moveForgetCursor.transform.localPosition = new Vector3(moveForgetCursor.transform.localPosition.x, initYPos - currentSelection * cursorOffset, 0f);
+        moveForgetCursor.transform.localPosition = moveTexts[currentSelection].transform.localPosition - new Vector3(cursorOffset, 0f, 0f);
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
