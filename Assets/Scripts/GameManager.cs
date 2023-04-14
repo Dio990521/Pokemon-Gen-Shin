@@ -23,17 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        playerController.OnEncountered += StartBattle;
         battleSystem.OnBattleOver += EndBattle;
-        playerController.OnEnterTrainerView += (Collider2D trainerCollider) =>
-        {
-            var trainer = trainerCollider.GetComponentInParent<TrainerController>();
-            if (trainer != null )
-            {
-                state = GameState.Cutscene;
-                StartCoroutine(trainer.TriggerTrainerBattle(playerController));
-            }
-        };
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
@@ -49,7 +39,7 @@ public class GameManager : MonoBehaviour
         };
     }
 
-    private void StartBattle()
+    public void StartBattle()
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         state = GameState.Battle;
@@ -74,6 +64,12 @@ public class GameManager : MonoBehaviour
         PokemonParty trainerParty = trainer.GetComponent<PokemonParty>();
 
         battleSystem.StartTrainerBattle(playerParty, trainerParty);
+    }
+
+    public void OnEnterTrainersView(TrainerController trainer)
+    {
+        state = GameState.Cutscene;
+        StartCoroutine(trainer.TriggerTrainerBattle(playerController));
     }
 
     private void EndBattle(bool won)

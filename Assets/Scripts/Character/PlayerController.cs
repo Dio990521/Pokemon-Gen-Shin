@@ -9,9 +9,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
     private Character character;
 
-    public event Action OnEncountered;
-    public event Action<Collider2D> OnEnterTrainerView;
-
     [SerializeField] private Sprite sprite;
     [SerializeField] private string playerName;
 
@@ -23,6 +20,11 @@ public class PlayerController : MonoBehaviour
     public Sprite Sprite
     {
         get => sprite;
+    }
+
+    public Character Character
+    {
+        get => character;
     }
 
     private void Awake()
@@ -71,32 +73,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnMoveOver()
     {
-        CheckEncounters();
-        CheckIfInTrainersView();
-    }
-
-    // Start battle with 10% probability when player is on the grass
-    private void CheckEncounters()
-    {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.15f, GameLayers.instance.GrassMask);
-        if (collider != null)
+        var colliders = Physics2D.OverlapCircleAll(transform.position, character.OffsetY, GameLayers.instance.TriggerableLayers);
+        foreach (var collider in colliders)
         {
-            collider.GetComponent<GrassEffect>().InitEffect();
-            if (UnityEngine.Random.Range(1, 101) <= 10)
+            var triggerable = collider.GetComponent<IPlayerTriggerable>();
+            if (triggerable != null)
             {
                 character.Animator.IsMoving = false;
-                OnEncountered();
+                triggerable.OnPlayerTriggered(this);
+                break;
             }
-        }
-    }
-
-    private void CheckIfInTrainersView()
-    {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, 0.15f, GameLayers.instance.FovLayer);
-        if (collider != null)
-        {
-            character.Animator.IsMoving = false;
-            OnEnterTrainerView?.Invoke(collider);
         }
     }
 
