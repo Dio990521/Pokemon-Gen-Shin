@@ -9,6 +9,7 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
 
     [SerializeField] private int sceneToLoad = -1;
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private DestinationIdentifier destinationIdentifier;
 
     public Transform SpawnPoint => spawnPoint;
 
@@ -22,13 +23,20 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
 
     private IEnumerator SwitchScene()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(transform.parent.gameObject);
+
+        GameManager.Instance.PauseGame(true);
+
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
-        var destPortal = FindObjectsOfType<Portal>().First(x => x != this);
+        var destPortal = FindObjectsOfType<Portal>().First(x => x != this && x.destinationIdentifier == this.destinationIdentifier);
         player.Character.SetPositionAndSnapToTile(destPortal.spawnPoint.position);
 
-        Destroy(gameObject);
+        GameManager.Instance.PauseGame(false);
+
+        Destroy(transform.parent.gameObject);
 
     }
 }
+
+public enum DestinationIdentifier { A, B, C, D, E };
