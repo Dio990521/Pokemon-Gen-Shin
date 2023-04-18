@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
+    public SceneDetails CurrentScene { get; private set; }
+    public SceneDetails PrevScene { get; private set; }
+
     private void Awake()
     {
         Instance = this;
@@ -114,5 +117,11 @@ public class GameManager : MonoBehaviour
         {
             DialogueManager.Instance.HandleUpdate();
         }
+    }
+
+    public void SetCurrentScene(SceneDetails curScene)
+    {
+        PrevScene = CurrentScene;
+        CurrentScene = curScene;
     }
 }
