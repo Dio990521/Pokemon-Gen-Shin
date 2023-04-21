@@ -14,6 +14,7 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
             collider.GetComponent<GrassEffect>().InitEffect();
             if (UnityEngine.Random.Range(1, 101) <= 10)
             {
+                player.Character.Animator.IsMoving = false;
                 GameManager.Instance.StartBattle();
             }
         }

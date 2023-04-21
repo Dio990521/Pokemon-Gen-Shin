@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 
-public class TrainerController : MonoBehaviour, InteractableObject
+public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 {
     [SerializeField] private GameObject exclamation;
     [SerializeField] private Dialogue dialogue;
@@ -106,5 +106,17 @@ public class TrainerController : MonoBehaviour, InteractableObject
         fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
     }
 
+    public object CaptureState()
+    {
+        return battleLost;
+    }
 
+    public void RestoreState(object state)
+    {
+        battleLost = (bool)state;
+        if (battleLost)
+        {
+            fov.gameObject.SetActive(false);
+        }
+    }
 }

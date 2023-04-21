@@ -6288,6 +6288,7 @@ GameObject:
   - component: {fileID: 4671520595028268060}
   - component: {fileID: 4671520595028268061}
   - component: {fileID: 4671520595028268062}
+  - component: {fileID: 788561851519055092}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6357,6 +6358,18 @@ MonoBehaviour:
   portalLayer:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &788561851519055092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671520595028268059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96ddb908fa7c729419f05867d9550daf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4671520595040900643
 GameObject:
   m_ObjectHideFlags: 0
@@ -6578,6 +6591,10 @@ PrefabInstance:
     - target: {fileID: 519420031, guid: 2b83bdca9ca70bc4d8cff52d9ec29eda, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853689695157781073, guid: 2b83bdca9ca70bc4d8cff52d9ec29eda, type: 3}
+      propertyPath: uniqueId
+      value: 55ff96b8-96e0-4f46-987e-c6bffe5b9bfe
       objectReference: {fileID: 0}
     - target: {fileID: 5605163963420818262, guid: 2b83bdca9ca70bc4d8cff52d9ec29eda, type: 3}
       propertyPath: pokemons.Array.data[0].level

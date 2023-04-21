@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         worldCamera.gameObject.SetActive(false);
 
         PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
-        Pokemon wildPokemon = FindObjectOfType<MapArea>().GetComponent<MapArea>().GetRandomWildPokemon();
+        Pokemon wildPokemon = CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon();
 
         var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
         battleSystem.StartBattle(playerParty, wildPokemonCopy);
@@ -108,6 +108,14 @@ public class GameManager : MonoBehaviour
         if (state == GameState.FreeRoam)
         {
             playerController.HandleUpdate();
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                SavingSystem.i.Save("saveSlot1");
+            }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                SavingSystem.i.Load("saveSlot1");
+            }
         }
         else if (state == GameState.Battle)
         {
@@ -117,6 +125,7 @@ public class GameManager : MonoBehaviour
         {
             DialogueManager.Instance.HandleUpdate();
         }
+        
     }
 
     public void SetCurrentScene(SceneDetails curScene)

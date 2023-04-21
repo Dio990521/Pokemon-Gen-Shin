@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ZhenxinTownRoom1.unity
     guid: 6ff9e8d5e0b867c4fa31ee00469ac3bf
+  - enabled: 1
+    path: Assets/Scenes/ZhenxinTownRoom1_2.unity
+    guid: 891f56d1cf341e24d9ce1a90f5a56337
   m_configObjects: {}
