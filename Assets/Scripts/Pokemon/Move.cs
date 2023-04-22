@@ -8,4 +8,21 @@ public class Move
         MoveBase = moveBase;
         PP = moveBase.PP;
     }
+
+    public Move(MoveSaveData saveData)
+    {
+        MoveBase = MoveDB.GetMoveByName(saveData.name);
+        PP = saveData.pp;
+    }
+
+    public MoveSaveData GetSaveData()
+    {
+        var saveData = new MoveSaveData()
+        {
+            name = MoveBase.MoveName,
+            pp = PP
+        };
+
+        return saveData;
+    }
 }

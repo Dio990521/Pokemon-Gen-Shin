@@ -26,7 +26,7 @@ public class Pokemon
     public int MaxHp { get; private set; }
 
     public PokemonBase PokemonBase { get { return pokemonBase; } }
-    public int Level { get { return level; } }
+    public int Level { get { return level; } set { level = value; } }
     public int Hp { get; set; }
     public int Exp { get; set; }
     public List<Move> Moves { get; set; }
@@ -40,6 +40,35 @@ public class Pokemon
     public Queue<string> StatusChanges { get; private set; }
     public bool HpChanged { get; set; }
     public event System.Action OnStatusChanged;
+
+    public Pokemon(PokemonSaveData saveData)
+    {
+        pokemonBase = PokemonDB.GetPokemonByName(saveData.pokemonName);
+        Hp = saveData.hp;
+        Level = saveData.level;
+        Exp = saveData.exp;
+
+        Debug.Log("Name: " + pokemonBase.PokemonName);
+        Debug.Log("Hp:" + Hp);
+        Debug.Log("Level: " + Level);
+        Debug.Log("Exp: " + Exp);
+
+        if (saveData.statusId != null)
+        {
+            Status = ConditionsDB.Conditions[saveData.statusId.Value];
+        }
+        else
+        {
+            Status = null;
+        }
+
+        Moves = saveData.moves.Select(s => new Move(s)).ToList();
+
+        CalculateStats();
+        StatusChanges = new Queue<string>();
+        ResetStatBoost();
+        VolatileStatus = null;
+    }
 
     // Initialize the pokemon
     public void Init()
@@ -65,6 +94,21 @@ public class Pokemon
         ResetStatBoost();
         Status = null;
         VolatileStatus = null;
+    }
+
+    public PokemonSaveData GetSaveData()
+    {
+        var saveData = new PokemonSaveData()
+        {
+            pokemonName = pokemonBase.PokemonName,
+            hp = Hp,
+            level = Level,
+            exp = Exp,
+            statusId = Status?.Id,
+            moves = Moves.Select(m => m.GetSaveData()).ToList()
+        };
+
+        return saveData;
     }
 
     // Calculate the pokemon's status by based status

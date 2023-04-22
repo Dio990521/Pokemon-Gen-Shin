@@ -409,8 +409,8 @@ public class BattleSystem : MonoBehaviour
                 yield return TryToEspace();
             }
 
-                // Enemy Turn
-                var enemyMove = enemyUnit.pokemon.GetRandomMove();
+            // Enemy Turn
+            var enemyMove = enemyUnit.pokemon.GetRandomMove();
             yield return RunMove(enemyUnit, playerUnit, enemyMove);
             yield return RunAfterTurn(enemyUnit);
             if (state == BattleState.BattleOver) yield break;

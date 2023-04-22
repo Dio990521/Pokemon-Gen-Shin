@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     {
         Instance = this;
         ConditionsDB.Init();
+        PokemonDB.Init();
+        MoveDB.Init();
     }
 
     private void Start()

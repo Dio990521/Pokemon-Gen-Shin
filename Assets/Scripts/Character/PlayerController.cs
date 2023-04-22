@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, ISavable
@@ -87,18 +86,28 @@ public class PlayerController : MonoBehaviour, ISavable
 
     public object CaptureState()
     {
-        float[] position = new float[] 
+        var saveData = new PlayerSaveData()
         {
-            transform.position.x,
-            transform.position.y,
+            position = new float[]
+            {
+                transform.position.x,
+                transform.position.y,
+            },
+            pokemons = GetComponent<PokemonParty>().Pokemons.Select(p => p.GetSaveData()).ToList()
         };
 
-        return position;
+        return saveData;
     }
 
     public void RestoreState(object state)
     {
-        var position = (float[]) state;
-        transform.position = new Vector3(position[0], position[1]);
+        var saveData = (PlayerSaveData) state;
+
+        // Restore pos
+        var pos = saveData.position;
+        transform.position = new Vector3(pos[0], pos[1]);
+
+        // Restore party
+        GetComponent<PokemonParty>().Pokemons =  saveData.pokemons.Select(s => new Pokemon(s)).ToList();
     }
 }
