@@ -48,11 +48,6 @@ public class Pokemon
         Level = saveData.level;
         Exp = saveData.exp;
 
-        Debug.Log("Name: " + pokemonBase.PokemonName);
-        Debug.Log("Hp:" + Hp);
-        Debug.Log("Level: " + Level);
-        Debug.Log("Exp: " + Exp);
-
         if (saveData.statusId != null)
         {
             Status = ConditionsDB.Conditions[saveData.statusId.Value];
