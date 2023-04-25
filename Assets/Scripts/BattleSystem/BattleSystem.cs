@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,10 +43,9 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private MoveSelectionUi moveSelectionUi;
 
     public BattleState state;
-    public BattleState? prevState;
+    
     public int currentAction;
     public int currentMove;
-    public int currentMember;
     private bool aboutToUseChoice = true;
 
     public event Action<bool> OnBattleOver;
@@ -260,7 +260,6 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 2)
             {
                 // Pokemon party
-                prevState = state;
                 OpenPartyScreen();
 
             }
@@ -302,6 +301,7 @@ public class BattleSystem : MonoBehaviour
 
     private void OpenPartyScreen()
     {
+        partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
         partyScreen.SetPartyData(playerParty.Pokemons);
         partyScreen.gameObject.SetActive(true);
@@ -394,7 +394,7 @@ public class BattleSystem : MonoBehaviour
             if (playerAction == BattleAction.SwitchPokemon)
             {
                 dialogueBox.EnableActionSelector(false);
-                var selectedPokemon = playerParty.Pokemons[currentMember];
+                var selectedPokemon = partyScreen.SelectedMember;
                 state = BattleState.Busy;
                 yield return SwitchPokemon(selectedPokemon);
             }
@@ -689,31 +689,10 @@ public class BattleSystem : MonoBehaviour
 
     private void HandlePartyScreenSelection()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentMember += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentMember -= 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentMember += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            currentMember -= 1;
-        }
-
-        currentMember = Mathf.Clamp(currentMember, 0, playerParty.Pokemons.Count - 1);
-
-        partyScreen.UpdateMemberSelection(currentMember);
-
-        if (Input.GetKeyDown(KeyCode.Z))
+        Action onSelected = () =>
         {
             AudioManager.instance.PlaySE(SFX.CONFIRM);
-            Pokemon seletedMember = playerParty.Pokemons[currentMember];
+            Pokemon seletedMember = partyScreen.SelectedMember;
             if (seletedMember.Hp <= 0)
             {
                 partyScreen.SetMessageText("它摸了，换一个吧！");
@@ -727,38 +706,42 @@ public class BattleSystem : MonoBehaviour
 
             partyScreen.gameObject.SetActive(false);
 
-            if (prevState == BattleState.ActionSelection)
+            if (partyScreen.CalledFrom == BattleState.ActionSelection)
             {
-                prevState = null;
                 StartCoroutine(RunTurns(BattleAction.SwitchPokemon));
             }
             else
             {
                 state = BattleState.Busy;
-                StartCoroutine(SwitchPokemon(seletedMember));
+                bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
+                StartCoroutine(SwitchPokemon(seletedMember, isTrainerAboutToUse));
             }
 
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
+            partyScreen.CalledFrom = null;
+        };
+
+        Action onBack = () =>
         {
             if (playerUnit.pokemon.Hp <= 0)
             {
-                partyScreen.SetMessageText("必须要选一个宝可梦呀！");
+                partyScreen.SetMessageText("必须要选择一个宝可梦！");
                 return;
             }
             partyScreen.gameObject.SetActive(false);
 
-            if (prevState == BattleState.AboutToUse)
+            if (partyScreen.CalledFrom == BattleState.AboutToUse)
             {
-                prevState = null;
                 StartCoroutine(SendNextTrainerPokemon());
             }
             else
             {
                 ActionSelection();
             }
-            
-        }
+
+            partyScreen.CalledFrom = null;
+        };
+
+        partyScreen.HandleUpdate(onSelected, onBack);
     }
 
     private void HandleAboutToUse()
@@ -775,7 +758,6 @@ public class BattleSystem : MonoBehaviour
             dialogueBox.EnableChoiceBox(false);
             if (aboutToUseChoice)
             {
-                prevState = BattleState.AboutToUse;
                 OpenPartyScreen();
             }
             else
@@ -789,7 +771,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    private IEnumerator SwitchPokemon(Pokemon newPokemon)
+    private IEnumerator SwitchPokemon(Pokemon newPokemon, bool isTrainerAboutToUse=false)
     {
         
         if (playerUnit.pokemon.Hp > 0)
@@ -804,14 +786,13 @@ public class BattleSystem : MonoBehaviour
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
         AudioManager.instance.PlaySE(SFX.BALL_OUT);
 
-        if (prevState == null)
+        if (isTrainerAboutToUse)
+        {
+            StartCoroutine(SendNextTrainerPokemon());
+        }
+        else
         {
             state = BattleState.RunningTurn;
-        }
-        else if (prevState == BattleState.AboutToUse)
-        {
-            prevState = null;
-            StartCoroutine(SendNextTrainerPokemon());
         }
         
     }

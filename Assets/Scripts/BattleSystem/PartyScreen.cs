@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.VersionControl;
@@ -9,6 +10,15 @@ public class PartyScreen : MonoBehaviour
     [SerializeField] private Text messageText;
     [SerializeField] private PartyMemberUI[] memberSlots;
     private List<Pokemon> pokemons;
+
+    private int selection = 0;
+
+    public Pokemon SelectedMember => pokemons[selection];
+
+    /// <summary>
+    /// Party screen can be called from different states like ActionSelection, RuuningTurn, AboutToUse
+    /// </summary>
+    public BattleState? CalledFrom { get; set; }
 
     public void SetPartyData(List<Pokemon> pokemons)
     {
@@ -25,7 +35,49 @@ public class PartyScreen : MonoBehaviour
                 memberSlots[i].SetEmptySlot();
             }
         }
+
+        UpdateMemberSelection(selection);
+
         SetMessageText("选择一个宝可梦。");
+    }
+
+    public void HandleUpdate(Action onSelected, Action onBack)
+    {
+
+        var prevSelection = selection;
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            selection += 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            selection -= 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            selection += 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            selection -= 1;
+        }
+
+        selection = Mathf.Clamp(selection, 0, pokemons.Count - 1);
+
+        if (selection != prevSelection)
+        {
+            UpdateMemberSelection(selection);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            onSelected?.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            onBack?.Invoke();
+        }
     }
 
     public void UpdateMemberSelection(int selectedMember)

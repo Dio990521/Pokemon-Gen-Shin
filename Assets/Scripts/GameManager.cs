@@ -1,14 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Cutscene, Pause }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, PartyScreen, Cutscene, Pause }
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private BattleSystem battleSystem;
     [SerializeField] private Camera worldCamera;
+    [SerializeField] private PartyScreen partyScreen;
 
     public GameState state;
     public GameState stateBeforePause;
@@ -33,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         battleSystem.OnBattleOver += EndBattle;
+
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
@@ -139,6 +142,22 @@ public class GameManager : MonoBehaviour
         {
             menuController.HandleUpdate();
         }
+        else if (state == GameState.PartyScreen)
+        {
+
+            Action onSelected = () =>
+            {
+                // Summary Screen
+            };
+
+            Action onBack = () =>
+            {
+                partyScreen.gameObject.SetActive(false);
+                state = GameState.FreeRoam;
+            };
+
+            partyScreen.HandleUpdate(onSelected, onBack);
+        }
         
     }
 
@@ -154,7 +173,9 @@ public class GameManager : MonoBehaviour
         if (selectedItem == 0)
         {
             // Pokemon
-
+            partyScreen.gameObject.SetActive(true);
+            partyScreen.SetPartyData(playerController.GetComponent<PokemonParty>().Pokemons);
+            state = GameState.PartyScreen;
         } 
         else if (selectedItem == 1)
         {
@@ -165,13 +186,15 @@ public class GameManager : MonoBehaviour
         {
             // Save
             SavingSystem.i.Save("saveSlot1");
+            state = GameState.FreeRoam;
         }
         else if (selectedItem == 3)
         {
             // Load
             SavingSystem.i.Load("saveSlot1");
+            state = GameState.FreeRoam;
         }
 
-        state = GameState.FreeRoam;
+        
     }
 }
