@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, PartyScreen, Cutscene, Pause }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, PartyScreen, Cutscene, Pause }
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BattleSystem battleSystem;
     [SerializeField] private Camera worldCamera;
     [SerializeField] private PartyScreen partyScreen;
+    [SerializeField] private InventoryUI inventoryUI;
 
     public GameState state;
     public GameState stateBeforePause;
@@ -158,6 +159,16 @@ public class GameManager : MonoBehaviour
 
             partyScreen.HandleUpdate(onSelected, onBack);
         }
+        else if (state == GameState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = GameState.FreeRoam;
+            };
+
+            inventoryUI.HandleUpdate(onBack);
+        }
         
     }
 
@@ -180,6 +191,8 @@ public class GameManager : MonoBehaviour
         else if (selectedItem == 1)
         {
             // Bag
+            inventoryUI.gameObject.SetActive(true);
+            state = GameState.Bag;
 
         }
         else if (selectedItem == 2)
