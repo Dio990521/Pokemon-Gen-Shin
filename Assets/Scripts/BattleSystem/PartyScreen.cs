@@ -10,6 +10,7 @@ public class PartyScreen : MonoBehaviour
     [SerializeField] private Text messageText;
     [SerializeField] private PartyMemberUI[] memberSlots;
     private List<Pokemon> pokemons;
+    private PokemonParty party;
 
     private int selection = 0;
 
@@ -20,9 +21,18 @@ public class PartyScreen : MonoBehaviour
     /// </summary>
     public BattleState? CalledFrom { get; set; }
 
-    public void SetPartyData(List<Pokemon> pokemons)
+    public void Init()
     {
-        this.pokemons = pokemons;
+        party = PokemonParty.GetPlayerParty();
+        SetPartyData();
+
+        party.OnUpdated += SetPartyData;
+    }
+
+    public void SetPartyData()
+    {
+        pokemons = party.Pokemons;
+
         for (int i = 0; i < memberSlots.Length; i++)
         {
             if (i < pokemons.Count)

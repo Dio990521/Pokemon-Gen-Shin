@@ -87,7 +87,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetDefaultPlayerSprite();
         playerUnit.HideHud();
         enemyUnit.HideHud();
-
+        
         if (!isTrainerBattle)
         {
             // Wild Pokemon Battle
@@ -128,6 +128,7 @@ public class BattleSystem : MonoBehaviour
             playerUnit.gameObject.SetActive(true);
             
         }
+        partyScreen.Init();
         var playerPokemon = playerParty.GetHealthyPokemon();
         playerUnit.ChangeUnit(playerPokemon);
         yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
@@ -303,7 +304,6 @@ public class BattleSystem : MonoBehaviour
     {
         partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
-        partyScreen.SetPartyData(playerParty.Pokemons);
         partyScreen.gameObject.SetActive(true);
     }
 

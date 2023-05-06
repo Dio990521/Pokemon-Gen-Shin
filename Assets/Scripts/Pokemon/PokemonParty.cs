@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,20 @@ public class PokemonParty : MonoBehaviour
 {
     [SerializeField] private List<Pokemon> pokemons;
 
+    public event Action OnUpdated;
+
     public List<Pokemon> Pokemons
     {
         get { return pokemons; }
         set { pokemons = value; }
     }
 
-    private void Start()
+    public static PokemonParty GetPlayerParty()
+    {
+        return FindObjectOfType<PlayerController>().GetComponent<PokemonParty>();
+    }
+
+    private void Awake()
     {
         foreach (Pokemon pokemon in pokemons)
         {
@@ -31,6 +39,7 @@ public class PokemonParty : MonoBehaviour
         if (pokemons.Count < 6)
         {
             pokemons.Add(newPokemon);
+            OnUpdated?.Invoke();
         }
         else
         {

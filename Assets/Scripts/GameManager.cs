@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     {
         battleSystem.OnBattleOver += EndBattle;
 
+        partyScreen.Init();
+
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
@@ -187,7 +189,6 @@ public class GameManager : MonoBehaviour
         {
             // Pokemon
             partyScreen.gameObject.SetActive(true);
-            partyScreen.SetPartyData(playerController.GetComponent<PokemonParty>().Pokemons);
             state = GameState.PartyScreen;
         } 
         else if (selectedItem == 1)
