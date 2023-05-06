@@ -14,7 +14,7 @@ public class ConditionsDB
                     StartMessage = "中毒了！",
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.UpdateHP(pokemon.MaxHp / 8);
+                        pokemon.DecreaseHP(pokemon.MaxHp / 8);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正遭受毒素折磨！");
                     }
                 }
@@ -27,7 +27,7 @@ public class ConditionsDB
                     StartMessage = "烧起来了！",
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.UpdateHP(pokemon.MaxHp / 16);
+                        pokemon.DecreaseHP(pokemon.MaxHp / 16);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正在燃烧！");
                     }
                 }
@@ -113,7 +113,7 @@ public class ConditionsDB
                             return true;
                         }
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不知所措！");
-                        pokemon.UpdateHP(pokemon.MaxHp / 8);
+                        pokemon.DecreaseHP(pokemon.MaxHp / 8);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}给了自己一拳！");
                         return false;
                     }

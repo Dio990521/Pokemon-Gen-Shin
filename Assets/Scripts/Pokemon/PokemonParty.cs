@@ -13,7 +13,11 @@ public class PokemonParty : MonoBehaviour
     public List<Pokemon> Pokemons
     {
         get { return pokemons; }
-        set { pokemons = value; }
+        set 
+        {
+            pokemons = value;
+            OnUpdated?.Invoke();
+        }
     }
 
     public static PokemonParty GetPlayerParty()

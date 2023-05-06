@@ -43,6 +43,7 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         UpdateItemList();
+        inventory.OnUpdated += UpdateItemList;
     }
     private void UpdateItemList()
     {
@@ -99,7 +100,7 @@ public class InventoryUI : MonoBehaviour
         {
             Action onSelected = () =>
             {
-                // Use the item on the selected pokemon
+                StartCoroutine(UseItem());
             };
 
             Action onBackPartyScreen = () => 
@@ -111,6 +112,22 @@ public class InventoryUI : MonoBehaviour
         }
 
 
+    }
+
+    private IEnumerator UseItem()
+    {
+        state = InventoryUIState.Busy;
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        if (usedItem != null)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
+        }
+        else
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
+        }
+
+        ClosePartyScreen();
     }
 
     private void UpdateUI()
@@ -126,7 +143,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (slotUIList.Count <= itemsInViewPort)
         {
-            inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position - new Vector3(cursorXOffset + 8f, cursorYOffset, 0f);
+            UpdateCursor();
             return;
         }
 
@@ -137,7 +154,7 @@ public class InventoryUI : MonoBehaviour
 
         if (!showUpArrow && !showDownArrow) 
         {
-            inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position - new Vector3(cursorXOffset+8f, cursorYOffset, 0f);
+            UpdateCursor();
         }
         
         float scrollPos = Mathf.Clamp(selectedItem - itemsInViewPort / 2, 0, selectedItem) * slotUIList[0].Height;
@@ -157,6 +174,11 @@ public class InventoryUI : MonoBehaviour
 
     }
 
+    private void UpdateCursor()
+    {
+        inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position - new Vector3(cursorXOffset + 8f, cursorYOffset, 0f);
+    }
+
     private void OpenPartyScreen()
     {
         state = InventoryUIState.PartySelection;
@@ -167,6 +189,9 @@ public class InventoryUI : MonoBehaviour
     {
         state = InventoryUIState.ItemSelection;
         partyScreen.gameObject.SetActive(false);
+        selectedItem = 0;
+        prevSelection = -1;
+        UpdateCursor();
     }
 
 }

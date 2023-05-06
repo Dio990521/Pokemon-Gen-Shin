@@ -40,6 +40,7 @@ public class Pokemon
     public Queue<string> StatusChanges { get; private set; }
     public bool HpChanged { get; set; }
     public event System.Action OnStatusChanged;
+    public event System.Action OnHpChanged;
 
     public Pokemon(PokemonSaveData saveData)
     {
@@ -217,7 +218,7 @@ public class Pokemon
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
         int damage = Mathf.FloorToInt(d * modifiers);
-        UpdateHP(damage);
+        DecreaseHP(damage);
 
         return damageDetails;
     }
@@ -251,9 +252,17 @@ public class Pokemon
         VolatileStatus?.OnAfterTurn?.Invoke(this);
     }
 
-    public void UpdateHP(int damage)
+    public void DecreaseHP(int damage)
     {
         Hp = Mathf.Clamp(Hp - damage, 0, MaxHp);
+        OnHpChanged?.Invoke();
+        HpChanged = true;
+    }
+
+    public void IncreaseHP(int amount)
+    {
+        Hp = Mathf.Clamp(Hp + amount, 0, MaxHp);
+        OnHpChanged?.Invoke();
         HpChanged = true;
     }
 

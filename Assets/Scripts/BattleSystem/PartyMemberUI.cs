@@ -24,13 +24,18 @@ public class PartyMemberUI : MonoBehaviour
     private Pokemon battlePokemon;
 
     // Show the essential status of the pokemon
-    public void SetData(Pokemon pokemon)
+    public void Init(Pokemon pokemon)
     {
         battlePokemon = pokemon;
+        UpdateData();
+        battlePokemon.OnHpChanged += UpdateData;
+    }
+
+    private void UpdateData()
+    {
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         levelText.text = "LV." + battlePokemon.Level;
         hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
-
     }
 
     public void SetEmptySlot()
