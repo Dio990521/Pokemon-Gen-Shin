@@ -18,15 +18,22 @@ public class BattleHud : MonoBehaviour
     // show the essential status of the pokemon
     public void SetData(Pokemon pokemon)
     {
+        if (battlePokemon != null)
+        {
+            battlePokemon.OnStatusChanged -= SetStatusText;
+            battlePokemon.OnHpChanged -= UpdateHP;
+        }
+
         battlePokemon = pokemon;
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         SetLevel();
         SetExp();
         SetStatusText();
         battlePokemon.OnStatusChanged += SetStatusText;
+        battlePokemon.OnHpChanged += UpdateHP;
     }
 
-    void SetStatusText()
+    private void SetStatusText()
     {
         if (battlePokemon.Status == null)
         {
@@ -75,14 +82,20 @@ public class BattleHud : MonoBehaviour
         yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
     }
 
-    // update Hp bar when the pokemon get hurt
-    public IEnumerator UpdateHp()
+    public void UpdateHP()
     {
-        if (battlePokemon.HpChanged)
-        {
-            yield return hpBar.SetHpSmooth((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.Hp);
-            battlePokemon.HpChanged = false;
-        }
+        StartCoroutine(UpdateHpAsync());
+    }
+
+    // update Hp bar when the pokemon get hurt
+    public IEnumerator UpdateHpAsync()
+    {
+        yield return hpBar.SetHpSmooth((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.Hp);
+    }
+
+    public IEnumerator WaitForHPUpdate()
+    {
+        yield return new WaitUntil(() => hpBar.IsUpdating == false);
     }
 
 }

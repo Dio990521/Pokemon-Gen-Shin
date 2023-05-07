@@ -7,6 +7,7 @@ public class ItemSlotUI : MonoBehaviour
 {
     [SerializeField] private Text nameText;
     [SerializeField] private Text countText;
+    public GameObject cursorPos;
 
     public RectTransform rectTransform;
 

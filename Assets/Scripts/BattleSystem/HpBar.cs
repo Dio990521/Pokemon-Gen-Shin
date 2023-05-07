@@ -9,6 +9,8 @@ public class HpBar : MonoBehaviour
     private int curHp;
     private int maxHp;
 
+    public bool IsUpdating { get; private set; }
+
     // Set up the Hp information
     public void SetHp(float hpNormalized, int maxHp, int curHp)
     {
@@ -26,6 +28,7 @@ public class HpBar : MonoBehaviour
     // Hp bar animation
     public IEnumerator SetHpSmooth(float newHp, int curHpInt)
     {
+        IsUpdating = true;
         float curHp = transform.localScale.x;
         float changeAmt = curHp - newHp;
 
@@ -41,6 +44,8 @@ public class HpBar : MonoBehaviour
         {
             hpText.text = curHpInt.ToString() + " / " + this.maxHp.ToString();
         } 
+
+        IsUpdating = false;
 
     }
 }

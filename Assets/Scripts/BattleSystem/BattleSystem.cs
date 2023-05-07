@@ -15,6 +15,7 @@ public enum BattleState
     MoveSelection,
     RunningTurn,
     Busy,
+    Bag,
     PartyScreen,
     AboutToUse,
     MoveToForget,
@@ -41,6 +42,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Image trainerImage;
     [SerializeField] private GameObject pokeballSprite;
     [SerializeField] private MoveSelectionUi moveSelectionUi;
+    [SerializeField] private InventoryUI inventoryUI;
 
     public BattleState state;
     
@@ -185,6 +187,23 @@ public class BattleSystem : MonoBehaviour
         {
             HandleMoveSelection();
         }
+        else if (state == BattleState.Bag)
+        {
+            Action onBack = () =>
+            {
+                inventoryUI.gameObject.SetActive(false);
+                state = BattleState.ActionSelection;
+            };
+
+            Action onItemUsed = () =>
+            {
+                state = BattleState.Busy;
+                inventoryUI.gameObject.SetActive(false);
+                StartCoroutine(RunTurns(BattleAction.UseItem));
+            };
+
+            inventoryUI.HandleUpdate(onBack, onItemUsed);
+        }
         else if (state == BattleState.PartyScreen)
         {
             HandlePartyScreenSelection();
@@ -256,7 +275,7 @@ public class BattleSystem : MonoBehaviour
             else if (currentAction == 1)
             {
                 // Bag
-                StartCoroutine(RunTurns(BattleAction.UseItem));
+                OpenBag();
             }
             else if (currentAction == 2)
             {
@@ -298,6 +317,12 @@ public class BattleSystem : MonoBehaviour
         moveSelectionUi.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
         moveToLearn = newMove;
         state = BattleState.MoveToForget;
+    }
+
+    private void OpenBag()
+    {
+        state = BattleState.Bag;
+        inventoryUI.gameObject.SetActive(true);
     }
 
     private void OpenPartyScreen()
@@ -401,7 +426,6 @@ public class BattleSystem : MonoBehaviour
             else if (playerAction == BattleAction.UseItem)
             {
                 dialogueBox.EnableActionSelector(false);
-                yield return ThrowPokeball();
             }
             else if (playerAction == BattleAction.Run)
             {
@@ -429,7 +453,7 @@ public class BattleSystem : MonoBehaviour
         if (!canRunMove)
         {
             yield return ShowStatusChanges(sourceUnit.pokemon);
-            yield return sourceUnit.Hud.UpdateHp();
+            yield return sourceUnit.Hud.WaitForHPUpdate();
             yield break;
         }
         yield return ShowStatusChanges(sourceUnit.pokemon);
@@ -474,7 +498,7 @@ public class BattleSystem : MonoBehaviour
                 {
                     AudioManager.instance.PlaySE(SFX.ATTACK);
                 }
-                yield return targetUnit.Hud.UpdateHp();
+                yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetials(damageDetails);
             }
 
@@ -537,7 +561,7 @@ public class BattleSystem : MonoBehaviour
 
         sourceUnit.pokemon.AfterTurn();
         yield return ShowStatusChanges(sourceUnit.pokemon);
-        yield return sourceUnit.Hud.UpdateHp();
+        yield return sourceUnit.Hud.WaitForHPUpdate();
         if (sourceUnit.pokemon.Hp <= 0)
         {
             yield return HandlePokemonFainted(sourceUnit);

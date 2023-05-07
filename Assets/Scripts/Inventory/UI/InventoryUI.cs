@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,14 +16,13 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemDescription;
 
-    [SerializeField] private float cursorXOffset;
-    [SerializeField] private float cursorYOffset;
-
     [SerializeField] private Image upArrow;
     [SerializeField] private Image downArrow;
 
     [SerializeField] private PartyScreen partyScreen;
     private InventoryUIState state;
+
+    private Action onItemUsed;
 
     private const int itemsInViewPort = 10;
 
@@ -45,6 +45,7 @@ public class InventoryUI : MonoBehaviour
         UpdateItemList();
         inventory.OnUpdated += UpdateItemList;
     }
+
     private void UpdateItemList()
     {
         // Clear all the existing items
@@ -64,11 +65,12 @@ public class InventoryUI : MonoBehaviour
         UpdateUI();
     }
 
-    public void HandleUpdate(Action onBack)
+    public void HandleUpdate(Action onBack, Action onItemUsed=null)
     {
-
+        this.onItemUsed = onItemUsed;
         if (state == InventoryUIState.ItemSelection)
         {
+            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
             prevSelection = selectedItem;
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -80,9 +82,8 @@ public class InventoryUI : MonoBehaviour
                 --selectedItem;
             }
 
-            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
-
-            if (prevSelection != selectedItem)
+            
+            if (prevSelection != selectedItem || selectedItem == 0)
             {
                 UpdateUI();
             }
@@ -121,6 +122,7 @@ public class InventoryUI : MonoBehaviour
         if (usedItem != null)
         {
             yield return DialogueManager.Instance.ShowDialogueText($"ฤใสนำรมห{usedItem.ItemName}ฃก");
+            onItemUsed?.Invoke();
         }
         else
         {
@@ -128,6 +130,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         ClosePartyScreen();
+        UpdateUI();
     }
 
     private void UpdateUI()
@@ -137,46 +140,27 @@ public class InventoryUI : MonoBehaviour
         itemIcon.sprite = item.Icon;
         itemDescription.text = item.Description;
         HandleScrolling();
+        UpdateCursor();
     }
 
     private void HandleScrolling()
     {
-        if (slotUIList.Count <= itemsInViewPort)
-        {
-            UpdateCursor();
-            return;
-        }
 
-        bool showUpArrow = selectedItem > (itemsInViewPort / 2);
+        bool showUpArrow = selectedItem > (itemsInViewPort / 2) && slotUIList.Count > itemsInViewPort;
         upArrow.gameObject.SetActive(showUpArrow);
-        bool showDownArrow = selectedItem + (itemsInViewPort / 2) < slotUIList.Count;
+        bool showDownArrow = selectedItem + (itemsInViewPort / 2) < slotUIList.Count && slotUIList.Count > itemsInViewPort;
         downArrow.gameObject.SetActive(showDownArrow);
-
-        if (!showUpArrow && !showDownArrow) 
-        {
-            UpdateCursor();
-        }
         
-        float scrollPos = Mathf.Clamp(selectedItem - itemsInViewPort / 2, 0, selectedItem) * slotUIList[0].Height;
-        itemListRect.localPosition = new Vector2(itemListRect.localPosition.x, scrollPos);
-
-        if (showUpArrow || showDownArrow)
+        if (selectedItem + (itemsInViewPort / 2) <= slotUIList.Count)
         {
-            if (selectedItem > slotUIList.Count - (itemsInViewPort / 2))
-            {
-                inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position + new Vector3(0f, (slotUIList.Count - (itemsInViewPort / 2) - selectedItem) * slotUIList[0].Height, 0f) - new Vector3(cursorXOffset, cursorYOffset, 0f);
-            }
-            else
-            {
-                inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position - new Vector3(cursorXOffset, cursorYOffset, 0f);
-            }
+            float scrollPos = Mathf.Clamp(selectedItem - itemsInViewPort / 2, 0, selectedItem) * slotUIList[0].Height;
+            itemListRect.localPosition = new Vector2(itemListRect.localPosition.x, scrollPos);
         }
-
     }
 
     private void UpdateCursor()
     {
-        inventoryCursor.rectTransform.position = slotUIList[selectedItem].rectTransform.position - new Vector3(cursorXOffset + 8f, cursorYOffset, 0f);
+        inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
     }
 
     private void OpenPartyScreen()
@@ -189,9 +173,6 @@ public class InventoryUI : MonoBehaviour
     {
         state = InventoryUIState.ItemSelection;
         partyScreen.gameObject.SetActive(false);
-        selectedItem = 0;
-        prevSelection = -1;
-        UpdateCursor();
     }
 
 }
