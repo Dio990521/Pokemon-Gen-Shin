@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Move
 {
     public MoveBase MoveBase { get; set; }
@@ -24,5 +26,10 @@ public class Move
         };
 
         return saveData;
+    }
+
+    public void IncreasePP(int amount)
+    {
+        PP = Mathf.Clamp(PP + amount, 0, MoveBase.PP);
     }
 }

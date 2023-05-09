@@ -23,14 +23,91 @@ public class RecoveryItem : ItemBase
 
     public override bool Use(Pokemon pokemon)
     {
-        if (hpAmount > 0)
+        // Revive
+        if (revive || maxRevive)
+        {
+            if (pokemon.Hp > 0)
+            {
+                return false;
+            }
+
+            if (revive)
+            {
+                pokemon.IncreaseHP(pokemon.MaxHp / 2);
+            }
+            else if (maxRevive)
+            {
+                pokemon.IncreaseHP(pokemon.MaxHp);
+            }
+
+            pokemon.CureStatus();
+
+            return true;
+        }
+
+        // No other items can be used on fainted pokemon
+        if (pokemon.Hp == 0)
+        {
+            return false;
+        }
+
+        // Restore HP
+        if (restoreMaxHp || hpAmount > 0)
         {
             if (pokemon.Hp == pokemon.MaxHp)
             {
                 return false;
             }
 
-            pokemon.IncreaseHP(hpAmount);
+            if (restoreMaxHp)
+            {
+                pokemon.IncreaseHP(pokemon.MaxHp);
+            }
+            else
+            {
+                pokemon.IncreaseHP(hpAmount);
+            }
+            
+        }
+
+        // Recover Status
+        if (recoverAllStatus || status != ConditionID.none)
+        {
+            if (pokemon.Status == null && pokemon.VolatileStatus == null)
+            {
+                return false;
+            }
+
+            if (recoverAllStatus)
+            {
+                pokemon.CureStatus();
+                pokemon.CureVolatileStatus();
+            }
+            else
+            {
+                if (pokemon.Status.Id == status)
+                {
+                    pokemon.CureStatus();
+                }
+                else if (pokemon.VolatileStatus.Id == status)
+                {
+                    pokemon.CureVolatileStatus();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        // Restore PP
+        if (restoreMaxPP)
+        {
+            pokemon.Moves.ForEach(m => m.IncreasePP(m.MoveBase.PP));
+        }
+        else if (ppAmount > 0) 
+        {
+            pokemon.Moves.ForEach(m => m.IncreasePP(ppAmount));
         }
 
         return true;

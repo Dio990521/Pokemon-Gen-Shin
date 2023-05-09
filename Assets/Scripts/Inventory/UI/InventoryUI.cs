@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemDescription;
+    [SerializeField] private Text categoryText;
 
     [SerializeField] private Image upArrow;
     [SerializeField] private Image downArrow;
@@ -29,10 +30,12 @@ public class InventoryUI : MonoBehaviour
     private Inventory inventory;
     private int selectedItem;
     private int prevSelection = -1;
+    private int selectedCategory;
     private List<ItemSlotUI> slotUIList;
     private RectTransform itemListRect;
 
     [SerializeField] private Image inventoryCursor;
+    [SerializeField] private List<Image> categoryPoints;
 
     private void Awake()
     {
@@ -56,13 +59,14 @@ public class InventoryUI : MonoBehaviour
 
         slotUIList = new List<ItemSlotUI>();
 
-        foreach (var itemSlot in inventory.Slots)
+        foreach (var itemSlot in inventory.GetSlotsByCategory(selectedCategory))
         {
             var slotUIObj = Instantiate(itemSlotUI, itemList.transform);
             slotUIObj.SetData(itemSlot);
             slotUIList.Add(slotUIObj);
         }
         UpdateUI();
+        UpdateCategory();
     }
 
     public void HandleUpdate(Action onBack, Action onItemUsed=null)
@@ -70,8 +74,9 @@ public class InventoryUI : MonoBehaviour
         this.onItemUsed = onItemUsed;
         if (state == InventoryUIState.ItemSelection)
         {
-            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.Slots.Count - 1);
+            
             prevSelection = selectedItem;
+            int prevCategory = selectedCategory;
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -81,9 +86,33 @@ public class InventoryUI : MonoBehaviour
             {
                 --selectedItem;
             }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                ++selectedCategory;
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                --selectedCategory;
+            }
 
+            if (selectedCategory > Inventory.ItemCategories.Count - 1)
+            {
+                selectedCategory = 0;
+            }
+            else if (selectedCategory < 0)
+            {
+                selectedCategory = Inventory.ItemCategories.Count - 1;
+            }
+
+            selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
             
-            if (prevSelection != selectedItem || selectedItem == 0)
+            if (prevCategory != selectedCategory)
+            {
+                ResetSelection();
+                UpdateCategory();
+                UpdateItemList();
+            }
+            else if (prevSelection != selectedItem || selectedItem == 0)
             {
                 UpdateUI();
             }
@@ -118,7 +147,7 @@ public class InventoryUI : MonoBehaviour
     private IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember);
+        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {
             yield return DialogueManager.Instance.ShowDialogueText($"ÄãÊ¹ÓÃÁË{usedItem.ItemName}£¡");
@@ -135,12 +164,28 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI()
     {
+        var slots = inventory.GetSlotsByCategory(selectedCategory);
+        selectedItem = Mathf.Clamp(selectedItem, 0, slots.Count-1);
+
+        if (slots.Count > 0)
+        {
+            var item = slots[selectedItem].Item;
+            itemIcon.sprite = item.Icon;
+            itemDescription.text = item.Description;
+        }
         
-        var item = inventory.Slots[selectedItem].Item;
-        itemIcon.sprite = item.Icon;
-        itemDescription.text = item.Description;
         HandleScrolling();
-        UpdateCursor();
+
+        if (slots.Count > 0)
+        {
+            inventoryCursor.gameObject.SetActive(true);
+            UpdateCursor();
+        }
+        else
+        {
+            inventoryCursor.gameObject.SetActive(false);
+        }
+            
     }
 
     private void HandleScrolling()
@@ -163,6 +208,16 @@ public class InventoryUI : MonoBehaviour
         inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
     }
 
+    private void UpdateCategory()
+    {
+        categoryText.text = Inventory.ItemCategories[selectedCategory];
+        foreach (var point in categoryPoints)
+        {
+            point.gameObject.SetActive(false);
+        }
+        categoryPoints[selectedCategory].gameObject.SetActive(true);
+    }
+
     private void OpenPartyScreen()
     {
         state = InventoryUIState.PartySelection;
@@ -173,6 +228,15 @@ public class InventoryUI : MonoBehaviour
     {
         state = InventoryUIState.ItemSelection;
         partyScreen.gameObject.SetActive(false);
+    }
+
+    private void ResetSelection()
+    {
+        selectedItem = 0;
+        upArrow.gameObject.SetActive(false);
+        downArrow.gameObject.SetActive(false);
+        itemIcon.sprite = null;
+        itemDescription.text = "";
     }
 
 }

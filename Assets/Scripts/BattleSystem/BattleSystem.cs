@@ -162,6 +162,8 @@ public class BattleSystem : MonoBehaviour
             
         }
         playerParty.Pokemons.ForEach(p => p.OnBattleOver());
+        playerUnit.Hud.ClearData();
+        enemyUnit.Hud.ClearData();
         yield return new WaitForSeconds(3f);
         OnBattleOver(won);
     }
