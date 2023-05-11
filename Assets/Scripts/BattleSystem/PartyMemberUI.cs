@@ -47,6 +47,19 @@ public class PartyMemberUI : MonoBehaviour
         }
     }
 
+    public void SetSLot()
+    {
+        GetComponent<Image>().sprite = notSelectedSlotImage;
+        for (int i = 0; i < transform.childCount - 1; ++i)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
+        }
+        if (battlePokemon.Status != null)
+        {
+            transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
+        }
+    }
+
     // Show the sprite when a pokemon is selected
     public void SetSelected(bool selected)
     {

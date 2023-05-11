@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private InventoryUI inventoryUI;
 
-    public GameState state;
+    private GameState state;
     public GameState stateBeforePause;
     private TrainerController trainer;
 
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
+    public GameState State { get => state; set => state = value; }
 
     MenuController menuController;
 
@@ -44,20 +45,20 @@ public class GameManager : MonoBehaviour
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
-            state = GameState.Dialogue;
+            State = GameState.Dialogue;
         };
 
         DialogueManager.Instance.OnCloseDialogue += () =>
         {
-            if (state == GameState.Dialogue)
+            if (State == GameState.Dialogue)
             {
-                state = GameState.FreeRoam;
+                State = GameState.FreeRoam;
             }
         };
 
         menuController.OnBack += () =>
         {
-            state = GameState.FreeRoam;
+            State = GameState.FreeRoam;
         };
 
         menuController.OnMenuSelected += MenuSelected;
@@ -67,19 +68,19 @@ public class GameManager : MonoBehaviour
     {
         if (pause)
         {
-            stateBeforePause = state;
-            state = GameState.Pause;
+            stateBeforePause = State;
+            State = GameState.Pause;
         }
         else
         {
-            state = stateBeforePause;
+            State = stateBeforePause;
         }
     }
 
     public void StartBattle()
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
-        state = GameState.Battle;
+        State = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
     public void StartTrainerBattle(TrainerController trainer)
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_TRAINER);
-        state = GameState.Battle;
+        State = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
         this.trainer = trainer;
@@ -105,7 +106,7 @@ public class GameManager : MonoBehaviour
 
     public void OnEnterTrainersView(TrainerController trainer)
     {
-        state = GameState.Cutscene;
+        State = GameState.Cutscene;
         StartCoroutine(trainer.TriggerTrainerBattle(playerController));
     }
 
@@ -118,36 +119,36 @@ public class GameManager : MonoBehaviour
         }
 
         AudioManager.instance.PlayMusic(BGM.LITTLEROOT_TOWN);
-        state = GameState.FreeRoam;
+        State = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        if (state == GameState.FreeRoam)
+        if (State == GameState.FreeRoam)
         {
             playerController.HandleUpdate();
 
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 menuController.OpenMenu();
-                state = GameState.Menu;
+                State = GameState.Menu;
             }
         }
-        else if (state == GameState.Battle)
+        else if (State == GameState.Battle)
         {
             battleSystem.HandleUpdate();
         }
-        else if (state == GameState.Dialogue)
+        else if (State == GameState.Dialogue)
         {
             DialogueManager.Instance.HandleUpdate();
         }
-        else if (state == GameState.Menu)
+        else if (State == GameState.Menu)
         {
             menuController.HandleUpdate();
         }
-        else if (state == GameState.PartyScreen)
+        else if (State == GameState.PartyScreen)
         {
 
             Action onSelected = () =>
@@ -158,17 +159,17 @@ public class GameManager : MonoBehaviour
             Action onBack = () =>
             {
                 partyScreen.gameObject.SetActive(false);
-                state = GameState.FreeRoam;
+                State = GameState.FreeRoam;
             };
 
             partyScreen.HandleUpdate(onSelected, onBack);
         }
-        else if (state == GameState.Bag)
+        else if (State == GameState.Bag)
         {
             Action onBack = () =>
             {
                 inventoryUI.gameObject.SetActive(false);
-                state = GameState.FreeRoam;
+                State = GameState.FreeRoam;
             };
 
             inventoryUI.HandleUpdate(onBack);
@@ -189,26 +190,26 @@ public class GameManager : MonoBehaviour
         {
             // Pokemon
             partyScreen.gameObject.SetActive(true);
-            state = GameState.PartyScreen;
+            State = GameState.PartyScreen;
         } 
         else if (selectedItem == 1)
         {
             // Bag
             inventoryUI.gameObject.SetActive(true);
-            state = GameState.Bag;
+            State = GameState.Bag;
 
         }
         else if (selectedItem == 2)
         {
             // Save
             SavingSystem.i.Save("saveSlot1");
-            state = GameState.FreeRoam;
+            State = GameState.FreeRoam;
         }
         else if (selectedItem == 3)
         {
             // Load
             SavingSystem.i.Load("saveSlot1");
-            state = GameState.FreeRoam;
+            State = GameState.FreeRoam;
         }
 
         

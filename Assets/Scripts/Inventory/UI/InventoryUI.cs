@@ -23,7 +23,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private PartyScreen partyScreen;
     private InventoryUIState state;
 
-    private Action onItemUsed;
+    private Action<ItemBase> onItemUsed;
 
     private const int itemsInViewPort = 10;
 
@@ -69,7 +69,7 @@ public class InventoryUI : MonoBehaviour
         UpdateCategory();
     }
 
-    public void HandleUpdate(Action onBack, Action onItemUsed=null)
+    public void HandleUpdate(Action onBack, Action<ItemBase> onItemUsed=null)
     {
         this.onItemUsed = onItemUsed;
         if (state == InventoryUIState.ItemSelection)
@@ -112,14 +112,14 @@ public class InventoryUI : MonoBehaviour
                 UpdateCategory();
                 UpdateItemList();
             }
-            else if (prevSelection != selectedItem || selectedItem == 0)
-            {
+            //else if (prevSelection != selectedItem || selectedItem == 0)
+            //{
                 UpdateUI();
-            }
+            //}
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                OpenPartyScreen();
+                ItemSelected();
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
@@ -144,14 +144,29 @@ public class InventoryUI : MonoBehaviour
 
     }
 
+    private void ItemSelected()
+    {
+        if (selectedCategory == (int)ItemCategory.Pokeballs)
+        {
+            StartCoroutine(UseItem());
+        }
+        else
+        {
+            OpenPartyScreen();
+        }
+    }
+
     private IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {
-            yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
-            onItemUsed?.Invoke();
+            if (!(usedItem is PokeballItem))
+            {
+                yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
+            }
+            onItemUsed?.Invoke(usedItem);
         }
         else
         {
