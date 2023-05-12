@@ -39,10 +39,15 @@ public class Inventory : MonoBehaviour
         return FindObjectOfType<PlayerController>().GetComponent<Inventory>();
     }
 
+    public ItemBase GetItem(int itemIndex, int categoryIndex)
+    {
+        var currentSlots = GetSlotsByCategory(categoryIndex);
+        return currentSlots[itemIndex].Item;
+    }
+
     public ItemBase UseItem(int itemIndex, Pokemon selectedPokemon, int selectedCategory)
     {
-        var currentSlots = GetSlotsByCategory(selectedCategory);
-        var item = currentSlots[itemIndex].Item;
+        var item = GetItem(itemIndex, selectedCategory);
         bool itemUsed = item.Use(selectedPokemon);
         if (itemUsed)
         {

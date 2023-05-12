@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum InventoryUIState { ItemSelection, PartySelection, Busy}
+public enum InventoryUIState { ItemSelection, PartySelection, MoveToForget, Busy}
 
 public class InventoryUI : MonoBehaviour
 {
@@ -20,7 +21,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Image upArrow;
     [SerializeField] private Image downArrow;
 
+    [SerializeField] private Image bagIcon;
+    [SerializeField] private List<Sprite> bagIcons;
+
     [SerializeField] private PartyScreen partyScreen;
+    [SerializeField] private MoveSelectionUI moveSelectionUI;
     private InventoryUIState state;
 
     private Action<ItemBase> onItemUsed;
@@ -33,6 +38,7 @@ public class InventoryUI : MonoBehaviour
     private int selectedCategory;
     private List<ItemSlotUI> slotUIList;
     private RectTransform itemListRect;
+    private MoveBase moveToLearn;
 
     [SerializeField] private Image inventoryCursor;
     [SerializeField] private List<Image> categoryPoints;
@@ -140,6 +146,16 @@ public class InventoryUI : MonoBehaviour
 
             partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
         }
+        else if (state == InventoryUIState.MoveToForget)
+        {
+
+            Action<int> onMoveSelected = (int moveIndex) =>
+            {
+                StartCoroutine(OnMoveToForgetSelected(moveIndex));
+            };
+
+            moveSelectionUI.HandleMoveSelection(onMoveSelected);
+        }
 
 
     }
@@ -159,10 +175,12 @@ public class InventoryUI : MonoBehaviour
     private IEnumerator UseItem()
     {
         state = InventoryUIState.Busy;
+
+        yield return HandleTmItems();
         var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
         if (usedItem != null)
         {
-            if (!(usedItem is PokeballItem))
+            if (usedItem is RecoveryItem)
             {
                 yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
             }
@@ -175,6 +193,39 @@ public class InventoryUI : MonoBehaviour
 
         ClosePartyScreen();
         UpdateUI();
+    }
+
+    private IEnumerator HandleTmItems()
+    {
+        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
+        if (tmItem == null)
+        {
+            yield break;
+        }
+        var pokemon = partyScreen.SelectedMember;
+        if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
+        {
+            pokemon.LearnMove(tmItem.Move);
+            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}习得了新技能\n{tmItem.Move.MoveName}！");
+
+        }
+        else
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}想要学习{tmItem.Move.MoveName}...");
+            yield return DialogueManager.Instance.ShowDialogueText($"但是{pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
+            yield return ChooseMoveToForget(pokemon, tmItem.Move);
+            yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
+        }
+    }
+
+    private IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    {
+        state = InventoryUIState.Busy;
+        yield return DialogueManager.Instance.ShowDialogueText($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", true, false);
+        moveSelectionUI.gameObject.SetActive(true);
+        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
+        moveToLearn = newMove;
+        state = InventoryUIState.MoveToForget;
     }
 
     private void UpdateUI()
@@ -230,6 +281,7 @@ public class InventoryUI : MonoBehaviour
         {
             point.gameObject.SetActive(false);
         }
+        bagIcon.sprite = bagIcons[selectedCategory];
         categoryPoints[selectedCategory].gameObject.SetActive(true);
     }
 
@@ -252,6 +304,29 @@ public class InventoryUI : MonoBehaviour
         downArrow.gameObject.SetActive(false);
         itemIcon.sprite = null;
         itemDescription.text = "";
+    }
+
+    private IEnumerator OnMoveToForgetSelected(int moveIndex)
+    {
+        var pokemon = partyScreen.SelectedMember;
+
+        DialogueManager.Instance.CloseDialog();
+        moveSelectionUI.gameObject.SetActive(false);
+        if (moveIndex == PokemonBase.MaxNumOfMoves)
+        {
+            // Don't learn the new move
+            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}放弃学习{moveToLearn.MoveName}！");
+        }
+        else
+        {
+            // Forget the selected move and learn new move
+            var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
+            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
+            pokemon.Moves[moveIndex] = new Move(moveToLearn);
+        }
+
+        moveToLearn = null;
+        state = InventoryUIState.ItemSelection;
     }
 
 }

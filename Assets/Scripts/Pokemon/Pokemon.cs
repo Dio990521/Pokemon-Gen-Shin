@@ -137,10 +137,15 @@ public class Pokemon
         return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
-    public void LearnMove(LearnableMove moveToLearn)
+    public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves) return;
-        Moves.Add(new Move(moveToLearn.MoveBase));
+        Moves.Add(new Move(moveToLearn));
+    }
+
+    public bool HasMove(MoveBase moveToCheck)
+    {
+        return Moves.Count(m => m.MoveBase == moveToCheck) > 0;
     }
 
     // Reset all status to the default state

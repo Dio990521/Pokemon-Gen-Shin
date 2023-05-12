@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoveSelectionUi : MonoBehaviour
+public class MoveSelectionUI : MonoBehaviour
 {
     [SerializeField] private List<Text> moveTexts;
     [SerializeField] private Image moveForgetCursor;

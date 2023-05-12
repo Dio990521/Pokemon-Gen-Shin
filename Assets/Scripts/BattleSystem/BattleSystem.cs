@@ -41,7 +41,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private Image trainerImage;
     [SerializeField] private GameObject pokeballSprite;
-    [SerializeField] private MoveSelectionUi moveSelectionUi;
+    [SerializeField] private MoveSelectionUI moveSelectionUI;
     [SerializeField] private InventoryUI inventoryUI;
 
     public BattleState state;
@@ -216,7 +216,7 @@ public class BattleSystem : MonoBehaviour
         {
             Action<int> onMoveSelected = (moveIndex) =>
             {
-                moveSelectionUi.gameObject.SetActive(false);
+                moveSelectionUI.gameObject.SetActive(false);
                 if (moveIndex == PokemonBase.MaxNumOfMoves)
                 {
                     // Don't learn new move
@@ -236,7 +236,7 @@ public class BattleSystem : MonoBehaviour
 
             
 
-            moveSelectionUi.HandleMoveSelection(onMoveSelected);
+            moveSelectionUI.HandleMoveSelection(onMoveSelected);
         }
     }
 
@@ -313,8 +313,8 @@ public class BattleSystem : MonoBehaviour
     {
         state = BattleState.Busy;
         yield return dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
-        moveSelectionUi.gameObject.SetActive(true);
-        moveSelectionUi.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
+        moveSelectionUI.gameObject.SetActive(true);
+        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
         moveToLearn = newMove;
         state = BattleState.MoveToForget;
     }
@@ -634,7 +634,7 @@ public class BattleSystem : MonoBehaviour
                 {
                     if (playerUnit.pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
                     {
-                        playerUnit.pokemon.LearnMove(newMove);
+                        playerUnit.pokemon.LearnMove(newMove.MoveBase);
                         yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}习得了新技能\n{newMove.MoveBase.MoveName}！");
                         dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
                     }
