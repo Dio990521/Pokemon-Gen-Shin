@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private InventoryUI inventoryUI;
 
     private GameState state;
-    public GameState stateBeforePause;
+    public GameState prevState;
     private TrainerController trainer;
 
     public static GameManager Instance { get; private set; }
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
+            prevState = State;
             State = GameState.Dialogue;
         };
 
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
         {
             if (State == GameState.Dialogue)
             {
-                State = GameState.FreeRoam;
+                State = prevState;
             }
         };
 
@@ -68,12 +69,12 @@ public class GameManager : MonoBehaviour
     {
         if (pause)
         {
-            stateBeforePause = State;
+            prevState = State;
             State = GameState.Pause;
         }
         else
         {
-            State = stateBeforePause;
+            State = prevState;
         }
     }
 

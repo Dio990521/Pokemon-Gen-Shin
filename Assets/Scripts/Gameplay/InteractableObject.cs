@@ -5,5 +5,5 @@ using UnityEngine;
 public interface InteractableObject
 {
 
-    public void Interact(Transform initiator);
+    public IEnumerator Interact(Transform initiator);
 }

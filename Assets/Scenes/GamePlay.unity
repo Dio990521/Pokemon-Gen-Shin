@@ -174,19 +174,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: m_Size.x
-      value: 29
+      value: 29.33349
       objectReference: {fileID: 0}
     - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: m_Size.y
-      value: 9
+      value: 10.233915
       objectReference: {fileID: 0}
     - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: m_Offset.x
-      value: -1.42
+      value: -1.5867453
       objectReference: {fileID: 0}
     - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: m_Offset.y
-      value: 7
+      value: 10.985215
       objectReference: {fileID: 0}
     - target: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: connectedScenes.Array.size

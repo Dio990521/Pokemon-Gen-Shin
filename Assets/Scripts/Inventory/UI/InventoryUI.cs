@@ -34,7 +34,6 @@ public class InventoryUI : MonoBehaviour
 
     private Inventory inventory;
     private int selectedItem;
-    private int prevSelection = -1;
     private int selectedCategory;
     private List<ItemSlotUI> slotUIList;
     private RectTransform itemListRect;
@@ -81,7 +80,7 @@ public class InventoryUI : MonoBehaviour
         if (state == InventoryUIState.ItemSelection)
         {
             
-            prevSelection = selectedItem;
+            //prevSelection = selectedItem;
             int prevCategory = selectedCategory;
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
