@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NpcController : MonoBehaviour, InteractableObject
+public class NPCController : MonoBehaviour, InteractableObject
 {
 
     [SerializeField] Dialogue dialogue;
@@ -13,10 +13,12 @@ public class NpcController : MonoBehaviour, InteractableObject
     private float idleTimer = 0f;
     private NPCState npcState;
     private int currentPattern = 0;
+    private ItemGiver itemGiver;
 
     private void Awake()
     {
         character = GetComponent<Character>();
+        itemGiver = GetComponent<ItemGiver>();
     }
 
     public IEnumerator Interact(Transform initiator)
@@ -25,7 +27,15 @@ public class NpcController : MonoBehaviour, InteractableObject
         {
             npcState = NPCState.Dialog;
             character.LookTowards(initiator.position);
-            yield return DialogueManager.Instance.ShowDialogue(dialogue);
+
+            if (itemGiver != null && itemGiver.CanBeGiven())
+            {
+                yield return itemGiver.GiveItem(initiator.GetComponent<PlayerController>());
+            }
+            else
+            {
+                yield return DialogueManager.Instance.ShowDialogue(dialogue);
+            }
 
             idleTimer = 0f;
             npcState = NPCState.Idle;
