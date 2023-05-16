@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private int lettersPerSecond;
 
     public event Action OnShowDialogue;
-    public event Action OnCloseDialogue;
+    public event Action OnDialogueFinished;
 
     public bool IsShowing { get; private set; }
 
@@ -47,13 +47,14 @@ public class DialogueManager : MonoBehaviour
             CloseDialog();
         }
 
+        OnDialogueFinished?.Invoke();
+
     }
 
     public void CloseDialog()
     {
         dialogueBox.SetActive(false);
         IsShowing = false;
-        OnCloseDialogue?.Invoke();
     }
 
     public IEnumerator ShowDialogue(Dialogue dialogue)
@@ -72,7 +73,7 @@ public class DialogueManager : MonoBehaviour
 
         dialogueBox.SetActive(false);
         IsShowing = false;
-        OnCloseDialogue?.Invoke();
+        OnDialogueFinished?.Invoke();
 
 
     }

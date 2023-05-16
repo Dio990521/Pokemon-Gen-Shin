@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         ConditionsDB.Init();
         PokemonDB.Init();
         MoveDB.Init();
+        ItemDB.Init();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         menuController = GetComponent<MenuController>();
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
             State = GameState.Dialogue;
         };
 
-        DialogueManager.Instance.OnCloseDialogue += () =>
+        DialogueManager.Instance.OnDialogueFinished += () =>
         {
             if (State == GameState.Dialogue)
             {

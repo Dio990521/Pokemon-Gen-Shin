@@ -6,11 +6,11 @@ using UnityEngine;
 
 public enum ItemCategory { Items, Pokeballs, Tms, Matetials, KeyItems }
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISavable
 {
-    [SerializeField] private List<ItemSlot> slots;
+    [SerializeField] private List<ItemSlot> itemSlots;
     [SerializeField] private List<ItemSlot> pokeballSlots;
-    [SerializeField] private List<ItemSlot> tmSlot;
+    [SerializeField] private List<ItemSlot> tmSlots;
     [SerializeField] private List<ItemSlot> materialSlots;
     [SerializeField] private List<ItemSlot> keyItemSlots;
 
@@ -26,7 +26,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { slots, pokeballSlots, tmSlot, materialSlots, keyItemSlots };
+        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, materialSlots, keyItemSlots };
     }
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -115,6 +115,34 @@ public class Inventory : MonoBehaviour
 
         OnUpdated?.Invoke();
     }
+
+    public object CaptureState()
+    {
+        var saveData = new InventorySaveData()
+        {
+            items = itemSlots.Select(i => i.GetSaveData()).ToList(),
+            pokeballs = pokeballSlots.Select(i => i.GetSaveData()).ToList(),
+            tms = tmSlots.Select(i => i.GetSaveData()).ToList(),
+            materials = materialSlots.Select(i => i.GetSaveData()).ToList(),
+            keyItems = keyItemSlots.Select(i => i.GetSaveData()).ToList(),
+        };
+
+        return saveData;
+    }
+
+    public void RestoreState(object state)
+    {
+        var saveData = state as InventorySaveData;
+
+        itemSlots = saveData.items.Select(i => new ItemSlot(i)).ToList();
+        pokeballSlots = saveData.pokeballs.Select(i => new ItemSlot(i)).ToList();
+        tmSlots = saveData.tms.Select(i => new ItemSlot(i)).ToList();
+        materialSlots = saveData.materials.Select(i => new ItemSlot(i)).ToList();
+        keyItemSlots = saveData.keyItems.Select(i => new ItemSlot(i)).ToList();
+
+        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, materialSlots, keyItemSlots };
+        OnUpdated?.Invoke();
+    }
 }
 
 [Serializable]
@@ -122,6 +150,17 @@ public class ItemSlot
 {
     [SerializeField] private ItemBase item;
     [SerializeField] private int count;
+
+    public ItemSlot()
+    {
+
+    }
+
+    public ItemSlot(ItemSaveData saveData)
+    {
+        item = ItemDB.GetItemByName(saveData.itemName); 
+        count = saveData.count;
+    }
 
     public ItemBase Item {
         get => item;
@@ -131,4 +170,33 @@ public class ItemSlot
         get => count;
         set => count = value;
     }
+
+    public ItemSaveData GetSaveData()
+    {
+        var saveData = new ItemSaveData()
+        {
+            itemName = item.ItemName,
+            count = Count
+        };
+
+        return saveData;
+    }
+}
+
+[Serializable]
+public class ItemSaveData
+{
+    public string itemName;
+    public int count;
+}
+
+[Serializable]
+public class InventorySaveData
+{
+    public List<ItemSaveData> items;
+    public List<ItemSaveData> pokeballs;
+    public List<ItemSaveData> tms;
+    public List<ItemSaveData> materials;
+    public List<ItemSaveData> keyItems;
+
 }

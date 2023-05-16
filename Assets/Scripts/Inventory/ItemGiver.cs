@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemGiver : MonoBehaviour
+public class ItemGiver : MonoBehaviour, ISavable
 {
     [SerializeField] private ItemBase item;
     [SerializeField] private int count = 1;
@@ -28,5 +28,15 @@ public class ItemGiver : MonoBehaviour
     public bool CanBeGiven()
     {
         return item != null && !used && count > 0;
+    }
+
+    public object CaptureState()
+    {
+        return used;
+    }
+
+    public void RestoreState(object state)
+    {
+        used = (bool)state;
     }
 }
