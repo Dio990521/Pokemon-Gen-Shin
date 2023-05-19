@@ -5,6 +5,8 @@ using UnityEngine.TextCore.Text;
 
 public class LongGrass : MonoBehaviour, IPlayerTriggerable
 {
+    public bool TriggerRepeatedly => false;
+
     // Start battle with 10% probability when player is on the grass
     public void OnPlayerTriggered(PlayerController player)
     {
