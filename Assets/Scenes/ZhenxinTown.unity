@@ -17769,6 +17769,7 @@ MonoBehaviour:
   dialogue:
     lines:
     - "\u50BB\u903C\uFF0C\u6EDA\u3002"
+  questToStart: {fileID: 11400000, guid: 77f6ebb67add54a4f9e3d91f69c90bcd, type: 2}
   movementPattern:
   - {x: -4, y: 0}
   - {x: 4, y: 0}
@@ -21082,6 +21083,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8260317732440157595, guid: 6d4d5c466cece1c47bcde115fb2d4df7, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 2e5d7dae4b244994cad020711337bd0c, type: 2}
     - target: {fileID: 8260317732440157607, guid: 6d4d5c466cece1c47bcde115fb2d4df7, type: 3}
       propertyPath: m_Name
       value: PickUp
