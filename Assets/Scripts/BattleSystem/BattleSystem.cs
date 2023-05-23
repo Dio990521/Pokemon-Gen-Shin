@@ -950,7 +950,7 @@ public class BattleSystem : MonoBehaviour
         {
             AudioManager.instance.PlaySE(SFX.ESCAPE);
             yield return dialogueBox.TypeDialogue($"成功逃跑了！");
-            yield return BattleOver(true);
+            yield return BattleOver(false);
         }
         else
         {
@@ -961,7 +961,7 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.instance.PlaySE(SFX.ESCAPE);
                 yield return dialogueBox.TypeDialogue($"成功逃跑了！");
-                yield return BattleOver(true);
+                yield return BattleOver(false);
             }
             else
             {

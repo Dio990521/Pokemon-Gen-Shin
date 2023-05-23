@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Quest
 {
     public QuestBase Base { get; private set; }
@@ -16,6 +17,9 @@ public class Quest
     {
         Status = QuestStatus.None;
         yield return DialogueManager.Instance.ShowDialogue(Base.StartDialogue);
+
+        var questList = QuestList.GetQuestList();
+        questList.AddQuest(this);
     
     }
 
@@ -35,8 +39,10 @@ public class Quest
             inventory.AddItem(Base.RewardItem);
             yield return DialogueManager.Instance.ShowDialogueText($"ƒ„ªÒµ√¡À{Base.RewardItem.ItemName}£°");
         }
-    
-    
+
+        var questList = QuestList.GetQuestList();
+        questList.AddQuest(this);
+
     }
 
     public bool CanBeCompleted()
