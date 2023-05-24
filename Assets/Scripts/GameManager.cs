@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         PokemonDB.Init();
         MoveDB.Init();
         ItemDB.Init();
+        QuestDB.Init();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         menuController = GetComponent<MenuController>();
