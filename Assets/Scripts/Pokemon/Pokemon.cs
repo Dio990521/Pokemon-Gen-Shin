@@ -132,6 +132,17 @@ public class Pokemon
         return false;
     }
 
+    public Evolution CheckForEvolution()
+    {
+        return pokemonBase.Evolutions.FirstOrDefault(e => e.RequiredLevel == level);
+    }
+
+    public void Evolve(Evolution evolution)
+    {
+        pokemonBase = evolution.EvolvesInto;
+        CalculateStats();
+    }
+
     public LearnableMove GetLearnableMoveAtCurrentLevel()
     {
         return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();

@@ -50,4 +50,18 @@ public class PokemonParty : MonoBehaviour
             // TODO
         }
     }
+
+    public IEnumerator CheckForEvolution()
+    {
+        foreach (var pokemon in pokemons)
+        {
+            var evolution = pokemon.CheckForEvolution();
+            if (evolution != null)
+            {
+                yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}进化成了\n{evolution.EvolvesInto.PokemonName}！");
+                pokemon.Evolve(evolution);
+            }
+        }
+        OnUpdated?.Invoke();
+    }
 }
