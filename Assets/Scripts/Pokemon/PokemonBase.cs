@@ -89,7 +89,9 @@ public class Evolution
 {
     [SerializeField] private PokemonBase evolvesInto;
     [SerializeField] private int requiredLevel;
+    [SerializeField] private EvolutionItem requiredItem;
 
     public PokemonBase EvolvesInto => evolvesInto;
     public int RequiredLevel => requiredLevel;  
+    public EvolutionItem RequiredItem => requiredItem;
 }

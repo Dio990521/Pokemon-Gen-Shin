@@ -119,6 +119,7 @@ public class Pokemon
         };
 
         MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + 10;
+        Hp = MaxHp;
     }
 
     public bool CheckForLevelUp()
@@ -134,7 +135,12 @@ public class Pokemon
 
     public Evolution CheckForEvolution()
     {
-        return pokemonBase.Evolutions.FirstOrDefault(e => e.RequiredLevel == level);
+        return pokemonBase.Evolutions.FirstOrDefault(e => e.RequiredLevel <= level);
+    }
+
+    public Evolution CheckForEvolution(ItemBase item)
+    {
+        return pokemonBase.Evolutions.FirstOrDefault(e => e.RequiredItem == item);
     }
 
     public void Evolve(Evolution evolution)

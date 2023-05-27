@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     private GameState state;
     public GameState prevState;
+    public GameState stateBeforeEvolution;
     private TrainerController trainer;
 
     public static GameManager Instance { get; private set; }
@@ -68,12 +69,14 @@ public class GameManager : MonoBehaviour
 
         EvolutionManager.i.OnStartEvolution += () =>
         {
+            stateBeforeEvolution = State;
             State = GameState.Evolution;
         };
 
         EvolutionManager.i.OnCompleteEvolution += () =>
         {
-            State = GameState.FreeRoam;
+            State = stateBeforeEvolution;
+            partyScreen.SetPartyData();
         };
     }
 
@@ -130,6 +133,8 @@ public class GameManager : MonoBehaviour
             trainer.BattleLost();
             trainer = null;
         }
+
+        partyScreen.SetPartyData();
 
         AudioManager.instance.PlayMusic(BGM.LITTLEROOT_TOWN);
         State = GameState.FreeRoam;
