@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, PartyScreen, Cutscene, Pause }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, PartyScreen, Cutscene, Pause, Evolution }
 
 public class GameManager : MonoBehaviour
 {
@@ -65,6 +65,16 @@ public class GameManager : MonoBehaviour
         };
 
         menuController.OnMenuSelected += MenuSelected;
+
+        EvolutionManager.i.OnStartEvolution += () =>
+        {
+            State = GameState.Evolution;
+        };
+
+        EvolutionManager.i.OnCompleteEvolution += () =>
+        {
+            State = GameState.FreeRoam;
+        };
     }
 
     public void PauseGame(bool pause)
