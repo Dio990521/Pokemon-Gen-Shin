@@ -118,8 +118,14 @@ public class Pokemon
             { Stat.ËÙ¶È, Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + 5 }
         };
 
+        int oldMaxHp = MaxHp;
         MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + 10;
-        Hp = MaxHp;
+
+        if (oldMaxHp != 0)
+        {
+            Hp += MaxHp - oldMaxHp;
+        }
+        
     }
 
     public bool CheckForLevelUp()
@@ -147,6 +153,12 @@ public class Pokemon
     {
         pokemonBase = evolution.EvolvesInto;
         CalculateStats();
+    }
+
+    public void Heal()
+    {
+        Hp = MaxHp;
+        OnHpChanged?.Invoke();
     }
 
     public LearnableMove GetLearnableMoveAtCurrentLevel()
