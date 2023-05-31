@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private ChoiceBox choiceBox;
     [SerializeField] private Text dialogueText;
     [SerializeField] private int lettersPerSecond;
 
@@ -57,7 +58,7 @@ public class DialogueManager : MonoBehaviour
         IsShowing = false;
     }
 
-    public IEnumerator ShowDialogue(Dialogue dialogue)
+    public IEnumerator ShowDialogue(Dialogue dialogue, List<string> choices=null, Action<int> onChoiceSelected=null)
     {
         yield return new WaitForEndOfFrame();
         OnShowDialogue?.Invoke();
@@ -69,6 +70,11 @@ public class DialogueManager : MonoBehaviour
         {
             yield return TypeDialogue(line);
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
+        }
+
+        if (choices != null && choices.Count > 1)
+        {
+            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
         }
 
         dialogueBox.SetActive(false);

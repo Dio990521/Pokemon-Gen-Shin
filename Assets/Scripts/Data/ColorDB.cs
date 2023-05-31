@@ -12,4 +12,10 @@ public class ColorDB
             { ConditionID.par, new Color32(168, 224, 31, 255) },
             { ConditionID.frz, new Color32(45, 65, 255, 255) },
         };
+
+    public static Dictionary<string, Color> textColors = new Dictionary<string, Color>()
+    {
+        { "NotChoice", new Color32(50,50,50,255) },
+        { "OnChoice", new Color32(183,39,69,255) }
+    };
 }

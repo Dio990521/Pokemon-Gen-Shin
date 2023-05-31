@@ -6,14 +6,31 @@ public class Healer : MonoBehaviour
 {
     public IEnumerator Heal(Transform player, Dialogue dialogue)
     {
-        yield return DialogueManager.Instance.ShowDialogue(dialogue);
+        int selectedChoice = 0;
+        yield return DialogueManager.Instance.ShowDialogue(dialogue,
+            new List<string>() { "好的", "不用了"},
+            (choiceIndex) => selectedChoice = choiceIndex);
 
-        yield return Fader.i.FadeIn(0.5f);
+        if (selectedChoice == 0)
+        {
+            // Yes
+            yield return Fader.i.FadeIn(0.5f);
 
-        var playerParty = player.GetComponent<PokemonParty>();
-        playerParty.Pokemons.ForEach(p => p.Heal());
-        playerParty.PartyUpdated();
+            var playerParty = player.GetComponent<PokemonParty>();
+            playerParty.Pokemons.ForEach(p => p.Heal());
+            playerParty.PartyUpdated();
 
-        yield return Fader.i.FadeOut(0.5f);
+            yield return Fader.i.FadeOut(0.5f);
+            yield return DialogueManager.Instance.ShowDialogueText($"你的宝可梦们都恢复健康了！");
+
+        }
+        else if (selectedChoice == 1)
+        {
+            // No
+            yield return DialogueManager.Instance.ShowDialogueText($"那你快滚啊。");
+        }
+
+
+        
     }
 }
