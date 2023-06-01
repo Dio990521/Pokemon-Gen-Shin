@@ -31,7 +31,8 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true)
+    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true,
+        List<string> choices=null, Action<int> onChoiceSelected=null)
     {
         OnShowDialogue?.Invoke();
         IsShowing = true;
@@ -41,6 +42,11 @@ public class DialogueManager : MonoBehaviour
         if (waitForInput)
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
+        }
+
+        if (choices != null && choices.Count > 1)
+        {
+            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
         }
 
         if (autoClose)

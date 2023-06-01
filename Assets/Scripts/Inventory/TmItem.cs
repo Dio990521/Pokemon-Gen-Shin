@@ -9,6 +9,8 @@ public class TmItem : ItemBase
 
     public MoveBase Move => move;
 
+    public override bool CanUseInBattle => false;
+
     public override bool Use(Pokemon pokemon)
     {
         // Learning move is handled from Inventory UI

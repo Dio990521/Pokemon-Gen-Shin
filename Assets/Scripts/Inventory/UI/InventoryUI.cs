@@ -124,7 +124,7 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                ItemSelected();
+                StartCoroutine(ItemSelected());
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
@@ -159,8 +159,41 @@ public class InventoryUI : MonoBehaviour
 
     }
 
-    private void ItemSelected()
+    public IEnumerator ItemSelected()
     {
+        state = InventoryUIState.Busy;
+
+        var item = inventory.GetItem(selectedItem, selectedCategory);
+
+        if (GameManager.Instance.State == GameState.Shop)
+        {
+            onItemUsed?.Invoke(item);
+            state = InventoryUIState.ItemSelection;
+            yield break;
+        }
+
+        if (GameManager.Instance.State == GameState.Battle)
+        {
+            // In battle
+            if (!item.CanUseInBattle)
+            {
+                yield return DialogueManager.Instance.ShowDialogueText($"你不能在战斗中使用它！");
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
+        else
+        {
+            // Outside battle
+            if (!item.CanUseOutsideBattle)
+            {
+                yield return DialogueManager.Instance.ShowDialogueText($"你不能在这里使用它！");
+                state = InventoryUIState.ItemSelection;
+                yield break;
+            }
+        }
+
+
         if (selectedCategory == (int)ItemCategory.Pokeballs)
         {
             StartCoroutine(UseItem());

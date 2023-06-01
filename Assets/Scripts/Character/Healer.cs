@@ -7,9 +7,9 @@ public class Healer : MonoBehaviour
     public IEnumerator Heal(Transform player, Dialogue dialogue)
     {
         int selectedChoice = 0;
-        yield return DialogueManager.Instance.ShowDialogue(dialogue,
-            new List<string>() { "好的", "不用了"},
-            (choiceIndex) => selectedChoice = choiceIndex);
+        yield return DialogueManager.Instance.ShowDialogueText("要不要恢复啊小妹妹？",
+            choices : new List<string>() { "好的", "不用了"},
+            onChoiceSelected : (choiceIndex) => selectedChoice = choiceIndex);
 
         if (selectedChoice == 0)
         {

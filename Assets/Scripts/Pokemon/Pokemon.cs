@@ -159,6 +159,7 @@ public class Pokemon
     {
         Hp = MaxHp;
         OnHpChanged?.Invoke();
+        CureStatus();
     }
 
     public LearnableMove GetLearnableMoveAtCurrentLevel()
