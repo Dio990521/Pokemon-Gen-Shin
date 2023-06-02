@@ -320,7 +320,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private void UpdateCursor()
+    public void UpdateCursor()
     {
         inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
     }

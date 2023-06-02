@@ -8,6 +8,7 @@ public enum ShopState { Menu, Buying, Selling, Busy}
 public class ShopController : MonoBehaviour
 {
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private WalletUI walletUI;
 
     public event Action OnStart;
     public event Action OnFinish;
@@ -86,7 +87,9 @@ public class ShopController : MonoBehaviour
             yield break;
         }
 
-        float sellingPrice = Mathf.Round(item.Price / 2);
+        walletUI.Show();
+
+        int sellingPrice = (int)Mathf.Round(item.Price / 2);
         int selectedChoice = 0;
         yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？",
             waitForInput: false,
@@ -97,10 +100,11 @@ public class ShopController : MonoBehaviour
         { 
             // Yes
             inventory.RemoveItem(item);
+            Wallet.i.AddMoney(sellingPrice);
             yield return DialogueManager.Instance.ShowDialogueText($"成功卖掉{item.ItemName}！\n获得了{sellingPrice}金钱！");
 
         }
-
+        walletUI.Close();
         state = ShopState.Selling;
     }
 }
