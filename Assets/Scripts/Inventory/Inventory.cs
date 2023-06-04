@@ -110,13 +110,27 @@ public class Inventory : MonoBehaviour, ISavable
         return currentSlots.Exists(slot => slot.Item == item);
     }
 
-    public void RemoveItem(ItemBase item) 
+    public int GetItemCount(ItemBase item)
+    {
+        int category = (int)GetCategoryFromItem(item);
+        var currentSlots = GetSlotsByCategory(category);
+
+        var itemSlot = currentSlots.FirstOrDefault(slot => slot.Item == item);
+    
+        if (itemSlot != null)
+        {
+            return itemSlot.Count;
+        }
+        return 0;
+    }
+
+    public void RemoveItem(ItemBase item, int countToRemove=1) 
     {
         int selectedCategory = (int)GetCategoryFromItem(item);
         var currentSlots = GetSlotsByCategory(selectedCategory);
 
         var itemSlot = currentSlots.First(slot => slot.Item == item);
-        itemSlot.Count--;
+        itemSlot.Count -= countToRemove;
         if (itemSlot.Count == 0)
         {
             currentSlots.Remove(itemSlot);

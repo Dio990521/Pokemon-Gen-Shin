@@ -9,6 +9,7 @@ public class ShopController : MonoBehaviour
 {
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private WalletUI walletUI;
+    [SerializeField] private CountSelectorUI countSelectorUI;
 
     public event Action OnStart;
     public event Action OnFinish;
@@ -90,6 +91,19 @@ public class ShopController : MonoBehaviour
         walletUI.Show();
 
         int sellingPrice = (int)Mathf.Round(item.Price / 2);
+        int countToSell = 1;
+        int itemCount = inventory.GetItemCount(item);
+        if (itemCount > 1)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText("卖多少个呢？",
+                waitForInput: false, autoClose: false);
+            yield return countSelectorUI.ShowSelector(itemCount, sellingPrice,
+                (selectedCount) => countToSell = selectedCount);
+            DialogueManager.Instance.CloseDialog();
+        }
+
+        sellingPrice = sellingPrice * countToSell;
+
         int selectedChoice = 0;
         yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？",
             waitForInput: false,
@@ -99,7 +113,7 @@ public class ShopController : MonoBehaviour
         if (selectedChoice == 0) 
         { 
             // Yes
-            inventory.RemoveItem(item);
+            inventory.RemoveItem(item, countToSell);
             Wallet.i.AddMoney(sellingPrice);
             yield return DialogueManager.Instance.ShowDialogueText($"成功卖掉{item.ItemName}！\n获得了{sellingPrice}金钱！");
 
