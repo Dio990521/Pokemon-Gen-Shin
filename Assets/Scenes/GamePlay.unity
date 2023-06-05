@@ -1446,6 +1446,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -96
       objectReference: {fileID: 0}
+    - target: {fileID: 2608206512802347282, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: shopCameraOffset.x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2608840455616298008, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8278,6 +8282,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520594911518422, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4671520594914851072, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -8925,6 +8933,10 @@ PrefabInstance:
     - target: {fileID: 6057008473290968587, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6198061411745221562, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: money
+      value: 6666
       objectReference: {fileID: 0}
     - target: {fileID: 6215402622753081719, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -10238,5 +10250,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4116759947366545586, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}

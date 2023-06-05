@@ -8,13 +8,13 @@ public class ItemBase : ScriptableObject
     [SerializeField] private string itemName;
     [SerializeField] private string description;
     [SerializeField] private Sprite icon;
-    [SerializeField] private float price;
+    [SerializeField] private int price;
     [SerializeField] private bool isSellable;
 
     public string ItemName => itemName;
     public string Description => description;
     public Sprite Icon => icon;
-    public float Price => price;
+    public int Price => price;
     public bool IsSellable => isSellable;
 
     public virtual bool Use(Pokemon pokemon)

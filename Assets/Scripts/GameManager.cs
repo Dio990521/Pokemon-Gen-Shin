@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
 
         partyScreen.Init();
 
-
         DialogueManager.Instance.OnShowDialogue += () =>
         {
             prevState = State;
@@ -201,6 +200,22 @@ public class GameManager : MonoBehaviour
         else if (State == GameState.Shop)
         {
             ShopController.i.HandleUpdate();
+        }
+        
+    }
+
+    public IEnumerator MoveCamera(Vector2 moveOffset, bool waitForFadeOut=false)
+    {
+        yield return Fader.i.FadeIn(0.5f);
+        worldCamera.transform.position += new Vector3(moveOffset.x, moveOffset.y);
+
+        if (waitForFadeOut)
+        {
+            yield return Fader.i.FadeOut(0.5f);
+        }
+        else
+        {
+            StartCoroutine(Fader.i.FadeOut(0.5f));
         }
         
     }

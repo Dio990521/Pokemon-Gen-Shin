@@ -11,6 +11,7 @@ public class ShopController : MonoBehaviour
     [SerializeField] private WalletUI walletUI;
     [SerializeField] private CountSelectorUI countSelectorUI;
     [SerializeField] private ShopUI shopUI;
+    [SerializeField] private Vector2 shopCameraOffset;
 
     public event Action OnStart;
     public event Action OnFinish;
@@ -50,9 +51,11 @@ public class ShopController : MonoBehaviour
         if (selectedChoice == 0)
         {
             // Buy
-            state = ShopState.Buying;
+            yield return GameManager.Instance.MoveCamera(shopCameraOffset);
             walletUI.Show();
-            shopUI.Show(merchant.AvailableItems);
+            shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
+                () => StartCoroutine(OnBackFromBuying()));
+            state = ShopState.Buying;
         }
         else if (selectedChoice == 1)
         {
@@ -129,5 +132,46 @@ public class ShopController : MonoBehaviour
         }
         walletUI.Close();
         state = ShopState.Selling;
+    }
+
+    private IEnumerator BuyItem(ItemBase item)
+    {
+        state = ShopState.Busy;
+        yield return DialogueManager.Instance.ShowDialogueText($"买多少个？", waitForInput: false, autoClose: false);
+
+        int countToBuy = 1;
+        yield return countSelectorUI.ShowSelector(99, item.Price,
+            (selectedCount) => countToBuy = selectedCount);
+
+        DialogueManager.Instance.CloseDialog();
+        int totalPrice = item.Price * countToBuy;
+        if (Wallet.i.HasMoney(totalPrice))
+        {
+            int selectedChoice = 0;
+            yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}元，买吗？",
+            waitForInput: false,
+            choices: new List<string>() { "彳亍", "算了" },
+            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
+
+            if (selectedChoice == 0)
+            {
+                inventory.AddItem(item, countToBuy);
+                Wallet.i.TakeMoney(totalPrice);
+                yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");
+            }
+        }
+        else
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"你没有那么多金钱！");
+        }
+        state = ShopState.Buying;
+    }
+
+    private IEnumerator OnBackFromBuying()
+    {
+        yield return GameManager.Instance.MoveCamera(-shopCameraOffset);
+        shopUI.Close();
+        walletUI.Close();
+        StartCoroutine(StartMenuState());
     }
 }
