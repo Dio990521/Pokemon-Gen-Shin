@@ -8,6 +8,9 @@ public class SceneDetails : MonoBehaviour
 {
 
     [SerializeField] private List<SceneDetails> connectedScenes;
+    [SerializeField] private BGM sceneMusic;
+
+    public BGM SceneMusic => sceneMusic;
 
     public bool IsLoaded {  get; private set; }
 
@@ -19,6 +22,11 @@ public class SceneDetails : MonoBehaviour
         {
             LoadScene();
             GameManager.Instance.SetCurrentScene(this);
+
+            if (sceneMusic != BGM.NONE)
+            {
+                AudioManager.instance.PlayMusic(sceneMusic, fade: true);
+            }
 
             // Load all connected scenes
             foreach (var scene in connectedScenes)

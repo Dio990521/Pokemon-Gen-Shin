@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,18 +22,23 @@ public enum BGM
     VICTORY_WILD_POKEMON,
     TRAINER_EYE_MEET_YOUNG,
     VICTORY_TRAINER,
-    BATTLE_TRAINER
+    BATTLE_TRAINER,
+    XUMENG_FOREST,
+    NONE
 }
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    public AudioSource musicPlayer;
-    public AudioSource soundPlayer;
+    [SerializeField] private AudioSource musicPlayer;
+    [SerializeField] private AudioSource sfxPlayer;
 
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] sfxClips;
+
+    [SerializeField] private float fadeDuration = 0.75f;
+    private float originalMusicVol;
 
     // Start is called before the first frame update
     private void Awake()
@@ -45,15 +51,20 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(instance);
         }
-        
     }
 
-    public void PlayMusic(BGM id)
+    private void Start()
     {
-        musicPlayer.Stop();
-        AudioClip clip = musicClips[(int)id];
-        musicPlayer.clip = clip;
-        musicPlayer.Play();
+        originalMusicVol = musicPlayer.volume;
+    }
+
+    public void PlayMusic(BGM id, bool loop=true, bool fade=false)
+    {
+        if (musicPlayer.clip == musicClips[(int)id])
+        {
+            return;
+        }
+        StartCoroutine(PlayerMusicAsync(id, loop, fade));
     }
 
     public void PlayMusic(BGM id, float volume)
@@ -72,16 +83,33 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySE(SFX id)
     {
-        soundPlayer.pitch = 1f;
+        sfxPlayer.pitch = 1f;
         AudioClip clip = sfxClips[(int)id];
-        soundPlayer.PlayOneShot(clip);
+        sfxPlayer.PlayOneShot(clip);
     }
 
     public void PlaySE(SFX id, float volume)
     {
-        soundPlayer.pitch = 1f;
+        sfxPlayer.pitch = 1f;
         AudioClip clip = sfxClips[(int)id];
-        soundPlayer.PlayOneShot(clip, volume);
+        sfxPlayer.PlayOneShot(clip, volume);
+    }
+
+    private IEnumerator PlayerMusicAsync(BGM id, bool loop, bool fade)
+    {
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(0, fadeDuration).WaitForCompletion();
+        }
+
+        musicPlayer.clip = musicClips[(int)id]; ;
+        musicPlayer.loop = loop;
+        musicPlayer.Play();
+
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
+        }
     }
 
 }

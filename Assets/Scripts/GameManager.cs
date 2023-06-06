@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         {
             State = stateBeforeEvolution;
             partyScreen.SetPartyData();
+
+            AudioManager.instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
 
         ShopController.i.OnStart += () => state = GameState.Shop;
@@ -138,13 +140,22 @@ public class GameManager : MonoBehaviour
 
         partyScreen.SetPartyData();
 
-        AudioManager.instance.PlayMusic(BGM.LITTLEROOT_TOWN);
         State = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
         worldCamera.gameObject.SetActive(true);
 
         var playerParty = playerController.GetComponent<PokemonParty>();
-        StartCoroutine(playerParty.CheckForEvolution());
+
+        bool hasEvolutions = playerParty.CheckForEvolutions();
+        if (hasEvolutions)
+        {
+            StartCoroutine(playerParty.RunEvolutions());
+        }
+        else
+        {
+            AudioManager.instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
+        }
+        
     }
 
     private void Update()
