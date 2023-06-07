@@ -81,18 +81,32 @@ public class AudioManager : MonoBehaviour
         musicPlayer.Stop();
     }
 
-    public void PlaySE(SFX id)
+    public void PlaySE(SFX id, bool pauseMusic=false)
     {
-        sfxPlayer.pitch = 1f;
         AudioClip clip = sfxClips[(int)id];
+        if (pauseMusic)
+        {
+            musicPlayer.Pause();
+            StartCoroutine(UnPauseMusic(clip.length));
+        }
+        sfxPlayer.pitch = 1f;
+        
         sfxPlayer.PlayOneShot(clip);
     }
 
-    public void PlaySE(SFX id, float volume)
+    public void PlaySE(SFX id, float volume, bool pauseMusic = false)
     {
         sfxPlayer.pitch = 1f;
         AudioClip clip = sfxClips[(int)id];
         sfxPlayer.PlayOneShot(clip, volume);
+    }
+
+    private IEnumerator UnPauseMusic(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        musicPlayer.volume = 0;
+        musicPlayer.UnPause();
+        musicPlayer.DOFade(originalMusicVol, fadeDuration);
     }
 
     private IEnumerator PlayerMusicAsync(BGM id, bool loop, bool fade)
