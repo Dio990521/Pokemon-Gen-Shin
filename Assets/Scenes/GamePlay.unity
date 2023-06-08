@@ -163,8 +163,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - pokemonBase: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
-    level: 20
+  - pokemon: {fileID: 0}
+    levelRange: {x: 0, y: 0}
+    chancePercentage: 0
 --- !u!1001 &1163452518
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -275,8 +276,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - pokemonBase: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
-    level: 40
+  - pokemon: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
+    levelRange: {x: 1, y: 10}
+    chancePercentage: 60
+  - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
+    levelRange: {x: 5, y: 19}
+    chancePercentage: 30
+  - pokemon: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    levelRange: {x: 20, y: 25}
+    chancePercentage: 10
 --- !u!1001 &2009059485
 PrefabInstance:
   m_ObjectHideFlags: 0
