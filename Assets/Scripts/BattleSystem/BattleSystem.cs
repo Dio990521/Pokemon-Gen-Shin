@@ -907,6 +907,37 @@ public class BattleSystem : MonoBehaviour
 
     private int TryToCatchPokemon(Pokemon pokemon, PokeballItem pokeballItem)
     {
+
+        switch (pokeballItem.BallType)
+        {
+            case PokeballType.Repeat: 
+                // TODO
+                return 1;
+            case PokeballType.Master: 
+                return 4;
+            case PokeballType.Beast:
+                AudioManager.instance.PlaySE(SFX.ATTACK);
+                break;
+            case PokeballType.FiveFive:
+                int prob = UnityEngine.Random.Range(0, 100);
+                return prob >= 50 ? 4 : 1;
+            case PokeballType.Timer:
+                // TODO
+                return 2;
+            case PokeballType.Luxury:
+                // TODO
+                break;
+            case PokeballType.Random:
+                // TODO
+                return 2;
+            case PokeballType.Iron:
+                // TODO
+                return 2;
+            case PokeballType.Premier: 
+                break;
+
+        }
+
         float a = (3 * pokemon.MaxHp - 2 * pokemon.Hp) * pokeballItem.CatchRateModifier * pokemon.PokemonBase.CatchRate * ConditionsDB.GetStatusBonus(pokemon.Status) / (3 * pokemon.MaxHp);
         
         if (a >= 255)
