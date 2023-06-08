@@ -11,6 +11,7 @@ public class GameLayers : MonoBehaviour
     [SerializeField] private LayerMask fovLayer;
     [SerializeField] private LayerMask portalLayer;
     [SerializeField] private LayerMask triggerLayer;
+    [SerializeField] private LayerMask ledgeLayer;
 
     public static GameLayers instance {  get; private set; }
 
@@ -48,6 +49,8 @@ public class GameLayers : MonoBehaviour
     {
         get => portalLayer;
     }
+
+    public LayerMask LedgeLayer => ledgeLayer;
 
     public LayerMask TriggerableLayers
     {

@@ -8,6 +8,7 @@ public class CharacterAnimator : MonoBehaviour
     public float MoveX { get; set; }
     public float MoveY { get; set; }
     public bool IsMoving { get; set; }
+    public bool IsJumping { get; set; }
 
     [SerializeField] private List<Sprite> walkDownSprites;
     [SerializeField] private List<Sprite> walkUpSprites;
@@ -68,7 +69,11 @@ public class CharacterAnimator : MonoBehaviour
             currentAnim.Start();
         }
 
-        if (IsMoving)
+        if (IsJumping)
+        {
+            spriteRenderer.sprite = currentAnim.Frames[0];
+        }
+        else if (IsMoving)
         {
             currentAnim.HandleUpdate();
         }
