@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartBattle()
+    public void StartBattle(BattleTrigger trigger)
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         State = GameState.Battle;
@@ -105,10 +105,10 @@ public class GameManager : MonoBehaviour
         worldCamera.gameObject.SetActive(false);
 
         PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
-        Pokemon wildPokemon = CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon();
+        Pokemon wildPokemon = CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon(trigger);
 
         var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
-        battleSystem.StartBattle(playerParty, wildPokemonCopy);
+        battleSystem.StartBattle(playerParty, wildPokemonCopy, trigger);
     }
 
     public void StartTrainerBattle(TrainerController trainer)

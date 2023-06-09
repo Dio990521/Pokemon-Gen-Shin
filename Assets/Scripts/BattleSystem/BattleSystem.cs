@@ -30,6 +30,8 @@ public enum BattleAction
     Run 
 }
 
+public enum BattleTrigger { LongGrass, Water }
+
 public class BattleSystem : MonoBehaviour
 {
     [SerializeField] private BattleUnit playerUnit;
@@ -43,6 +45,11 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private GameObject pokeballSprite;
     [SerializeField] private MoveSelectionUI moveSelectionUI;
     [SerializeField] private InventoryUI inventoryUI;
+
+    [SerializeField] List<Sprite> backgroundImages;
+    [SerializeField] List<Sprite> enemyGroundSprites;
+    [SerializeField] List<Sprite> playerGroundSprites;
+    [SerializeField] Image backgroundImage;
 
     public BattleState state;
     
@@ -63,17 +70,20 @@ public class BattleSystem : MonoBehaviour
     int escapeAttempts;
     MoveBase moveToLearn;
 
-    public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon)
+    private BattleTrigger battleTrigger;
+
+    public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon, BattleTrigger trigger=BattleTrigger.LongGrass)
     {
         this.isTrainerBattle = false;
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
         player = playerParty.GetComponent<PlayerController>();
+        battleTrigger = trigger;
         StartCoroutine(SetupBattle());
     }
 
-    public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty)
+    public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty, BattleTrigger trigger = BattleTrigger.LongGrass)
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_TRAINER);
         this.playerParty = playerParty;
@@ -81,6 +91,7 @@ public class BattleSystem : MonoBehaviour
         this.isTrainerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
         trainer = trainerParty.GetComponent<TrainerController>();
+        battleTrigger = trigger;
         StartCoroutine(SetupBattle());
     }
 
@@ -89,7 +100,11 @@ public class BattleSystem : MonoBehaviour
         playerUnit.SetDefaultPlayerSprite();
         playerUnit.HideHud();
         enemyUnit.HideHud();
-        
+
+        backgroundImage.sprite = backgroundImages[((int)battleTrigger)];
+        playerUnit.SetGroundImage(playerGroundSprites[((int)battleTrigger)]);
+        enemyUnit.SetGroundImage(enemyGroundSprites[((int)battleTrigger)]);
+
         if (!isTrainerBattle)
         {
             // Wild Pokemon Battle

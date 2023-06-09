@@ -58,6 +58,11 @@ public class BattleUnit : MonoBehaviour
         hud.gameObject.SetActive(true);
     }
 
+    public void SetGroundImage(Sprite ground)
+    {
+        groundSprite.sprite = ground;
+    }
+
     public void ChangeUnit(Pokemon selectedPokemon)
     {
         pokemon = selectedPokemon;

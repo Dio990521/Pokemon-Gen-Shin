@@ -6,30 +6,61 @@ using UnityEngine;
 public class MapArea : MonoBehaviour
 {
     [SerializeField] private List<PokemonEncounterRecord> wildPokemons;
+    [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInWater;
+
 
     [HideInInspector]
     [SerializeField] private int totalChance = 0;
+
+    [HideInInspector]
+    [SerializeField] private int totalChanceInWater = 0;
+
     private void OnValidate()
     {
-        totalChance = 0;
-        foreach (var record in wildPokemons)
-        {
-            record.chanceLower = totalChance;
-            record.chanceUpper = totalChance + record.chancePercentage;
-
-            totalChance += record.chancePercentage;
-        }
+        CalculateChancePercentage();
     }
 
     private void Start()
     {
-        
+        CalculateChancePercentage();
     }
 
-    public Pokemon GetRandomWildPokemon()
+    private void CalculateChancePercentage()
     {
+        totalChance = -1;
+        totalChanceInWater = -1;
+
+        if (wildPokemons.Count > 0)
+        {
+            totalChance = 0;
+            foreach (var record in wildPokemons)
+            {
+                record.chanceLower = totalChance;
+                record.chanceUpper = totalChance + record.chancePercentage;
+
+                totalChance += record.chancePercentage;
+            }
+        }
+
+        if (wildPokemonsInWater.Count > 0)
+        {
+            totalChanceInWater = 0;
+            foreach (var record in wildPokemonsInWater)
+            {
+                record.chanceLower = totalChanceInWater;
+                record.chanceUpper = totalChanceInWater + record.chancePercentage;
+
+                totalChanceInWater += record.chancePercentage;
+            }
+        }
+    }
+
+    public Pokemon GetRandomWildPokemon(BattleTrigger trigger)
+    {
+        var pokemonList = (trigger == BattleTrigger.LongGrass) ? wildPokemons : wildPokemonsInWater;
+
         int randVal = Random.Range(1, 101);
-        var pokemonRecord = wildPokemons.First(p => randVal >= p.chanceLower && randVal <= p.chanceUpper);
+        var pokemonRecord = pokemonList.First(p => randVal >= p.chanceLower && randVal <= p.chanceUpper);
         var levelRange = pokemonRecord.levelRange;
         int level = levelRange.y == 0 ? levelRange.x : Random.Range(levelRange.x, levelRange.y + 1);
 

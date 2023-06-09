@@ -11,16 +11,21 @@ public class MapAreaEditor : Editor
     {
         base.OnInspectorGUI();
 
-        int totalChance = serializedObject.FindProperty("totalChance").intValue;
+        int totalChanceInGrass = serializedObject.FindProperty("totalChance").intValue;
+        int totalChanceInWater = serializedObject.FindProperty("totalChanceInWater").intValue;
 
-        var style = new GUIStyle();
-        style.fontStyle = FontStyle.Bold;
+        //var style = new GUIStyle();
+        //style.fontStyle = FontStyle.Bold;
 
-        GUILayout.Label($"Total Chance = {totalChance}", style);
+        //GUILayout.Label($"Total Chance = {totalChanceInGrass}", style);
 
-        if (totalChance != 100)
+        if (totalChanceInGrass != 100 && totalChanceInGrass != -1)
         {
-            EditorGUILayout.HelpBox("The total chance percentage is not 100%", MessageType.Error);
+            EditorGUILayout.HelpBox($"The total chance percentage in grass is {totalChanceInGrass}%, not 100%", MessageType.Error);
+        }
+        if (totalChanceInWater != 100 && totalChanceInWater != -1)
+        {
+            EditorGUILayout.HelpBox($"The total chance percentage in water is {totalChanceInWater}%, not 100%", MessageType.Error);
         }
     }
 }
