@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour, ISavable
         var interactPos = transform.position + facingDir;
 
         //Debug.DrawLine(transform.position, interactPos, Color.red, 0.5f);
-        Collider2D collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.instance.InteractableLayer);
+        Collider2D collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.instance.InteractableLayer | GameLayers.instance.WaterLayer);
         if (collider != null)
         {
             yield return collider.GetComponent<InteractableObject>()?.Interact(transform);

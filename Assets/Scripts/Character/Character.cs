@@ -51,6 +51,11 @@ public class Character : MonoBehaviour
 
         if (!IsPathClear(targetPos)) { yield break; }
 
+        if (animator.IsSurfing && Physics2D.OverlapCircle(targetPos, 0.3f, GameLayers.instance.WaterLayer) == null)
+        {
+            animator.IsSurfing = false;
+        }
+
         IsMoving = true;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
@@ -72,8 +77,13 @@ public class Character : MonoBehaviour
     {
         var diff = targetPos - transform.position;
         var direction = diff.normalized;
+        var collisionLayer = GameLayers.instance.ObjectMask | GameLayers.instance.InteractableLayer | GameLayers.instance.PlayerLayer;
+        if (!animator.IsSurfing)
+        {
+            collisionLayer |= GameLayers.instance.WaterLayer;
+        }
         if (Physics2D.BoxCast(transform.position + direction, new Vector2(0.2f, 0.2f), 0f, direction, diff.magnitude - 1, 
-            GameLayers.instance.ObjectMask | GameLayers.instance.InteractableLayer | GameLayers.instance.PlayerLayer))
+            collisionLayer))
         {
             return false;
         }

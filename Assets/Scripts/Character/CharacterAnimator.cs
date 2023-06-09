@@ -10,6 +10,8 @@ public class CharacterAnimator : MonoBehaviour
     public bool IsMoving { get; set; }
     public bool IsJumping { get; set; }
 
+    public bool IsSurfing { get; set; }
+
     [SerializeField] private List<Sprite> walkDownSprites;
     [SerializeField] private List<Sprite> walkUpSprites;
     [SerializeField] private List<Sprite> walkLeftSprites;
