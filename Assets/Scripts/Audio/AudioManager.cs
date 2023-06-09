@@ -12,7 +12,16 @@ public enum SFX
     FAINTED,
     BALL_OUT,
     ESCAPE,
-    THROW_BALL
+    THROW_BALL,
+    JUMP,
+    EXP_UP,
+    GO_OUT,
+    LEVEL_UP,
+    NO,
+    OPEN_DOOR,
+    SURPRISE,
+    TRUCK,
+    TRUCK_END
 }
 
 public enum BGM
@@ -24,6 +33,12 @@ public enum BGM
     VICTORY_TRAINER,
     BATTLE_TRAINER,
     XUMENG_FOREST,
+    LEVEL_UP,
+    OBTAIN_TM,
+    OBTAIN_ITEM,
+    OBTAIN_BERRY,
+    ENTRY_CALL,
+    POKEMON_HEAL,
     NONE
 }
 

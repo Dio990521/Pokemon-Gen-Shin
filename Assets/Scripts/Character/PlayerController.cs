@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, ISavable
         Collider2D collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.instance.InteractableLayer | GameLayers.instance.WaterLayer);
         if (collider != null)
         {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
             yield return collider.GetComponent<InteractableObject>()?.Interact(transform);
         }
     }

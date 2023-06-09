@@ -68,6 +68,7 @@ public class ShopUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
             onItemSelected?.Invoke(availableItems[selectedItem]);
         }
         else if (Input.GetKeyDown(KeyCode.X))

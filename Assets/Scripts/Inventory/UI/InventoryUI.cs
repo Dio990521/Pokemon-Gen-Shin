@@ -124,6 +124,7 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                AudioManager.instance.PlaySE(SFX.CONFIRM);
                 StartCoroutine(ItemSelected());
             }
             else if (Input.GetKeyDown(KeyCode.X))

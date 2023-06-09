@@ -12,6 +12,7 @@ public class Ledge : MonoBehaviour
     {
         if (moveDir.x == xDir && moveDir.y == yDir)
         {
+            AudioManager.instance.PlaySE(SFX.JUMP);
             StartCoroutine(Jump(character));
             return true;
         }

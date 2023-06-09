@@ -26,6 +26,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenMenu()
     {
+        AudioManager.instance.PlaySE(SFX.CONFIRM);
         menu.SetActive(true);
         menuCursor.gameObject.SetActive(true);
     }
@@ -61,7 +62,7 @@ public class MenuController : MonoBehaviour
             CloseMenu();
             OnMenuSelected?.Invoke(selectedItem);
         }
-        else  if (Input.GetKeyDown(KeyCode.X))
+        else if (Input.GetKeyDown(KeyCode.X))
         {
             CloseMenu();
             OnBack?.Invoke();

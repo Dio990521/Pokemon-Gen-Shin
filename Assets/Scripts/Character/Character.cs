@@ -107,6 +107,11 @@ public class Character : MonoBehaviour
         return collider?.GetComponent<Ledge>();
     }
 
+    private void CheckForDoor(Vector3 targetPos)
+    {
+        var collider = Physics2D.OverlapCircle(targetPos, 0.15f, GameLayers.instance.DoorLayer);
+    }
+
     public void LookTowards(Vector3 targetPos)
     {
         var xDiff = Mathf.Floor(targetPos.x) - Mathf.Floor(transform.position.x);

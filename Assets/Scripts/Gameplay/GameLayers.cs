@@ -13,6 +13,7 @@ public class GameLayers : MonoBehaviour
     [SerializeField] private LayerMask triggerLayer;
     [SerializeField] private LayerMask ledgeLayer;
     [SerializeField] private LayerMask waterLayer;
+    [SerializeField] private LayerMask doorLayer;
 
     public static GameLayers instance {  get; private set; }
 
@@ -54,6 +55,8 @@ public class GameLayers : MonoBehaviour
     public LayerMask LedgeLayer => ledgeLayer;
 
     public LayerMask WaterLayer => waterLayer;
+
+    public LayerMask DoorLayer => doorLayer;
 
     public LayerMask TriggerableLayers
     {

@@ -57,6 +57,7 @@ public class ChoiceBox : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
             choiceSelected = true;
         }
     }

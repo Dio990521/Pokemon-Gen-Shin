@@ -67,6 +67,7 @@ public class CountSelectorUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
             selected = true;
         }
     }

@@ -31,6 +31,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
     private IEnumerator Teleport()
     {
         GameManager.Instance.PauseGame(true);
+        AudioManager.instance.PlaySE(SFX.GO_OUT);
         yield return fader.FadeIn(0.5f);
 
 
