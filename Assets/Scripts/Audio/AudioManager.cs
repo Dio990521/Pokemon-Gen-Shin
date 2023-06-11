@@ -39,6 +39,8 @@ public enum BGM
     OBTAIN_BERRY,
     ENTRY_CALL,
     POKEMON_HEAL,
+    MIDE_BEACH,
+    TIWATE,
     NONE
 }
 

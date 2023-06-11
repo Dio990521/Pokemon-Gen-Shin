@@ -8,7 +8,7 @@ public class SceneDetails : MonoBehaviour
 {
 
     [SerializeField] private List<SceneDetails> connectedScenes;
-    [SerializeField] private BGM sceneMusic;
+    [SerializeField] private BGM sceneMusic = BGM.NONE;
 
     public BGM SceneMusic => sceneMusic;
 
