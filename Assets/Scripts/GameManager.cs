@@ -97,6 +97,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartCutsceneState()
+    {
+        state = GameState.Cutscene;
+    }
+
+    public void StartFreeRoamState()
+    {
+        state = GameState.FreeRoam;
+    }
+
     public void StartBattle(BattleTrigger trigger)
     {
         AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
@@ -169,6 +179,10 @@ public class GameManager : MonoBehaviour
                 menuController.OpenMenu();
                 State = GameState.Menu;
             }
+        }
+        else if (State == GameState.Cutscene)
+        {
+            playerController.Character.HandleUpdate();
         }
         else if (State == GameState.Battle)
         {

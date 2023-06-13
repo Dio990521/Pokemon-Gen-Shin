@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour, ISavable
     [SerializeField] private Sprite sprite;
     [SerializeField] private string playerName;
 
+    public static PlayerController i { get; private set; }
+
+
     public string PlayerName
     {
         get => playerName;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private void Awake()
     {
+        i = this;
         character = GetComponent<Character>();
     }
 

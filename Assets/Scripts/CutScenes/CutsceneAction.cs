@@ -6,6 +6,14 @@ using UnityEngine;
 public class CutsceneAction
 {
     [SerializeField] private string actionName;
+    [SerializeField] private bool waitForCompletion = true;
+
+    public bool WaitForCompletion => waitForCompletion;
+
+    public virtual IEnumerator Play()
+    {
+        yield break;
+    }
 
     public string ActionName { get; set; }
 }
