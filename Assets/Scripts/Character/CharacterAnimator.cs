@@ -90,6 +90,8 @@ public class CharacterAnimator : MonoBehaviour
 
     public void SetFacingDirection(FacingDirection dir)
     {
+        MoveX = 0;
+        MoveY = 0;
         if (dir == FacingDirection.Right)
         {
             MoveX = 1;
