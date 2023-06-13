@@ -157,6 +157,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
+      propertyPath: m_Size.x
+      value: 64.720764
+      objectReference: {fileID: 0}
+    - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
+      propertyPath: m_Size.y
+      value: 62.41751
+      objectReference: {fileID: 0}
+    - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.46933746
+      objectReference: {fileID: 0}
+    - target: {fileID: 830788832347591948, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
+      propertyPath: m_Offset.y
+      value: 97.53107
+      objectReference: {fileID: 0}
     - target: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
       propertyPath: sceneMusic
       value: 14
@@ -8550,12 +8566,16 @@ PrefabInstance:
       objectReference: {fileID: 1125071401}
     - target: {fileID: 4671520594395104573, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: musicClips.Array.size
-      value: 14
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4671520594395104573, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: musicClips.Array.data[6]
       value: 
       objectReference: {fileID: 8300000, guid: 536aef941e714b344ba220dbcc1a2307, type: 3}
+    - target: {fileID: 4671520594395104573, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: musicClips.Array.data[14]
+      value: 
+      objectReference: {fileID: 8300000, guid: 87a48427d7570994b8d79c86eb67a492, type: 3}
     - target: {fileID: 4671520594911518422, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
       value: 1

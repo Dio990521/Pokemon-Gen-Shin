@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     public float moveSpeed;
     private CharacterAnimator animator;
 
-    public bool IsMoving {  get; private set; }
+    public bool IsMoving {  get; set; }
 
     public float OffsetY { get; private set; } = 0.15f;
 
