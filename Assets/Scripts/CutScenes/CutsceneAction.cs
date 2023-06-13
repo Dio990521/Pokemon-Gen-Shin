@@ -15,5 +15,6 @@ public class CutsceneAction
         yield break;
     }
 
-    public string ActionName { get; set; }
+    public string ActionName { get { return actionName; } set { actionName = value; } }
+
 }

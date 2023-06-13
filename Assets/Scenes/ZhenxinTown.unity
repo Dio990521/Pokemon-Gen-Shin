@@ -20800,42 +20800,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dfaf2c33424ff1458d2bb500f777e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions:
-  - rid: 8385139855007416326
-  - rid: 8385139855007416327
-  - rid: 8385139855007416328
+  actions: []
   references:
     version: 2
-    RefIds:
-    - rid: 8385139855007416326
-      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
-      data:
-        actionName: 
-        waitForCompletion: 1
-        actor:
-          isPlayer: 0
-          character: {fileID: 2050385419}
-        movePatterns:
-        - {x: 2, y: 0}
-        - {x: 0, y: -2}
-    - rid: 8385139855007416327
-      type: {class: DialogueAction, ns: , asm: Assembly-CSharp}
-      data:
-        actionName: 
-        waitForCompletion: 1
-        dialogue:
-          lines:
-          - "\u6211\u8349\uFF0C\u50BB\u903C\uFF1F"
-    - rid: 8385139855007416328
-      type: {class: MoveActorAction, ns: , asm: Assembly-CSharp}
-      data:
-        actionName: 
-        waitForCompletion: 1
-        actor:
-          isPlayer: 1
-          character: {fileID: 0}
-        movePatterns:
-        - {x: 5, y: 0}
+    RefIds: []
 --- !u!61 &1243418199
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -23452,17 +23420,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 2043254562793657493, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
---- !u!114 &2050385419 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3192666759394679998, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
-  m_PrefabInstance: {fileID: 2050385418}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19cadab34514bd441a7178a6328c9313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2096731128
 PrefabInstance:
   m_ObjectHideFlags: 0
