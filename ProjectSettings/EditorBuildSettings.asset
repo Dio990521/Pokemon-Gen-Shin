@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tiwate.unity
     guid: 8cf77730a92dd994db76cf85f15da222
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert.unity
+    guid: f70801cc101fbb54084554565004a6a5
+  - enabled: 1
+    path: Assets/Scenes/NataMountain.unity
+    guid: ac75a19e0c099ac4cb3e3ad9c4c36b02
   m_configObjects: {}

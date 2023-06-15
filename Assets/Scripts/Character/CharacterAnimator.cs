@@ -112,4 +112,4 @@ public class CharacterAnimator : MonoBehaviour
 
 }
 
-public enum FacingDirection { Left, Right, Up, Down }
+public enum FacingDirection { Left, Right, Up, Down, None }

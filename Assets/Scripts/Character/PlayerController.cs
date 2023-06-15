@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     IPlayerTriggerable currentlyInTrigger;
 
-    private void OnMoveOver()
+    public void OnMoveOver()
     {
         var colliders = Physics2D.OverlapCircleAll(transform.position, character.OffsetY, GameLayers.instance.TriggerableLayers);
         IPlayerTriggerable triggerable = null;

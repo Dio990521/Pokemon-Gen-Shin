@@ -20,7 +20,7 @@ public class SceneDetails : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            LoadScene();
+            StartCoroutine(LoadScene());
             GameManager.Instance.SetCurrentScene(this);
 
             if (sceneMusic != BGM.NONE)
@@ -31,7 +31,7 @@ public class SceneDetails : MonoBehaviour
             // Load all connected scenes
             foreach (var scene in connectedScenes)
             {
-                scene.LoadScene();
+                StartCoroutine(scene.LoadScene());
             }
 
             // Unload the scenes that are no longer connected
@@ -57,7 +57,7 @@ public class SceneDetails : MonoBehaviour
         }
     }
 
-    public void LoadScene()
+    public IEnumerator LoadScene()
     {
         if (!IsLoaded)
         {
@@ -71,6 +71,7 @@ public class SceneDetails : MonoBehaviour
             };
 
         }
+        yield return null;
     }
 
     public void UnloadScene()

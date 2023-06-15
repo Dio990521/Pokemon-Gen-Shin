@@ -39,7 +39,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
         player.Character.SetPositionAndSnapToTile(destPortal.spawnPoint.position);
 
         yield return fader.FadeOut(0.5f);
-        GameManager.Instance.PauseGame(false);
+        GameManager.Instance.StartFreeRoamState();
 
     }
 }

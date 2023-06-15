@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
 public class Cutscene : MonoBehaviour, IPlayerTriggerable
 {
     [SerializeReference]
     [SerializeField] private List<CutsceneAction> actions;
+
+    [SerializeField] private FacingDirection direction = FacingDirection.None;
 
     public bool TriggerRepeatedly => false;
 
@@ -39,7 +42,12 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
-        player.Character.IsMoving = false;
-        StartCoroutine(Play());
+        if (direction == FacingDirection.None || 
+            player.Character.GetCharacterDirection() == direction)
+        {
+            player.Character.IsMoving = false;
+            StartCoroutine(Play());
+        }
+        
     }
 }

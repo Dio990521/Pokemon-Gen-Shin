@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Application.backgroundLoadingPriority = ThreadPriority.Low;
         ConditionsDB.Init();
         PokemonDB.Init();
         MoveDB.Init();

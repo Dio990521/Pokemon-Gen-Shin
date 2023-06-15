@@ -24,6 +24,28 @@ public class Character : MonoBehaviour
         SetPositionAndSnapToTile(transform.position);
     }
 
+    public FacingDirection GetCharacterDirection()
+    {
+        float moveX = animator.MoveX;
+        float moveY = animator.MoveY;
+
+        if (moveX == 1 && moveY == 0)
+        {
+            return FacingDirection.Right;
+        }
+        else if (moveX == -1 && moveY == 0)
+        {
+            return FacingDirection.Left;
+        }
+        else if (moveX == 0 && moveY == 1)
+        {
+            return FacingDirection.Up;
+        }
+
+        return FacingDirection.Down;
+
+    }
+
     public void SetPositionAndSnapToTile(Vector2 pos)
     {
         pos.x = Mathf.Floor(pos.x) + 0.5f;

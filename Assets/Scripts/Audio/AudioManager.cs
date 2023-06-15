@@ -41,6 +41,8 @@ public enum BGM
     POKEMON_HEAL,
     MIDE_BEACH,
     TIWATE,
+    LIDAO_DESERT,
+    NATA_MOUNTAIN,
     NONE
 }
 
