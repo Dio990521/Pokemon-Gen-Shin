@@ -23,13 +23,13 @@ public class Door : MonoBehaviour
                 var player = collision.GetComponent<PlayerController>();
                 if (Input.GetKey(KeyCode.UpArrow))
                 {
-                    StartCoroutine(OpenDoor(player));
+                    StartCoroutine(PlayDoorAnimation(player));
                 }
             }
         }
     }
 
-    private IEnumerator OpenDoor(PlayerController player)
+    public IEnumerator PlayDoorAnimation(PlayerController player)
     {
         player.Character.IsMoving = false;
         player.Character.Animator.SetFacingDirection(FacingDirection.Up);

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class LocationPortal : MonoBehaviour, IPlayerTriggerable
 {
     [SerializeField] private Transform spawnPoint;
+    [SerializeField] private FacingDirection spawnDir;
     [SerializeField] private DestinationIdentifier destinationIdentifier;
 
     public Transform SpawnPoint => spawnPoint;
@@ -37,6 +38,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
 
         var destPortal = FindObjectsOfType<LocationPortal>().First(x => x != this && x.destinationIdentifier == this.destinationIdentifier);
         player.Character.SetPositionAndSnapToTile(destPortal.spawnPoint.position);
+        player.Character.Animator.SetFacingDirection(spawnDir);
 
         yield return fader.FadeOut(0.5f);
         GameManager.Instance.StartFreeRoamState();
