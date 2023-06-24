@@ -70,7 +70,6 @@ public class CharacterAnimator : MonoBehaviour
         {
             currentAnim.Start();
         }
-
         if (IsJumping)
         {
             spriteRenderer.sprite = currentAnim.Frames[0];

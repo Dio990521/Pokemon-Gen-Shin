@@ -31,13 +31,13 @@ public class Door : MonoBehaviour
 
     public IEnumerator PlayDoorAnimation(PlayerController player)
     {
-        player.Character.IsMoving = false;
         player.Character.Animator.SetFacingDirection(FacingDirection.Up);
         AudioManager.instance.PlaySE(SFX.OPEN_DOOR);
         GameManager.Instance.PauseGame(true);
         opened = true;
         animator.SetBool("isOpen", true);
         yield return new WaitForSeconds(0.5f);
+        player.Character.Animator.IsMoving = true;
         yield return player.Character.Move(new Vector2(0, 1), player.OnMoveOver, false);
         yield return new WaitForSeconds(0.5f);
         animator.SetBool("isOpen", false);

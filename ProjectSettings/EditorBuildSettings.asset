@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/GamePlay.unity
+    guid: 5e7dc8713e1c08d4eb507a8a16b41b69
+  - enabled: 1
     path: Assets/Scenes/ZhenxinTown/ZhenxinTown.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -18,18 +21,42 @@ EditorBuildSettings:
     path: Assets/Scenes/ZhenxinTown/ZhenxinTownRoom3.unity
     guid: a25543ceed53caf439e9b192f16cca4a
   - enabled: 1
-    path: Assets/Scenes/XumengForest.unity
-    guid: 63cf959ae7d20b34288758363492f87b
+    path: Assets/Scenes/XumengForest/XumengForestE.unity
+    guid: 022f7339fc23fd0488ea53b2300c9a28
   - enabled: 1
-    path: Assets/Scenes/MideBeach.unity
-    guid: c369f5f0e9d710b479a40a0111337711
+    path: Assets/Scenes/XumengForest/XumengForestN.unity
+    guid: 56a0433c2ea331e4b8d74de4e131fb08
   - enabled: 1
-    path: Assets/Scenes/Tiwate.unity
-    guid: 8cf77730a92dd994db76cf85f15da222
+    path: Assets/Scenes/XumengForest/XumengForestS.unity
+    guid: e65809e3cd2af2f4095cd445d58b4384
   - enabled: 1
-    path: Assets/Scenes/LidaoDesert.unity
-    guid: f70801cc101fbb54084554565004a6a5
+    path: Assets/Scenes/MideBeach/MideBeachN.unity
+    guid: 45d9569b12ef56346aa56dbcf2f5fed1
   - enabled: 1
-    path: Assets/Scenes/NataMountain.unity
-    guid: ac75a19e0c099ac4cb3e3ad9c4c36b02
+    path: Assets/Scenes/MideBeach/MideBeachS.unity
+    guid: 623c793749ee4b64c9b2abde151dff62
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateE.unity
+    guid: 72a6e91045cd08f44875598adcc45fed
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateM.unity
+    guid: a127027b9f1113949a57bfcf96ba04a6
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateW.unity
+    guid: f2291690413e5d544a3a0bb3de4980ef
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert/LidaoDesertM.unity
+    guid: 12bb73c64e18811429fc5aaccf9c1a35
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert/LidaoDesertN.unity
+    guid: cbdea7f0c81352d4daf50a0e6e710afc
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert/LidaoDesertS.unity
+    guid: 975e2826af77ed545b874f7bbe8eeba1
+  - enabled: 1
+    path: Assets/Scenes/NataMountain/NataMountainS.unity
+    guid: 7085354874367c646992586e4b26b655
+  - enabled: 1
+    path: Assets/Scenes/NataMountain/NataMountainN.unity
+    guid: 0c83b7ff8e9ef0543b5135579dcc7163
   m_configObjects: {}

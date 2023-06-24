@@ -61,8 +61,8 @@ public class SceneDetails : MonoBehaviour
     {
         if (!IsLoaded)
         {
-            var operation = SceneManager.LoadSceneAsync(gameObject.name, LoadSceneMode.Additive);
             IsLoaded = true;
+            var operation = SceneManager.LoadSceneAsync(gameObject.name, LoadSceneMode.Additive);
 
             operation.completed += (AsyncOperation op) =>
             {
@@ -79,7 +79,6 @@ public class SceneDetails : MonoBehaviour
         if (IsLoaded)
         {
             SavingSystem.i.CaptureEntityStates(savableEntities);
-
             SceneManager.UnloadSceneAsync(gameObject.name);
             IsLoaded = false;
         }
