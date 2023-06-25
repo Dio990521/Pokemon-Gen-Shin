@@ -45,6 +45,24 @@ EditorBuildSettings:
     path: Assets/Scenes/Tiwate/TiwateW.unity
     guid: f2291690413e5d544a3a0bb3de4980ef
   - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateRoom1.unity
+    guid: 409887d48184e8c4b8d156232180da0a
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateRoom2.unity
+    guid: 2df0ca61dcc52bd498c1c2ce5616e11d
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateRoom3.unity
+    guid: 2b0e918044434dd4580799c9cca2570f
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateRoom4.unity
+    guid: a6cc9b7eef292b54894e8e47e6c0f011
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwatePokemonCenter.unity
+    guid: f9513bcfc3c13eb409e557c07b19b5eb
+  - enabled: 1
+    path: Assets/Scenes/Tiwate/TiwateShop.unity
+    guid: 86de44fe20e26284286ea2d5e8f03e1f
+  - enabled: 1
     path: Assets/Scenes/LidaoDesert/LidaoDesertM.unity
     guid: 12bb73c64e18811429fc5aaccf9c1a35
   - enabled: 1
@@ -53,6 +71,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LidaoDesert/LidaoDesertS.unity
     guid: 975e2826af77ed545b874f7bbe8eeba1
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert/LidaoRoom1.unity
+    guid: 821616c26d8be464289efcfc96196d83
+  - enabled: 1
+    path: Assets/Scenes/LidaoDesert/LidaoRoom2.unity
+    guid: 3d2fd9859736f744cb2c4dd9577f291e
   - enabled: 1
     path: Assets/Scenes/NataMountain/NataMountainS.unity
     guid: 7085354874367c646992586e4b26b655

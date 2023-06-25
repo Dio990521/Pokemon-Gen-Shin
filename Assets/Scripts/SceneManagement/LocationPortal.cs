@@ -33,14 +33,14 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
     {
         GameManager.Instance.PauseGame(true);
         AudioManager.instance.PlaySE(SFX.GO_OUT);
-        yield return fader.FadeIn(0.5f);
+        yield return fader.FadeIn(0.65f);
 
 
         var destPortal = FindObjectsOfType<LocationPortal>().First(x => x != this && x.destinationIdentifier == this.destinationIdentifier);
         player.Character.SetPositionAndSnapToTile(destPortal.spawnPoint.position);
         player.Character.Animator.SetFacingDirection(spawnDir);
 
-        yield return fader.FadeOut(0.5f);
+        yield return fader.FadeOut(0.65f);
         GameManager.Instance.StartFreeRoamState();
 
     }
