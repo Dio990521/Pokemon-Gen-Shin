@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum ItemCategory { Items, Pokeballs, Tms, Matetials, KeyItems }
+public enum ItemCategory { Items, Pokeballs, Tms, Misc, KeyItems }
 
 public class Inventory : MonoBehaviour, ISavable
 {
     [SerializeField] private List<ItemSlot> itemSlots;
     [SerializeField] private List<ItemSlot> pokeballSlots;
     [SerializeField] private List<ItemSlot> tmSlots;
-    [SerializeField] private List<ItemSlot> materialSlots;
+    [SerializeField] private List<ItemSlot> miscSlots;
     [SerializeField] private List<ItemSlot> keyItemSlots;
 
 
@@ -21,12 +21,12 @@ public class Inventory : MonoBehaviour, ISavable
 
     public static List<string> ItemCategories { get; set; } = new List<string>()
     {
-        "消耗品", "精灵球", "技能学习器", "材料", "重要道具"
+        "消耗品", "精灵球", "技能学习器", "杂物", "重要道具"
     };
 
     private void Awake()
     {
-        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, materialSlots, keyItemSlots };
+        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, miscSlots, keyItemSlots };
     }
 
     public List<ItemSlot> GetSlotsByCategory(int categoryIndex)
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour, ISavable
         }
         else if (item is null) 
         {
-            return ItemCategory.Matetials;
+            return ItemCategory.Misc;
         }
 
         return ItemCategory.KeyItems;
@@ -146,7 +146,7 @@ public class Inventory : MonoBehaviour, ISavable
             items = itemSlots.Select(i => i.GetSaveData()).ToList(),
             pokeballs = pokeballSlots.Select(i => i.GetSaveData()).ToList(),
             tms = tmSlots.Select(i => i.GetSaveData()).ToList(),
-            materials = materialSlots.Select(i => i.GetSaveData()).ToList(),
+            materials = miscSlots.Select(i => i.GetSaveData()).ToList(),
             keyItems = keyItemSlots.Select(i => i.GetSaveData()).ToList(),
         };
 
@@ -160,10 +160,10 @@ public class Inventory : MonoBehaviour, ISavable
         itemSlots = saveData.items.Select(i => new ItemSlot(i)).ToList();
         pokeballSlots = saveData.pokeballs.Select(i => new ItemSlot(i)).ToList();
         tmSlots = saveData.tms.Select(i => new ItemSlot(i)).ToList();
-        materialSlots = saveData.materials.Select(i => new ItemSlot(i)).ToList();
+        miscSlots = saveData.materials.Select(i => new ItemSlot(i)).ToList();
         keyItemSlots = saveData.keyItems.Select(i => new ItemSlot(i)).ToList();
 
-        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, materialSlots, keyItemSlots };
+        allSlots = new List<List<ItemSlot>>() { itemSlots, pokeballSlots, tmSlots, miscSlots, keyItemSlots };
         OnUpdated?.Invoke();
     }
 }

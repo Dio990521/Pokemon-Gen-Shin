@@ -45,23 +45,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Tiwate/TiwateW.unity
     guid: f2291690413e5d544a3a0bb3de4980ef
   - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwateRoom1.unity
-    guid: 409887d48184e8c4b8d156232180da0a
+    path: Assets/Scenes/Tiwate/Gyms.unity
+    guid: becf33f055fc1f14082056a7db86595c
   - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwateRoom2.unity
-    guid: 2df0ca61dcc52bd498c1c2ce5616e11d
+    path: Assets/Scenes/Tiwate/PokemonCenter.unity
+    guid: a788008011c45d44d9c9a29d0201fac8
   - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwateRoom3.unity
-    guid: 2b0e918044434dd4580799c9cca2570f
+    path: Assets/Scenes/Tiwate/Shop.unity
+    guid: 2d23c2447ba5f96409fd4dfcfce72cb2
   - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwateRoom4.unity
-    guid: a6cc9b7eef292b54894e8e47e6c0f011
-  - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwatePokemonCenter.unity
-    guid: f9513bcfc3c13eb409e557c07b19b5eb
-  - enabled: 1
-    path: Assets/Scenes/Tiwate/TiwateShop.unity
-    guid: 86de44fe20e26284286ea2d5e8f03e1f
+    path: Assets/Scenes/Tiwate/TiwateRooms.unity
+    guid: 0dd61500584a75b4ea22bce825e320ef
   - enabled: 1
     path: Assets/Scenes/LidaoDesert/LidaoDesertM.unity
     guid: 12bb73c64e18811429fc5aaccf9c1a35
@@ -83,4 +77,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NataMountain/NataMountainN.unity
     guid: 0c83b7ff8e9ef0543b5135579dcc7163
+  - enabled: 1
+    path: Assets/Scenes/Arena/Arena.unity
+    guid: ffedb0935ffb4c041a5901f167f31498
+  - enabled: 1
+    path: Assets/Scenes/Arena/ArenaLobby.unity
+    guid: c90818021c755c540a9cf9ff10dcba54
   m_configObjects: {}

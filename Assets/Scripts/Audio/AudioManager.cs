@@ -21,7 +21,10 @@ public enum SFX
     OPEN_DOOR,
     SURPRISE,
     TRUCK,
-    TRUCK_END
+    TRUCK_END,
+    SWITCH,
+    CHEST,
+    HEALTH_CENTER_IN
 }
 
 public enum BGM
@@ -43,6 +46,11 @@ public enum BGM
     TIWATE,
     LIDAO_DESERT,
     NATA_MOUNTAIN,
+    GYM,
+    SHOP,
+    LOBBY,
+    ARENA,
+    POKE_CENTER,
     NONE
 }
 

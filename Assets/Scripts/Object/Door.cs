@@ -7,6 +7,7 @@ public class Door : MonoBehaviour
     private Animator animator;
     [SerializeField] private RuntimeAnimatorController controller;
     private bool opened = false;
+    [SerializeField] private bool isAutoDoor = false;
 
     private void Awake()
     {
@@ -32,7 +33,14 @@ public class Door : MonoBehaviour
     public IEnumerator PlayDoorAnimation(PlayerController player)
     {
         player.Character.Animator.SetFacingDirection(FacingDirection.Up);
-        AudioManager.instance.PlaySE(SFX.OPEN_DOOR);
+        if (isAutoDoor)
+        {
+            AudioManager.instance.PlaySE(SFX.HEALTH_CENTER_IN);
+        }
+        else
+        {
+            AudioManager.instance.PlaySE(SFX.OPEN_DOOR);
+        }
         GameManager.Instance.PauseGame(true);
         opened = true;
         animator.SetBool("isOpen", true);
