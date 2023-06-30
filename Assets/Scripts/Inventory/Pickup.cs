@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour, InteractableObject, ISavable
 {
+    [Header("ItemChest")]
     [SerializeField] private ItemBase item;
     [SerializeField] private List<Sprite> animatedSprites;
+    [SerializeField] private int itemAmt = 1;
+
+    [Header("MoneyChest")]
+    [SerializeField] private bool isMoney = false;
+    [SerializeField] private int moneyAmt;
     private SpriteRenderer spriteRenderer;
 
     public bool Used { get; set; } = false;
@@ -19,29 +25,41 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     {
         if (!Used)
         {
-            initiator.GetComponent<Inventory>().AddItem(item);
             Used = true;
-
-            if (animatedSprites.Count == 0)
+            yield return PlayChestAnimation();
+            if (isMoney)
             {
-                spriteRenderer.enabled = false;
-                GetComponent<BoxCollider2D>().enabled = false;
+                Wallet.i.AddMoney(moneyAmt);
+                yield return DialogueManager.Instance.ShowDialogueText($"你获得了{moneyAmt}摩拉！");
             }
             else
             {
-                AudioManager.instance.PlaySE(SFX.CHEST);
-                int curFrame = 0;
-                while (curFrame < animatedSprites.Count)
-                {
-                    spriteRenderer.sprite = animatedSprites[curFrame];
-                    curFrame++;
-                    yield return new WaitForSeconds(0.1f);
-                }
+                initiator.GetComponent<Inventory>().AddItem(item, itemAmt);
+                yield return DialogueManager.Instance.ShowDialogueText($"你找到了{itemAmt}个{item.ItemName}！");
             }
-
-            yield return DialogueManager.Instance.ShowDialogueText($"你找到了{item.ItemName}！");
+            
         }
         
+    }
+
+    private IEnumerator PlayChestAnimation()
+    {
+        if (animatedSprites.Count == 0)
+        {
+            spriteRenderer.enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+        else
+        {
+            AudioManager.instance.PlaySE(SFX.CHEST);
+            int curFrame = 0;
+            while (curFrame < animatedSprites.Count)
+            {
+                spriteRenderer.sprite = animatedSprites[curFrame];
+                curFrame++;
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
     }
 
     public object CaptureState()

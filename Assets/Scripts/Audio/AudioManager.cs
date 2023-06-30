@@ -24,7 +24,13 @@ public enum SFX
     TRUCK_END,
     SWITCH,
     CHEST,
-    HEALTH_CENTER_IN
+    HEALTH_CENTER_IN,
+    LEVEL_UP2,
+    OBTAIN_TM,
+    OBTAIN_ITEM,
+    OBTAIN_BERRY,
+    ENTRY_CALL,
+    POKEMON_HEAL
 }
 
 public enum BGM
@@ -36,12 +42,6 @@ public enum BGM
     VICTORY_TRAINER,
     BATTLE_TRAINER,
     XUMENG_FOREST,
-    LEVEL_UP,
-    OBTAIN_TM,
-    OBTAIN_ITEM,
-    OBTAIN_BERRY,
-    ENTRY_CALL,
-    POKEMON_HEAL,
     MIDE_BEACH,
     TIWATE,
     LIDAO_DESERT,
@@ -114,7 +114,7 @@ public class AudioManager : MonoBehaviour
         if (pauseMusic)
         {
             musicPlayer.Pause();
-            StartCoroutine(UnPauseMusic(clip.length));
+            StartCoroutine(UnPauseMusic(clip.length * 0.7f));
         }
         sfxPlayer.pitch = 1f;
         
@@ -133,7 +133,7 @@ public class AudioManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         musicPlayer.volume = 0;
         musicPlayer.UnPause();
-        musicPlayer.DOFade(originalMusicVol, fadeDuration);
+        musicPlayer.DOFade(originalMusicVol, fadeDuration);  
     }
 
     private IEnumerator PlayerMusicAsync(BGM id, bool loop, bool fade)

@@ -60,6 +60,7 @@ public class Inventory : MonoBehaviour, ISavable
 
     public void AddItem(ItemBase item, int count=1)
     {
+        AudioManager.instance.PlaySE(SFX.OBTAIN_ITEM, true);
         int category = (int)GetCategoryFromItem(item);
         var currentSlots = GetSlotsByCategory(category);
 
