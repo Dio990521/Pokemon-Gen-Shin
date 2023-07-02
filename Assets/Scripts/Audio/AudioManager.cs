@@ -51,6 +51,7 @@ public enum BGM
     LOBBY,
     ARENA,
     POKE_CENTER,
+    LAB,
     NONE
 }
 
@@ -114,7 +115,7 @@ public class AudioManager : MonoBehaviour
         if (pauseMusic)
         {
             musicPlayer.Pause();
-            StartCoroutine(UnPauseMusic(clip.length * 0.7f));
+            StartCoroutine(UnPauseMusic(clip.length * 0.75f));
         }
         sfxPlayer.pitch = 1f;
         

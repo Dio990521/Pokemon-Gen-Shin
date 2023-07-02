@@ -64,11 +64,11 @@ public class Inventory : MonoBehaviour, ISavable
         int category = (int)GetCategoryFromItem(item);
         if (category == (int)ItemCategory.Tms)
         {
-            AudioManager.instance.PlaySE(SFX.OBTAIN_ITEM, true);
+            AudioManager.instance.PlaySE(SFX.OBTAIN_TM, true);
         }
         else
         {
-            AudioManager.instance.PlaySE(SFX.OBTAIN_TM, true);
+            AudioManager.instance.PlaySE(SFX.OBTAIN_ITEM, true);
         }
 
         var currentSlots = GetSlotsByCategory(category);

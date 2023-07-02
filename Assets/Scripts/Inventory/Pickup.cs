@@ -55,8 +55,7 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
             int curFrame = 0;
             while (curFrame < animatedSprites.Count)
             {
-                spriteRenderer.sprite = animatedSprites[curFrame];
-                curFrame++;
+                spriteRenderer.sprite = animatedSprites[curFrame++];
                 yield return new WaitForSeconds(0.1f);
             }
         }
