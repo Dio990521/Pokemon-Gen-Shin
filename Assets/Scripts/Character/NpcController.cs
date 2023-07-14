@@ -119,8 +119,11 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
                 
             }
         }
-
-        character.HandleUpdate();
+        if (character != null)
+        {
+            character.HandleUpdate();
+        }
+        
     }
 
     private IEnumerator Walk()

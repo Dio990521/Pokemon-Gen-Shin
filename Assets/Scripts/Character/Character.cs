@@ -11,7 +11,7 @@ public class Character : MonoBehaviour
 
     public bool IsMoving {  get; set; }
 
-    public float OffsetY { get; private set; } = 0.15f;
+    public float OffsetY = 0.15f;
 
     public CharacterAnimator Animator
     {
