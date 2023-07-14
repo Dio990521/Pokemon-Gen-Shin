@@ -925,9 +925,6 @@ public class BattleSystem : MonoBehaviour
 
         switch (pokeballItem.BallType)
         {
-            case PokeballType.Repeat: 
-                // TODO
-                return 1;
             case PokeballType.Master: 
                 return 4;
             case PokeballType.Beast:
@@ -936,20 +933,12 @@ public class BattleSystem : MonoBehaviour
             case PokeballType.FiveFive:
                 int prob = UnityEngine.Random.Range(0, 100);
                 return prob >= 50 ? 4 : 1;
-            case PokeballType.Timer:
-                // TODO
-                return 2;
-            case PokeballType.Luxury:
-                // TODO
-                break;
             case PokeballType.Random:
                 // TODO
                 return 2;
             case PokeballType.Iron:
                 // TODO
                 return 2;
-            case PokeballType.Premier: 
-                break;
 
         }
 

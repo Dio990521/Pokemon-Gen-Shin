@@ -25,10 +25,6 @@ public class PokeballItem : ItemBase
 public enum PokeballType
 {
     None,
-    Repeat,
-    Premier,
-    Timer,
-    Luxury,
     Random,
     Iron,
     FiveFive,
