@@ -11,8 +11,13 @@ public class PlayerController : MonoBehaviour, ISavable
     [SerializeField] private Sprite sprite;
     [SerializeField] private string playerName;
 
-    public static PlayerController i { get; private set; }
+    [SerializeField] private float _interactRadius;
+    [SerializeField] private Vector3 _interactStepOffset;
 
+    private Vector3 _interactPos;
+    private Vector3 _faceDir;
+
+    public static PlayerController i { get; private set; }
 
     public string PlayerName
     {
@@ -33,6 +38,14 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         i = this;
         character = GetComponent<Character>();
+        _interactPos = transform.position + _faceDir;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position + _interactStepOffset, _interactRadius);
+        Gizmos.DrawWireSphere(_interactPos, _interactRadius);
     }
 
     // Handle player movement
@@ -63,15 +76,19 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private IEnumerator Interact()
     {
-        var facingDir = new Vector3(character.Animator.MoveX, character.Animator.MoveY);
-        var interactPos = transform.position + facingDir;
-
-        //Debug.DrawLine(transform.position, interactPos, Color.red, 0.5f);
-        Collider2D collider = Physics2D.OverlapCircle(interactPos, 0.3f, GameLayers.instance.InteractableLayer | GameLayers.instance.WaterLayer);
-        if (collider != null)
+        _faceDir = new Vector3(character.Animator.MoveX, character.Animator.MoveY);
+        _interactPos = transform.position + _faceDir;
+        Collider2D colliderFront = Physics2D.OverlapCircle(_interactPos, _interactRadius, GameLayers.instance.InteractableLayer | GameLayers.instance.WaterLayer);
+        Collider2D colliderStep = Physics2D.OverlapCircle(transform.position + _interactStepOffset, _interactRadius, GameLayers.instance.StepInteractableLayer | GameLayers.instance.WaterLayer);
+        if (colliderFront != null)
         {
             AudioManager.instance.PlaySE(SFX.CONFIRM);
-            yield return collider.GetComponent<InteractableObject>()?.Interact(transform);
+            yield return colliderFront.GetComponent<InteractableObject>()?.Interact(transform);
+        }
+        else if (colliderStep != null)
+        {
+            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            yield return colliderStep.GetComponent<InteractableObject>()?.Interact(transform);
         }
     }
 

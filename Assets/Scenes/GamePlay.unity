@@ -11929,6 +11929,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520595028268062, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: stepInteractableLayer.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
     - target: {fileID: 4811579567448002839, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

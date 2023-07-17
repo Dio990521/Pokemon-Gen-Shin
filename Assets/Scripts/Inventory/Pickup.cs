@@ -27,6 +27,10 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
         {
             Used = true;
             yield return PlayChestAnimation();
+            if (initiator.gameObject.layer == GameLayers.instance.StepInteractableLayer)
+            {
+                yield return DialogueManager.Instance.ShowDialogueText("感觉踩到了什么东西。");
+            }
             if (isMoney)
             {
                 Wallet.i.AddMoney(moneyAmt);
