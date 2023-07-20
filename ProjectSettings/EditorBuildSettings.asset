@@ -83,4 +83,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arena/ArenaLobby.unity
     guid: c90818021c755c540a9cf9ff10dcba54
+  - enabled: 1
+    path: Assets/Scenes/End.unity
+    guid: f9af2f557cc08b8418fdf3172cbb33b2
+  - enabled: 1
+    path: Assets/Scenes/Title.unity
+    guid: 71a0f4a75ea314241b2416a2c8d938d9
   m_configObjects: {}

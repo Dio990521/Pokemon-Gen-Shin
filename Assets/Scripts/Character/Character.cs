@@ -53,7 +53,7 @@ public class Character : MonoBehaviour
         transform.position = pos;
     }
 
-    public IEnumerator Move(Vector2 moveVec, Action OnMoveOver = null, bool checkCollisions=true)
+    public IEnumerator Move(Vector2 moveVec, Action OnMoveOver = null, bool checkCollisions=true, bool isRunning=false)
     {
        
         animator.MoveX = Mathf.Clamp(moveVec.x, -1f, 1f);
@@ -84,7 +84,8 @@ public class Character : MonoBehaviour
         IsMoving = true;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * moveSpeed);
+            var curSpeed = isRunning ? moveSpeed * 1.5f : moveSpeed;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * curSpeed);
             yield return null;
         }
         transform.position = targetPos;

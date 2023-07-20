@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private Vector3 _interactPos;
     private Vector3 _faceDir;
+    private bool _isRunning;
 
     public static PlayerController i { get; private set; }
 
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         if (!character.IsMoving)
         {
+            _isRunning = Input.GetKey(KeyCode.X);
             
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
             if (input != Vector2.zero)
             {
-                StartCoroutine(character.Move(input, OnMoveOver));
+                StartCoroutine(character.Move(input, OnMoveOver, isRunning: _isRunning));
             }
         }
 

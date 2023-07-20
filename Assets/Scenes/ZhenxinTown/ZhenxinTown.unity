@@ -18776,8 +18776,28 @@ PrefabInstance:
       value: NPC17
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: movementPattern.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: "\u8BF4\u8D77\u6765\u4F60\u53EF\u80FD\u4E0D\u4FE1\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogue.lines.Array.data[1]
+      value: "\u4F5C\u4E3A\u4E00\u4E2ANPC\uFF0C\u6211\u539F\u6765\u7684\u6D3B\u52A8\u533A\u57DF\u4E0D\u5728\u672A\u767D\u9547\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogue.lines.Array.data[2]
+      value: "\u4E0D\u77E5\u9053\u4ECE\u4EC0\u4E48\u65F6\u5019\u5F00\u59CB\u6211\u5C31\u51FA\u73B0\u5728\u4E86\u8FD9\u91CC\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogue.lines.Array.data[3]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: movementPattern.Array.data[0].x
@@ -19036,6 +19056,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door2
       objectReference: {fileID: 0}
+    - target: {fileID: 5999895500399682322, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
+      propertyPath: m_Size.y
+      value: 0.568418
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999895500399682322, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.96920896
+      objectReference: {fileID: 0}
     - target: {fileID: 5999895500399682413, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
       propertyPath: controller
       value: 
@@ -19267,6 +19295,14 @@ PrefabInstance:
     - target: {fileID: 5999895500399682321, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999895500399682322, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5132232
+      objectReference: {fileID: 0}
+    - target: {fileID: 5999895500399682322, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.9416115
       objectReference: {fileID: 0}
     - target: {fileID: 5999895500399682413, guid: 9b14399768e5da345837db97134ba8a4, type: 3}
       propertyPath: controller
@@ -20161,8 +20197,24 @@ PrefabInstance:
       value: NPC14
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
       propertyPath: movementPattern.Array.size
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: "\u6211\u5728\u672A\u767D\u9547\u5DF2\u7ECF\u751F\u6D3B\u4E86\u51E0\u5341\u5E74\u4E86\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
+      propertyPath: dialogue.lines.Array.data[1]
+      value: "\u603B\u611F\u89C9\u73B0\u5728\u5468\u56F4\u7684\u73AF\u5883\u8DDF\u4EE5\u524D\u4E0D\u592A\u4E00\u6837\u4E86\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
+      propertyPath: dialogue.lines.Array.data[2]
+      value: "\u4E5F\u8BB8\u662F\u6211\u5E74\u7EAA\u592A\u5927\u4E86\u5427..."
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: cb22375f69544e74c90eb83537ec68d8, type: 3}
       propertyPath: movementPattern.Array.data[0].x
