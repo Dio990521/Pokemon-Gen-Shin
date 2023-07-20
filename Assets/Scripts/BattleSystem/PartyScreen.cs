@@ -81,7 +81,7 @@ public class PartyScreen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             onSelected?.Invoke();
         }
         else if (Input.GetKeyDown(KeyCode.X))

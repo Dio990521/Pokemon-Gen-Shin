@@ -14,7 +14,6 @@ public class Inventory : MonoBehaviour, ISavable
     [SerializeField] private List<ItemSlot> miscSlots;
     [SerializeField] private List<ItemSlot> keyItemSlots;
 
-
     private List<List<ItemSlot>> allSlots;
 
     public event Action OnUpdated;
@@ -33,10 +32,10 @@ public class Inventory : MonoBehaviour, ISavable
     {
         return allSlots[categoryIndex];
     }
-    
+   
     public static Inventory GetInventory()
     {
-        return FindObjectOfType<PlayerController>().GetComponent<Inventory>();
+        return GameManager.Instance.PlayerController.GetComponent<Inventory>();
     }
 
     public ItemBase GetItem(int itemIndex, int categoryIndex)
@@ -64,11 +63,11 @@ public class Inventory : MonoBehaviour, ISavable
         int category = (int)GetCategoryFromItem(item);
         if (category == (int)ItemCategory.Tms)
         {
-            AudioManager.instance.PlaySE(SFX.OBTAIN_TM, true);
+            AudioManager.Instance.PlaySE(SFX.OBTAIN_TM, true);
         }
         else
         {
-            AudioManager.instance.PlaySE(SFX.OBTAIN_ITEM, true);
+            AudioManager.Instance.PlaySE(SFX.OBTAIN_ITEM, true);
         }
 
         var currentSlots = GetSlotsByCategory(category);

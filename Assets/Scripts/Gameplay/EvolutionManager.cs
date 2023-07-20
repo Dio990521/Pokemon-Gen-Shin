@@ -1,24 +1,17 @@
+using Game.Tool.Singleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvolutionManager : MonoBehaviour
+public class EvolutionManager : Singleton<EvolutionManager>
 {
     [SerializeField] private GameObject evolutionUI;
-    [SerializeField] private Image pokemonImage;
+    private Image pokemonImage;
 
     public event Action OnStartEvolution;
     public event Action OnCompleteEvolution;
-
-
-    public static EvolutionManager i { get; private set; }
-
-    private void Awake()
-    {
-        i = this;
-    }
 
     public IEnumerator Evolve(Pokemon pokemon, Evolution evolution)
     {

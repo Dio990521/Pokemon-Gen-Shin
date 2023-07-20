@@ -16,12 +16,6 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
     public bool TriggerRepeatedly => false;
 
     private PlayerController player;
-    private Fader fader;
-
-    private void Start()
-    {
-        fader = FindObjectOfType<Fader>();
-    }
 
     public void OnPlayerTriggered(PlayerController player)
     {
@@ -35,14 +29,14 @@ public class Portal : MonoBehaviour, IPlayerTriggerable
         DontDestroyOnLoad(transform.parent.gameObject);
 
         GameManager.Instance.PauseGame(true);
-        yield return fader.FadeIn(0.5f);
+        yield return Fader.FadeIn(0.5f);
 
         yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
         var destPortal = FindObjectsOfType<Portal>().First(x => x != this && x.destinationIdentifier == this.destinationIdentifier);
         player.Character.SetPositionAndSnapToTile(destPortal.spawnPoint.position);
 
-        yield return fader.FadeOut(0.5f);
+        yield return Fader.FadeOut(0.5f);
         GameManager.Instance.PauseGame(false);
 
         Destroy(transform.parent.gameObject);

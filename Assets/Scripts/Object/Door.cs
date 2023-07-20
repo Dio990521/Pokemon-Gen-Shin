@@ -35,11 +35,11 @@ public class Door : MonoBehaviour
         player.Character.Animator.SetFacingDirection(FacingDirection.Up);
         if (isAutoDoor)
         {
-            AudioManager.instance.PlaySE(SFX.HEALTH_CENTER_IN);
+            AudioManager.Instance.PlaySE(SFX.HEALTH_CENTER_IN);
         }
         else
         {
-            AudioManager.instance.PlaySE(SFX.OPEN_DOOR);
+            AudioManager.Instance.PlaySE(SFX.OPEN_DOOR);
         }
         GameManager.Instance.PauseGame(true);
         opened = true;

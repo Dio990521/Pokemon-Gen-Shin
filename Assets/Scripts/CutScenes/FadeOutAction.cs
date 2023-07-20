@@ -8,6 +8,6 @@ public class FadeOutAction : CutsceneAction
 
     public override IEnumerator Play()
     {
-        yield return Fader.i.FadeOut(duration);
+        yield return Fader.FadeOut(duration);
     }
 }

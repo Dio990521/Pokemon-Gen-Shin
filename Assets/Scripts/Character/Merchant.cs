@@ -7,7 +7,7 @@ public class Merchant : MonoBehaviour
     [SerializeField] private List<ItemBase> availableItems;
     public IEnumerator Trade()
     {
-        yield return ShopController.i.StartTrading(this);
+        yield return ShopController.Instance.StartTrading(this);
     }
 
     public List<ItemBase> AvailableItems => availableItems;

@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
         character.HandleUpdate();
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (!character.IsMoving && Input.GetKeyDown(KeyCode.Z))
         {
             StartCoroutine(Interact());
         }
@@ -82,12 +82,12 @@ public class PlayerController : MonoBehaviour, ISavable
         Collider2D colliderStep = Physics2D.OverlapCircle(transform.position + _interactStepOffset, _interactRadius, GameLayers.instance.StepInteractableLayer | GameLayers.instance.WaterLayer);
         if (colliderFront != null)
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             yield return colliderFront.GetComponent<InteractableObject>()?.Interact(transform);
         }
         else if (colliderStep != null)
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             yield return colliderStep.GetComponent<InteractableObject>()?.Interact(transform);
         }
     }

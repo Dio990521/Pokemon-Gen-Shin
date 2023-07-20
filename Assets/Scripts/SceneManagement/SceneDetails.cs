@@ -25,7 +25,7 @@ public class SceneDetails : MonoBehaviour
 
             if (sceneMusic != BGM.NONE)
             {
-                AudioManager.instance.PlayMusic(sceneMusic, fade: true);
+                AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
             }
 
             // Load all connected scenes

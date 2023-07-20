@@ -1,3 +1,4 @@
+using Game.Tool.Singleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public enum ShopState { Menu, Buying, Selling, Busy}
 
-public class ShopController : MonoBehaviour
+public class ShopController : Singleton<ShopController>
 {
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private WalletUI walletUI;
@@ -19,13 +20,6 @@ public class ShopController : MonoBehaviour
     private Merchant merchant;
 
     private ShopState state;
-
-    public static ShopController i { get; private set; }
-
-    private void Awake()
-    {
-        i = this;
-    }
 
     private void Start()
     {

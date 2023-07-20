@@ -43,7 +43,7 @@ public class MoveSelectionUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             onSelected?.Invoke(currentSelection);
         }
     }

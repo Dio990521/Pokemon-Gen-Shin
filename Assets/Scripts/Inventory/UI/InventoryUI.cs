@@ -108,7 +108,6 @@ public class InventoryUI : MonoBehaviour
             {
                 selectedCategory = Inventory.ItemCategories.Count - 1;
             }
-
             selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
             
             if (prevCategory != selectedCategory)
@@ -124,7 +123,7 @@ public class InventoryUI : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                AudioManager.instance.PlaySE(SFX.CONFIRM);
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
                 StartCoroutine(ItemSelected());
             }
             else if (Input.GetKeyDown(KeyCode.X))
@@ -218,7 +217,7 @@ public class InventoryUI : MonoBehaviour
             var evolution = pokemon.CheckForEvolution(item);
             if (evolution != null)
             {
-                yield return EvolutionManager.i.Evolve(pokemon, evolution);
+                yield return EvolutionManager.Instance.Evolve(pokemon, evolution);
             }
             else
             {

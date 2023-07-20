@@ -75,7 +75,7 @@ public class BattleSystem : MonoBehaviour
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon, BattleTrigger trigger=BattleTrigger.LongGrass)
     {
         this.isTrainerBattle = false;
-        AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.playerParty = playerParty;
         this.wildPokemon = wildPokemon;
         player = playerParty.GetComponent<PlayerController>();
@@ -85,7 +85,7 @@ public class BattleSystem : MonoBehaviour
 
     public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty, BattleTrigger trigger = BattleTrigger.LongGrass)
     {
-        AudioManager.instance.PlayMusic(BGM.BATTLE_TRAINER);
+        AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
         this.playerParty = playerParty;
         this.trainerParty = trainerParty;
         this.isTrainerBattle = true;
@@ -135,7 +135,7 @@ public class BattleSystem : MonoBehaviour
             // Send out first pokemon of the trainer
             var enemyPokemon = trainerParty.GetHealthyPokemon();
             enemyUnit.ChangeUnit(enemyPokemon);
-            AudioManager.instance.PlaySE(SFX.BALL_OUT);
+            AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
             
             yield return new WaitForSeconds(2f);
@@ -149,7 +149,7 @@ public class BattleSystem : MonoBehaviour
         var playerPokemon = playerParty.GetHealthyPokemon();
         playerUnit.ChangeUnit(playerPokemon);
         yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
-        AudioManager.instance.PlaySE(SFX.BALL_OUT);
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
         dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
         yield return new WaitForSeconds(2f);
 
@@ -166,12 +166,12 @@ public class BattleSystem : MonoBehaviour
         {
             if (isTrainerBattle)
             {
-                AudioManager.instance.PlayMusic(BGM.VICTORY_TRAINER);
+                AudioManager.Instance.PlayMusic(BGM.VICTORY_TRAINER);
                 StartCoroutine(dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！"));
             }
             else
             {
-                AudioManager.instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
+                AudioManager.Instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
                 StartCoroutine(dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！"));
             }
             
@@ -281,7 +281,7 @@ public class BattleSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             if (currentAction == 0)
             {
                 // Fight
@@ -375,7 +375,7 @@ public class BattleSystem : MonoBehaviour
         {
             var move = playerUnit.pokemon.Moves[currentMove];
             if (move.PP == 0) return;
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             dialogueBox.EnableMoveSelector(false);
             dialogueBox.EnableDialogueText(true);
             StartCoroutine(RunTurns(BattleAction.Move));
@@ -498,20 +498,20 @@ public class BattleSystem : MonoBehaviour
                 DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
                 if (damageDetails.Critical > 1f)
                 {
-                    AudioManager.instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                    AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
                 }
 
                 if (damageDetails.TypeEffectiveness > 1f)
                 {
-                    AudioManager.instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                    AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
                 }
                 else if (damageDetails.TypeEffectiveness < 1f)
                 {
-                    AudioManager.instance.PlaySE(SFX.LOW_ATTACK);
+                    AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
                 }
                 else
                 {
-                    AudioManager.instance.PlaySE(SFX.ATTACK);
+                    AudioManager.Instance.PlaySE(SFX.ATTACK);
                 }
                 yield return targetUnit.Hud.WaitForHPUpdate();
                 yield return ShowDamageDetials(damageDetails);
@@ -618,7 +618,7 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator HandlePokemonFainted(BattleUnit faintedUnit)
     {
-        AudioManager.instance.PlaySE(SFX.FAINTED);
+        AudioManager.Instance.PlaySE(SFX.FAINTED);
         faintedUnit.PlayFaintAnimation();
         yield return dialogueBox.TypeDialogue($"{faintedUnit.pokemon.PokemonBase.PokemonName}\n倒下了！");
 
@@ -730,7 +730,7 @@ public class BattleSystem : MonoBehaviour
     {
         Action onSelected = () =>
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             Pokemon seletedMember = partyScreen.SelectedMember;
             if (seletedMember.Hp <= 0)
             {
@@ -793,7 +793,7 @@ public class BattleSystem : MonoBehaviour
         dialogueBox.UpdateChoiceBox(aboutToUseChoice);
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             dialogueBox.EnableChoiceBox(false);
             if (aboutToUseChoice)
             {
@@ -823,7 +823,7 @@ public class BattleSystem : MonoBehaviour
         playerUnit.ChangeUnit(newPokemon);
         dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
-        AudioManager.instance.PlaySE(SFX.BALL_OUT);
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
 
         if (isTrainerAboutToUse)
         {
@@ -873,7 +873,7 @@ public class BattleSystem : MonoBehaviour
         
         dialogueBox.EnableActionSelector(false);
         yield return dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
-        AudioManager.instance.PlaySE(SFX.THROW_BALL);
+        AudioManager.Instance.PlaySE(SFX.THROW_BALL);
 
         var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
@@ -881,7 +881,7 @@ public class BattleSystem : MonoBehaviour
 
         // Animations
         yield return pokeball.transform.DOJump(enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
-        AudioManager.instance.PlaySE(SFX.BALL_OUT);
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
         yield return enemyUnit.PlayCaptureAnimation();
         pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
 
@@ -912,7 +912,7 @@ public class BattleSystem : MonoBehaviour
             pokeball.DOFade(0, 0.2f);
             yield return enemyUnit.PlayBreakOutAnimation();
 
-            AudioManager.instance.PlaySE(SFX.BALL_OUT);
+            AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
             Destroy(pokeball);
@@ -928,7 +928,7 @@ public class BattleSystem : MonoBehaviour
             case PokeballType.Master: 
                 return 4;
             case PokeballType.Beast:
-                AudioManager.instance.PlaySE(SFX.ATTACK);
+                AudioManager.Instance.PlaySE(SFX.ATTACK);
                 break;
             case PokeballType.FiveFive:
                 int prob = UnityEngine.Random.Range(0, 100);
@@ -983,7 +983,7 @@ public class BattleSystem : MonoBehaviour
 
         if (enemySpeed < playerSpeed)
         {
-            AudioManager.instance.PlaySE(SFX.ESCAPE);
+            AudioManager.Instance.PlaySE(SFX.ESCAPE);
             yield return dialogueBox.TypeDialogue($"成功逃跑了！");
             yield return BattleOver(false);
         }
@@ -994,7 +994,7 @@ public class BattleSystem : MonoBehaviour
 
             if (UnityEngine.Random.Range(0, 256) < f)
             {
-                AudioManager.instance.PlaySE(SFX.ESCAPE);
+                AudioManager.Instance.PlaySE(SFX.ESCAPE);
                 yield return dialogueBox.TypeDialogue($"成功逃跑了！");
                 yield return BattleOver(false);
             }

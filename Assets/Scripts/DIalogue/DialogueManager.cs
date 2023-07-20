@@ -1,10 +1,11 @@
+using Game.Tool.Singleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>
 {
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private ChoiceBox choiceBox;
@@ -15,21 +16,6 @@ public class DialogueManager : MonoBehaviour
     public event Action OnDialogueFinished;
 
     public bool IsShowing { get; private set; }
-
-    public static DialogueManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(Instance);
-        }
-        
-    }
 
     public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true,
         List<string> choices=null, Action<int> onChoiceSelected=null)
@@ -42,7 +28,7 @@ public class DialogueManager : MonoBehaviour
         if (waitForInput)
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
-            AudioManager.instance.PlaySE(SFX.CONFIRM);
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
         }
 
         if (choices != null && choices.Count > 1)
@@ -79,7 +65,7 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
             if (line != dialogue.Lines[dialogue.Lines.Count - 1])
             {
-                AudioManager.instance.PlaySE(SFX.CONFIRM);
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
             }
             
         }

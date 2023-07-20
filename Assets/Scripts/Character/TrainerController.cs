@@ -66,7 +66,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
-        AudioManager.instance.PlayMusic(BGM.TRAINER_EYE_MEET_YOUNG);
+        AudioManager.Instance.PlayMusic(BGM.TRAINER_EYE_MEET_YOUNG);
         // Show exclamation
         exclamation.SetActive(true);
         yield return new WaitForSeconds(0.5f);

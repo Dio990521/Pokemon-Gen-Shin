@@ -9,7 +9,7 @@ namespace Game.Tool.Singleton
         private static T _instance;
         private static object _lock = new object();
 
-        public static T MainInstance
+        public static T Instance
         {
             get
             {

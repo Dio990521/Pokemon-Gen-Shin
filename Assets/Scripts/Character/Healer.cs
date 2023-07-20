@@ -14,13 +14,13 @@ public class Healer : MonoBehaviour
         if (selectedChoice == 0)
         {
             // Yes
-            yield return Fader.i.FadeIn(0.5f);
+            yield return Fader.FadeIn(0.5f);
 
             var playerParty = player.GetComponent<PokemonParty>();
             playerParty.Pokemons.ForEach(p => p.Heal());
             playerParty.PartyUpdated();
 
-            yield return Fader.i.FadeOut(0.5f);
+            yield return Fader.FadeOut(0.5f);
             yield return DialogueManager.Instance.ShowDialogueText($"你的宝可梦们都恢复健康了！");
 
         }

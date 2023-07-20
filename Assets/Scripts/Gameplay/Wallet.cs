@@ -20,7 +20,7 @@ public class Wallet : MonoBehaviour, ISavable
 
     public void AddMoney(int amount)
     {
-        AudioManager.instance.PlaySE(SFX.OBTAIN_BERRY, true);
+        AudioManager.Instance.PlaySE(SFX.OBTAIN_BERRY, true);
         money += amount;
         OnMoneyChanged?.Invoke();
     }

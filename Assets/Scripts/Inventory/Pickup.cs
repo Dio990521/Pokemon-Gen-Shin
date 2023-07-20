@@ -12,13 +12,13 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     [Header("MoneyChest")]
     [SerializeField] private bool isMoney = false;
     [SerializeField] private int moneyAmt;
-    private SpriteRenderer spriteRenderer;
+    protected SpriteRenderer _spriteRenderer;
 
     public bool Used { get; set; } = false;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public IEnumerator Interact(Transform initiator)
@@ -50,16 +50,16 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     {
         if (animatedSprites.Count == 0)
         {
-            spriteRenderer.enabled = false;
+            _spriteRenderer.enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {
-            AudioManager.instance.PlaySE(SFX.CHEST);
+            AudioManager.Instance.PlaySE(SFX.CHEST);
             int curFrame = 0;
             while (curFrame < animatedSprites.Count)
             {
-                spriteRenderer.sprite = animatedSprites[curFrame++];
+                _spriteRenderer.sprite = animatedSprites[curFrame++];
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -77,12 +77,12 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
         {
             if (animatedSprites.Count == 0)
             {
-                spriteRenderer.enabled = false;
+                _spriteRenderer.enabled = false;
                 GetComponent<BoxCollider2D>().enabled = false;
             }
             else
             {
-                spriteRenderer.sprite = animatedSprites[animatedSprites.Count - 1];
+                _spriteRenderer.sprite = animatedSprites[animatedSprites.Count - 1];
             }
         }
     }

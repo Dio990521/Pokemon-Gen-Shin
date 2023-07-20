@@ -1,3 +1,4 @@
+using Game.Tool.Singleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution }
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private BattleSystem battleSystem;
@@ -18,17 +19,17 @@ public class GameManager : MonoBehaviour
     public GameState stateBeforeEvolution;
     private TrainerController trainer;
 
-    public static GameManager Instance { get; private set; }
 
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
     public GameState State { get => state; set => state = value; }
+    public PlayerController PlayerController { get => playerController;}
 
     MenuController menuController;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         Application.backgroundLoadingPriority = ThreadPriority.Low;
         ConditionsDB.Init();
         PokemonDB.Init();
@@ -67,22 +68,22 @@ public class GameManager : MonoBehaviour
 
         menuController.OnMenuSelected += MenuSelected;
 
-        EvolutionManager.i.OnStartEvolution += () =>
+        EvolutionManager.Instance.OnStartEvolution += () =>
         {
             stateBeforeEvolution = State;
             State = GameState.Evolution;
         };
 
-        EvolutionManager.i.OnCompleteEvolution += () =>
+        EvolutionManager.Instance.OnCompleteEvolution += () =>
         {
             State = stateBeforeEvolution;
             partyScreen.SetPartyData();
 
-            AudioManager.instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
+            AudioManager.Instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
 
-        ShopController.i.OnStart += () => state = GameState.Shop;
-        ShopController.i.OnFinish += () => state = GameState.FreeRoam;
+        ShopController.Instance.OnStart += () => state = GameState.Shop;
+        ShopController.Instance.OnFinish += () => state = GameState.FreeRoam;
     }
 
     public void PauseGame(bool pause)
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
 
     public void StartBattle(BattleTrigger trigger)
     {
-        AudioManager.instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         State = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
@@ -124,7 +125,7 @@ public class GameManager : MonoBehaviour
 
     public void StartTrainerBattle(TrainerController trainer)
     {
-        AudioManager.instance.PlayMusic(BGM.BATTLE_TRAINER);
+        AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
         State = GameState.Battle;
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
@@ -164,7 +165,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            AudioManager.instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
+            AudioManager.Instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
         }
         
     }
@@ -225,23 +226,23 @@ public class GameManager : MonoBehaviour
         }
         else if (State == GameState.Shop)
         {
-            ShopController.i.HandleUpdate();
+            ShopController.Instance.HandleUpdate();
         }
         
     }
 
     public IEnumerator MoveCamera(Vector2 moveOffset, bool waitForFadeOut=false)
     {
-        yield return Fader.i.FadeIn(0.5f);
+        yield return Fader.FadeIn(0.5f);
         worldCamera.transform.position += new Vector3(moveOffset.x, moveOffset.y);
 
         if (waitForFadeOut)
         {
-            yield return Fader.i.FadeOut(0.5f);
+            yield return Fader.FadeOut(0.5f);
         }
         else
         {
-            StartCoroutine(Fader.i.FadeOut(0.5f));
+            StartCoroutine(Fader.FadeOut(0.5f));
         }
         
     }
@@ -254,7 +255,7 @@ public class GameManager : MonoBehaviour
 
     private void MenuSelected(int selectedItem)
     {
-        AudioManager.instance.PlaySE(SFX.CONFIRM);
+        AudioManager.Instance.PlaySE(SFX.CONFIRM);
         if (selectedItem == 0)
         {
             // Pokemon

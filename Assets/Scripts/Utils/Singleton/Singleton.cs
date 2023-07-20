@@ -10,7 +10,7 @@ namespace Game.Tool.Singleton
         private static T _instance;
         private static object _lock = new object();
 
-        public static T MainInstance
+        public static T Instance
         {
             get
             {
@@ -33,7 +33,7 @@ namespace Game.Tool.Singleton
         }
         
 
-        protected  virtual void Awake()
+        protected virtual void Awake()
         {
             if (_instance == null)
             {
