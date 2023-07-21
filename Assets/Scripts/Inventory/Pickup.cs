@@ -13,11 +13,16 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private bool isMoney = false;
     [SerializeField] private int moneyAmt;
     protected SpriteRenderer _spriteRenderer;
+    protected BoxCollider2D _boxCollider;
+
+    [SerializeField] private bool isDcz = false;
+    [SerializeField] private bool isStep = false;
 
     public bool Used { get; set; } = false;
 
     protected virtual void Awake()
     {
+        _boxCollider = GetComponent<BoxCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -27,7 +32,7 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
         {
             Used = true;
             yield return PlayChestAnimation();
-            if (gameObject.layer == GameLayers.instance.StepInteractableLayer)
+            if (isStep)
             {
                 yield return DialogueManager.Instance.ShowDialogueText("感觉踩到了什么东西。");
             }
@@ -40,6 +45,10 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
             {
                 initiator.GetComponent<Inventory>().AddItem(item, itemAmt);
                 yield return DialogueManager.Instance.ShowDialogueText($"你找到了{itemAmt}个{item.ItemName}！");
+                if (isDcz)
+                {
+                    GameEventManager.Instance.CallEvent("DCZ");
+                }
             }
             
         }
@@ -55,7 +64,10 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
         }
         else
         {
-            AudioManager.Instance.PlaySE(SFX.CHEST);
+            if (!isStep)
+            {
+                AudioManager.Instance.PlaySE(SFX.CHEST);
+            }
             int curFrame = 0;
             while (curFrame < animatedSprites.Count)
             {

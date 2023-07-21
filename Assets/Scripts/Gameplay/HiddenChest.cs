@@ -6,13 +6,11 @@ public class HiddenChest : Pickup
 {
     [SerializeField] private string _eventKey;
     [SerializeField] private int _total;
-    private BoxCollider2D _boxCollider;
     [SerializeField] private int _cur = 0;
 
     protected override void Awake()
     {
         base.Awake();
-        _boxCollider = GetComponent<BoxCollider2D>();
         _spriteRenderer.enabled = false;
         _boxCollider.enabled = false;
         GameEventManager.Instance.AddEventListener(_eventKey, CheckClear);

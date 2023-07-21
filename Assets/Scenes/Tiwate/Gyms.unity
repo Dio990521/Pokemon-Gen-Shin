@@ -7496,7 +7496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1493597039318010317, guid: d120df013d979fd4982e650e3968c055, type: 3}
       propertyPath: m_Color.a
-      value: 0.53333336
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1493597039318010317, guid: d120df013d979fd4982e650e3968c055, type: 3}
       propertyPath: m_Origin.y
@@ -7599,6 +7599,18 @@ PrefabInstance:
       value: 65535
       objectReference: {fileID: 0}
     - target: {fileID: 2485639365126390284, guid: d120df013d979fd4982e650e3968c055, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2485639365126390284, guid: d120df013d979fd4982e650e3968c055, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2485639365126390284, guid: d120df013d979fd4982e650e3968c055, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1882827371
+      objectReference: {fileID: 0}
+    - target: {fileID: 2485639365126390284, guid: d120df013d979fd4982e650e3968c055, type: 3}
       propertyPath: m_ChunkCullingBounds.x
       value: 8.5
       objectReference: {fileID: 0}
@@ -7612,7 +7624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3697889417610712319, guid: d120df013d979fd4982e650e3968c055, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -69.5
+      value: -69
       objectReference: {fileID: 0}
     - target: {fileID: 3697889417610712319, guid: d120df013d979fd4982e650e3968c055, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12401,6 +12413,10 @@ PrefabInstance:
       propertyPath: item
       value: 
       objectReference: {fileID: 11400000, guid: 2be1272c78d18824693628a0d3f7ed9a, type: 2}
+    - target: {fileID: 4655697548088479180, guid: 30c6e825bb6aeb14db50f9729e4d16f2, type: 3}
+      propertyPath: isDcz
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6050746558193571040, guid: 30c6e825bb6aeb14db50f9729e4d16f2, type: 3}
       propertyPath: uniqueId
       value: 9b5d9709-33ae-41ce-98e7-534f22586752
