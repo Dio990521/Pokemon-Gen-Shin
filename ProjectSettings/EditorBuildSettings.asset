@@ -36,6 +36,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MideBeach/MideBeachS.unity
     guid: 623c793749ee4b64c9b2abde151dff62
   - enabled: 1
+    path: Assets/Scenes/MideBeach/AbandonedShip.unity
+    guid: ca492c58bc7973e41b69a6b81c31e5b2
+  - enabled: 1
     path: Assets/Scenes/Tiwate/TiwateE.unity
     guid: 72a6e91045cd08f44875598adcc45fed
   - enabled: 1
@@ -66,6 +69,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LidaoDesert/LidaoDesertS.unity
     guid: 975e2826af77ed545b874f7bbe8eeba1
   - enabled: 1
+    path: Assets/Scenes/LidaoDesert/SandTower.unity
+    guid: 5d6ad66e109b6d448b04d64c85925717
+  - enabled: 1
     path: Assets/Scenes/LidaoDesert/LidaoRoom1.unity
     guid: 821616c26d8be464289efcfc96196d83
   - enabled: 1
@@ -77,6 +83,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NataMountain/NataMountainN.unity
     guid: 0c83b7ff8e9ef0543b5135579dcc7163
+  - enabled: 1
+    path: Assets/Scenes/NataMountain/Cave.unity
+    guid: 99eac3ac654a5d342b3d162273b55925
   - enabled: 1
     path: Assets/Scenes/Arena/Arena.unity
     guid: ffedb0935ffb4c041a5901f167f31498

@@ -886,6 +886,8 @@ MonoBehaviour:
   itemAmt: 1
   isMoney: 0
   moneyAmt: 0
+  isDcz: 0
+  isStep: 0
   _eventKey: DESERT_PUZZLE
   _total: 4
   _cur: 0
