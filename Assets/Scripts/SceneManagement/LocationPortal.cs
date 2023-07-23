@@ -8,7 +8,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private FacingDirection spawnDir;
-    [SerializeField] private DestinationIdentifier destinationIdentifier;
+    [SerializeField] private int destinationIdentifier;
 
     public Transform SpawnPoint => spawnPoint;
 

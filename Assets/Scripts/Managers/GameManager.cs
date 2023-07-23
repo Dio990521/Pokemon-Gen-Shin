@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution }
 
@@ -278,10 +279,22 @@ public class GameManager : Singleton<GameManager>
         else if (selectedItem == 3)
         {
             // Load
-            SavingSystem.i.Load("saveSlot1");
-            State = GameState.FreeRoam;
+            StartCoroutine(LoadGame());
         }
+    }
 
-        
+    private IEnumerator LoadGame()
+    {
+        PauseGame(true);
+        yield return Fader.FadeIn(1f);
+        SavingSystem.i.Load("saveSlot1");
+        CurrentScene.UnloadScene();
+        CurrentScene.UnloadConnectedScenes();
+        yield return new WaitForSeconds(1.5f);
+        yield return CurrentScene.LoadScene();
+        yield return new WaitForSeconds(1f);
+        yield return Fader.FadeOut(1f);
+        PauseGame(false);
+        State = GameState.FreeRoam;
     }
 }

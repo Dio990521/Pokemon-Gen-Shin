@@ -28,31 +28,39 @@ public class SceneDetails : MonoBehaviour
                 AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
             }
 
-            // Load all connected scenes
-            foreach (var scene in connectedScenes)
+
+            LoadConnectedScenes();
+            UnloadConnectedScenes();
+        }
+    }
+
+    public void LoadConnectedScenes()
+    {
+        // Load all connected scenes
+        foreach (var scene in connectedScenes)
+        {
+            StartCoroutine(scene.LoadScene());
+        }
+    }
+
+    public void UnloadConnectedScenes()
+    {
+        // Unload the scenes that are no longer connected
+        var prevScene = GameManager.Instance.PrevScene;
+        if (prevScene != null)
+        {
+            var prevLoadedScenes = prevScene.connectedScenes;
+            foreach (var scene in prevLoadedScenes)
             {
-                StartCoroutine(scene.LoadScene());
+                if (!connectedScenes.Contains(scene) && scene != this)
+                {
+                    scene.UnloadScene();
+                }
             }
 
-            // Unload the scenes that are no longer connected
-            var prevScene = GameManager.Instance.PrevScene;
-            if (prevScene != null)
+            if (!connectedScenes.Contains(prevScene))
             {
-                var prevLoadedScenes = prevScene.connectedScenes;
-                foreach (var scene in prevLoadedScenes)
-                {
-                    if (!connectedScenes.Contains(scene) && scene != this)
-                    {
-                        scene.UnloadScene();
-                    }
-                }
-
-                if (!connectedScenes.Contains(prevScene))
-                {
-                    prevScene.UnloadScene();
-                }
-                
-            
+                prevScene.UnloadScene();
             }
         }
     }
