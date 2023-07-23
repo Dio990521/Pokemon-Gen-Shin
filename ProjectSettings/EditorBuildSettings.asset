@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ZhenxinTown/ZhenxinTownRoom3.unity
     guid: a25543ceed53caf439e9b192f16cca4a
   - enabled: 1
+    path: Assets/Scenes/ZhenxinTown/DCZ.unity
+    guid: ad847fa48a3b0b647bca73e722084959
+  - enabled: 1
     path: Assets/Scenes/XumengForest/XumengForestE.unity
     guid: 022f7339fc23fd0488ea53b2300c9a28
   - enabled: 1

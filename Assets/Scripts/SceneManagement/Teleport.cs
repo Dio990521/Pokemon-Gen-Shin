@@ -44,7 +44,6 @@ public class Teleport : MonoBehaviour, InteractableObject
 
         int selectedChoice = 0;
         List<string> teleports = TeleportManager.Instance.GetActiveList();
-        print(teleports);
         yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？",
             choices: teleports,
             onChoiceSelected: (selection) => selectedChoice = selection);

@@ -32,7 +32,7 @@ public class Lock : MonoBehaviour, InteractableObject, ISavable
         {
             if (inventory.HasItem(_keyItem))
             {
-                yield return DialogueManager.Instance.ShowDialogueText("使用了火箭队的钥匙解开了锁。");
+                yield return DialogueManager.Instance.ShowDialogueText($"使用了{_keyItem.ItemName}解开了锁。");
                 UnlockAnim();
             }
             else
