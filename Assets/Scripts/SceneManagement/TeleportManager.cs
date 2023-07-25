@@ -23,6 +23,19 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable
         return teleNames;
     }
 
+    public List<int> GetActiveTeleportIndex()
+    {
+        List<int> teleIndex = new List<int>();
+        for (int i = 0; i < _teleports.Count; ++i)
+        {
+            if (_teleports[i].IsActive)
+            {
+                teleIndex.Add(i);
+            }
+        }
+        return teleIndex;
+    }
+
     public object CaptureState()
     {
         var saveData = new List<bool>();

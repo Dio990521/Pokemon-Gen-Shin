@@ -26,7 +26,7 @@ public class MenuController : MonoBehaviour
 
     public void OpenMenu()
     {
-        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        AudioManager.Instance.PlaySE(SFX.MENU);
         menu.SetActive(true);
         menuCursor.gameObject.SetActive(true);
     }

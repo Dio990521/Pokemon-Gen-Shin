@@ -31,7 +31,10 @@ public enum SFX
     OBTAIN_ITEM,
     OBTAIN_BERRY,
     ENTRY_CALL,
-    POKEMON_HEAL
+    POKEMON_HEAL,
+    MENU,
+    TELEPORT,
+    ACTIVATE_TELEPORT
 }
 
 public enum BGM
@@ -53,6 +56,10 @@ public enum BGM
     ARENA,
     POKE_CENTER,
     LAB,
+    DCZ,
+    ABANDONED_SHIP,
+    SAND_TOWER,
+    CAVE,
     NONE
 }
 
