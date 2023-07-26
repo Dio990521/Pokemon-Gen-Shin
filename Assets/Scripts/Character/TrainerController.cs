@@ -8,6 +8,9 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private GameObject exclamation;
     [SerializeField] private Dialogue dialogue;
     [SerializeField] private Dialogue dialogueAfterBattle;
+    [SerializeField] private int winMoney;
+    [SerializeField] private BGM meetBGM = BGM.TRAINER_EYE_MEET_YOUNG;
+    [SerializeField] private BGM winBGM = BGM.VICTORY_TRAINER;
     [SerializeField] private GameObject fov;
     [SerializeField] private Sprite sprite;
     [SerializeField] private string tainerName;
@@ -24,6 +27,13 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     {
         get => sprite;
     }
+
+    public int WinMoney
+    {
+        get => winMoney;
+    }
+
+    public BGM WinBGM { get => winBGM; }
 
     private void Awake()
     {
@@ -61,12 +71,12 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     public void BattleLost()
     {
         battleLost = true;
-        fov.gameObject.SetActive(false);
+        fov.SetActive(false);
     }
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
-        AudioManager.Instance.PlayMusic(BGM.TRAINER_EYE_MEET_YOUNG);
+        AudioManager.Instance.PlayMusic(meetBGM);
         // Show exclamation
         exclamation.SetActive(true);
         yield return new WaitForSeconds(0.5f);
@@ -113,7 +123,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         battleLost = (bool)state;
         if (battleLost)
         {
-            fov.gameObject.SetActive(false);
+            fov.SetActive(false);
         }
     }
 }

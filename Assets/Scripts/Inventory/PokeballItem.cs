@@ -29,5 +29,6 @@ public enum PokeballType
     Iron,
     FiveFive,
     Beast,
-    Master
+    Master,
+    Genshin
 }

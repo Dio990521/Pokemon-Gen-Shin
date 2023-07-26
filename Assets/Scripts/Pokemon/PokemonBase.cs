@@ -15,6 +15,7 @@ public class PokemonBase : ScriptableObject
 
     [SerializeField] private PokemonType type1;
     [SerializeField] private PokemonType type2;
+    [SerializeField] private bool isHuman;
 
     [SerializeField] private int maxHp;
     [SerializeField] private int attack;
@@ -57,6 +58,7 @@ public class PokemonBase : ScriptableObject
     public Sprite BackSprite { get { return backSprite; } }
     public PokemonType Type1 { get { return type1; } }
     public PokemonType Type2 { get { return type2; } }
+    public bool IsHuman { get { return isHuman; } }
     public string PokemonName { get { return pokemonName; } }
     public string Description { get { return description; } }
     public int CatchRate { get { return catchRate; } }

@@ -166,20 +166,22 @@ public class BattleSystem : MonoBehaviour
         {
             if (isTrainerBattle)
             {
-                AudioManager.Instance.PlayMusic(BGM.VICTORY_TRAINER);
-                StartCoroutine(dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！"));
+                AudioManager.Instance.PlayMusic(trainer.WinBGM);
+                yield return dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
+                Wallet.i.AddMoney(trainer.WinMoney);
+                yield return dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
             }
             else
             {
                 AudioManager.Instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
-                StartCoroutine(dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！"));
+                yield return dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
             }
             
         }
         playerParty.Pokemons.ForEach(p => p.OnBattleOver());
         playerUnit.Hud.ClearData();
         enemyUnit.Hud.ClearData();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         OnBattleOver(won);
     }
 
@@ -862,7 +864,7 @@ public class BattleSystem : MonoBehaviour
     private IEnumerator ThrowPokeball(PokeballItem pokeballItem)
     {
         state = BattleState.Busy;
-
+        dialogueBox.EnableActionSelector(false);
         if (isTrainerBattle)
         {
             yield return dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
@@ -870,8 +872,21 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
+        if (pokeballItem.BallType == PokeballType.Genshin && !enemyUnit.pokemon.PokemonBase.IsHuman)
+        {
+            yield return dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
+        if (pokeballItem.BallType != PokeballType.Genshin && enemyUnit.pokemon.PokemonBase.IsHuman)
+        {
+            yield return dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
+            state = BattleState.RunningTurn;
+            yield break;
+        }
+
         
-        dialogueBox.EnableActionSelector(false);
         yield return dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         AudioManager.Instance.PlaySE(SFX.THROW_BALL);
 
@@ -941,6 +956,7 @@ public class BattleSystem : MonoBehaviour
                 return 2;
 
         }
+
 
         float a = (3 * pokemon.MaxHp - 2 * pokemon.Hp) * pokeballItem.CatchRateModifier * pokemon.PokemonBase.CatchRate * ConditionsDB.GetStatusBonus(pokemon.Status) / (3 * pokemon.MaxHp);
         
