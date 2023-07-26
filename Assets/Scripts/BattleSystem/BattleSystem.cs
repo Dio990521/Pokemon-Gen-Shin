@@ -175,6 +175,15 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
                 yield return dialogueBox.TypeDialogue($"ƒ„¥Ú∞‹¡À{enemyUnit.pokemon.PokemonBase.PokemonName}£°");
+                if (enemyUnit.pokemon.PokemonBase.RewardProb != 0 && enemyUnit.pokemon.PokemonBase.Reward != null)
+                {
+                    float tmp = UnityEngine.Random.Range(0f, 1f);
+                    if (tmp <= enemyUnit.pokemon.PokemonBase.RewardProb)
+                    {
+                        Inventory.GetInventory().AddItem(enemyUnit.pokemon.PokemonBase.Reward);
+                        yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}µÙ¬‰¡À{enemyUnit.pokemon.PokemonBase.Reward.ItemName}£°");
+                    }
+                }
             }
             
         }

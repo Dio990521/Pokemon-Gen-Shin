@@ -41,7 +41,11 @@ public class Inventory : MonoBehaviour, ISavable
     public ItemBase GetItem(int itemIndex, int categoryIndex)
     {
         var currentSlots = GetSlotsByCategory(categoryIndex);
-        return currentSlots[itemIndex].Item;
+        if (currentSlots.Count > 0)
+        {
+            return currentSlots[itemIndex].Item;
+        }
+        return null;
     }
 
     public ItemBase UseItem(int itemIndex, Pokemon selectedPokemon, int selectedCategory)
@@ -103,7 +107,7 @@ public class Inventory : MonoBehaviour, ISavable
         {
             return ItemCategory.Tms;
         }
-        else if (item is null) 
+        else if (item is MiscItem) 
         {
             return ItemCategory.Misc;
         }

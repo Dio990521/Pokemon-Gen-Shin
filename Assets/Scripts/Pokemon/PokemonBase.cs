@@ -33,6 +33,10 @@ public class PokemonBase : ScriptableObject
 
     [SerializeField] private List<Evolution> evolutions;
 
+    [Header("Battle Rewards")]
+    [SerializeField] private ItemBase reward;
+    [SerializeField] private float rewardProb;
+
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public int GetExpForLevel(int level)
@@ -66,7 +70,8 @@ public class PokemonBase : ScriptableObject
     public GrowthRate GrowthRate { get { return growthRate; } }
     public List<LearnableMove> LearnableMoves { get { return learnableMoves; } }
     public List<Evolution> Evolutions { get { return evolutions; } }   
-
+    public ItemBase Reward { get { return reward; } }
+    public float RewardProb { get { return rewardProb; } }
 }
 
 
