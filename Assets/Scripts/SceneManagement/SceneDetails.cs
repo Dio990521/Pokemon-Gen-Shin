@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneDetails : MonoBehaviour
 {
 
     [SerializeField] private List<SceneDetails> connectedScenes;
     [SerializeField] private BGM sceneMusic = BGM.NONE;
+    [SerializeField] private string _mapName;
 
     public BGM SceneMusic => sceneMusic;
 
@@ -16,18 +18,23 @@ public class SceneDetails : MonoBehaviour
 
     private List<SavableEntity> savableEntities;
 
+    public string MapName => _mapName; 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
+
             StartCoroutine(LoadScene());
             GameManager.Instance.SetCurrentScene(this);
-
             if (sceneMusic != BGM.NONE)
             {
                 AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
             }
-
+            if (_mapName.Length > 0)
+            {
+                StartCoroutine(GameManager.Instance.RouteIcon.RouteIntroAnim(_mapName));
+            }
 
             LoadConnectedScenes();
             UnloadConnectedScenes();
@@ -97,4 +104,5 @@ public class SceneDetails : MonoBehaviour
         var curScene = SceneManager.GetSceneByName(gameObject.name);
         return FindObjectsOfType<SavableEntity>().Where(x => x.gameObject.scene == curScene).ToList();
     }
+
 }

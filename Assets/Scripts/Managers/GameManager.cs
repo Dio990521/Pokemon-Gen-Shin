@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution }
 
@@ -14,6 +15,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private Camera worldCamera;
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private RouteIcon routeIcon;
 
     private GameState state;
     public GameState prevState;
@@ -25,6 +27,8 @@ public class GameManager : Singleton<GameManager>
     public SceneDetails PrevScene { get; private set; }
     public GameState State { get => state; set => state = value; }
     public PlayerController PlayerController { get => playerController;}
+
+    public RouteIcon RouteIcon { get => routeIcon; }
 
     MenuController menuController;
 

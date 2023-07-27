@@ -9,32 +9,33 @@ public class MenuController : MonoBehaviour
 {
 
     [SerializeField] private GameObject menu;
-    [SerializeField] private Image menuCursor;
-    [SerializeField] private float cursorOffset;
+    [SerializeField] private GameObject menuCursor;
 
     public event Action<int> OnMenuSelected;
     public event Action OnBack;
 
-    private List<Text> menuItems;
+    [SerializeField] private List<Transform> menuItemPos;
 
     private int selectedItem = 0;
 
     private void Awake()
     {
-        menuItems = menu.GetComponentsInChildren<Text>().ToList();
+        menuCursor.SetActive(false);
     }
 
     public void OpenMenu()
     {
         AudioManager.Instance.PlaySE(SFX.MENU);
         menu.SetActive(true);
-        menuCursor.gameObject.SetActive(true);
+        menuCursor.SetActive(true);
+        selectedItem = 0;
+        menuCursor.transform.position = menuItemPos[selectedItem].position;
     }
 
     public void CloseMenu()
     {
         menu.SetActive(false);
-        menuCursor.gameObject.SetActive(false);
+        menuCursor.SetActive(false);
     }
 
     public void HandleUpdate()
@@ -50,11 +51,11 @@ public class MenuController : MonoBehaviour
             --selectedItem;
         }
 
-        selectedItem = Mathf.Clamp(selectedItem, 0, menuItems.Count - 1);
+        selectedItem = Mathf.Clamp(selectedItem, 0, menuItemPos.Count - 1);
 
         if (prevSelection != selectedItem)
         {
-            menuCursor.transform.position = menuItems[selectedItem].transform.position - new Vector3(cursorOffset, 0f, 0f);
+            menuCursor.transform.position = menuItemPos[selectedItem].position;
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
