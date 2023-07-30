@@ -19,7 +19,6 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable
                 teleNames.Add(tele.TeleportName);
             }
         }
-        teleNames.Add("不了。");
         return teleNames;
     }
 

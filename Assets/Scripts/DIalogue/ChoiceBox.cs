@@ -35,7 +35,13 @@ public class ChoiceBox : MonoBehaviour
         yield return new WaitUntil(() => choiceSelected == true);
 
         onChoiceSelected?.Invoke(currentChoice);
+        CloseBox();
+    }
+
+    private void CloseBox()
+    {
         gameObject.SetActive(false);
+        DialogueManager.Instance.CloseDialog();
     }
 
     private void Update()
@@ -59,6 +65,12 @@ public class ChoiceBox : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
             choiceSelected = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            CloseBox();
+            GameManager.Instance.StartFreeRoamState();
         }
     }
 }

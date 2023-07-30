@@ -46,6 +46,11 @@ public class Teleport : MonoBehaviour, InteractableObject
         int selectedChoice = 0;
         List<string> teleports = TeleportManager.Instance.GetActiveList();
         List<int> indices = TeleportManager.Instance.GetActiveTeleportIndex();
+        if (teleports.Count == 1)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText("已激活的传送锚点只有这里！");
+            yield break;
+        }
         yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？",
             choices: teleports,
             onChoiceSelected: (selection) => selectedChoice = selection);

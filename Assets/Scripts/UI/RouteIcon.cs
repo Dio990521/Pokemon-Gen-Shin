@@ -22,7 +22,11 @@ public class RouteIcon : MonoBehaviour
 
     public IEnumerator RouteIntroAnim(string mapName)
     {
-        if (!_isActive)
+        if (_isActive)
+        {
+            _text.text = mapName;
+        }
+        else if (!_isActive && _text.text != mapName)
         {
             _isActive = true;
             _text.text = mapName;
