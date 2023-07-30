@@ -49,7 +49,7 @@ public class SurfableWater : MonoBehaviour, InteractableObject, IPlayerTriggerab
         if (UnityEngine.Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;
-            GameManager.Instance.StartBattle(BattleTrigger.Water);
+            StartCoroutine(GameManager.Instance.StartBattle(BattleTrigger.Water));
         }
     }
 }

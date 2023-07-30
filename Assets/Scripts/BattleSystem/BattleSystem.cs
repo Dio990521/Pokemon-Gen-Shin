@@ -74,6 +74,7 @@ public class BattleSystem : MonoBehaviour
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon, BattleTrigger trigger=BattleTrigger.LongGrass)
     {
+        dialogueBox.SetDialogue("");
         this.isTrainerBattle = false;
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.playerParty = playerParty;
@@ -85,6 +86,7 @@ public class BattleSystem : MonoBehaviour
 
     public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty, BattleTrigger trigger = BattleTrigger.LongGrass)
     {
+        dialogueBox.SetDialogue("");
         AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
         this.playerParty = playerParty;
         this.trainerParty = trainerParty;
@@ -115,9 +117,9 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.SetUp(wildPokemon);
             playerUnit.UnitEnterAnimation();
             enemyUnit.UnitEnterAnimation();
-
+            yield return new WaitForSeconds(1.5f);
             yield return dialogueBox.TypeDialogue($"野生的{enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
         }
         else
         {
@@ -128,9 +130,9 @@ public class BattleSystem : MonoBehaviour
             enemyUnit.ResetAnimation();
             playerUnit.UnitEnterAnimation();
             enemyUnit.UnitEnterAnimation();
-
+            yield return new WaitForSeconds(1.5f);
             yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
-            yield return new WaitForSeconds(4f);
+            yield return new WaitForSeconds(2f);
 
             // Send out first pokemon of the trainer
             var enemyPokemon = trainerParty.GetHealthyPokemon();
@@ -180,7 +182,7 @@ public class BattleSystem : MonoBehaviour
                     float tmp = UnityEngine.Random.Range(0f, 1f);
                     if (tmp <= enemyUnit.pokemon.PokemonBase.RewardProb)
                     {
-                        Inventory.GetInventory().AddItem(enemyUnit.pokemon.PokemonBase.Reward);
+                        Inventory.GetInventory().AddItem(enemyUnit.pokemon.PokemonBase.Reward, playSE: false);
                         yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}掉落了{enemyUnit.pokemon.PokemonBase.Reward.ItemName}！");
                     }
                 }

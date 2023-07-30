@@ -1009,6 +1009,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830788832347591951, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 452048260}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &476774257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1992438536908283251, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &480278253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,6 +1697,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d16123ecece574693c29c43e82f1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &610436580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4671520593772574419, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &610436584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610436580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f91d742f3be083418c26878ab8255c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
+  topbottomTransition: {fileID: 2800000, guid: ed5355cd5f09dcb4c9f33267d904d07a, type: 3}
+  wildBattleTransition: {fileID: 0}
+  trainerBattleTransition: {fileID: 0}
+  bossBattleTransition: {fileID: 0}
+  superBossBattleTransition: {fileID: 0}
 --- !u!1001 &637068833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1789,6 +1817,24 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 5474071107367999389, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
   m_PrefabInstance: {fileID: 4963794604952134813}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &697475511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 476774257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f91d742f3be083418c26878ab8255c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionMaterial: {fileID: 2100000, guid: 7624d611bd330e44b80ef65275598a16, type: 2}
+  topbottomTransition: {fileID: 2800000, guid: ed5355cd5f09dcb4c9f33267d904d07a, type: 3}
+  wildBattleTransition: {fileID: 2800000, guid: ba6a1098712f522418697e7a4893fb62, type: 3}
+  trainerBattleTransition: {fileID: 2800000, guid: eb3feefd835775241a204200cc0c3a96, type: 3}
+  bossBattleTransition: {fileID: 2800000, guid: ea1ad820d45466d4795f65b8bcdfaac9, type: 3}
+  superBossBattleTransition: {fileID: 2800000, guid: c5896b76872c676488ab81350f954ba3, type: 3}
 --- !u!1001 &715625078
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6259,6 +6305,18 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1821868709}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: _transitionManager
+      value: 
+      objectReference: {fileID: 697475511}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: _worldTransitionManager
+      value: 
+      objectReference: {fileID: 697475511}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: _battleTransitionManager
+      value: 
+      objectReference: {fileID: 610436584}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
 --- !u!1001 &2219967225854741100
@@ -7053,6 +7111,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorPos1
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520592979434527, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4671520593013661640, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Camera
       value: 
@@ -7077,6 +7139,14 @@ PrefabInstance:
       propertyPath: pokemons.Array.data[3].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: 146156e621cea8d43b57737677e7caff, type: 2}
+    - target: {fileID: 4671520593820589622, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _transitionManager
+      value: 
+      objectReference: {fileID: 697475511}
     - target: {fileID: 4671520595013629985, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Name
       value: EssentialObjects

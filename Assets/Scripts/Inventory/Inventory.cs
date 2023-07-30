@@ -61,17 +61,20 @@ public class Inventory : MonoBehaviour, ISavable
         return null;
     }
 
-    public void AddItem(ItemBase item, int count=1)
+    public void AddItem(ItemBase item, int count=1, bool playSE=true)
     {
         
         int category = (int)GetCategoryFromItem(item);
-        if (category == (int)ItemCategory.Tms)
+        if (playSE)
         {
-            AudioManager.Instance.PlaySE(SFX.OBTAIN_TM, true);
-        }
-        else
-        {
-            AudioManager.Instance.PlaySE(SFX.OBTAIN_ITEM, true);
+            if (category == (int)ItemCategory.Tms)
+            {
+                AudioManager.Instance.PlaySE(SFX.OBTAIN_TM, true);
+            }
+            else
+            {
+                AudioManager.Instance.PlaySE(SFX.OBTAIN_ITEM, true);
+            }
         }
 
         var currentSlots = GetSlotsByCategory(category);

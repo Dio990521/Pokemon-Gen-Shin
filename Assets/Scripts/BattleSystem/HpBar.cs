@@ -36,24 +36,12 @@ public class HpBar : MonoBehaviour
     }
 
     // Hp bar animation
-    public IEnumerator SetHpSmooth(float newHp, int curHpInt)
-    {
-        IsUpdating = true;
-        float curHp = transform.localScale.x;
-        float changeAmt = curHp - newHp;
-
-        while (curHp - newHp > Mathf.Epsilon)
-        {
-            curHp -= changeAmt * Time.deltaTime;
-            transform.localScale = new Vector3(curHp, 1f);
-            yield return null;
-        }
-        transform.localScale = new Vector3(newHp, 1f);
-        IsUpdating = false;
-    }
-
     public IEnumerator SetHpSmooth(float newHp, float duration)
     {
+        if (newHp <= 0)
+        {
+            duration = 1f;
+        }
         IsUpdating = true;
         _hpScale = transform.localScale.x;
         // 创建一个DOTween的整数Tween，从currentCountdown到end，持续duration秒
@@ -69,6 +57,10 @@ public class HpBar : MonoBehaviour
 
     public IEnumerator StartCountdownAnimation(int end, float duration)
     {
+        if (end <= 0)
+        {
+            duration = 1f;
+        }
         // 创建一个DOTween的整数Tween，从currentCountdown到end，持续duration秒
         Tween countdownTween = DOTween.To(() => _curHp, x => _curHp = x, end, duration)
             .SetEase(Ease.Linear)

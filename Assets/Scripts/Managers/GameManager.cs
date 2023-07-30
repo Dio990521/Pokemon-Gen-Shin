@@ -16,12 +16,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private RouteIcon routeIcon;
+    [SerializeField] private TransitionManager _worldTransitionManager;
+    [SerializeField] private TransitionManager _battleTransitionManager;
+
 
     private GameState state;
     public GameState prevState;
     public GameState stateBeforeEvolution;
     private TrainerController trainer;
-
 
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
@@ -114,10 +116,13 @@ public class GameManager : Singleton<GameManager>
         state = GameState.FreeRoam;
     }
 
-    public void StartBattle(BattleTrigger trigger)
+    public IEnumerator StartBattle(BattleTrigger trigger)
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         State = GameState.Battle;
+        yield return _worldTransitionManager.StartTransition(TransitionType.WildBattle, 2f);
+        yield return new WaitForSeconds(2f);
+        yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
 
@@ -128,10 +133,13 @@ public class GameManager : Singleton<GameManager>
         battleSystem.StartBattle(playerParty, wildPokemonCopy, trigger);
     }
 
-    public void StartTrainerBattle(TrainerController trainer)
+    public IEnumerator StartTrainerBattle(TrainerController trainer)
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
         State = GameState.Battle;
+        yield return _worldTransitionManager.StartTransition(TransitionType.TrainerBattle, 2f);
+        yield return new WaitForSeconds(2f);
+        yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
         battleSystem.gameObject.SetActive(true);
         worldCamera.gameObject.SetActive(false);
         this.trainer = trainer;
@@ -159,6 +167,8 @@ public class GameManager : Singleton<GameManager>
 
         State = GameState.FreeRoam;
         battleSystem.gameObject.SetActive(false);
+        _battleTransitionManager.ClearTransition();
+        _worldTransitionManager.ClearTransition();
         worldCamera.gameObject.SetActive(true);
 
         var playerParty = playerController.GetComponent<PokemonParty>();

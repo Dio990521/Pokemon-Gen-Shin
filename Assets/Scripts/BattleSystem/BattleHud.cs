@@ -80,13 +80,12 @@ public class BattleHud : MonoBehaviour
 
     public void UpdateHP()
     {
-        StartCoroutine(UpdateHpAsync());
+        StartCoroutine(UpdateHpAsync(1.5f));
     }
 
     // update Hp bar when the pokemon get hurt
-    public IEnumerator UpdateHpAsync()
+    public IEnumerator UpdateHpAsync(float duration)
     {
-        float duration = 2.5f;
         yield return hpBar.SetHpSmooth((float)battlePokemon.Hp / battlePokemon.MaxHp, duration);
         yield return hpBar.StartCountdownAnimation(battlePokemon.Hp, duration);
     }
