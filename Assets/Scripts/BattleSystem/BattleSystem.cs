@@ -170,7 +170,7 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlayMusic(trainer.WinBGM);
                 yield return dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
-                Wallet.i.AddMoney(trainer.WinMoney);
+                Wallet.i.AddMoney(trainer.WinMoney, false);
                 yield return dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
             }
             else

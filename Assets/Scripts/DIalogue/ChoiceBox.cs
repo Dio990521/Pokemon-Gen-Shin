@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChoiceBox : MonoBehaviour
@@ -8,6 +9,7 @@ public class ChoiceBox : MonoBehaviour
     [SerializeField] private ChoiceText choiceTextPrefab;
 
     private bool choiceSelected = false;
+    private bool cancel = false;
 
     private List<ChoiceText> choiceTexts = new List<ChoiceText>();
     private int currentChoice;
@@ -15,6 +17,7 @@ public class ChoiceBox : MonoBehaviour
     public IEnumerator ShowChoices(List<string> choices, Action<int> onChoiceSelected)
     {
         choiceSelected = false;
+        cancel = false;
         currentChoice = 0;
         gameObject.SetActive(true);
 
@@ -32,8 +35,8 @@ public class ChoiceBox : MonoBehaviour
             choiceTexts.Add(choiceTextObject);
         }
 
-        yield return new WaitUntil(() => choiceSelected == true);
-
+        yield return new WaitUntil(() => choiceSelected == true || cancel == true);
+        currentChoice = cancel ? -1 : currentChoice;
         onChoiceSelected?.Invoke(currentChoice);
         CloseBox();
     }
@@ -69,7 +72,7 @@ public class ChoiceBox : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            CloseBox();
+            cancel = true;
             GameManager.Instance.StartFreeRoamState();
         }
     }

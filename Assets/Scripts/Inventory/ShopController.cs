@@ -108,7 +108,7 @@ public class ShopController : Singleton<ShopController>
             DialogueManager.Instance.CloseDialog();
         }
 
-        sellingPrice = sellingPrice * countToSell;
+        sellingPrice *= countToSell;
 
         int selectedChoice = 0;
         yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？",
@@ -121,7 +121,7 @@ public class ShopController : Singleton<ShopController>
             // Yes
             inventory.RemoveItem(item, countToSell);
             Wallet.i.AddMoney(sellingPrice);
-            yield return DialogueManager.Instance.ShowDialogueText($"成功卖掉{item.ItemName}！\n获得了{sellingPrice}金钱！");
+            yield return DialogueManager.Instance.ShowDialogueText($"成功卖掉{item.ItemName}！\n获得了{sellingPrice}摩拉！");
 
         }
         walletUI.Close();
@@ -142,7 +142,7 @@ public class ShopController : Singleton<ShopController>
         if (Wallet.i.HasMoney(totalPrice))
         {
             int selectedChoice = 0;
-            yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}元，买吗？",
+            yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}摩拉，买吗？",
             waitForInput: false,
             choices: new List<string>() { "彳亍", "算了" },
             onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
@@ -156,7 +156,7 @@ public class ShopController : Singleton<ShopController>
         }
         else
         {
-            yield return DialogueManager.Instance.ShowDialogueText($"你没有那么多金钱！");
+            yield return DialogueManager.Instance.ShowDialogueText($"你没有那么多摩拉！");
         }
         state = ShopState.Buying;
     }

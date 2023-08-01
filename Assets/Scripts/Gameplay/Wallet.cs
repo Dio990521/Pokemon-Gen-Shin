@@ -6,6 +6,7 @@ using UnityEngine;
 public class Wallet : MonoBehaviour, ISavable
 {
     [SerializeField] private int money;
+    [SerializeField] private ItemBase yuanshi;
 
     public event Action OnMoneyChanged;
 
@@ -18,9 +19,14 @@ public class Wallet : MonoBehaviour, ISavable
 
     public int Money => money;
 
-    public void AddMoney(int amount)
+    public ItemBase Yuanshi { get {  return yuanshi; } }
+
+    public void AddMoney(int amount, bool playSE=true)
     {
-        AudioManager.Instance.PlaySE(SFX.OBTAIN_BERRY, true);
+        if (playSE)
+        {
+            AudioManager.Instance.PlaySE(SFX.OBTAIN_BERRY, true);
+        }
         money += amount;
         OnMoneyChanged?.Invoke();
     }

@@ -55,7 +55,7 @@ public class Teleport : MonoBehaviour, InteractableObject
             choices: teleports,
             onChoiceSelected: (selection) => selectedChoice = selection);
 
-        if (selectedChoice != teleports.Count - 1)
+        if (selectedChoice != - 1)
         {
             yield return StartTeleport(TeleportManager.Instance.Teleports[indices[selectedChoice]].SpawnPoint, initiator.GetComponent<PlayerController>());
         }

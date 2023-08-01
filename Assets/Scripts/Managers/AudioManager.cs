@@ -30,7 +30,6 @@ public enum SFX
     OBTAIN_TM,
     OBTAIN_ITEM,
     OBTAIN_BERRY,
-    ENTRY_CALL,
     POKEMON_HEAL,
     MENU,
     TELEPORT,

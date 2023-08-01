@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class WalletUI : MonoBehaviour
 {
     [SerializeField] private Text moneyText;
+    [SerializeField] private Text yuanshiText;
 
     private void Start()
     {
@@ -27,9 +28,11 @@ public class WalletUI : MonoBehaviour
     private void SetMoneyText()
     {
         StringBuilder money = new StringBuilder();
-        money.Append("持有金钱：");
-        money.Append(Wallet.i.Money);
-        money.Append("￥");
+        money.Append("持有摩拉：").Append(Wallet.i.Money).Append("￥");
         moneyText.text = money.ToString();
+        money.Clear();
+        money.Append("持有原石：").Append(Inventory.GetInventory().GetItemCount(Wallet.i.Yuanshi));
+        yuanshiText.text = money.ToString();
     }
+
 }
