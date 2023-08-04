@@ -29,6 +29,6 @@ public class ItemSlotUI : MonoBehaviour
     {
         rectTransform = GetComponent<RectTransform>();
         nameText.text = item.ItemName;
-        countText.text = $"{item.Price}гд";
+        countText.text = item.Price == 0 ? $"{item.YuanshiPrice}╘н╩п" : $"{item.Price}гд";
     }
 }

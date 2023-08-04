@@ -51,11 +51,11 @@ public class CountSelectorUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            currentCount = 1;
+            currentCount -= 10;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            currentCount = maxCount;
+            currentCount += 10;
         }
 
         currentCount = Mathf.Clamp(currentCount, 1, maxCount);

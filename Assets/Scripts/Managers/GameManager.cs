@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo }
 
 public class GameManager : Singleton<GameManager>
 {
@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private BattleSystem battleSystem;
     [SerializeField] private Camera worldCamera;
     [SerializeField] private PartyScreen partyScreen;
+    [SerializeField] private PokemonInfoUI pokemonInfoUI;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private RouteIcon routeIcon;
     [SerializeField] private TransitionManager _worldTransitionManager;
@@ -91,6 +92,8 @@ public class GameManager : Singleton<GameManager>
 
         ShopController.Instance.OnStart += () => state = GameState.Shop;
         ShopController.Instance.OnFinish += () => state = GameState.FreeRoam;
+        ComputerController.Instance.OnStart += () => state = GameState.Computer;
+        ComputerController.Instance.OnFinish += () => state = GameState.FreeRoam;
     }
 
     public void PauseGame(bool pause)
@@ -219,6 +222,8 @@ public class GameManager : Singleton<GameManager>
             Action onSelected = () =>
             {
                 // Summary Screen
+                pokemonInfoUI.gameObject.SetActive(true);
+                State = GameState.PokeInfo;
             };
 
             Action onBack = () =>
@@ -242,6 +247,10 @@ public class GameManager : Singleton<GameManager>
         else if (State == GameState.Shop)
         {
             ShopController.Instance.HandleUpdate();
+        }
+        else if (State == GameState.Computer)
+        {
+            ComputerController.Instance.HandleUpdate();
         }
         
     }

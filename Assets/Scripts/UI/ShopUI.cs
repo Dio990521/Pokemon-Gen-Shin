@@ -60,6 +60,7 @@ public class ShopUI : MonoBehaviour
         if (selectedItem == 0)
         {
             UpdateCursor();
+            UpdateUI();
         }
         else if (selectedItem != prevSelection)
         {
