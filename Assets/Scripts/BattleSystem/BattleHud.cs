@@ -46,7 +46,7 @@ public class BattleHud : MonoBehaviour
     public void SetExp()
     {
         if (expBar == null) return;
-        float normalizedExp = GetNormalizedExp();
+        float normalizedExp = battlePokemon.GetNormalizedExp();
         expBar.transform.localScale = new Vector3(normalizedExp, 1, 1);
     }
 
@@ -54,15 +54,6 @@ public class BattleHud : MonoBehaviour
     {
         levelText.text = "LV." + battlePokemon.Level;
         hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
-    }
-
-    private float GetNormalizedExp()
-    {
-        int currLevelExp = battlePokemon.PokemonBase.GetExpForLevel(battlePokemon.Level);
-        int nextLevelExp = battlePokemon.PokemonBase.GetExpForLevel(battlePokemon.Level + 1);
-
-        float normalizedExp = (float)(battlePokemon.Exp - currLevelExp) / (nextLevelExp - currLevelExp);
-        return Mathf.Clamp01(normalizedExp);
     }
 
     public IEnumerator SetExpSmooth(bool reset=false)
@@ -74,7 +65,7 @@ public class BattleHud : MonoBehaviour
             expBar.transform.localScale = new Vector3(0, 1, 1);
         }
 
-        float normalizedExp = GetNormalizedExp();
+        float normalizedExp = battlePokemon.GetNormalizedExp();
         yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
     }
 

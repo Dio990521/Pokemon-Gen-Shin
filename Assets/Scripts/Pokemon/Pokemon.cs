@@ -128,6 +128,20 @@ public class Pokemon
         
     }
 
+    public int GetNextLevelExpLeft()
+    {
+        return pokemonBase.GetExpForLevel(level + 1) - Exp;
+    }
+
+
+    public float GetNormalizedExp()
+    {
+        int currLevelExp = pokemonBase.GetExpForLevel(Level);
+        int nextLevelExp = pokemonBase.GetExpForLevel(Level + 1);
+
+        float normalizedExp = (float)(Exp - currLevelExp) / (nextLevelExp - currLevelExp);
+        return Mathf.Clamp01(normalizedExp);
+    }
     public bool CheckForLevelUp()
     {
         if (Exp > pokemonBase.GetExpForLevel(level + 1))

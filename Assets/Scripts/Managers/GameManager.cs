@@ -222,7 +222,7 @@ public class GameManager : Singleton<GameManager>
             Action onSelected = () =>
             {
                 // Summary Screen
-                pokemonInfoUI.gameObject.SetActive(true);
+                pokemonInfoUI.Show(partyScreen.SelectedMember);
                 State = GameState.PokeInfo;
             };
 
@@ -251,6 +251,10 @@ public class GameManager : Singleton<GameManager>
         else if (State == GameState.Computer)
         {
             ComputerController.Instance.HandleUpdate();
+        }
+        else if (State == GameState.PokeInfo)
+        {
+            pokemonInfoUI.HandleUpdate();
         }
         
     }
