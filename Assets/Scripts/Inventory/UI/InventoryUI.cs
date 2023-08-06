@@ -34,6 +34,7 @@ public class InventoryUI : MonoBehaviour
 
     private Inventory inventory;
     private int selectedItem;
+    private int prevSelection;
     private int selectedCategory;
     private List<ItemSlotUI> slotUIList;
     private RectTransform itemListRect;

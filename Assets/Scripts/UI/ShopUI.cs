@@ -19,6 +19,7 @@ public class ShopUI : MonoBehaviour
     private List<ItemBase> availableItems;
     private List<ItemSlotUI> slotUIList;
     private int selectedItem;
+    private int prevSelection;
     private const int itemsInViewPort = 10;
     private RectTransform itemListRect;
     private Action<ItemBase> onItemSelected;
@@ -33,6 +34,7 @@ public class ShopUI : MonoBehaviour
         Action onBack)
     {
         selectedItem = 0;
+        prevSelection = -1;
         this.availableItems = availableItems;
         this.onItemSelected = onItemSelected;
         this.onBack = onBack;
@@ -47,7 +49,6 @@ public class ShopUI : MonoBehaviour
 
     public void HandleUpdate()
     {
-        var prevSelection = selectedItem;
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ++selectedItem;
@@ -57,16 +58,11 @@ public class ShopUI : MonoBehaviour
             --selectedItem;
         }
         selectedItem = Mathf.Clamp(selectedItem, 0, availableItems.Count - 1);
-        if (selectedItem == 0)
-        {
-            UpdateCursor();
-            UpdateUI();
-        }
-        else if (selectedItem != prevSelection)
+        if (selectedItem != prevSelection)
         {
             UpdateUI();
         }
-
+        prevSelection = selectedItem;
         if (Input.GetKeyDown(KeyCode.Z))
         {
             AudioManager.Instance.PlaySE(SFX.CONFIRM);

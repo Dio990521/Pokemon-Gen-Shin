@@ -39,7 +39,7 @@ public class ShopController : Singleton<ShopController>
         int selectedChoice = 0;
         yield return DialogueManager.Instance.ShowDialogueText("你要干啥？",
             waitForInput: false,
-            choices: new List<string>() { "买", "卖", "算了" },
+            choices: new List<string>() { "买", "卖"},
             onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
 
         if (selectedChoice == 0)
@@ -54,11 +54,10 @@ public class ShopController : Singleton<ShopController>
         else if (selectedChoice == 1)
         {
             // Sell
-            state = ShopState.Selling;
             inventoryUI.gameObject.SetActive(true);
-            
+            state = ShopState.Selling;
         }
-        else if (selectedChoice == 2)
+        else if (selectedChoice == -1)
         {
             // Quit
             OnFinish?.Invoke();
@@ -114,7 +113,8 @@ public class ShopController : Singleton<ShopController>
         yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？",
             waitForInput: false,
             choices: new List<string>() { "彳亍", "算了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
+            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
+            cancelX: false);
 
         if (selectedChoice == 0) 
         { 
@@ -145,7 +145,8 @@ public class ShopController : Singleton<ShopController>
             yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}摩拉，买吗？",
             waitForInput: false,
             choices: new List<string>() { "彳亍", "算了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
+            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
+            cancelX: false);
 
             if (selectedChoice == 0)
             {

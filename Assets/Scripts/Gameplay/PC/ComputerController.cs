@@ -52,6 +52,7 @@ public class ComputerController : Singleton<ComputerController>
         else if (selectedChoice == 1)
         {
             AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
+            GameManager.Instance.State = GameState.Computer;
             state = ComputerState.Buying;
             walletUI.Show();
             yuanshiShopUI.Show(_computer.AvailableItems, (item) => StartCoroutine(BuyItem(item)),

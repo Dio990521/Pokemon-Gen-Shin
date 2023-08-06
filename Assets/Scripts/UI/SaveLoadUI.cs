@@ -76,7 +76,6 @@ public class SaveLoadUI : MonoBehaviour
 
     public void Close()
     {
-        AudioManager.Instance.PlaySE(SFX.CANCEL);
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -114,6 +113,7 @@ public class SaveLoadUI : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
                 Close();
                 GameManager.Instance.StartFreeRoamState();
             }

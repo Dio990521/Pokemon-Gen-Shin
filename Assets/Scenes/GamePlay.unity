@@ -5703,17 +5703,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830788832347591951, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 2009059485}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2019046657 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3120824573878458151, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
-  m_PrefabInstance: {fileID: 4963794604952134813}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44943c1f0a1c6e34198f362de17c0159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2065423870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6195,7 +6184,7 @@ PrefabInstance:
     - target: {fileID: 1670295426207063890, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: inventoryUI
       value: 
-      objectReference: {fileID: 2019046657}
+      objectReference: {fileID: 651463602}
     - target: {fileID: 1670295426207063890, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: countSelectorUI
       value: 
