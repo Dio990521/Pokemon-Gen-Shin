@@ -33,7 +33,11 @@ public enum SFX
     POKEMON_HEAL,
     MENU,
     TELEPORT,
-    ACTIVATE_TELEPORT
+    ACTIVATE_TELEPORT,
+    CANCEL,
+    PC_ON,
+    PC_OFF,
+    PC_OPERATE
 }
 
 public enum BGM

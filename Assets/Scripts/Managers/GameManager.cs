@@ -2,13 +2,15 @@ using Game.Tool.Singleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo, Save, Load }
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private BattleSystem battleSystem;
@@ -16,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private PokemonInfoUI pokemonInfoUI;
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private SaveLoadUI saveLoadUI;
     [SerializeField] private RouteIcon routeIcon;
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
@@ -35,6 +38,9 @@ public class GameManager : Singleton<GameManager>
 
     MenuController menuController;
 
+    private float _gameTimeSpend;
+    public string GamePlayTime;
+
     protected override void Awake()
     {
         base.Awake();
@@ -51,6 +57,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        _gameTimeSpend = 0f;
         battleSystem.OnBattleOver += EndBattle;
 
         partyScreen.Init();
@@ -190,6 +197,15 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
+        _gameTimeSpend += Time.deltaTime;
+
+        // 将秒数转换为小时和分钟
+        int hours = (int)(_gameTimeSpend / 3600);
+        int minutes = ((int)_gameTimeSpend - hours * 3600) / 60;
+
+        // 格式化为“小时:分钟”的字符串
+        GamePlayTime = string.Format("{0:00}:{1:00}", hours, minutes);
+
         if (State == GameState.FreeRoam)
         {
             playerController.HandleUpdate();
@@ -256,7 +272,15 @@ public class GameManager : Singleton<GameManager>
         {
             pokemonInfoUI.HandleUpdate();
         }
-        
+        else if (State == GameState.Save)
+        {
+            saveLoadUI.HandleUpdate(save: true);
+        }
+        else if (State == GameState.Load)
+        {
+            saveLoadUI.HandleUpdate(save: false);
+        }
+
     }
 
     public IEnumerator MoveCamera(Vector2 moveOffset, bool waitForFadeOut=false)
@@ -300,21 +324,24 @@ public class GameManager : Singleton<GameManager>
         else if (selectedItem == 2)
         {
             // Save
-            SavingSystem.i.Save("saveSlot1");
-            State = GameState.FreeRoam;
+            saveLoadUI.Show();
+            State = GameState.Save;
+
         }
         else if (selectedItem == 3)
         {
             // Load
-            StartCoroutine(LoadGame());
+            saveLoadUI.Show();
+            State = GameState.Load;
         }
     }
 
-    private IEnumerator LoadGame()
+    public IEnumerator LoadGame(string fileName)
     {
         PauseGame(true);
         yield return Fader.FadeIn(1f);
-        SavingSystem.i.Load("saveSlot1");
+        saveLoadUI.Close();
+        SavingSystem.i.Load(fileName);
         CurrentScene.UnloadScene();
         CurrentScene.UnloadConnectedScenes();
         yield return new WaitForSeconds(1.5f);
@@ -323,5 +350,15 @@ public class GameManager : Singleton<GameManager>
         yield return Fader.FadeOut(1f);
         PauseGame(false);
         State = GameState.FreeRoam;
+    }
+
+    public object CaptureState()
+    {
+        return _gameTimeSpend;
+    }
+
+    public void RestoreState(object state)
+    {
+        _gameTimeSpend = (float)state;
     }
 }

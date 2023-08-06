@@ -13,12 +13,14 @@ public class ChoiceBox : MonoBehaviour
 
     private List<ChoiceText> choiceTexts = new List<ChoiceText>();
     private int currentChoice;
+    private bool _cancelX;
 
-    public IEnumerator ShowChoices(List<string> choices, Action<int> onChoiceSelected)
+    public IEnumerator ShowChoices(List<string> choices, Action<int> onChoiceSelected, bool cancelX=true)
     {
         choiceSelected = false;
         cancel = false;
         currentChoice = 0;
+        _cancelX = cancelX;
         gameObject.SetActive(true);
 
         // Delete existing choices
@@ -70,10 +72,14 @@ public class ChoiceBox : MonoBehaviour
             choiceSelected = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (_cancelX)
         {
-            cancel = true;
-            GameManager.Instance.StartFreeRoamState();
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
+                cancel = true;
+                GameManager.Instance.StartFreeRoamState();
+            }
         }
     }
 }

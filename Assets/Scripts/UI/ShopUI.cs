@@ -74,6 +74,7 @@ public class ShopUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
+            AudioManager.Instance.PlaySE(SFX.CANCEL);
             onBack?.Invoke();
         }
     }

@@ -46,6 +46,8 @@ public class PokemonInfoUI : MonoBehaviour
     [SerializeField] private Text _dmg;
     [SerializeField] private Text _acc;
     [SerializeField] private Text _moveDes;
+    [SerializeField] private Text _button;
+    [SerializeField] private GameObject _buttonObject;
 
 
     public void Show(Pokemon pokemon)
@@ -78,13 +80,14 @@ public class PokemonInfoUI : MonoBehaviour
         {
             _moveInfoUIList[i].MoveName = pokemon.Moves[i].MoveBase.MoveName;
             _moveInfoUIList[i].MoveTypeName = pokemon.Moves[i].MoveBase.Type.ToString();
-            _moveInfoUIList[i].PP = $"PP {pokemon.Moves[i].PP}/{pokemon.Moves[i].PP}";
+            _moveInfoUIList[i].PP = $"PP {pokemon.Moves[i].PP}/{pokemon.Moves[i].MoveBase.PP}";
             _moveInfoUIList[i].MoveTypeBG.color = Color.gray;
             _moveInfoUIList[i].MoveType.SetActive(true);
         }
         gameObject.SetActive(true);
         _infoUI1.SetActive(true);
         _infoUI2.SetActive(false);
+        _buttonObject.SetActive(false);
         _selectedMove = 0;
         _state = InfoState.Info1;
 
@@ -92,8 +95,9 @@ public class PokemonInfoUI : MonoBehaviour
 
     private void Close()
     {
-        gameObject.SetActive(false);
         GameManager.Instance.State = GameState.PartyScreen;
+        AudioManager.Instance.PlaySE(SFX.CANCEL);
+        gameObject.SetActive(false);
     }
 
     public void HandleUpdate()
@@ -103,6 +107,7 @@ public class PokemonInfoUI : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
                 _infoUI2.SetActive(true);
+                _buttonObject.SetActive(true);
                 _selector.SetActive(false);
                 _moveDetail.SetActive(false);
                 _tag.sprite = _tagImage2;
@@ -118,12 +123,15 @@ public class PokemonInfoUI : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
                 _infoUI2.SetActive(false);
+                _buttonObject.SetActive(false);
                 _tag.sprite = _tagImage1;
                 _state = InfoState.Info1;
             }
             else if (Input.GetKeyDown(KeyCode.Z))
             {
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
                 _state = InfoState.Detail;
+                _button.text = "X   ·µ»Ø";
                 _selector.SetActive(true);
                 _moveDetail.SetActive(true);
             }
@@ -155,7 +163,9 @@ public class PokemonInfoUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
+            AudioManager.Instance.PlaySE(SFX.CANCEL);
             _moveDetail.SetActive(false);
+            _button.text = "Z   ²é¿´";
             _selector.SetActive(false);
             _state = InfoState.Info2;
         }

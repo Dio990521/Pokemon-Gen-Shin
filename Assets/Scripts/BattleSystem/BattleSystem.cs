@@ -818,6 +818,7 @@ public class BattleSystem : MonoBehaviour
             }
         }else if (Input.GetKeyDown(KeyCode.X))
         {
+            AudioManager.Instance.PlaySE(SFX.CANCEL);
             dialogueBox.EnableChoiceBox(false);
             StartCoroutine(SendNextTrainerPokemon());
         }

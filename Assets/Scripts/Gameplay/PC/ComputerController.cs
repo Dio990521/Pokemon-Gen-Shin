@@ -27,6 +27,7 @@ public class ComputerController : Singleton<ComputerController>
 
     public IEnumerator Boost(Computer computer)
     {
+        AudioManager.Instance.PlaySE(SFX.PC_ON);
         _computer = computer;
         OnStart?.Invoke();
         yield return StartMenuState();
@@ -43,12 +44,14 @@ public class ComputerController : Singleton<ComputerController>
 
         if (selectedChoice == 0)
         {
+            AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
             state = ComputerState.BuyYuanshi;
             walletUI.Show();
             yield return BuyYuanshi();
         }
         else if (selectedChoice == 1)
         {
+            AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
             state = ComputerState.Buying;
             walletUI.Show();
             yuanshiShopUI.Show(_computer.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
@@ -56,11 +59,13 @@ public class ComputerController : Singleton<ComputerController>
         }
         else if (selectedChoice == 2)
         {
+            AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
             state = ComputerState.Room;
             pokemonRoom.gameObject.SetActive(true);
         }
         else if (selectedChoice == -1)
         {
+            AudioManager.Instance.PlaySE(SFX.PC_OFF);
             OnFinish?.Invoke();
             yield break;
         }

@@ -18,7 +18,7 @@ public class DialogueManager : Singleton<DialogueManager>
     public bool IsShowing { get; private set; }
 
     public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true,
-        List<string> choices=null, Action<int> onChoiceSelected=null)
+        List<string> choices=null, Action<int> onChoiceSelected=null, bool cancelX=true)
     {
         OnShowDialogue?.Invoke();
         IsShowing = true;
@@ -33,7 +33,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         if (choices != null && choices.Count > 1)
         {
-            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
+            yield return choiceBox.ShowChoices(choices, onChoiceSelected, cancelX);
         }
 
         if (autoClose)

@@ -65,6 +65,7 @@ public class MenuController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
+            AudioManager.Instance.PlaySE(SFX.CANCEL);
             CloseMenu();
             OnBack?.Invoke();
         }
