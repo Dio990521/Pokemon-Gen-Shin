@@ -199,6 +199,7 @@ public class BattleSystem : MonoBehaviour
     // Player turn
     private void ActionSelection()
     {
+        currentAction = 0;
         state = BattleState.ActionSelection;
         playerUnit.Hud.gameObject.SetActive(true);
         enemyUnit.Hud.gameObject.SetActive(true);
@@ -350,14 +351,14 @@ public class BattleSystem : MonoBehaviour
     private void OpenBag()
     {
         state = BattleState.Bag;
-        inventoryUI.gameObject.SetActive(true);
+        inventoryUI.Show();
     }
 
     private void OpenPartyScreen()
     {
         partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
-        partyScreen.gameObject.SetActive(true);
+        partyScreen.Show();
     }
 
     // Press Z to use the selected move

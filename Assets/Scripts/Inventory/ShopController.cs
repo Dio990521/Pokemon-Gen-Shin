@@ -54,7 +54,7 @@ public class ShopController : Singleton<ShopController>
         else if (selectedChoice == 1)
         {
             // Sell
-            inventoryUI.gameObject.SetActive(true);
+            inventoryUI.Show();
             state = ShopState.Selling;
         }
         else if (selectedChoice == -1)

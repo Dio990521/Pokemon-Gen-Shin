@@ -130,6 +130,7 @@ public class PokemonInfoUI : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Z))
             {
                 AudioManager.Instance.PlaySE(SFX.CONFIRM);
+                _selectedMove = 0;
                 _state = InfoState.Detail;
                 _button.text = "X   ·µ»Ø";
                 _selector.SetActive(true);

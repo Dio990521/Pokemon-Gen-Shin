@@ -11,6 +11,7 @@ public class PartyScreen : MonoBehaviour
     private PokemonParty party;
 
     private int selection = 0;
+    private int prevSelection = -1;
 
     public Pokemon SelectedMember => pokemons[selection];
 
@@ -25,6 +26,13 @@ public class PartyScreen : MonoBehaviour
         SetPartyData();
 
         party.OnUpdated += SetPartyData;
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        selection = 0;
+        prevSelection = -1;
     }
 
     public void SetPartyData()
@@ -52,9 +60,6 @@ public class PartyScreen : MonoBehaviour
 
     public void HandleUpdate(Action onSelected, Action onBack)
     {
-
-        var prevSelection = selection;
-
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             selection += 1;
@@ -78,6 +83,7 @@ public class PartyScreen : MonoBehaviour
         {
             UpdateMemberSelection(selection);
         }
+        prevSelection = selection;
 
         if (Input.GetKeyDown(KeyCode.Z))
         {

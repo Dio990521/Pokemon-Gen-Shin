@@ -311,13 +311,13 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         if (selectedItem == 0)
         {
             // Pokemon
-            partyScreen.gameObject.SetActive(true);
+            partyScreen.Show();
             State = GameState.PartyScreen;
         } 
         else if (selectedItem == 1)
         {
             // Bag
-            inventoryUI.gameObject.SetActive(true);
+            inventoryUI.Show();
             State = GameState.Bag;
 
         }

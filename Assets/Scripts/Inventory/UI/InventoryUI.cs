@@ -34,7 +34,8 @@ public class InventoryUI : MonoBehaviour
 
     private Inventory inventory;
     private int selectedItem;
-    private int prevSelection;
+    private int prevSelection = -1;
+    private int prevCategory = -1;
     private int selectedCategory;
     private List<ItemSlotUI> slotUIList;
     private RectTransform itemListRect;
@@ -53,6 +54,14 @@ public class InventoryUI : MonoBehaviour
     {
         UpdateItemList();
         inventory.OnUpdated += UpdateItemList;
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        selectedItem = 0;
+        prevSelection = -1;
+        prevCategory = -1;
     }
 
     private void UpdateItemList()
@@ -80,10 +89,6 @@ public class InventoryUI : MonoBehaviour
         this.onItemUsed = onItemUsed;
         if (state == InventoryUIState.ItemSelection)
         {
-            
-            //prevSelection = selectedItem;
-            int prevCategory = selectedCategory;
-
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 ++selectedItem;
@@ -117,10 +122,13 @@ public class InventoryUI : MonoBehaviour
                 UpdateCategory();
                 UpdateItemList();
             }
-            //else if (prevSelection != selectedItem || selectedItem == 0)
-            //{
+            prevCategory = selectedCategory;
+
+            if (prevSelection != selectedItem || selectedItem == 0)
+            {
                 UpdateUI();
-            //}
+            }
+            prevSelection = selectedItem;
 
             if (Input.GetKeyDown(KeyCode.Z))
             {
@@ -346,7 +354,7 @@ public class InventoryUI : MonoBehaviour
     private void OpenPartyScreen()
     {
         state = InventoryUIState.PartySelection;
-        partyScreen.gameObject.SetActive(true);
+        partyScreen.Show();
     }
 
     private void ClosePartyScreen()
@@ -358,6 +366,7 @@ public class InventoryUI : MonoBehaviour
     private void ResetSelection()
     {
         selectedItem = 0;
+        prevSelection = -1;
         upArrow.gameObject.SetActive(false);
         downArrow.gameObject.SetActive(false);
         itemIcon.sprite = null;

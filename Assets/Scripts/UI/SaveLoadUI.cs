@@ -12,6 +12,7 @@ public enum SaveLoadUIState { Select, Saving, Loading}
 public class SaveLoadUI : MonoBehaviour
 {
     private int selection = 0;
+    private int prevSelection = -1;
     [SerializeField] private GameObject _selector;
     [SerializeField] private List<DataSlotUI> _dataSlotUIs;
     private SaveLoadUIState _state;
@@ -56,6 +57,7 @@ public class SaveLoadUI : MonoBehaviour
     public void Show()
     {
         Init();
+        selection = 0;
         _state = SaveLoadUIState.Select;
         transform.GetChild(0).gameObject.SetActive(true);
     }
@@ -83,7 +85,6 @@ public class SaveLoadUI : MonoBehaviour
     {
         if (_state == SaveLoadUIState.Select)
         {
-            var prevSelection = selection;
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -95,7 +96,13 @@ public class SaveLoadUI : MonoBehaviour
             }
 
             selection = Mathf.Clamp(selection, 0, 2);
-            UpdateUI(selection);
+
+            if (selection != prevSelection)
+            {
+                UpdateUI(selection);
+            }
+            prevSelection = selection;
+
 
             if (Input.GetKeyDown(KeyCode.Z))
             {

@@ -17,6 +17,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private List<Transform> menuItemPos;
 
     private int selectedItem = 0;
+    private int prevSelection = -1;
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class MenuController : MonoBehaviour
         menu.SetActive(true);
         menuCursor.SetActive(true);
         selectedItem = 0;
+        prevSelection = -1;
         menuCursor.transform.position = menuItemPos[selectedItem].position;
     }
 
@@ -40,7 +42,7 @@ public class MenuController : MonoBehaviour
 
     public void HandleUpdate()
     {
-        int prevSelection = selectedItem;
+        
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -52,11 +54,11 @@ public class MenuController : MonoBehaviour
         }
 
         selectedItem = Mathf.Clamp(selectedItem, 0, menuItemPos.Count - 1);
-
         if (prevSelection != selectedItem)
         {
             menuCursor.transform.position = menuItemPos[selectedItem].position;
         }
+        prevSelection = selectedItem;
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
