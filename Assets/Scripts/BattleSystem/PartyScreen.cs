@@ -7,6 +7,10 @@ public class PartyScreen : MonoBehaviour
 {
     [SerializeField] private Text messageText;
     [SerializeField] private PartyMemberUI[] memberSlots;
+    [SerializeField] private GameObject _buttonBG;
+    [SerializeField] private Image _cancelBall;
+    [SerializeField] private Sprite _cancelBallSprite1;
+    [SerializeField] private Sprite _cancelBallSprite2;
     private List<Pokemon> pokemons;
     private PokemonParty party;
 
@@ -77,7 +81,7 @@ public class PartyScreen : MonoBehaviour
             selection -= 1;
         }
 
-        selection = Mathf.Clamp(selection, 0, pokemons.Count - 1);
+        selection = Mathf.Clamp(selection, 0, pokemons.Count);
 
         if (selection != prevSelection)
         {
@@ -87,8 +91,16 @@ public class PartyScreen : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            onSelected?.Invoke();
+            if (selection == pokemons.Count)
+            {
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
+                onBack?.Invoke();
+            }
+            else
+            {
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
+                onSelected?.Invoke();
+            }
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
@@ -99,6 +111,17 @@ public class PartyScreen : MonoBehaviour
 
     public void UpdateMemberSelection(int selectedMember)
     {
+        if (selectedMember == pokemons.Count)
+        {
+            _buttonBG.SetActive(true);
+            _cancelBall.sprite = _cancelBallSprite2;
+        }
+        else
+        {
+            _buttonBG.SetActive(false);
+            _cancelBall.sprite = _cancelBallSprite1;
+        }
+
         for (int i = 0; i < pokemons.Count; i++)
         {
             if (i == selectedMember)

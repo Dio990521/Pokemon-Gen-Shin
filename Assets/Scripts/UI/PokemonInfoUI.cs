@@ -84,6 +84,7 @@ public class PokemonInfoUI : MonoBehaviour
             _moveInfoUIList[i].MoveTypeBG.color = Color.gray;
             _moveInfoUIList[i].MoveType.SetActive(true);
         }
+        _tag.sprite = _tagImage1;
         gameObject.SetActive(true);
         _infoUI1.SetActive(true);
         _infoUI2.SetActive(false);
