@@ -34,7 +34,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cutoff: 0
+    - _Cutoff: 0.9853622
     - _Distort: 0
     - _Fade: 1
     m_Colors:

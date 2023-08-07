@@ -29,7 +29,7 @@ public class PokemonInfoUI : MonoBehaviour
 
     [Header("Info1")]
     [SerializeField] private Text _pokemonType;
-    [SerializeField] private Text _pokemonEvo;
+    [SerializeField] private Text _pokemonPlace;
     [SerializeField] private GameObject _expBar;
     [SerializeField] private Text _hp;
     [SerializeField] private Text _atk;
@@ -64,7 +64,7 @@ public class PokemonInfoUI : MonoBehaviour
             stringBuilder.Append(" + ").Append(pokemon.PokemonBase.Type2.ToString());
         }
         _pokemonType.text = stringBuilder.ToString();
-        _pokemonEvo.text = "不可进化";
+        _pokemonPlace.text = GameManager.Instance.CurrentScene.MapName;
         stringBuilder.Clear();
         stringBuilder.Append(pokemon.Hp.ToString()).Append("/").Append(pokemon.MaxHp.ToString());
         _hp.text = stringBuilder.ToString();
