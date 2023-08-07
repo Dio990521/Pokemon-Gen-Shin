@@ -834,7 +834,7 @@ public class BattleSystem : MonoBehaviour
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
-        
+        partyScreen.SwitchPokemonSlot(0, partyScreen.Selection);
         playerUnit.ChangeUnit(newPokemon);
         dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");

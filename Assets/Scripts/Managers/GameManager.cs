@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo, Save, Load }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo, Save, Load, PartyMenu, PokemonSwitch }
 
 public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 {
@@ -17,6 +17,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     [SerializeField] private Camera worldCamera;
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private PokemonInfoUI pokemonInfoUI;
+    [SerializeField] private PartyMenu partyMenu;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private SaveLoadUI saveLoadUI;
     [SerializeField] private RouteIcon routeIcon;
@@ -40,6 +41,8 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
     private float _gameTimeSpend;
     public string GamePlayTime;
+
+    private int switchPokemon;
 
     protected override void Awake()
     {
@@ -82,6 +85,11 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         };
 
         menuController.OnMenuSelected += MenuSelected;
+        partyMenu.OnMenuSelected += PartyMenuSelected;
+        partyMenu.OnBack += () =>
+        {
+            State = GameState.PartyScreen;
+        };
 
         EvolutionManager.Instance.OnStartEvolution += () =>
         {
@@ -237,9 +245,8 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
             Action onSelected = () =>
             {
-                // Summary Screen
-                pokemonInfoUI.Show(partyScreen.SelectedMember);
-                State = GameState.PokeInfo;
+                partyMenu.Show(partyScreen.SelectedMember);
+                State = GameState.PartyMenu;
             };
 
             Action onBack = () =>
@@ -279,6 +286,26 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         else if (State == GameState.Load)
         {
             saveLoadUI.HandleUpdate(save: false);
+        }
+        else if (State == GameState.PartyMenu)
+        {
+            partyMenu.HandleUpdate();
+        }
+        else if (State == GameState.PokemonSwitch)
+        {
+            Action onSelected = () =>
+            {
+                partyScreen.SwitchPokemonSlot(switchPokemon, partyScreen.Selection);
+                State = GameState.PartyScreen;
+            };
+
+            Action onBack = () =>
+            {
+                partyScreen.SetMessageText("选择一个宝可梦。");
+                State = GameState.PartyScreen;
+            };
+
+            partyScreen.HandleUpdate(onSelected, onBack);
         }
 
     }
@@ -333,6 +360,26 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
             // Load
             saveLoadUI.Show();
             State = GameState.Load;
+        }
+    }
+
+    private void PartyMenuSelected(int selectedItem, Pokemon selectedPokemon)
+    {
+        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        if (selectedItem == 0)
+        {
+            // Pokemon Summary
+            pokemonInfoUI.Show(selectedPokemon);
+            State = GameState.PokeInfo;
+        }
+        else if (selectedItem == 1)
+        {
+            // Switch Pokemon
+            switchPokemon = partyScreen.Selection;
+            partyScreen.SetMessageText("选择要交换的宝可梦。");
+            partyMenu.Close();
+            State = GameState.PokemonSwitch;
+
         }
     }
 

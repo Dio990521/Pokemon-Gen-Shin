@@ -18,6 +18,7 @@ public class PartyScreen : MonoBehaviour
     private int prevSelection = -1;
 
     public Pokemon SelectedMember => pokemons[selection];
+    public int Selection => selection;
 
     /// <summary>
     /// Party screen can be called from different states like ActionSelection, RuuningTurn, AboutToUse
@@ -60,6 +61,12 @@ public class PartyScreen : MonoBehaviour
         UpdateMemberSelection(selection);
 
         SetMessageText("选择一个宝可梦。");
+    }
+
+    public void SwitchPokemonSlot(int index1, int index2)
+    {
+        (pokemons[index2], pokemons[index1]) = (pokemons[index1], pokemons[index2]);
+        SetPartyData();
     }
 
     public void HandleUpdate(Action onSelected, Action onBack)
