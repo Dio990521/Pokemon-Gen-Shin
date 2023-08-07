@@ -161,10 +161,10 @@ public class BattleSystem : MonoBehaviour
         ActionSelection();
     }
 
-    private IEnumerator BattleOver(bool won)
+    private IEnumerator BattleOver(bool won, bool isCatch=false)
     {
         state = BattleState.BattleOver;
-        if (won)
+        if (!isCatch && won)
         {
             if (isTrainerBattle)
             {
@@ -924,14 +924,15 @@ public class BattleSystem : MonoBehaviour
         if (shakeCount == 4)
         {
             // Pokemon is caught
+            AudioManager.Instance.PlayMusic(BGM.CATCH_POKEMON);
             yield return dialogueBox.TypeDialogue($"抓到了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
-
+            enemyUnit.pokemon.PokeballSprite = pokeballItem.InBattleIcon;
             playerParty.AddPokemon(enemyUnit.pokemon);
             yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
 
             Destroy(pokeball);
-            yield return BattleOver(true);
+            yield return BattleOver(true, true);
         }
         else
         {

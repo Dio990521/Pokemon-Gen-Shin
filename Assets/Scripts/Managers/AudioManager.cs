@@ -63,6 +63,7 @@ public enum BGM
     ABANDONED_SHIP,
     SAND_TOWER,
     CAVE,
+    CATCH_POKEMON,
     NONE
 }
 

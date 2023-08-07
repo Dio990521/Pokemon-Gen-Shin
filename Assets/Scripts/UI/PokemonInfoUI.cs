@@ -56,7 +56,7 @@ public class PokemonInfoUI : MonoBehaviour
         _pokemonImage.sprite = pokemon.PokemonBase.FrontSprite;
         _pokemonName.text = pokemon.PokemonBase.PokemonName;
         _pokemonLevel.text = $"Lv.{pokemon.Level}";
-        _pokeball.sprite = null;
+        _pokeball.sprite = pokemon.PokeballSprite;
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.Append(pokemon.PokemonBase.Type1.ToString());
         if (pokemon.PokemonBase.Type2 != PokemonType.None)

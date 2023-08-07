@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Pokemon
 {
     [SerializeField] private PokemonBase pokemonBase;
     [SerializeField] private int level;
+    private Sprite _pokeballSprite;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
@@ -38,6 +40,8 @@ public class Pokemon
     public Condition VolatileStatus { get; private set; }
     public int VolatileStatusTime { get; set; }
     public Queue<string> StatusChanges { get; private set; }
+    public Sprite PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
+
     public event System.Action OnStatusChanged;
     public event System.Action OnHpChanged;
 
