@@ -61,6 +61,9 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     private void Start()
     {
         _gameTimeSpend = 0f;
+        _worldTransitionManager.ClearTransition(true);
+        _battleTransitionManager.ClearTransition(true);
+
         battleSystem.OnBattleOver += EndBattle;
 
         partyScreen.Init();

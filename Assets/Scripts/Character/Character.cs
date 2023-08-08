@@ -82,6 +82,7 @@ public class Character : MonoBehaviour
         }
 
         IsMoving = true;
+        animator.IsRunning = isRunning;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
             var curSpeed = isRunning ? moveSpeed * 1.5f : moveSpeed;
@@ -97,6 +98,10 @@ public class Character : MonoBehaviour
     public void HandleUpdate()
     {
         animator.IsMoving = IsMoving;
+        if (!animator.IsMoving)
+        {
+            animator.IsRunning = false;
+        }
     }
 
     private bool IsPathClear(Vector3 targetPos)

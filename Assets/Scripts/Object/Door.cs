@@ -44,10 +44,12 @@ public class Door : MonoBehaviour
         GameManager.Instance.PauseGame(true);
         opened = true;
         animator.SetBool("isOpen", true);
+        player.Character.Animator.IsMoving = false;
         yield return new WaitForSeconds(0.5f);
         player.Character.Animator.IsMoving = true;
         yield return player.Character.Move(new Vector2(0, 1), player.OnMoveOver, false);
         yield return new WaitForSeconds(0.5f);
+        player.Character.Animator.IsMoving = false;
         animator.SetBool("isOpen", false);
         opened = false;
     }

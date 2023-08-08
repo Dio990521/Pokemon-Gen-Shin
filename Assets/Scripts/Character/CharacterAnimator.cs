@@ -9,6 +9,7 @@ public class CharacterAnimator : MonoBehaviour
     public float MoveY { get; set; }
     public bool IsMoving { get; set; }
     public bool IsJumping { get; set; }
+    public bool IsRunning { get; set; }
 
     public bool IsSurfing { get; set; }
 
@@ -18,11 +19,21 @@ public class CharacterAnimator : MonoBehaviour
     [SerializeField] private List<Sprite> walkRightSprites;
     [SerializeField] private FacingDirection defaultDirection = FacingDirection.Down;
 
+    [SerializeField] private List<Sprite> runDownSprites;
+    [SerializeField] private List<Sprite> runUpSprites;
+    [SerializeField] private List<Sprite> runLeftSprites;
+    [SerializeField] private List<Sprite> runRightSprites;
+
     // States
     private SpriteAnimator walkDownAnim;
     private SpriteAnimator walkUpAnim;
     private SpriteAnimator walkLeftAnim;
     private SpriteAnimator walkRightAnim;
+
+    private SpriteAnimator runDownAnim;
+    private SpriteAnimator runUpAnim;
+    private SpriteAnimator runLeftAnim;
+    private SpriteAnimator runRightAnim;
 
     private SpriteAnimator currentAnim;
 
@@ -40,6 +51,10 @@ public class CharacterAnimator : MonoBehaviour
         walkUpAnim = new SpriteAnimator(spriteRenderer, walkUpSprites);
         walkLeftAnim = new SpriteAnimator(spriteRenderer, walkLeftSprites);
         walkRightAnim = new SpriteAnimator(spriteRenderer, walkRightSprites);
+        runDownAnim = new SpriteAnimator(spriteRenderer, runDownSprites, 0.12f);
+        runUpAnim = new SpriteAnimator(spriteRenderer, runUpSprites, 0.12f);
+        runLeftAnim = new SpriteAnimator(spriteRenderer, runLeftSprites, 0.12f);
+        runRightAnim = new SpriteAnimator(spriteRenderer, runRightSprites, 0.12f);
         SetFacingDirection(defaultDirection);
 
         currentAnim = walkDownAnim;
@@ -48,23 +63,45 @@ public class CharacterAnimator : MonoBehaviour
     private void Update()
     {
         var prevAnim = currentAnim;
+        if (!IsRunning)
+        {
+            if (MoveX == 1)
+            {
+                currentAnim = walkRightAnim;
+            }
+            else if (MoveX == -1)
+            {
+                currentAnim = walkLeftAnim;
+            }
+            else if (MoveY == 1)
+            {
+                currentAnim = walkUpAnim;
+            }
+            else if (MoveY == -1)
+            {
+                currentAnim = walkDownAnim;
+            }
+        }
+        else if (IsRunning && IsMoving)
+        {
+            if (MoveX == 1)
+            {
+                currentAnim = runRightAnim;
+            }
+            else if (MoveX == -1)
+            {
+                currentAnim = runLeftAnim;
+            }
+            else if (MoveY == 1)
+            {
+                currentAnim = runUpAnim;
+            }
+            else if (MoveY == -1)
+            {
+                currentAnim = runDownAnim;
+            }
+        }
 
-        if (MoveX == 1)
-        {
-            currentAnim = walkRightAnim;
-        }
-        else if (MoveX == -1)
-        {
-            currentAnim = walkLeftAnim;
-        }
-        else if (MoveY == 1)
-        {
-            currentAnim = walkUpAnim;
-        }
-        else if (MoveY == -1)
-        {
-            currentAnim = walkDownAnim;
-        }
 
         if (currentAnim != prevAnim || IsMoving != wasPreviouslyMoving)
         {

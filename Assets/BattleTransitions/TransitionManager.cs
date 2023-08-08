@@ -116,10 +116,14 @@ public class TransitionManager : MonoBehaviour
 
     }
 
-    public void ClearTransition()
+    public void ClearTransition(bool update=false)
     {
         _cutoff = 0;
         _fade = 1;
+        if (update)
+        {
+            UpdateProperties();
+        }
     }
 
     private void UpdateProperties()

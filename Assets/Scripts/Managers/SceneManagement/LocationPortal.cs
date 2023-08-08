@@ -25,6 +25,8 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
     private IEnumerator Teleport()
     {
         GameManager.Instance.PauseGame(true);
+        player.Character.Animator.IsMoving = false;
+        player.Character.Animator.IsRunning = false;
         AudioManager.Instance.PlaySE(SFX.GO_OUT);
         yield return Fader.FadeIn(0.5f);
         var destPortal = FindObjectsOfType<LocationPortal>().First(x => x != this && x.destinationIdentifier == this.destinationIdentifier);
