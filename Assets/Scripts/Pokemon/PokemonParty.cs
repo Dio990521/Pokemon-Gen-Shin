@@ -42,6 +42,7 @@ public class PokemonParty : MonoBehaviour
     {
         if (pokemons.Count < 6)
         {
+            AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
             pokemons.Add(newPokemon);
             OnUpdated?.Invoke();
         }

@@ -928,6 +928,7 @@ public class BattleSystem : MonoBehaviour
             yield return dialogueBox.TypeDialogue($"抓到了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             enemyUnit.pokemon.PokeballSprite = pokeballItem.InBattleIcon;
+            enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
             playerParty.AddPokemon(enemyUnit.pokemon);
             yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
 

@@ -64,7 +64,7 @@ public class PokemonInfoUI : MonoBehaviour
             stringBuilder.Append(" + ").Append(pokemon.PokemonBase.Type2.ToString());
         }
         _pokemonType.text = stringBuilder.ToString();
-        _pokemonPlace.text = GameManager.Instance.CurrentScene.MapName;
+        _pokemonPlace.text = pokemon.CatchPlace;
         stringBuilder.Clear();
         stringBuilder.Append(pokemon.Hp.ToString()).Append("/").Append(pokemon.MaxHp.ToString());
         _hp.text = stringBuilder.ToString();

@@ -33,6 +33,9 @@ public class PokemonBase : ScriptableObject
 
     [SerializeField] private List<Evolution> evolutions;
 
+    [SerializeField] private bool _isEvoState;
+    [SerializeField] private Achievement _achievement;
+
     [Header("Battle Rewards")]
     [SerializeField] private ItemBase reward;
     [SerializeField] private float rewardProb;
@@ -72,6 +75,9 @@ public class PokemonBase : ScriptableObject
     public List<Evolution> Evolutions { get { return evolutions; } }   
     public ItemBase Reward { get { return reward; } }
     public float RewardProb { get { return rewardProb; } }
+
+    public bool IsEvoState { get => _isEvoState; set => _isEvoState = value; }
+    public Achievement Achievement { get => _achievement; set => _achievement = value; }
 }
 
 

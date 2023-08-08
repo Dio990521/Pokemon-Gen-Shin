@@ -11,6 +11,7 @@ public class Pokemon
     [SerializeField] private PokemonBase pokemonBase;
     [SerializeField] private int level;
     private Sprite _pokeballSprite;
+    private string _catchPlace;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
@@ -41,6 +42,7 @@ public class Pokemon
     public int VolatileStatusTime { get; set; }
     public Queue<string> StatusChanges { get; private set; }
     public Sprite PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
+    public string CatchPlace { get => _catchPlace; set => _catchPlace = value; }
 
     public event System.Action OnStatusChanged;
     public event System.Action OnHpChanged;

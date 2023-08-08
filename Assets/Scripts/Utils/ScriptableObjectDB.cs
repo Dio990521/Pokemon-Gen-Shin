@@ -37,6 +37,11 @@ public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
         return objects[name];
     }
 
+    public static ICollection<string> GetAllKeys()
+    {
+        return objects.Keys;
+    }
+
 
 }
 

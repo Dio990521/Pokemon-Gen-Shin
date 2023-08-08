@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo, Save, Load, PartyMenu, PokemonSwitch }
+public enum GameState { FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, PokeInfo, Save, Load, PartyMenu, PokemonSwitch, Achievement }
 
 public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 {
@@ -20,6 +20,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     [SerializeField] private PartyMenu partyMenu;
     [SerializeField] private InventoryUI inventoryUI;
     [SerializeField] private SaveLoadUI saveLoadUI;
+    [SerializeField] private AchievementUI achievementUI;
     [SerializeField] private RouteIcon routeIcon;
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
@@ -310,6 +311,10 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
             partyScreen.HandleUpdate(onSelected, onBack);
         }
+        else if (State == GameState.Achievement)
+        {
+            achievementUI.HandleUpdate();
+        }
 
     }
 
@@ -363,6 +368,20 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
             // Load
             saveLoadUI.Show();
             State = GameState.Load;
+        }
+        else if (selectedItem == 4)
+        {
+            // Achievement
+            achievementUI.Show();
+            State = GameState.Achievement;
+        }
+        else if (selectedItem == 5)
+        {
+            // Setting
+        }
+        else if (selectedItem == 6)
+        {
+            // Title
         }
     }
 

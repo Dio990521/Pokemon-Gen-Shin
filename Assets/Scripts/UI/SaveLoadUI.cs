@@ -150,7 +150,7 @@ public class SaveLoadUI : MonoBehaviour
             _dataSlotUIs[selection].Scene.text = GameManager.Instance.CurrentScene.MapName;
             _dataSlotUIs[selection].Date.text = System.DateTime.Now.ToString();
             _dataSlotUIs[selection].PlayTime.text = GameManager.Instance.GamePlayTime;
-            _dataSlotUIs[selection].Achievement.text = "11%";
+            _dataSlotUIs[selection].Achievement.text = $"{AchievementManager.Instance.GetTotalProgress().ToString("F1")}%";
             _dataSlotUIs[selection].Active = true;
             SaveDataSlot();
         }
