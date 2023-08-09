@@ -19735,6 +19735,10 @@ MonoBehaviour:
   - {fileID: -642900423, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
   - {fileID: -1786720812, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
   defaultDirection: 3
+  runDownSprites: []
+  runUpSprites: []
+  runLeftSprites: []
+  runRightSprites: []
 --- !u!114 &981488787
 MonoBehaviour:
   m_ObjectHideFlags: 0

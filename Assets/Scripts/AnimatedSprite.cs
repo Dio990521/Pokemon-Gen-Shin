@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AnimatedSprite : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class AnimatedSprite : MonoBehaviour
     public float frameRate = 1f / 6f;
 
     private SpriteRenderer spriteRenderer;
+    private Image image;
     private int frame = 0;
 
     public bool isLoop = true;
@@ -15,6 +17,10 @@ public class AnimatedSprite : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null)
+        {
+            image = GetComponent<Image>();
+        }
     }
 
     private void OnEnable()
@@ -46,7 +52,7 @@ public class AnimatedSprite : MonoBehaviour
 
         if (frame >= 0 && frame < sprites.Length)
         {
-            spriteRenderer.sprite = sprites[frame];
+            SetSprite();
         }
 
     }
@@ -55,12 +61,24 @@ public class AnimatedSprite : MonoBehaviour
     {
         while (frame >= 0 && frame < sprites.Length)
         {
-            spriteRenderer.sprite = sprites[frame];
+            SetSprite();
             yield return new WaitForSeconds(frameRate);
             frame++;
         }
 
         Destroy(gameObject);
+    }
+
+    private void SetSprite()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sprite = sprites[frame];
+        }
+        else
+        {
+            image.sprite = sprites[frame];
+        }
     }
 
 }
