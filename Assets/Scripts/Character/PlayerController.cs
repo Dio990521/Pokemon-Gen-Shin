@@ -8,15 +8,16 @@ public class PlayerController : MonoBehaviour, ISavable
     private Vector2 input;
     private Character character;
 
-    [SerializeField] private Sprite sprite;
     [SerializeField] private string playerName;
 
     [SerializeField] private float _interactRadius;
     [SerializeField] private Vector3 _interactStepOffset;
+    [SerializeField] private TrailRenderer _trailRenderer;
 
     private Vector3 _interactPos;
     private Vector3 _faceDir;
     private bool _isRunning;
+
 
     public static PlayerController i { get; private set; }
 
@@ -25,15 +26,11 @@ public class PlayerController : MonoBehaviour, ISavable
         get => playerName;
     }
 
-    public Sprite Sprite
-    {
-        get => sprite;
-    }
-
     public Character Character
     {
         get => character;
     }
+    public TrailRenderer TrailRenderer { get => _trailRenderer; set => _trailRenderer = value; }
 
     private void Awake()
     {
@@ -74,6 +71,7 @@ public class PlayerController : MonoBehaviour, ISavable
         {
             StartCoroutine(Interact());
         }
+
     }
 
     private IEnumerator Interact()
@@ -118,6 +116,15 @@ public class PlayerController : MonoBehaviour, ISavable
         if (colliders.Count() == 0 || triggerable != currentlyInTrigger)
         {
             currentlyInTrigger = null;
+        }
+
+        if (character.Animator.IsSurfing)
+        {
+            _trailRenderer.gameObject.SetActive(true);
+        }
+        else
+        {
+            _trailRenderer.gameObject.SetActive(false);
         }
     }
 

@@ -592,6 +592,11 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!1 &397042469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 830788832347591985, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
+  m_PrefabInstance: {fileID: 1887629941}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &418183527
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3394,9 +3399,12 @@ MonoBehaviour:
   - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
     levelRange: {x: 1, y: 2}
     chancePercentage: 100
-  wildPokemonsInWater: []
+  wildPokemonsInWater:
+  - pokemon: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    levelRange: {x: 1, y: 1}
+    chancePercentage: 100
   totalChance: 100
-  totalChanceInWater: -1
+  totalChanceInWater: 100
 --- !u!1 &1074293869
 GameObject:
   m_ObjectHideFlags: 0
@@ -5340,9 +5348,12 @@ MonoBehaviour:
   - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
     levelRange: {x: 1, y: 2}
     chancePercentage: 100
-  wildPokemonsInWater: []
+  wildPokemonsInWater:
+  - pokemon: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    levelRange: {x: 1, y: 1}
+    chancePercentage: 100
   totalChance: 100
-  totalChanceInWater: -1
+  totalChanceInWater: 100
 --- !u!114 &1877074096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -5481,7 +5492,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 1887629941}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 397042469}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4d16123ecece574693c29c43e82f1a8, type: 3}
@@ -5492,6 +5503,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830788832347591951, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 1887629941}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1887629945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397042469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b05f278bfa3924f96197dd53ab0d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons:
+  - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
+    levelRange: {x: 2, y: 2}
+    chancePercentage: 100
+  wildPokemonsInWater:
+  - pokemon: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    levelRange: {x: 1, y: 1}
+    chancePercentage: 100
+  totalChance: 100
+  totalChanceInWater: 100
 --- !u!1001 &1964184247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5712,6 +5745,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 36.96144, y: 43.20736}
   m_EdgeRadius: 0
+--- !u!114 &1964184253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964184248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8b05f278bfa3924f96197dd53ab0d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wildPokemons:
+  - pokemon: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    levelRange: {x: 2, y: 2}
+    chancePercentage: 100
+  wildPokemonsInWater:
+  - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
+    levelRange: {x: 1, y: 1}
+    chancePercentage: 100
+  totalChance: 100
+  totalChanceInWater: 100
 --- !u!224 &2007365995 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7863999116603981163, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -7068,6 +7123,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 731287863822435020, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 732561168545538132, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7251,6 +7310,14 @@ PrefabInstance:
     - target: {fileID: 1283850259245123989, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 1347192834175601124, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1421056413238366843, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1498475188047462041, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7580,6 +7647,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346032833477327738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346032833477327738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346032833477327738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346032833477327738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2373757018538316669, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -7771,6 +7854,22 @@ PrefabInstance:
     - target: {fileID: 2634228050296468756, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638906656938024540, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_SortMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638906656938024540, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_RenderMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638906656938024540, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_SortingFudge
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2638906656938024540, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2681900849007582128, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8733,6 +8832,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokemons.Array.data[2].pokemonBase
+      value: 
+      objectReference: {fileID: 11400000, guid: bcc023d767c8e4346961b43fba0926c9, type: 2}
+    - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[4].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
@@ -9123,6 +9226,10 @@ PrefabInstance:
     - target: {fileID: 5468538395415090403, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -352
+      objectReference: {fileID: 0}
+    - target: {fileID: 5474071107367999389, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: near clip plane
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 5496794894505183794, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Text
@@ -10048,6 +10155,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorPos4
       objectReference: {fileID: 0}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: gap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: delta
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: stepSystem
+      value: 
+      objectReference: {fileID: 4963794604952134818}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: systemYOffset
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: footStepMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1882de302893c7e45a0dce2445a2b2c5, type: 2}
     - target: {fileID: 7670984964727255585, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Text
       value: "\u51FA\u6CA1\u5730\u70B9"
@@ -10408,6 +10535,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8488539470506232911, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8505817920616286616, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -10427,6 +10558,22 @@ PrefabInstance:
     - target: {fileID: 8505817920616286616, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516674491326888755, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: gap
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516674491326888755, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: delta
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516674491326888755, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: IsDesert
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8516674491326888755, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: systemYOffset
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8572280263048202422, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -10764,3 +10911,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945d7d2dd939c894db1216da160d4c88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &4963794604952134818 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2346032833477327738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using UnityEngine.Windows;
 
 public class Character : MonoBehaviour
@@ -13,6 +14,16 @@ public class Character : MonoBehaviour
 
     public float OffsetY = 0.15f;
 
+    [Header("FootStep")]
+    public ParticleSystem stepSystem;
+    public Material footStepMaterial;
+    public bool IsDesert;
+    Vector3 lastEmit;
+    public float delta = 0.8f;
+    public float gap = 0.1f;
+    public float systemYOffset = -0.5f;
+    int dir = 1;
+
     public CharacterAnimator Animator
     {
         get => animator;
@@ -22,6 +33,11 @@ public class Character : MonoBehaviour
     {
         animator = GetComponent<CharacterAnimator>();
         SetPositionAndSnapToTile(transform.position);
+        if (stepSystem != null )
+        {
+            stepSystem.GetComponent<Renderer>().material = footStepMaterial;
+            lastEmit = transform.position;
+        }
     }
 
     public FacingDirection GetCharacterDirection()
@@ -101,6 +117,33 @@ public class Character : MonoBehaviour
         if (!animator.IsMoving)
         {
             animator.IsRunning = false;
+        }
+        if (IsDesert)
+        {
+            SetFootStep();
+        }
+    }
+
+    private void SetFootStep()
+    {
+        if (Vector2.Distance(lastEmit, transform.position) > delta)
+        {
+            Gizmos.color = Color.green;
+            var pos = transform.position + new Vector3(Animator.MoveY * gap * dir, -Animator.MoveX * gap * dir, -5) + new Vector3(0, systemYOffset, 0);
+            //利用两向量垂直公式：x1x2+y1y2=0，将lookDirection转90度。
+            dir *= -1;
+            ParticleSystem.EmitParams ep = new ParticleSystem.EmitParams();
+            ep.position = pos;
+            if (Animator.MoveX > 0)
+            {
+                ep.rotation = Vector2.Angle(new Vector2(0, 1), new Vector2(Animator.MoveX, Animator.MoveY));
+            }
+            else if (Animator.MoveX <= 0)
+            {
+                ep.rotation = -Vector2.Angle(new Vector2(0, 1), new Vector2(Animator.MoveX, Animator.MoveY));
+            }
+            stepSystem.Emit(ep, 1);
+            lastEmit = transform.position;
         }
     }
 
