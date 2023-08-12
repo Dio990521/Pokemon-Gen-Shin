@@ -6566,6 +6566,30 @@ MonoBehaviour:
   yuanshiShopUI: {fileID: 2082832281}
   countSelectorUI: {fileID: 1602842722}
   pokemonRoom: {fileID: 0}
+--- !u!114 &2173388929618975062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9506c32b369b3b648aae74a9926b574b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c70cf6b680b03954f8d7fed3e5598a96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2219967225854741100
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public GameState stateBeforeEvolution;
     private TrainerController trainer;
 
+    public StateMachine<GameManager> StateMachine { get; private set; }
+
     public SceneDetails CurrentScene { get; private set; }
     public SceneDetails PrevScene { get; private set; }
     public GameState State { get => state; set => state = value; }
@@ -60,6 +63,9 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
     private void Start()
     {
+        StateMachine = new StateMachine<GameManager>(this);
+        StateMachine.ChangeState(FreeRoamState.i);
+
         _gameTimeSpend = 0f;
         _worldTransitionManager.ClearTransition(true);
         _battleTransitionManager.ClearTransition(true);
@@ -217,17 +223,19 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         // 格式化为“小时:分钟”的字符串
         GamePlayTime = string.Format("{0:00}:{1:00}", hours, minutes);
 
-        if (State == GameState.FreeRoam)
-        {
-            playerController.HandleUpdate();
+        StateMachine.Execute();
 
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                menuController.OpenMenu();
-                State = GameState.Menu;
-            }
-        }
-        else if (State == GameState.Cutscene)
+        //if (State == GameState.FreeRoam)
+        //{
+        //    playerController.HandleUpdate();
+
+        //    if (Input.GetKeyDown(KeyCode.Return))
+        //    {
+        //        menuController.OpenMenu();
+        //        State = GameState.Menu;
+        //    }
+        //}
+        if (State == GameState.Cutscene)
         {
             playerController.Character.HandleUpdate();
         }
@@ -434,5 +442,16 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public void RestoreState(object state)
     {
         _gameTimeSpend = (float)state;
+    }
+
+    private void OnGUI()
+    {
+        var style = new GUIStyle();
+        style.fontSize = 25;
+        GUILayout.Label("STATE STACK", style);
+        foreach (var state in StateMachine.StateStack)
+        {
+            GUILayout.Label(state.GetType().ToString(), style);
+        }
     }
 }
