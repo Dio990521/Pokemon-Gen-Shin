@@ -26,7 +26,7 @@ public class FreeRoamState : State<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            _gameManager.StateMachine.Push(GameMenuState.i);
+            _gameManager.StateMachine.Push(GameMenuState.I);
         }
         //    {
         //        menuController.OpenMenu();

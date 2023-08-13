@@ -40,7 +40,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
     public RouteIcon RouteIcon { get => routeIcon; }
 
-    MenuController menuController;
+    //MenuController menuController;
 
     private float _gameTimeSpend;
     public string GamePlayTime;
@@ -58,7 +58,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         QuestDB.Init();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-        menuController = GetComponent<MenuController>();
+        //menuController = GetComponent<MenuController>();
     }
 
     private void Start()
@@ -88,12 +88,12 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
             }
         };
 
-        menuController.OnBack += () =>
-        {
-            State = GameState.FreeRoam;
-        };
+        //menuController.OnBack += () =>
+        //{
+        //    State = GameState.FreeRoam;
+        //};
 
-        menuController.OnMenuSelected += MenuSelected;
+        //menuController.OnMenuSelected += MenuSelected;
         partyMenu.OnMenuSelected += PartyMenuSelected;
         partyMenu.OnBack += () =>
         {
@@ -247,10 +247,10 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         {
             DialogueManager.Instance.HandleUpdate();
         }
-        else if (State == GameState.Menu)
-        {
-            menuController.HandleUpdate();
-        }
+        //else if (State == GameState.Menu)
+        //{
+        //    menuController.HandleUpdate();
+        //}
         else if (State == GameState.PartyScreen)
         {
 
