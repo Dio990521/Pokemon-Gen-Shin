@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,14 @@ namespace PokeGenshinUtils.SelectionUI
     public class SelectionUI<T> : MonoBehaviour where T : ISelectableItem
     {
         private List<T> _items;
-        private float selectedItem = 0;
-        private float prevSelection = -1;
+        private int selectedItem = 0;
+        private int prevSelection = -1;
 
         //private float selectionTimer = 0;
         //const float selectionSpeed = 5;
+
+        public event Action<int> OnSelected;
+        public event Action OnBack;
 
         public void SetItems(List<T> items)
         {
@@ -38,6 +42,15 @@ namespace PokeGenshinUtils.SelectionUI
             }
 
             prevSelection = selectedItem;
+
+            if (Input.GetButtonDown("Action"))
+            {
+                OnSelected?.Invoke(selectedItem);
+            }
+            else if (Input.GetButtonDown("Back"))
+            {
+                OnBack?.Invoke();
+            }
         }
 
         public void HandleListSelection(bool isGrid=false)
