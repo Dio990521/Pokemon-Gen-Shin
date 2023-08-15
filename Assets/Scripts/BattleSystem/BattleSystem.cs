@@ -356,7 +356,7 @@ public class BattleSystem : MonoBehaviour
 
     private void OpenPartyScreen()
     {
-        partyScreen.CalledFrom = state;
+        //partyScreen.CalledFrom = state;
         state = BattleState.PartyScreen;
         partyScreen.Show();
     }
@@ -759,18 +759,18 @@ public class BattleSystem : MonoBehaviour
 
             partyScreen.gameObject.SetActive(false);
 
-            if (partyScreen.CalledFrom == BattleState.ActionSelection)
-            {
-                StartCoroutine(RunTurns(BattleAction.SwitchPokemon));
-            }
-            else
-            {
-                state = BattleState.Busy;
-                bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
-                StartCoroutine(SwitchPokemon(seletedMember, isTrainerAboutToUse));
-            }
+            //if (partyScreen.CalledFrom == BattleState.ActionSelection)
+            //{
+            //    StartCoroutine(RunTurns(BattleAction.SwitchPokemon));
+            //}
+            //else
+            //{
+            //    state = BattleState.Busy;
+            //    bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
+            //    StartCoroutine(SwitchPokemon(seletedMember, isTrainerAboutToUse));
+            //}
 
-            partyScreen.CalledFrom = null;
+            //partyScreen.CalledFrom = null;
         };
 
         Action onBack = () =>
@@ -782,19 +782,19 @@ public class BattleSystem : MonoBehaviour
             }
             partyScreen.gameObject.SetActive(false);
 
-            if (partyScreen.CalledFrom == BattleState.AboutToUse)
-            {
-                StartCoroutine(SendNextTrainerPokemon());
-            }
-            else
-            {
-                ActionSelection();
-            }
+            //if (partyScreen.CalledFrom == BattleState.AboutToUse)
+            //{
+            //    StartCoroutine(SendNextTrainerPokemon());
+            //}
+            //else
+            //{
+            //    ActionSelection();
+            //}
 
-            partyScreen.CalledFrom = null;
+            //partyScreen.CalledFrom = null;
         };
 
-        partyScreen.HandleUpdate(onSelected, onBack);
+        //partyScreen.HandleUpdate(onSelected, onBack);
     }
 
     private void HandleAboutToUse()
@@ -834,7 +834,7 @@ public class BattleSystem : MonoBehaviour
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
-        partyScreen.SwitchPokemonSlot(0, partyScreen.Selection);
+        //partyScreen.SwitchPokemonSlot(0, partyScreen.Selection);
         playerUnit.ChangeUnit(newPokemon);
         dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");

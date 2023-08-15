@@ -41,6 +41,10 @@ public class GameMenuState : State<GameManager>
     private void OnMenuItemSelected(int selection)
     {
         print($"shit!fuck {selection} you!");
+        if ( selection == 0 )
+        {
+            _gameManager.StateMachine.Push(GamePartyState.I);
+        }
     }
 
     private void OnBack()

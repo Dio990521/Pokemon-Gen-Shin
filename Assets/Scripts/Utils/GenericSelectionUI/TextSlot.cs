@@ -7,6 +7,11 @@ public class TextSlot : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private Image _cursor;
 
+    public void Init()
+    {
+
+    }
+
     public void OnSelectionChanged(bool selected)
     {
         _cursor.enabled = selected;

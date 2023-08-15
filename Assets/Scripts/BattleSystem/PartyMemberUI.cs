@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PartyMemberUI : MonoBehaviour
+public class PartyMemberUI : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private Text nameText;
     [SerializeField] private Text levelText;
@@ -62,6 +62,20 @@ public class PartyMemberUI : MonoBehaviour
 
     // Show the sprite when a pokemon is selected
     public void SetSelected(bool selected)
+    {
+        GetComponent<Image>().sprite = selected ? selectedSlotImage : notSelectedSlotImage;
+        ballIcon.sprite = selected ? selectedBallImage : notSelectedBallImage;
+        ballIcon.rectTransform.sizeDelta = selected ? new Vector2(ballIcon.rectTransform.sizeDelta.x, 95f) : new Vector2(ballIcon.rectTransform.sizeDelta.x, 86.33f);
+        nameText.color = selected ? new Color32(79, 79, 79, 255) : new Color32(255, 255, 255, 255);
+        levelText.color = selected ? new Color32(79, 79, 79, 255) : new Color32(255, 255, 255, 255);
+    }
+
+    public void Init()
+    {
+
+    }
+
+    public void OnSelectionChanged(bool selected)
     {
         GetComponent<Image>().sprite = selected ? selectedSlotImage : notSelectedSlotImage;
         ballIcon.sprite = selected ? selectedBallImage : notSelectedBallImage;

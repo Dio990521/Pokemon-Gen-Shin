@@ -251,23 +251,23 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         //{
         //    menuController.HandleUpdate();
         //}
-        else if (State == GameState.PartyScreen)
-        {
+        //else if (State == GameState.PartyScreen)
+        //{
 
-            Action onSelected = () =>
-            {
-                partyMenu.Show(partyScreen.SelectedMember);
-                State = GameState.PartyMenu;
-            };
+        //    Action onSelected = () =>
+        //    {
+        //        partyMenu.Show(partyScreen.SelectedMember);
+        //        State = GameState.PartyMenu;
+        //    };
 
-            Action onBack = () =>
-            {
-                partyScreen.gameObject.SetActive(false);
-                State = GameState.FreeRoam;
-            };
+        //    Action onBack = () =>
+        //    {
+        //        partyScreen.gameObject.SetActive(false);
+        //        State = GameState.FreeRoam;
+        //    };
 
-            partyScreen.HandleUpdate(onSelected, onBack);
-        }
+        //    partyScreen.HandleUpdate(onSelected, onBack);
+        //}
         else if (State == GameState.Bag)
         {
             Action onBack = () =>
@@ -306,7 +306,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         {
             Action onSelected = () =>
             {
-                partyScreen.SwitchPokemonSlot(switchPokemon, partyScreen.Selection);
+                //partyScreen.SwitchPokemonSlot(switchPokemon, partyScreen.Selection);
                 State = GameState.PartyScreen;
             };
 
@@ -316,7 +316,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
                 State = GameState.PartyScreen;
             };
 
-            partyScreen.HandleUpdate(onSelected, onBack);
+            //partyScreen.HandleUpdate(onSelected, onBack);
         }
         else if (State == GameState.Achievement)
         {
@@ -410,7 +410,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         else if (selectedItem == 1)
         {
             // Switch Pokemon
-            switchPokemon = partyScreen.Selection;
+            //switchPokemon = partyScreen.Selection;
             partyScreen.SetMessageText("选择要交换的宝可梦。");
             partyMenu.Close();
             State = GameState.PokemonSwitch;
