@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlotUI : MonoBehaviour
+public class ItemSlotUI : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private Text nameText;
     [SerializeField] private Text countText;
-    public GameObject cursorPos;
+    public Image _cursor;
 
     public RectTransform rectTransform;
 
@@ -30,5 +30,15 @@ public class ItemSlotUI : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
         nameText.text = item.ItemName;
         countText.text = item.Price == 0 ? $"{item.YuanshiPrice}Ô­Ê¯" : $"{item.Price}£¤";
+    }
+
+    public void Init()
+    {
+
+    }
+
+    public void OnSelectionChanged(bool selected)
+    {
+        _cursor.enabled = selected;
     }
 }

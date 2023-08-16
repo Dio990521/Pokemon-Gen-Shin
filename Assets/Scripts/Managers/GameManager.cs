@@ -268,16 +268,16 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
         //    partyScreen.HandleUpdate(onSelected, onBack);
         //}
-        else if (State == GameState.Bag)
-        {
-            Action onBack = () =>
-            {
-                inventoryUI.gameObject.SetActive(false);
-                State = GameState.FreeRoam;
-            };
+        //else if (State == GameState.Bag)
+        //{
+        //    Action onBack = () =>
+        //    {
+        //        inventoryUI.gameObject.SetActive(false);
+        //        State = GameState.FreeRoam;
+        //    };
 
-            inventoryUI.HandleUpdate(onBack);
-        }
+        //    inventoryUI.HandleUpdate(onBack);
+        //}
         else if (State == GameState.Shop)
         {
             ShopController.Instance.HandleUpdate();
@@ -354,20 +354,20 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     private void MenuSelected(int selectedItem)
     {
         AudioManager.Instance.PlaySE(SFX.CONFIRM);
-        if (selectedItem == 0)
-        {
-            // Pokemon
-            partyScreen.Show();
-            State = GameState.PartyScreen;
-        } 
-        else if (selectedItem == 1)
-        {
-            // Bag
-            inventoryUI.Show();
-            State = GameState.Bag;
+        //if (selectedItem == 0)
+        //{
+        //    // Pokemon
+        //    partyScreen.Show();
+        //    State = GameState.PartyScreen;
+        //} 
+        //else if (selectedItem == 1)
+        //{
+        //    // Bag
+        //    inventoryUI.Show();
+        //    State = GameState.Bag;
 
-        }
-        else if (selectedItem == 2)
+        //}
+        if (selectedItem == 2)
         {
             // Save
             saveLoadUI.Show();

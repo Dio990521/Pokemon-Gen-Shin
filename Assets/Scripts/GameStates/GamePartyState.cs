@@ -48,8 +48,18 @@ public class GamePartyState : State<GameManager>
         else
         {
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            // Summary screen
-            print($"open summary screen {selection}");
+            if (_gameManager.StateMachine.GetPrevState() == InventoryState.I)
+            {
+                print($"Use Item {selection}");
+            }
+            else
+            {
+                // Summary screen
+                print($"open summary screen {selection}");
+            }
+
+            
+            
         }
         
     }

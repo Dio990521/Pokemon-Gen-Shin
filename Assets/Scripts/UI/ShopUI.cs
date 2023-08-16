@@ -123,7 +123,7 @@ public class ShopUI : MonoBehaviour
 
     public void UpdateCursor()
     {
-        inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
+        //inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
     }
 
 }

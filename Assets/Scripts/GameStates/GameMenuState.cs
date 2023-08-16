@@ -45,6 +45,10 @@ public class GameMenuState : State<GameManager>
         {
             _gameManager.StateMachine.Push(GamePartyState.I);
         }
+        else if (selection == 1 )
+        {
+            _gameManager.StateMachine.Push(InventoryState.I);
+        }
     }
 
     private void OnBack()

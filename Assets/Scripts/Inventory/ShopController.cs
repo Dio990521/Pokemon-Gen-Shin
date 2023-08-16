@@ -69,7 +69,7 @@ public class ShopController : Singleton<ShopController>
     {
         if (state == ShopState.Selling)
         {
-            inventoryUI.HandleUpdate(OnBackFromSelling, (selectedItem) => StartCoroutine(SellItem(selectedItem)));
+            //inventoryUI.HandleUpdate(OnBackFromSelling, (selectedItem) => StartCoroutine(SellItem(selectedItem)));
         }
         else if (state == ShopState.Buying)
         {

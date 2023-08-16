@@ -36,7 +36,7 @@ namespace PokeGenshinUtils.SelectionUI
             UpdateSelectionUI();
         }
 
-        public void ResetSelection()
+        public virtual void ResetSelection()
         {
             selectedItem = 0;
             prevSelection = -1;
@@ -79,7 +79,7 @@ namespace PokeGenshinUtils.SelectionUI
             }
         }
 
-        public void HandleListSelection()
+        public virtual void HandleListSelection()
         {
             //float v = Input.GetAxis("Vertical");
 

@@ -231,7 +231,7 @@ public class BattleSystem : MonoBehaviour
                 StartCoroutine(OnItemUsed(usedItem));
             };
 
-            inventoryUI.HandleUpdate(onBack, onItemUsed);
+            //inventoryUI.HandleUpdate(onBack, onItemUsed);
         }
         else if (state == BattleState.PartyScreen)
         {
