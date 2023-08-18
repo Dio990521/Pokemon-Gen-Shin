@@ -265,7 +265,7 @@ public class BattleSystem : MonoBehaviour
 
             
 
-            moveSelectionUI.HandleMoveSelection(onMoveSelected);
+            //moveSelectionUI.HandleMoveSelection(onMoveSelected);
         }
     }
 

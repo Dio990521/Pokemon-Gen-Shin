@@ -40,6 +40,8 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     private RectTransform itemListRect;
     private MoveBase moveToLearn;
 
+    public ItemBase SelectedItem => inventory.GetItem(selectedItem, selectedCategory);
+
     //[SerializeField] private Image inventoryCursor;
     [SerializeField] private List<Image> categoryPoints;
 
@@ -55,7 +57,12 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     private void Start()
     {
         UpdateItemList();
-        //inventory.OnUpdated += UpdateItemList;
+        inventory.OnUpdated += UpdateItemList;
+    }
+
+    public bool IsCategoryEmpty()
+    {
+        return slotUIList.Count == 0;
     }
 
     public void Show()

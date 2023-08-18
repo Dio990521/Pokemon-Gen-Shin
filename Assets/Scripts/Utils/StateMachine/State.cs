@@ -12,7 +12,7 @@ namespace PokeGenshinUtils.StateMachine
 
         public virtual void Execute() { }
 
-        public virtual void Exit() { }
+        public virtual void Exit(bool sfx=true) { }
 
     }
 

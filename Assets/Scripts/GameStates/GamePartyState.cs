@@ -29,9 +29,12 @@ public class GamePartyState : State<GameManager>
         partyScreen.HandleUpdate();
     }
 
-    public override void Exit()
+    public override void Exit(bool sfx)
     {
-        AudioManager.Instance.PlaySE(SFX.CANCEL);
+        if (sfx)
+        {
+            AudioManager.Instance.PlaySE(SFX.CANCEL);
+        }
         partyScreen.ResetSelection();
         partyScreen.gameObject.SetActive(false);
         partyScreen.OnSelected -= OnPokemonSelected;
@@ -50,7 +53,7 @@ public class GamePartyState : State<GameManager>
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
             if (_gameManager.StateMachine.GetPrevState() == InventoryState.I)
             {
-                print($"Use Item {selection}");
+                StartCoroutine(GoToUseItemState());
             }
             else
             {
@@ -62,6 +65,12 @@ public class GamePartyState : State<GameManager>
             
         }
         
+    }
+
+    private IEnumerator GoToUseItemState()
+    {
+        yield return _gameManager.StateMachine.PushAndWait(UseItemState.I);
+        _gameManager.StateMachine.Pop(false);
     }
 
     private void OnBack()

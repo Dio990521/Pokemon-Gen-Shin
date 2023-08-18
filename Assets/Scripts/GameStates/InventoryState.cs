@@ -30,7 +30,7 @@ public class InventoryState : State<GameManager>
         _inventoryUI.HandleUpdate();
     }
 
-    public override void Exit()
+    public override void Exit(bool sfx)
     {
         AudioManager.Instance.PlaySE(SFX.CANCEL);
         _inventoryUI.SelectedCategory = 0;
@@ -42,7 +42,10 @@ public class InventoryState : State<GameManager>
 
     private void OnItemSelected(int selection)
     {
-        _gameManager.StateMachine.Push(GamePartyState.I);
+        if (!_inventoryUI.IsCategoryEmpty())
+        {
+            _gameManager.StateMachine.Push(GamePartyState.I);
+        }
     }
 
     private void OnBack()

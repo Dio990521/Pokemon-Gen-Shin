@@ -29,7 +29,7 @@ public class GameMenuState : State<GameManager>
         _menuController.HandleUpdate();
     }
 
-    public override void Exit()
+    public override void Exit(bool sfx)
     {
         AudioManager.Instance.PlaySE(SFX.CANCEL);
         _menuController.ResetSelection();

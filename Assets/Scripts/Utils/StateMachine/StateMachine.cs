@@ -28,10 +28,17 @@ namespace PokeGenshinUtils.StateMachine
             CurrentState.Enter(_owner);
         }
 
-        public void Pop()
+        public IEnumerator PushAndWait(State<T> newState)
+        {
+            var oldState = CurrentState;
+            Push(newState);
+            yield return new WaitUntil(() => CurrentState == oldState);
+        }
+
+        public void Pop(bool sfx=true)
         {
             StateStack.Pop();
-            CurrentState.Exit();
+            CurrentState.Exit(sfx);
             CurrentState = StateStack.Peek();
         }
 
