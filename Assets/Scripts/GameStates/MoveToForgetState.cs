@@ -37,6 +37,7 @@ public class MoveToForgetState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
+        _moveSelectionUI.ResetSelection();
         _moveSelectionUI.gameObject.SetActive(false);
         _moveSelectionUI.OnSelected -= OnMoveSelected;
         _moveSelectionUI.OnBack -= OnBack;
@@ -44,12 +45,14 @@ public class MoveToForgetState : State<GameManager>
 
     private void OnMoveSelected(int selection)
     {
+        AudioManager.Instance.PlaySE(SFX.CONFIRM);
         Selection = selection;
         _gameManager.StateMachine.Pop();
     }
 
     private void OnBack()
     {
+        AudioManager.Instance.PlaySE(SFX.CANCEL);
         Selection = -1;
         _gameManager.StateMachine.Pop();
     }

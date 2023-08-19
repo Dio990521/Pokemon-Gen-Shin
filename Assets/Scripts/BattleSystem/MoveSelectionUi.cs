@@ -19,7 +19,7 @@ public class MoveSelectionUI : SelectionUI<TextSlot>
 
         moveTexts[currentMoves.Count].text = newMove.MoveName;
 
-        SetItems(moveTexts.Select(m => m.GetComponent<TextSlot>()).ToList());
+        SetItems(GetComponentsInChildren<TextSlot>().ToList());
     }
 
 }

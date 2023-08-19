@@ -45,7 +45,6 @@ public class GamePartyState : State<GameManager>
     {
         if (selection == partyScreen.Pokemons.Count)
         {
-            AudioManager.Instance.PlaySE(SFX.CANCEL);
             OnBack();
         }
         else

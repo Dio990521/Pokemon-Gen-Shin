@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public enum InventoryUIState { ItemSelection, PartySelection, MoveToForget, Busy}
 
@@ -27,9 +28,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
 
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private MoveSelectionUI moveSelectionUI;
-    private InventoryUIState state;
-
-    private Action<ItemBase> onItemUsed;
 
     private const int itemsInViewPort = 10;
 
@@ -142,6 +140,11 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
             itemIcon.sprite = item.Icon;
             itemDescription.text = item.Description;
         }
+        else
+        {
+            itemIcon.sprite = null;
+            itemDescription.text = null;
+        }
 
         HandleScrolling();
     }
@@ -244,131 +247,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
 
     //}
 
-    public IEnumerator ItemSelected()
-    {
-        state = InventoryUIState.Busy;
-
-        var item = inventory.GetItem(selectedItem, selectedCategory);
-        if (item == null)
-        {
-            state = InventoryUIState.ItemSelection;
-            yield break;
-        }
-
-        if (GameManager.Instance.State == GameState.Shop)
-        {
-            onItemUsed?.Invoke(item);
-            state = InventoryUIState.ItemSelection;
-            yield break;
-        }
-
-        if (GameManager.Instance.State == GameState.Battle)
-        {
-            // In battle
-            if (!item.CanUseInBattle)
-            {
-                yield return DialogueManager.Instance.ShowDialogueText($"你不能在战斗中使用它！");
-                state = InventoryUIState.ItemSelection;
-                yield break;
-            }
-        }
-        else
-        {
-            // Outside battle
-            if (!item.CanUseOutsideBattle)
-            {
-                yield return DialogueManager.Instance.ShowDialogueText($"你不能在这里使用它！");
-                state = InventoryUIState.ItemSelection;
-                yield break;
-            }
-        }
-
-
-        if (selectedCategory == (int)ItemCategory.Pokeballs)
-        {
-            StartCoroutine(UseItem());
-        }
-        else
-        {
-            OpenPartyScreen();
-        }
-    }
-
-    private IEnumerator UseItem()
-    {
-        state = InventoryUIState.Busy;
-
-        yield return HandleTmItems();
-
-        var item = inventory.GetItem(selectedItem, selectedCategory);
-        var pokemon = partyScreen.SelectedMember;
-        if (item is EvolutionItem)
-        {
-            var evolution = pokemon.CheckForEvolution(item);
-            if (evolution != null)
-            {
-                yield return EvolutionManager.Instance.Evolve(pokemon, evolution);
-            }
-            else
-            {
-                yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
-                ClosePartyScreen();
-                yield break;
-            }
-        }
-
-
-        var usedItem = inventory.UseItem(selectedItem, partyScreen.SelectedMember, selectedCategory);
-        if (usedItem != null)
-        {
-            if (usedItem is RecoveryItem)
-            {
-                yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
-            }
-            onItemUsed?.Invoke(usedItem);
-        }
-        else
-        {
-            yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
-        }
-
-        ClosePartyScreen();
-        UpdateUI();
-    }
-
-    private IEnumerator HandleTmItems()
-    {
-        var tmItem = inventory.GetItem(selectedItem, selectedCategory) as TmItem;
-        if (tmItem == null)
-        {
-            yield break;
-        }
-        var pokemon = partyScreen.SelectedMember;
-        if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
-        {
-            pokemon.LearnMove(tmItem.Move);
-            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}习得了新技能\n{tmItem.Move.MoveName}！");
-
-        }
-        else
-        {
-            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}想要学习{tmItem.Move.MoveName}...");
-            yield return DialogueManager.Instance.ShowDialogueText($"但是{pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
-            yield return ChooseMoveToForget(pokemon, tmItem.Move);
-            yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
-        }
-    }
-
-    private IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
-    {
-        state = InventoryUIState.Busy;
-        yield return DialogueManager.Instance.ShowDialogueText($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", true, false);
-        moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
-        moveToLearn = newMove;
-        state = InventoryUIState.MoveToForget;
-    }
-
     private void UpdateUI()
     {
         var slots = inventory.GetSlotsByCategory(selectedCategory);
@@ -426,18 +304,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         categoryPoints[selectedCategory].gameObject.SetActive(true);
     }
 
-    private void OpenPartyScreen()
-    {
-        state = InventoryUIState.PartySelection;
-        partyScreen.Show();
-    }
-
-    private void ClosePartyScreen()
-    {
-        state = InventoryUIState.ItemSelection;
-        partyScreen.gameObject.SetActive(false);
-    }
-
     //private void ResetSelection()
     //{
     //    selectedItem = 0;
@@ -447,28 +313,5 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     //    itemIcon.sprite = null;
     //    itemDescription.text = "";
     //}
-
-    private IEnumerator OnMoveToForgetSelected(int moveIndex)
-    {
-        var pokemon = partyScreen.SelectedMember;
-
-        DialogueManager.Instance.CloseDialog();
-        moveSelectionUI.gameObject.SetActive(false);
-        if (moveIndex == PokemonBase.MaxNumOfMoves)
-        {
-            // Don't learn the new move
-            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}放弃学习{moveToLearn.MoveName}！");
-        }
-        else
-        {
-            // Forget the selected move and learn new move
-            var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
-            yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
-            pokemon.Moves[moveIndex] = new Move(moveToLearn);
-        }
-
-        moveToLearn = null;
-        state = InventoryUIState.ItemSelection;
-    }
 
 }

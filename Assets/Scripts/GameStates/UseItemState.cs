@@ -29,8 +29,6 @@ public class UseItemState : State<GameManager>
     private IEnumerator UseItem()
     {
 
-        yield return HandleTmItems();
-
         var item = _inventoryUI.SelectedItem;
         var pokemon = _partyScreen.SelectedMember;
 
@@ -89,14 +87,34 @@ public class UseItemState : State<GameManager>
         {
             pokemon.LearnMove(tmItem.Move);
             yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}习得了新技能\n{tmItem.Move.MoveName}！");
-
+            _inventory.RemoveItem(tmItem);
         }
         else
         {
             yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}想要学习{tmItem.Move.MoveName}...");
             yield return DialogueManager.Instance.ShowDialogueText($"但是{pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
-            //yield return ChooseMoveToForget(pokemon, tmItem.Move);
-            //yield return new WaitUntil(() => state != InventoryUIState.MoveToForget);
+
+            yield return DialogueManager.Instance.ShowDialogueText($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", true, false);
+
+            MoveToForgetState.I.NewMove = tmItem.Move;
+            MoveToForgetState.I.CurrentMoves = pokemon.Moves.Select(m => m.MoveBase).ToList();
+            yield return _gameManager.StateMachine.PushAndWait(MoveToForgetState.I);
+
+            int moveIndex = MoveToForgetState.I.Selection;
+            if (moveIndex == PokemonBase.MaxNumOfMoves || moveIndex == -1)
+            {
+                // Don't learn the new move
+                yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}放弃学习{tmItem.Move.MoveName}！");
+            }
+            else
+            {
+                // Forget the selected move and learn new move
+                var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
+                yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
+                pokemon.Moves[moveIndex] = new Move(tmItem.Move);
+                _inventory.RemoveItem(tmItem);
+            }
+
         }
     }
 
