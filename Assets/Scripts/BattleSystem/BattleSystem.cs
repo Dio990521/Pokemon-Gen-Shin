@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum BattleState
+public enum BattleStates
 {
     Start,
     ActionSelection,
@@ -51,7 +51,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] List<Sprite> playerGroundSprites;
     [SerializeField] Image backgroundImage;
 
-    public BattleState state;
+    public BattleStates state;
     
     public int currentAction;
     public int currentMove;
@@ -163,7 +163,7 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator BattleOver(bool won, bool isCatch=false)
     {
-        state = BattleState.BattleOver;
+        state = BattleStates.BattleOver;
         if (!isCatch && won)
         {
             if (isTrainerBattle)
@@ -200,7 +200,7 @@ public class BattleSystem : MonoBehaviour
     private void ActionSelection()
     {
         currentAction = 0;
-        state = BattleState.ActionSelection;
+        state = BattleStates.ActionSelection;
         playerUnit.Hud.gameObject.SetActive(true);
         enemyUnit.Hud.gameObject.SetActive(true);
         StartCoroutine(dialogueBox.TypeDialogue($"想要\n{playerUnit.pokemon.PokemonBase.PokemonName}做什么？"));
@@ -210,20 +210,20 @@ public class BattleSystem : MonoBehaviour
     // Check action cursor and move cursor
     public void HandleUpdate()
     {
-        if (state == BattleState.ActionSelection)
+        if (state == BattleStates.ActionSelection)
         {
             HandleActionSelection();
         }
-        else if (state == BattleState.MoveSelection)
+        else if (state == BattleStates.MoveSelection)
         {
             HandleMoveSelection();
         }
-        else if (state == BattleState.Bag)
+        else if (state == BattleStates.Bag)
         {
             Action onBack = () =>
             {
                 inventoryUI.gameObject.SetActive(false);
-                state = BattleState.ActionSelection;
+                state = BattleStates.ActionSelection;
             };
 
             Action<ItemBase> onItemUsed = (ItemBase usedItem) =>
@@ -233,15 +233,15 @@ public class BattleSystem : MonoBehaviour
 
             //inventoryUI.HandleUpdate(onBack, onItemUsed);
         }
-        else if (state == BattleState.PartyScreen)
+        else if (state == BattleStates.PartyScreen)
         {
             HandlePartyScreenSelection();
         }
-        else if (state == BattleState.AboutToUse)
+        else if (state == BattleStates.AboutToUse)
         {
             HandleAboutToUse();
         }
-        else if (state == BattleState.MoveToForget)
+        else if (state == BattleStates.MoveToForget)
         {
             Action<int> onMoveSelected = (moveIndex) =>
             {
@@ -260,7 +260,7 @@ public class BattleSystem : MonoBehaviour
                 }
 
                 moveToLearn = null;
-                state = BattleState.RunningTurn;
+                state = BattleStates.RunningTurn;
             };
 
             
@@ -324,7 +324,7 @@ public class BattleSystem : MonoBehaviour
     // Open move box
     private void MoveSelection()
     {
-        state = BattleState.MoveSelection;
+        state = BattleStates.MoveSelection;
         dialogueBox.EnableActionSelector(false);
         dialogueBox.EnableDialogueText(false);
         dialogueBox.EnableMoveSelector(true);
@@ -332,32 +332,32 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator AboutToUse(Pokemon newPokemon)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要让{newPokemon.PokemonBase.PokemonName}上场！\n是否要更换当前出战宝可梦？");
-        state = BattleState.AboutToUse;
+        state = BattleStates.AboutToUse;
         dialogueBox.EnableChoiceBox(true);
     }
 
     private IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         yield return dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
         moveSelectionUI.gameObject.SetActive(true);
         moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
         moveToLearn = newMove;
-        state = BattleState.MoveToForget;
+        state = BattleStates.MoveToForget;
     }
 
     private void OpenBag()
     {
-        state = BattleState.Bag;
+        state = BattleStates.Bag;
         inventoryUI.Show();
     }
 
     private void OpenPartyScreen()
     {
         //partyScreen.CalledFrom = state;
-        state = BattleState.PartyScreen;
+        state = BattleStates.PartyScreen;
         partyScreen.Show();
     }
 
@@ -404,7 +404,7 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator RunTurns(BattleAction playerAction)
     {
-        state = BattleState.RunningTurn;
+        state = BattleStates.RunningTurn;
         if (playerAction == BattleAction.Move)
         {
             playerUnit.pokemon.CurrentMove = playerUnit.pokemon.Moves[currentMove];
@@ -432,14 +432,14 @@ public class BattleSystem : MonoBehaviour
             // First turn
             yield return RunMove(firstUnit, secondUnit, firstUnit.pokemon.CurrentMove);
             yield return RunAfterTurn(firstUnit);
-            if (state == BattleState.BattleOver) yield break;
+            if (state == BattleStates.BattleOver) yield break;
 
             if (secondPokemon.Hp > 0)
             {
                 // Second turn
                 yield return RunMove(secondUnit, firstUnit, secondUnit.pokemon.CurrentMove);
                 yield return RunAfterTurn(secondUnit);
-                if (state == BattleState.BattleOver) yield break;
+                if (state == BattleStates.BattleOver) yield break;
             }
             
         }
@@ -449,7 +449,7 @@ public class BattleSystem : MonoBehaviour
             {
                 dialogueBox.EnableActionSelector(false);
                 var selectedPokemon = partyScreen.SelectedMember;
-                state = BattleState.Busy;
+                state = BattleStates.Busy;
                 yield return SwitchPokemon(selectedPokemon);
             }
             else if (playerAction == BattleAction.UseItem)
@@ -466,11 +466,11 @@ public class BattleSystem : MonoBehaviour
             var enemyMove = enemyUnit.pokemon.GetRandomMove();
             yield return RunMove(enemyUnit, playerUnit, enemyMove);
             yield return RunAfterTurn(enemyUnit);
-            if (state == BattleState.BattleOver) yield break;
+            if (state == BattleStates.BattleOver) yield break;
         }
 
         // Back to selecting actions
-        if (state != BattleState.BattleOver)
+        if (state != BattleStates.BattleOver)
         {
             ActionSelection();
         }
@@ -585,8 +585,8 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator RunAfterTurn(BattleUnit sourceUnit)
     {
-        if (state == BattleState.BattleOver) yield break;
-        yield return new WaitUntil(() => state == BattleState.RunningTurn);
+        if (state == BattleStates.BattleOver) yield break;
+        yield return new WaitUntil(() => state == BattleStates.RunningTurn);
 
         sourceUnit.pokemon.AfterTurn();
         yield return ShowStatusChanges(sourceUnit.pokemon);
@@ -594,7 +594,7 @@ public class BattleSystem : MonoBehaviour
         if (sourceUnit.pokemon.Hp <= 0)
         {
             yield return HandlePokemonFainted(sourceUnit);
-            yield return new WaitUntil(() => state == BattleState.RunningTurn);
+            yield return new WaitUntil(() => state == BattleStates.RunningTurn);
         }
     }
 
@@ -672,7 +672,7 @@ public class BattleSystem : MonoBehaviour
                         yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
                         yield return dialogueBox.TypeDialogue($"但是{playerUnit.pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
                         yield return ChooseMoveToForget(playerUnit.pokemon, newMove.MoveBase);
-                        yield return new WaitUntil(() => state != BattleState.MoveToForget);
+                        yield return new WaitUntil(() => state != BattleStates.MoveToForget);
                         yield return new WaitForSeconds(2f);
                     }
                 }
@@ -846,24 +846,24 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
         }
         
     }
 
     private IEnumerator SendNextTrainerPokemon()
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
 
         var nextPokemon = trainerParty.GetHealthyPokemon();
         enemyUnit.SetUp(nextPokemon);
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
-        state = BattleState.RunningTurn;
+        state = BattleStates.RunningTurn;
     }
 
     private IEnumerator OnItemUsed(ItemBase usedItem)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         inventoryUI.gameObject.SetActive(false);
 
         if (usedItem is PokeballItem)
@@ -876,26 +876,26 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator ThrowPokeball(PokeballItem pokeballItem)
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
         dialogueBox.EnableActionSelector(false);
         if (isTrainerBattle)
         {
             yield return dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
 
         if (pokeballItem.BallType == PokeballType.Genshin && !enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
 
         if (pokeballItem.BallType != PokeballType.Genshin && enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
 
@@ -946,7 +946,7 @@ public class BattleSystem : MonoBehaviour
             yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
             Destroy(pokeball);
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
         }
     }
 
@@ -998,12 +998,12 @@ public class BattleSystem : MonoBehaviour
 
     private IEnumerator TryToEspace()
     {
-        state = BattleState.Busy;
+        state = BattleStates.Busy;
 
         if (isTrainerBattle)
         {
             yield return dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
-            state = BattleState.RunningTurn;
+            state = BattleStates.RunningTurn;
             yield break;
         }
 
@@ -1032,7 +1032,7 @@ public class BattleSystem : MonoBehaviour
             else
             {
                 yield return dialogueBox.TypeDialogue($"逃跑失败了！");
-                state = BattleState.RunningTurn;
+                state = BattleStates.RunningTurn;
             }
         }
     }

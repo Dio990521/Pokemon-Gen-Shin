@@ -57,7 +57,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         if (!battleLost)
         {
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
-            StartCoroutine(GameManager.Instance.StartTrainerBattle(this));
+            GameManager.Instance.StartTrainerBattle(this);
 
         }
         else
@@ -91,7 +91,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
         // Show dialog
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
-        StartCoroutine(GameManager.Instance.StartTrainerBattle(this));
+        GameManager.Instance.StartTrainerBattle(this);
     }
 
     public void SetFovRotation(FacingDirection dir)

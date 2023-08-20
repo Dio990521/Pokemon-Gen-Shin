@@ -39,6 +39,9 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public PlayerController PlayerController { get => playerController;}
 
     public RouteIcon RouteIcon { get => routeIcon; }
+    public Camera WorldCamera { get => worldCamera; set => worldCamera = value; }
+    public TransitionManager WorldTransitionManager { get => _worldTransitionManager; set => _worldTransitionManager = value; }
+    public TransitionManager BattleTransitionManager { get => _battleTransitionManager; set => _battleTransitionManager = value; }
 
     //MenuController menuController;
 
@@ -143,37 +146,42 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         state = GameState.FreeRoam;
     }
 
-    public IEnumerator StartBattle(BattleTrigger trigger)
+    public void StartBattle(BattleTrigger trigger)
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
-        State = GameState.Battle;
-        yield return _worldTransitionManager.StartTransition(TransitionType.WildBattle, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
-        battleSystem.gameObject.SetActive(true);
-        worldCamera.gameObject.SetActive(false);
+        BattleState.I.Trigger = trigger;
+        StateMachine.Push(BattleState.I);
+        //
+        //State = GameState.Battle;
+        //yield return _worldTransitionManager.StartTransition(TransitionType.WildBattle, 2f);
+        //yield return new WaitForSeconds(2f);
+        //yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
+        //battleSystem.gameObject.SetActive(true);
+        //worldCamera.gameObject.SetActive(false);
 
-        PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
-        Pokemon wildPokemon = CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon(trigger);
+        //PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
+        //Pokemon wildPokemon = CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon(trigger);
 
-        var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
-        battleSystem.StartBattle(playerParty, wildPokemonCopy, trigger);
+        //var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
+        //battleSystem.StartBattle(playerParty, wildPokemonCopy, trigger);
     }
 
-    public IEnumerator StartTrainerBattle(TrainerController trainer)
+    public void StartTrainerBattle(TrainerController trainer)
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
-        State = GameState.Battle;
-        yield return _worldTransitionManager.StartTransition(TransitionType.TrainerBattle, 2f);
-        yield return new WaitForSeconds(2f);
-        yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
-        battleSystem.gameObject.SetActive(true);
-        worldCamera.gameObject.SetActive(false);
-        this.trainer = trainer;
-        PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
-        PokemonParty trainerParty = trainer.GetComponent<PokemonParty>();
+        BattleState.I.Trainer = trainer;
+        StateMachine.Push(BattleState.I);
+        //State = GameState.Battle;
+        //yield return _worldTransitionManager.StartTransition(TransitionType.TrainerBattle, 2f);
+        //yield return new WaitForSeconds(2f);
+        //yield return _battleTransitionManager.StartTransition(TransitionType.TopBottom, 1.5f);
+        //battleSystem.gameObject.SetActive(true);
+        //worldCamera.gameObject.SetActive(false);
+        //this.trainer = trainer;
+        //PokemonParty playerParty = playerController.GetComponent<PokemonParty>();
+        //PokemonParty trainerParty = trainer.GetComponent<PokemonParty>();
 
-        battleSystem.StartTrainerBattle(playerParty, trainerParty);
+        //battleSystem.StartTrainerBattle(playerParty, trainerParty);
     }
 
     public void OnEnterTrainersView(TrainerController trainer)
@@ -239,10 +247,10 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         {
             playerController.Character.HandleUpdate();
         }
-        else if (State == GameState.Battle)
-        {
-            battleSystem.HandleUpdate();
-        }
+        //else if (State == GameState.Battle)
+        //{
+        //    battleSystem.HandleUpdate();
+        //}
         else if (State == GameState.Dialogue)
         {
             DialogueManager.Instance.HandleUpdate();
