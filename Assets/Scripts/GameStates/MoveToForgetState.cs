@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveToForgetState : State<GameManager>
 {
-    [SerializeField] private MoveSelectionUI _moveSelectionUI;
+    [SerializeField] private ForgetMoveSelectionUI _moveSelectionUI;
 
     public List<MoveBase> CurrentMoves { get; set; }
     public MoveBase NewMove { get; set; }

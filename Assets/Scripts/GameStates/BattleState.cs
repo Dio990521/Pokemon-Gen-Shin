@@ -21,6 +21,7 @@ public class BattleState : State<GameManager>
     public override void Enter(GameManager owner)
     {
         _gameManager = owner;
+        _battleSystem.CreateBattleStateMachine();
         StartCoroutine(EnterBattle());
         _battleSystem.OnBattleOver += EndBattle;
 

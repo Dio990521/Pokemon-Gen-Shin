@@ -16,4 +16,9 @@ public class TextSlot : MonoBehaviour, ISelectableItem
     {
         _cursor.enabled = selected;
     }
+
+    public void SetText(string text)
+    {
+        GetComponentInChildren<Text>().text = text;
+    }
 }

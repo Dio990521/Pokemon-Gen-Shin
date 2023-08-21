@@ -27,7 +27,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     [SerializeField] private List<Sprite> bagIcons;
 
     [SerializeField] private PartyScreen partyScreen;
-    [SerializeField] private MoveSelectionUI moveSelectionUI;
+    [SerializeField] private ForgetMoveSelectionUI moveSelectionUI;
 
     private const int itemsInViewPort = 10;
 

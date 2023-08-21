@@ -1,4 +1,5 @@
 using DG.Tweening;
+using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private Image playerImage;
     [SerializeField] private Image trainerImage;
     [SerializeField] private GameObject pokeballSprite;
-    [SerializeField] private MoveSelectionUI moveSelectionUI;
+    [SerializeField] private ForgetMoveSelectionUI moveSelectionUI;
     [SerializeField] private InventoryUI inventoryUI;
 
     [SerializeField] List<Sprite> backgroundImages;
@@ -52,7 +53,12 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] Image backgroundImage;
 
     public BattleStates state;
-    
+
+    public StateMachine<BattleSystem> StateMachine { get; private set; }
+    public BattleDialogueBox DialogueBox { get => dialogueBox; set => dialogueBox = value; }
+    public BattleUnit PlayerUnit { get => playerUnit; set => playerUnit = value; }
+    public BattleUnit EnemyUnit { get => enemyUnit; set => enemyUnit = value; }
+
     public int currentAction;
     public int currentMove;
     private bool aboutToUseChoice = true;
@@ -97,8 +103,14 @@ public class BattleSystem : MonoBehaviour
         StartCoroutine(SetupBattle());
     }
 
+    public void CreateBattleStateMachine()
+    {
+        StateMachine = new StateMachine<BattleSystem>(this);
+    }
+
     public IEnumerator SetupBattle()
     {
+
         playerUnit.SetDefaultPlayerSprite();
         playerUnit.HideHud();
         enemyUnit.HideHud();
@@ -152,13 +164,14 @@ public class BattleSystem : MonoBehaviour
         playerUnit.ChangeUnit(playerPokemon);
         yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
+        //dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
         yield return new WaitForSeconds(2f);
 
         playerUnit.ShowHud();
         enemyUnit.ShowHud();
         escapeAttempts = 0;
-        ActionSelection();
+
+        StateMachine.ChangeState(ActionSelectionState.I);
     }
 
     private IEnumerator BattleOver(bool won, bool isCatch=false)
@@ -210,15 +223,9 @@ public class BattleSystem : MonoBehaviour
     // Check action cursor and move cursor
     public void HandleUpdate()
     {
-        if (state == BattleStates.ActionSelection)
-        {
-            HandleActionSelection();
-        }
-        else if (state == BattleStates.MoveSelection)
-        {
-            HandleMoveSelection();
-        }
-        else if (state == BattleStates.Bag)
+        StateMachine.Execute();
+
+        if (state == BattleStates.Bag)
         {
             Action onBack = () =>
             {
@@ -665,7 +672,7 @@ public class BattleSystem : MonoBehaviour
                     {
                         playerUnit.pokemon.LearnMove(newMove.MoveBase);
                         yield return dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}习得了新技能\n{newMove.MoveBase.MoveName}！");
-                        dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
+                        //dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
                     }
                     else
                     {
@@ -836,7 +843,7 @@ public class BattleSystem : MonoBehaviour
         }
         //partyScreen.SwitchPokemonSlot(0, partyScreen.Selection);
         playerUnit.ChangeUnit(newPokemon);
-        dialogueBox.SetMoveNames(newPokemon.Moves);
+        //dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
 

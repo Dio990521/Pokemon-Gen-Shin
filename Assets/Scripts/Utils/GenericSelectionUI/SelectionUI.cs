@@ -109,6 +109,7 @@ namespace PokeGenshinUtils.SelectionUI
 
         public void HandleGridSelection()
         {
+            
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 selectedItem += _gridWidth;
