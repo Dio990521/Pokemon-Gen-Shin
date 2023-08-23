@@ -20,6 +20,7 @@ public class ActionSelectionState : State<BattleSystem>
     {
         _battleSystem = owner;
         _selectionUI.gameObject.SetActive(true);
+        _selectionUI.ResetSelection();
         _selectionUI.OnSelected += OnActionSelected;
 
         StartCoroutine(_battleSystem.DialogueBox.TypeDialogue($"想要\n{_battleSystem.PlayerUnit.pokemon.PokemonBase.PokemonName}做什么？"));
@@ -42,8 +43,23 @@ public class ActionSelectionState : State<BattleSystem>
         if (selection == 0)
         {
             // Fight
+            _battleSystem.SelectedAction = BattleAction.Move;
             MoveSelectionState.I.Moves = _battleSystem.PlayerUnit.pokemon.Moves;
             _battleSystem.StateMachine.ChangeState(MoveSelectionState.I);
+        }
+        else if (selection == 1)
+        {
+            // Bag
+        }
+        else if (selection == 2)
+        {
+            // Pokemon
+        }
+        else if (selection == 3)
+        {
+            // Run
+            _battleSystem.SelectedAction = BattleAction.Run;
+            _battleSystem.StateMachine.ChangeState(RunTurnState.I);
         }
     }
 }

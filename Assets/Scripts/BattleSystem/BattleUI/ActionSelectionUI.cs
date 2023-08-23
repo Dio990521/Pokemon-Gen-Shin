@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ActionSelectionUI : SelectionUI<TextSlot>
 {
-    private void Start()
+    private void Awake()
     {
         SetSelectionSettings(SelectionType.Grid, 2);
         SetItems(GetComponentsInChildren<TextSlot>().ToList());
