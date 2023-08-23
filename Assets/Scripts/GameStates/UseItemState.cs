@@ -46,7 +46,7 @@ public class UseItemState : State<GameManager>
                 var evolution = pokemon.CheckForEvolution(item);
                 if (evolution != null)
                 {
-                    yield return EvolutionManager.Instance.Evolve(pokemon, evolution);
+                    yield return EvolutionState.I.Evolve(pokemon, evolution);
                 }
                 else
                 {
@@ -68,10 +68,7 @@ public class UseItemState : State<GameManager>
             }
             else
             {
-                if (_inventoryUI.SelectedCategory == (int)ItemCategory.Items)
-                {
-                    yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
-                }
+                yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
             }
         }
 

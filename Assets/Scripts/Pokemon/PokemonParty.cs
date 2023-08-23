@@ -69,7 +69,7 @@ public class PokemonParty : MonoBehaviour
             var evolution = pokemon.CheckForEvolution();
             if (evolution != null)
             {
-                yield return EvolutionManager.Instance.Evolve(pokemon, evolution);
+                yield return EvolutionState.I.Evolve(pokemon, evolution);
             }
         }
     }

@@ -1,7 +1,9 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class RunTurnState : State<BattleSystem>
 {
@@ -319,9 +321,26 @@ public class RunTurnState : State<BattleSystem>
                     {
                         yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
                         yield return _dialogueBox.TypeDialogue($"但是{_playerUnit.pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
-                        //yield return ChooseMoveToForget(_playerUnit.pokemon, newMove.MoveBase);
-                        //yield return new WaitUntil(() => state != BattleStates.MoveToForget);
-                        yield return new WaitForSeconds(2f);
+                        yield return _dialogueBox.TypeDialogue($"想要让{_playerUnit.pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
+                        //yield return DialogueManager.Instance.ShowDialogueText($"想要让{_playerUnit.pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", true, false);
+
+                        MoveToForgetState.I.NewMove = newMove.MoveBase;
+                        MoveToForgetState.I.CurrentMoves = _playerUnit.pokemon.Moves.Select(m => m.MoveBase).ToList();
+                        yield return GameManager.Instance.StateMachine.PushAndWait(MoveToForgetState.I);
+
+                        int moveIndex = MoveToForgetState.I.Selection;
+                        if (moveIndex == PokemonBase.MaxNumOfMoves || moveIndex == -1)
+                        {
+                            // Don't learn the new move
+                            yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}放弃学习{newMove.MoveBase.MoveName}！");
+                        }
+                        else
+                        {
+                            // Forget the selected move and learn new move
+                            var selevtedMove = _playerUnit.pokemon.Moves[moveIndex].MoveBase;
+                            yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
+                            _playerUnit.pokemon.Moves[moveIndex] = new Move(newMove.MoveBase);
+                        }
                     }
                 }
 

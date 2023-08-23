@@ -4120,6 +4120,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2373757018538316669, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
   m_PrefabInstance: {fileID: 4963794604952134813}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1315856530 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4965289408151001905, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e166d74a655d364fbbdcc13ce67ec1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367060012
 GameObject:
   m_ObjectHideFlags: 0
@@ -7102,6 +7113,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: moveSelectionUI
+      value: 
+      objectReference: {fileID: 1315856530}
     - target: {fileID: 4671520594331999450, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -19.999004

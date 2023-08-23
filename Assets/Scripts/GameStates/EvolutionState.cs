@@ -1,21 +1,29 @@
 using Game.Tool.Singleton;
+using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvolutionManager : Singleton<EvolutionManager>
+public class EvolutionState : State<GameManager>
 {
     [SerializeField] private GameObject evolutionUI;
-    private Image pokemonImage;
+    [SerializeField] private Image pokemonImage;
 
-    public event Action OnStartEvolution;
-    public event Action OnCompleteEvolution;
+    public static EvolutionState I { get; private set; }
+
+    private void Awake()
+    {
+        I = this;
+    }
+
 
     public IEnumerator Evolve(Pokemon pokemon, Evolution evolution)
     {
-        OnStartEvolution?.Invoke();
+        var gameManager = GameManager.Instance;
+        gameManager.StateMachine.Push(this);
+
         evolutionUI.SetActive(true);
 
         pokemonImage.sprite = pokemon.PokemonBase.FrontSprite;
@@ -27,6 +35,10 @@ public class EvolutionManager : Singleton<EvolutionManager>
         yield return DialogueManager.Instance.ShowDialogueText($"{oldPokemon.PokemonName}成功进化为\n{pokemon.PokemonBase.PokemonName}了！");
 
         evolutionUI.SetActive(false);
-        OnCompleteEvolution?.Invoke();
+
+        gameManager.PartyScreen.SetPartyData();
+        AudioManager.Instance.PlayMusic(gameManager.CurrentScene.SceneMusic, fade: true);
+
+        gameManager.StateMachine.Pop();
     }
 }

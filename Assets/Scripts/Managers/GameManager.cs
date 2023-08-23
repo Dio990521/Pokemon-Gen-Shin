@@ -42,6 +42,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public Camera WorldCamera { get => worldCamera; set => worldCamera = value; }
     public TransitionManager WorldTransitionManager { get => _worldTransitionManager; set => _worldTransitionManager = value; }
     public TransitionManager BattleTransitionManager { get => _battleTransitionManager; set => _battleTransitionManager = value; }
+    public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
 
     //MenuController menuController;
 
@@ -97,20 +98,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         partyMenu.OnBack += () =>
         {
             State = GameState.PartyScreen;
-        };
-
-        EvolutionManager.Instance.OnStartEvolution += () =>
-        {
-            stateBeforeEvolution = State;
-            State = GameState.Evolution;
-        };
-
-        EvolutionManager.Instance.OnCompleteEvolution += () =>
-        {
-            State = stateBeforeEvolution;
-            partyScreen.SetPartyData();
-
-            AudioManager.Instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
         };
 
         ShopController.Instance.OnStart += () => state = GameState.Shop;

@@ -136,6 +136,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
 
         if (slots.Count > 0 && selectedItem >= 0)
         {
+            base.ClampSelection();
             var item = slots[selectedItem].Item;
             itemIcon.sprite = item.Icon;
             itemDescription.text = item.Description;

@@ -357,14 +357,12 @@ public class BattleSystem : MonoBehaviour
         dialogueBox.EnableChoiceBox(true);
     }
 
-    private IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
+    public IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
     {
-        state = BattleStates.Busy;
         yield return dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
         moveSelectionUI.gameObject.SetActive(true);
         moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
         moveToLearn = newMove;
-        state = BattleStates.MoveToForget;
     }
 
     private void OpenBag()
