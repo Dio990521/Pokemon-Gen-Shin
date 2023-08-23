@@ -534,6 +534,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0be6fe461699dbc4d876492cbe57585b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &348108973 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4671520593421274252, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &350424749
 GameObject:
   m_ObjectHideFlags: 0
@@ -3941,6 +3952,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830788832347591951, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 1204852519}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1205512386 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7559188507660202016, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1220106464 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -4472,6 +4494,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 830788832347591951, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
   m_PrefabInstance: {fileID: 1389047343}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1403067068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5611115039428684990, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1417141017
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6317,6 +6350,10 @@ PrefabInstance:
       propertyPath: evolutionUI
       value: 
       objectReference: {fileID: 927910551}
+    - target: {fileID: 2570929497772671517, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: pokemonImage
+      value: 
+      objectReference: {fileID: 1205512386}
     - target: {fileID: 4624101447025537899, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: uniqueId
       value: a0b9b00d-1175-42d4-8cc3-ba2699a9bba9
@@ -6604,6 +6641,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ed1321fb1faa449854a8ec51508107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71f5266edceb3c4692994e2705bb917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1896036eb9867fb4ea27ec639aa09200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37bc85a04ff9dbd4abae42698d048079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 651463602}
+  walletUI: {fileID: 190008697}
+  countSelectorUI: {fileID: 1602842722}
+--- !u!114 &2173388929618975103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7407f446c401e664595091c131b2a75f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walletUI: {fileID: 190008697}
+  countSelectorUI: {fileID: 1602842722}
+  shopUI: {fileID: 2082832281}
+  shopCameraOffset: {x: 0, y: 0}
 --- !u!1001 &2219967225854741100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6933,6 +7025,10 @@ PrefabInstance:
       propertyPath: pokeballSlots.Array.data[2].count
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4055235585633421300, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4236015941473918781, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7033,6 +7129,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520593421274251, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _image
+      value: 
+      objectReference: {fileID: 348108973}
     - target: {fileID: 4671520593425259593, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7177,6 +7277,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520594889989866, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4671520595013629985, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Name
       value: EssentialObjects
@@ -7313,6 +7417,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5611115039428684985, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _image
+      value: 
+      objectReference: {fileID: 1403067068}
     - target: {fileID: 5710992670898689828, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

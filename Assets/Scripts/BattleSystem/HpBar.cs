@@ -12,6 +12,7 @@ public class HpBar : MonoBehaviour
     private int _curHp;
     private int _maxHp;
     private float _hpScale;
+    [SerializeField] private Image _image;
 
     public bool IsUpdating { get; private set; }
 
@@ -80,6 +81,18 @@ public class HpBar : MonoBehaviour
     private void UpdateHpBar()
     {
         transform.localScale = new Vector3(_hpScale, 1f);
+        if (_hpScale >= 0.5f)
+        {
+            _image.color = new Color32(104, 237, 167, 255);
+        }
+        else if (_hpScale >= 0.2f)
+        {
+            _image.color = new Color32(248, 224, 56, 255);
+        }
+        else
+        {
+            _image.color = new Color32(248, 88, 56, 255);
+        }
     }
 
     private void CountdownComplete()

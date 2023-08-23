@@ -14,8 +14,6 @@ public class ShopController : Singleton<ShopController>
     [SerializeField] private ShopUI shopUI;
     [SerializeField] private Vector2 shopCameraOffset;
 
-    public event Action OnStart;
-    public event Action OnFinish;
     private Inventory inventory;
     private Merchant merchant;
 
@@ -29,7 +27,6 @@ public class ShopController : Singleton<ShopController>
     public IEnumerator StartTrading(Merchant merchant)
     {
         this.merchant = merchant;
-        OnStart?.Invoke();
         yield return StartMenuState();
     }
 
@@ -60,7 +57,6 @@ public class ShopController : Singleton<ShopController>
         else if (selectedChoice == -1)
         {
             // Quit
-            OnFinish?.Invoke();
             yield break;
         }
     }

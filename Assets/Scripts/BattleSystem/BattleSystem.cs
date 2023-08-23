@@ -531,12 +531,9 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SendNextTrainerPokemon()
     {
-        state = BattleStates.Busy;
-
         var nextPokemon = TrainerParty.GetHealthyPokemon();
         enemyUnit.SetUp(nextPokemon);
         yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}≈…≥ˆ¡À{nextPokemon.PokemonBase.PokemonName}£°");
-        state = BattleStates.RunningTurn;
     }
 
     private IEnumerator OnItemUsed(ItemBase usedItem)

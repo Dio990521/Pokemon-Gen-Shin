@@ -7,7 +7,8 @@ public class Merchant : MonoBehaviour
     [SerializeField] private List<ItemBase> availableItems;
     public IEnumerator Trade()
     {
-        yield return ShopController.Instance.StartTrading(this);
+        ShopMenuState.I.AvailableItems = availableItems;
+        yield return GameManager.Instance.StateMachine.PushAndWait(ShopMenuState.I);
     }
 
     public List<ItemBase> AvailableItems => availableItems;

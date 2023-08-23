@@ -34,7 +34,7 @@ public class LocationPortal : MonoBehaviour, IPlayerTriggerable
         player.Character.Animator.SetFacingDirection(spawnDir);
         yield return new WaitForSeconds(0.5f);
         yield return Fader.FadeOut(0.5f);
-        //GameManager.Instance.StartFreeRoamState();
+        GameManager.Instance.PauseGame(false);
 
     }
 }

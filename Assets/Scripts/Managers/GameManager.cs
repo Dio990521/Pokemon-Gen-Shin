@@ -100,8 +100,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
             State = GameState.PartyScreen;
         };
 
-        ShopController.Instance.OnStart += () => state = GameState.Shop;
-        ShopController.Instance.OnFinish += () => state = GameState.FreeRoam;
         ComputerController.Instance.OnStart += () => state = GameState.Computer;
         ComputerController.Instance.OnFinish += () => state = GameState.FreeRoam;
     }
@@ -110,12 +108,14 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     {
         if (pause)
         {
-            prevState = State;
-            State = GameState.Pause;
+            if (StateMachine.CurrentState != PauseState.I)
+            {
+                StateMachine.Push(PauseState.I);
+            }
         }
         else
         {
-            State = prevState;
+            StateMachine.Pop();
         }
     }
 
@@ -205,64 +205,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
         StateMachine.Execute();
 
-        //if (State == GameState.FreeRoam)
-        //{
-        //    playerController.HandleUpdate();
-
-        //    if (Input.GetKeyDown(KeyCode.Return))
-        //    {
-        //        menuController.OpenMenu();
-        //        State = GameState.Menu;
-        //    }
-        //}
-        //if (State == GameState.Cutscene)
-        //{
-        //    playerController.Character.HandleUpdate();
-        //}
-        //else if (State == GameState.Battle)
-        //{
-        //    battleSystem.HandleUpdate();
-        //}
-        if (State == GameState.Dialogue)
-        {
-            DialogueManager.Instance.HandleUpdate();
-        }
-        //else if (State == GameState.Menu)
-        //{
-        //    menuController.HandleUpdate();
-        //}
-        //else if (State == GameState.PartyScreen)
-        //{
-
-        //    Action onSelected = () =>
-        //    {
-        //        partyMenu.Show(partyScreen.SelectedMember);
-        //        State = GameState.PartyMenu;
-        //    };
-
-        //    Action onBack = () =>
-        //    {
-        //        partyScreen.gameObject.SetActive(false);
-        //        State = GameState.FreeRoam;
-        //    };
-
-        //    partyScreen.HandleUpdate(onSelected, onBack);
-        //}
-        //else if (State == GameState.Bag)
-        //{
-        //    Action onBack = () =>
-        //    {
-        //        inventoryUI.gameObject.SetActive(false);
-        //        State = GameState.FreeRoam;
-        //    };
-
-        //    inventoryUI.HandleUpdate(onBack);
-        //}
-        else if (State == GameState.Shop)
-        {
-            ShopController.Instance.HandleUpdate();
-        }
-        else if (State == GameState.Computer)
+        if (State == GameState.Computer)
         {
             ComputerController.Instance.HandleUpdate();
         }
@@ -278,34 +221,18 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         {
             saveLoadUI.HandleUpdate(save: false);
         }
-        else if (State == GameState.PartyMenu)
-        {
-            partyMenu.HandleUpdate();
-        }
-        else if (State == GameState.PokemonSwitch)
-        {
-            Action onSelected = () =>
-            {
-                //partyScreen.SwitchPokemonSlot(switchPokemon, partyScreen.Selection);
-                State = GameState.PartyScreen;
-            };
-
-            Action onBack = () =>
-            {
-                partyScreen.SetMessageText("选择一个宝可梦。");
-                State = GameState.PartyScreen;
-            };
-
-            //partyScreen.HandleUpdate(onSelected, onBack);
-        }
+        //else if (State == GameState.PartyMenu)
+        //{
+        //    partyMenu.HandleUpdate();
+        //}
         else if (State == GameState.Achievement)
         {
             achievementUI.HandleUpdate();
         }
-        else if (State == GameState.PokemonSelection)
-        {
-            _pokesSelectionUI.HandleUpdate();
-        }
+        //else if (State == GameState.PokemonSelection)
+        //{
+        //    _pokesSelectionUI.HandleUpdate();
+        //}
 
     }
 

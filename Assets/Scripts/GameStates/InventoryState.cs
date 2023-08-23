@@ -52,7 +52,15 @@ public class InventoryState : State<GameManager>
     private void OnItemSelected(int selection)
     {
         SelectedItem = _inventoryUI.SelectedItem;
-        StartCoroutine(SelectPokemonAndUseItem());
+
+        if (_gameManager.StateMachine.GetPrevState() != ShopSellingState.I)
+        {
+            StartCoroutine(SelectPokemonAndUseItem());
+        }
+        else
+        {
+            _gameManager.StateMachine.Pop();
+        }
     }
 
     private void OnBack()
