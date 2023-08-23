@@ -122,7 +122,7 @@ public class SaveLoadUI : MonoBehaviour
             {
                 AudioManager.Instance.PlaySE(SFX.CANCEL);
                 Close();
-                GameManager.Instance.StartFreeRoamState();
+                //GameManager.Instance.StartFreeRoamState();
             }
         }
 

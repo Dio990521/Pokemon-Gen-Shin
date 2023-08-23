@@ -7,8 +7,6 @@ public class DialogueState : State<GameManager>
 {
     public static DialogueState I { get; private set; }
 
-    private GameManager _gameManager;
-
     private void Awake()
     {
         I = this;

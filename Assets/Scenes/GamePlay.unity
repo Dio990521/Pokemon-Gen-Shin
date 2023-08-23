@@ -6581,6 +6581,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3515cce99e1edfb4d95f9775a30db9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ed1321fb1faa449854a8ec51508107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2219967225854741100
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7072,7 +7084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 1
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589622, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
@@ -7680,5 +7692,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c23a90a4b5622484dafb0a743ca8dd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4963794604952134823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4963794604952134816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf058c28a26ce74a97f7365943b050b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

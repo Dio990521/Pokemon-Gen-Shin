@@ -22,7 +22,7 @@ public class FreeRoamState : State<GameManager>
 
     public override void Execute()
     {
-        PlayerController.i.HandleUpdate();
+        PlayerController.I.HandleUpdate();
 
         if (Input.GetKeyDown(KeyCode.Return))
         {

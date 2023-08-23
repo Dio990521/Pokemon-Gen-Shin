@@ -78,7 +78,7 @@ public class ChoiceBox : MonoBehaviour
             {
                 AudioManager.Instance.PlaySE(SFX.CANCEL);
                 cancel = true;
-                GameManager.Instance.StartFreeRoamState();
+                //GameManager.Instance.StartFreeRoamState();
             }
         }
     }

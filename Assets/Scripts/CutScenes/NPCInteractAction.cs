@@ -8,6 +8,6 @@ public class NPCInteractAction : CutsceneAction
 
     public override IEnumerator Play()
     {
-        yield return npc.Interact(PlayerController.i.transform);
+        yield return npc.Interact(PlayerController.I.transform);
     }
 }

@@ -82,6 +82,8 @@ public class BattleSystem : MonoBehaviour
     TrainerController trainer;
 
     public int EscapeAttempts { get; set; }
+    public TrainerController Trainer { get => trainer; set => trainer = value; }
+
     MoveBase moveToLearn;
 
     private BattleTrigger battleTrigger;
@@ -528,7 +530,7 @@ public class BattleSystem : MonoBehaviour
         
     }
 
-    private IEnumerator SendNextTrainerPokemon()
+    public IEnumerator SendNextTrainerPokemon()
     {
         state = BattleStates.Busy;
 

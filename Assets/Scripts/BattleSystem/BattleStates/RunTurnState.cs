@@ -355,7 +355,8 @@ public class RunTurnState : State<BattleSystem>
                 if (nextPokemon != null)
                 {
                     // Send out next pokemon
-                    //StartCoroutine(AboutToUse(nextPokemon));
+                    AboutToUseState.I.NewPokemon = nextPokemon;
+                    yield return _battleSystem.StateMachine.PushAndWait(AboutToUseState.I);
                 }
                 else
                 {

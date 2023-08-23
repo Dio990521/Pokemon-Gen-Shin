@@ -76,6 +76,9 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
+        GameManager.Instance.StateMachine.Push(CutsceneState.I);
+
+
         AudioManager.Instance.PlayMusic(meetBGM);
         // Show exclamation
         exclamation.SetActive(true);
@@ -91,6 +94,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
         // Show dialog
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
+
+        GameManager.Instance.StateMachine.Pop();
         GameManager.Instance.StartTrainerBattle(this);
     }
 

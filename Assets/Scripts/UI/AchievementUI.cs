@@ -49,7 +49,7 @@ public class AchievementUI : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        GameManager.Instance.StartFreeRoamState();
+        //GameManager.Instance.StartFreeRoamState();
     }
 
     public void HandleUpdate()

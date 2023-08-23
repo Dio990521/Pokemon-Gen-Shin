@@ -23,6 +23,8 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private Image yesSelector;
     [SerializeField] private Image noSelector;
 
+    public bool IsChoiceBoxEnabled => choiceBox.activeSelf;
+
     public void SetDialogue(string dialogue)
     {
         dialogueText.text = dialogue;

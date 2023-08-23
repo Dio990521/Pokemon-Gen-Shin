@@ -2057,6 +2057,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1297186659}
     m_Modifications:
+    - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: pokemons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: pokemons.Array.data[1].level
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: pokemons.Array.data[1].pokemonBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
     - target: {fileID: 3192666759394679989, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: m_Name
       value: NPC1 - T

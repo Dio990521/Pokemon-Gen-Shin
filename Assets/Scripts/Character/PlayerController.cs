@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour, ISavable
     private bool _isRunning;
 
 
-    public static PlayerController i { get; private set; }
+    public static PlayerController I { get; private set; }
 
     public string PlayerName
     {
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     private void Awake()
     {
-        i = this;
+        I = this;
         character = GetComponent<Character>();
         _interactPos = transform.position + _faceDir;
     }

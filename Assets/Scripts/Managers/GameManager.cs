@@ -132,16 +132,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         }
     }
 
-    public void StartCutsceneState()
-    {
-        state = GameState.Cutscene;
-    }
-
-    public void StartFreeRoamState()
-    {
-        state = GameState.FreeRoam;
-    }
-
     public void StartBattle(BattleTrigger trigger)
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
@@ -182,7 +172,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
     public void OnEnterTrainersView(TrainerController trainer)
     {
-        State = GameState.Cutscene;
         StartCoroutine(trainer.TriggerTrainerBattle(playerController));
     }
 
@@ -239,15 +228,15 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         //        State = GameState.Menu;
         //    }
         //}
-        if (State == GameState.Cutscene)
-        {
-            playerController.Character.HandleUpdate();
-        }
+        //if (State == GameState.Cutscene)
+        //{
+        //    playerController.Character.HandleUpdate();
+        //}
         //else if (State == GameState.Battle)
         //{
         //    battleSystem.HandleUpdate();
         //}
-        else if (State == GameState.Dialogue)
+        if (State == GameState.Dialogue)
         {
             DialogueManager.Instance.HandleUpdate();
         }
