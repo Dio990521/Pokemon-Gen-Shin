@@ -79,16 +79,12 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
         DialogueManager.Instance.OnShowDialogue += () =>
         {
-            prevState = State;
-            State = GameState.Dialogue;
+            StateMachine.Push(DialogueState.I);
         };
 
         DialogueManager.Instance.OnDialogueFinished += () =>
         {
-            if (State == GameState.Dialogue)
-            {
-                State = prevState;
-            }
+            StateMachine.Pop();
         };
 
         //menuController.OnBack += () =>
