@@ -72,10 +72,12 @@ namespace PokeGenshinUtils.SelectionUI
 
             if (Input.GetButtonDown("Action"))
             {
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
                 OnSelected?.Invoke(selectedItem);
             }
             else if (Input.GetButtonDown("Back"))
             {
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
                 OnBack?.Invoke();
             }
         }

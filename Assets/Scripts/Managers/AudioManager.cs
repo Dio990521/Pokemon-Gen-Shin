@@ -110,6 +110,10 @@ public class AudioManager : Singleton<AudioManager>
     public void PlaySE(SFX id, bool pauseMusic=false)
     {
         AudioClip clip = sfxClips[(int)id];
+        if (sfxPlayer.clip == clip)
+        {
+            return;
+        }
         if (pauseMusic)
         {
             musicPlayer.Pause();

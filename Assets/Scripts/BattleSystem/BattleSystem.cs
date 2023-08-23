@@ -60,6 +60,7 @@ public class BattleSystem : MonoBehaviour
     public BattleUnit EnemyUnit { get => enemyUnit; set => enemyUnit = value; }
     public BattleDialogueBox DialogueBox1 { get => dialogueBox; set => dialogueBox = value; }
     public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
+    public Pokemon SelectedPokemon { get; set; }
 
     public int currentAction;
     public int currentMove;
@@ -310,7 +311,7 @@ public class BattleSystem : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
+            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
             if (currentAction == 0)
             {
                 // Fight
@@ -423,7 +424,7 @@ public class BattleSystem : MonoBehaviour
     {
         Action onSelected = () =>
         {
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
+            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
             Pokemon seletedMember = partyScreen.SelectedMember;
             if (seletedMember.Hp <= 0)
             {
@@ -486,7 +487,7 @@ public class BattleSystem : MonoBehaviour
         dialogueBox.UpdateChoiceBox(aboutToUseChoice);
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
+            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
             dialogueBox.EnableChoiceBox(false);
             if (aboutToUseChoice)
             {
@@ -498,13 +499,13 @@ public class BattleSystem : MonoBehaviour
             }
         }else if (Input.GetKeyDown(KeyCode.X))
         {
-            AudioManager.Instance.PlaySE(SFX.CANCEL);
+            //AudioManager.Instance.PlaySE(SFX.CANCEL);
             dialogueBox.EnableChoiceBox(false);
             StartCoroutine(SendNextTrainerPokemon());
         }
     }
 
-    private IEnumerator SwitchPokemon(Pokemon newPokemon, bool isTrainerAboutToUse=false)
+    public IEnumerator SwitchPokemon(Pokemon newPokemon)//, bool isTrainerAboutToUse=false)
     {
         
         if (playerUnit.pokemon.Hp > 0)
@@ -513,20 +514,17 @@ public class BattleSystem : MonoBehaviour
             playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
-        //partyScreen.SwitchPokemonSlot(0, partyScreen.Selection);
+        partyScreen.SwitchPokemonSlot(0, partyScreen.SelectedItem);
         playerUnit.ChangeUnit(newPokemon);
         //dialogueBox.SetMoveNames(newPokemon.Moves);
         yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
 
-        if (isTrainerAboutToUse)
-        {
-            StartCoroutine(SendNextTrainerPokemon());
-        }
-        else
-        {
-            state = BattleStates.RunningTurn;
-        }
+        //if (isTrainerAboutToUse)
+        //{
+        //    StartCoroutine(SendNextTrainerPokemon());
+        //}
+
         
     }
 

@@ -408,7 +408,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
     private void PartyMenuSelected(int selectedItem, Pokemon selectedPokemon)
     {
-        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         if (selectedItem == 0)
         {
             // Pokemon Summary

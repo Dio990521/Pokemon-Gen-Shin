@@ -24,7 +24,7 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
 
     public List<Pokemon> Pokemons { get => pokemons; set => pokemons = value; }
 
-    //public int Selection => selection;
+    public int SelectedItem => selectedItem;
 
     /// <summary>
     /// Party screen can be called from different states like ActionSelection, RuuningTurn, AboutToUse

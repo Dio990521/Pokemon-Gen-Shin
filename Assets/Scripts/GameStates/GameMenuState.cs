@@ -31,7 +31,7 @@ public class GameMenuState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
-        AudioManager.Instance.PlaySE(SFX.CANCEL);
+        //AudioManager.Instance.PlaySE(SFX.CANCEL);
         _menuController.ResetSelection();
         _menuController.OnSelected -= OnMenuItemSelected;
         _menuController.OnBack -= OnBack;
@@ -43,7 +43,7 @@ public class GameMenuState : State<GameManager>
         print($"shit!fuck {selection} you!");
         if ( selection == 0 )
         {
-            _gameManager.StateMachine.Push(GamePartyState.I);
+            _gameManager.StateMachine.Push(PartyState.I);
         }
         else if (selection == 1 )
         {

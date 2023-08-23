@@ -10,6 +10,7 @@ public class BattleState : State<GameManager>
     public BattleTrigger Trigger { get; set; }
     public TrainerController Trainer { get; set; }
     public static BattleState I { get; private set; }
+    public BattleSystem BattleSystem { get => _battleSystem; set => _battleSystem = value; }
 
     private GameManager _gameManager;
 

@@ -18,7 +18,7 @@ public class InventoryState : State<GameManager>
 
     public override void Enter(GameManager owner)
     {
-        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         _gameManager = owner;
         _inventoryUI.gameObject.SetActive(true);
         _inventoryUI.OnSelected += OnItemSelected;
@@ -32,7 +32,7 @@ public class InventoryState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
-        AudioManager.Instance.PlaySE(SFX.CANCEL);
+        //AudioManager.Instance.PlaySE(SFX.CANCEL);
         _inventoryUI.SelectedCategory = 0;
         _inventoryUI.PrevCategory = -1;
         _inventoryUI.gameObject.SetActive(false);
@@ -44,7 +44,7 @@ public class InventoryState : State<GameManager>
     {
         if (!_inventoryUI.IsCategoryEmpty())
         {
-            _gameManager.StateMachine.Push(GamePartyState.I);
+            _gameManager.StateMachine.Push(PartyState.I);
         }
     }
 

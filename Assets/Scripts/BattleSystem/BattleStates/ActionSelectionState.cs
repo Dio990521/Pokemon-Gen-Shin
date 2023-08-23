@@ -39,7 +39,7 @@ public class ActionSelectionState : State<BattleSystem>
 
     private void OnActionSelected(int selection)
     {
-        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         if (selection == 0)
         {
             // Fight
@@ -54,11 +54,25 @@ public class ActionSelectionState : State<BattleSystem>
         else if (selection == 2)
         {
             // Pokemon
+            StartCoroutine(GoToPartyState());
         }
         else if (selection == 3)
         {
             // Run
             _battleSystem.SelectedAction = BattleAction.Run;
+            _battleSystem.StateMachine.ChangeState(RunTurnState.I);
+        }
+    }
+
+    private IEnumerator GoToPartyState()
+    {
+        yield return GameManager.Instance.StateMachine.PushAndWait(PartyState.I);
+
+        var selectedPokemon = PartyState.I.SelectedPokemon;
+        if (selectedPokemon != null)
+        {
+            _battleSystem.SelectedAction = BattleAction.SwitchPokemon;
+            _battleSystem.SelectedPokemon = selectedPokemon;
             _battleSystem.StateMachine.ChangeState(RunTurnState.I);
         }
     }

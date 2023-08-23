@@ -94,8 +94,7 @@ public class RunTurnState : State<BattleSystem>
             if (playerAction == BattleAction.SwitchPokemon)
             {
                 _dialogueBox.EnableActionSelector(false);
-                var selectedPokemon = _partyScreen.SelectedMember;
-                //yield return SwitchPokemon(selectedPokemon);
+                yield return _battleSystem.SwitchPokemon(_battleSystem.SelectedPokemon);
             }
             else if (playerAction == BattleAction.UseItem)
             {
@@ -326,29 +325,29 @@ public class RunTurnState : State<BattleSystem>
             yield return new WaitForSeconds(1f);
         }
 
-        CheckForBattleOver(faintedUnit);
+        yield return CheckForBattleOver(faintedUnit);
     }
 
-    private void CheckForBattleOver(BattleUnit faintedUnit)
+    private IEnumerator CheckForBattleOver(BattleUnit faintedUnit)
     {
         if (faintedUnit.IsPlayerUnit)
         {
             Pokemon nextPokemon = _playerParty.GetHealthyPokemon();
             if (nextPokemon != null)
             {
-                //OpenPartyScreen();
-                return;
+                yield return GameManager.Instance.StateMachine.PushAndWait(PartyState.I);
+                yield return _battleSystem.SwitchPokemon(PartyState.I.SelectedPokemon);
             }
             else
             {
-                StartCoroutine(_battleSystem.BattleOver(false));
+                yield return _battleSystem.BattleOver(false);
             }
         }
         else
         {
             if (!_isTrainerBattle)
             {
-                StartCoroutine(_battleSystem.BattleOver(true));
+                yield return _battleSystem.BattleOver(true);
             }
             else
             {
@@ -360,7 +359,7 @@ public class RunTurnState : State<BattleSystem>
                 }
                 else
                 {
-                    StartCoroutine(_battleSystem.BattleOver(true));
+                    yield return _battleSystem.BattleOver(true);
                 }
             }
 
