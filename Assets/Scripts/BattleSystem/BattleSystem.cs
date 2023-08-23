@@ -61,6 +61,7 @@ public class BattleSystem : MonoBehaviour
     public BattleDialogueBox DialogueBox1 { get => dialogueBox; set => dialogueBox = value; }
     public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
     public Pokemon SelectedPokemon { get; set; }
+    public ItemBase SelectedItem { get; set; }
 
     public int currentAction;
     public int currentMove;
@@ -553,28 +554,27 @@ public class BattleSystem : MonoBehaviour
         //StartCoroutine(RunTurns(BattleAction.UseItem));
     }
 
-    private IEnumerator ThrowPokeball(PokeballItem pokeballItem)
+    public IEnumerator ThrowPokeball(PokeballItem pokeballItem)
     {
-        state = BattleStates.Busy;
         dialogueBox.EnableActionSelector(false);
         if (IsTrainerBattle)
         {
             yield return dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
-            state = BattleStates.RunningTurn;
+            //state = BattleStates.RunningTurn;
             yield break;
         }
 
         if (pokeballItem.BallType == PokeballType.Genshin && !enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
-            state = BattleStates.RunningTurn;
+            //state = BattleStates.RunningTurn;
             yield break;
         }
 
         if (pokeballItem.BallType != PokeballType.Genshin && enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
-            state = BattleStates.RunningTurn;
+            //state = BattleStates.RunningTurn;
             yield break;
         }
 
@@ -625,7 +625,6 @@ public class BattleSystem : MonoBehaviour
             yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
             Destroy(pokeball);
-            state = BattleStates.RunningTurn;
         }
     }
 

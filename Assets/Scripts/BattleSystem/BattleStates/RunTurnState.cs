@@ -99,6 +99,12 @@ public class RunTurnState : State<BattleSystem>
             else if (playerAction == BattleAction.UseItem)
             {
                 _dialogueBox.EnableActionSelector(false);
+
+                if (_battleSystem.SelectedItem is PokeballItem)
+                {
+                    yield return _battleSystem.ThrowPokeball(_battleSystem.SelectedItem as PokeballItem);
+                }
+
             }
             else if (playerAction == BattleAction.Run)
             {

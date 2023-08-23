@@ -10,6 +10,8 @@ public class UseItemState : State<GameManager>
     [SerializeField] private InventoryUI _inventoryUI;
     private Inventory _inventory;
 
+    public bool ItemUsed { get; private set; }
+
     public static UseItemState I { get; private set; }
 
     private GameManager _gameManager;
@@ -23,6 +25,7 @@ public class UseItemState : State<GameManager>
     public override void Enter(GameManager owner)
     {
         _gameManager = owner;
+        ItemUsed = false;
         StartCoroutine(UseItem());
     }
 
@@ -57,6 +60,7 @@ public class UseItemState : State<GameManager>
             var usedItem = _inventory.UseItem(item, _partyScreen.SelectedMember);
             if (usedItem != null)
             {
+                ItemUsed = true;
                 if (usedItem is RecoveryItem)
                 {
                     yield return DialogueManager.Instance.ShowDialogueText($"ฤใสนำรมห{usedItem.ItemName}ฃก");

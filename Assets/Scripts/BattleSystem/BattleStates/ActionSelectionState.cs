@@ -50,6 +50,7 @@ public class ActionSelectionState : State<BattleSystem>
         else if (selection == 1)
         {
             // Bag
+            StartCoroutine(GoToInventoryState());
         }
         else if (selection == 2)
         {
@@ -74,6 +75,19 @@ public class ActionSelectionState : State<BattleSystem>
             _battleSystem.SelectedAction = BattleAction.SwitchPokemon;
             _battleSystem.SelectedPokemon = selectedPokemon;
             _battleSystem.StateMachine.ChangeState(RunTurnState.I);
+        }
+    }
+
+    private IEnumerator GoToInventoryState()
+    {
+        yield return GameManager.Instance.StateMachine.PushAndWait(InventoryState.I);
+        var selectedItem = InventoryState.I.SelectedItem;
+        if (selectedItem != null)
+        {
+            _battleSystem.SelectedAction = BattleAction.UseItem;
+            _battleSystem.SelectedItem = selectedItem;
+            _battleSystem.StateMachine.ChangeState(RunTurnState.I);
+            
         }
     }
 }

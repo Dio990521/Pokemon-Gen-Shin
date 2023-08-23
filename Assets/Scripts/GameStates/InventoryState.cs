@@ -6,6 +6,9 @@ using UnityEngine;
 public class InventoryState : State<GameManager>
 {
     [SerializeField] private InventoryUI _inventoryUI;
+    private Inventory _inventory;
+
+    public ItemBase SelectedItem { get; private set; }
 
     public static InventoryState I { get; private set; }
 
@@ -16,10 +19,16 @@ public class InventoryState : State<GameManager>
         I = this;
     }
 
+    private void Start()
+    {
+        _inventory = Inventory.GetInventory();
+    }
+
     public override void Enter(GameManager owner)
     {
         //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         _gameManager = owner;
+        SelectedItem = null;
         _inventoryUI.gameObject.SetActive(true);
         _inventoryUI.OnSelected += OnItemSelected;
         _inventoryUI.OnBack += OnBack;
@@ -42,14 +51,58 @@ public class InventoryState : State<GameManager>
 
     private void OnItemSelected(int selection)
     {
-        if (!_inventoryUI.IsCategoryEmpty())
-        {
-            _gameManager.StateMachine.Push(PartyState.I);
-        }
+        SelectedItem = _inventoryUI.SelectedItem;
+        StartCoroutine(SelectPokemonAndUseItem());
     }
 
     private void OnBack()
     {
+        SelectedItem = null;
         _gameManager.StateMachine.Pop();
+    }
+
+    private IEnumerator SelectPokemonAndUseItem()
+    {
+        if (!_inventoryUI.IsCategoryEmpty())
+        {
+            var prevState = _gameManager.StateMachine.GetPrevState();
+            if (prevState == BattleState.I) 
+            {
+                // In Battle
+                if (!SelectedItem.CanUseInBattle)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("你不能在这里使用它！");
+                    yield break;
+                }
+            }
+            else
+            {
+                // Outside Battle
+                if (!SelectedItem.CanUseOutsideBattle)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("你不能在这里使用它！");
+                    yield break;
+                }
+            }
+
+            if (SelectedItem is PokeballItem)
+            {
+                _inventory.UseItem(SelectedItem, null);
+                _gameManager.StateMachine.Pop();
+                yield break;
+            }
+
+
+            yield return _gameManager.StateMachine.PushAndWait(PartyState.I);
+
+            if (prevState == BattleState.I)
+            {
+                if (UseItemState.I.ItemUsed)
+                {
+                    _gameManager.StateMachine.Pop();
+                }
+            }
+        }
+
     }
 }

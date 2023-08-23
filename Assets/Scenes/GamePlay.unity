@@ -6910,6 +6910,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 07dc802c99f25ef49b71782f895145cd, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[2].count
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4236015941473918781, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
