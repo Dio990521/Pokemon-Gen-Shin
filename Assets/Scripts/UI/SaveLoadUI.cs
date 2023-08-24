@@ -104,7 +104,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
     public IEnumerator TrySave()
     {
         yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？", autoClose: false);
-        ChoiceState.I.Choices = new List<string>() { "是的aaaaa", "不了从" };
+        ChoiceState.I.Choices = new List<string>() { "是的", "不了" };
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
 
         int selectedChoice = ChoiceState.I.Selection;

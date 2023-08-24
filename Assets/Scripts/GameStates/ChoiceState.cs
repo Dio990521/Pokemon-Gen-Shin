@@ -24,7 +24,6 @@ public class ChoiceState : State<GameManager>
     {
         Choices.Clear();
         Selection = -1;
-        AllowCancel = true;
     }
 
     public override void Enter(GameManager owner)
@@ -46,7 +45,6 @@ public class ChoiceState : State<GameManager>
         _choiceBox.OnSelected -= OnChoiceSelected;
         _choiceBox.OnBack -= OnBack;
         _choiceBox.CloseBox();
-        Clear();
     }
 
     private void OnChoiceSelected(int selection)
@@ -57,7 +55,7 @@ public class ChoiceState : State<GameManager>
 
     private void OnBack()
     {
-        Selection = -1;
+        Clear();
         _gameManager.StateMachine.Pop();
     }
 }
