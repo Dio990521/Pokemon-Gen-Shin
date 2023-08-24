@@ -328,17 +328,12 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public IEnumerator LoadGame(string fileName)
     {
         PauseGame(true);
-        yield return Fader.FadeIn(1f);
-        saveLoadUI.Close();
         SavingSystem.i.Load(fileName);
         CurrentScene.UnloadScene();
         CurrentScene.UnloadConnectedScenes();
         yield return new WaitForSeconds(1.5f);
         yield return CurrentScene.LoadScene();
         yield return new WaitForSeconds(1f);
-        yield return Fader.FadeOut(1f);
-        PauseGame(false);
-        State = GameState.FreeRoam;
     }
 
     public object CaptureState()

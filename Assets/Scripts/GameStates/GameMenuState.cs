@@ -59,6 +59,7 @@ public class GameMenuState : State<GameManager>
         else if (selection == 3)
         {
             // Load Screen
+            _gameManager.StateMachine.Push(LoadState.I);
         }
         else if (selection == 4)
         {

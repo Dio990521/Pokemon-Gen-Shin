@@ -19,6 +19,7 @@ public class SaveState : State<GameManager>
     public override void Enter(GameManager owner)
     {
         _gameManager = owner;
+        _saveLoadUI.ResetSelection();
         _saveLoadUI.OnSelected += OnItemSelected;
         _saveLoadUI.OnBack += OnBack;
         _saveLoadUI.Show();

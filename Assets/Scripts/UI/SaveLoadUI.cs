@@ -129,23 +129,26 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
 
     }
 
-    private IEnumerator TryLoad()
+    public IEnumerator TryLoad()
     {
         if (!_dataSlotUIs[selectedItem].Active)
         {
             yield break;
         }
-        int selectedChoice = 0;
-        yield return DialogueManager.Instance.ShowDialogueText("要读取这个存档吗？",
-            waitForInput: false,
-            choices: new List<string>() { "是的", "不了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-            cancelX: false);
+        yield return DialogueManager.Instance.ShowDialogueText("要读取这个存档吗？", autoClose: false);
+        ChoiceState.I.Choices = new List<string>() { "是的", "不了" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+        int selectedChoice = ChoiceState.I.Selection;
         if (selectedChoice == 0)
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("saveFile").Append(selectedItem);
+            yield return Fader.FadeIn(1f);
+            GameManager.Instance.StateMachine.Pop();
+            GameManager.Instance.StateMachine.Pop();
             yield return GameManager.Instance.LoadGame(stringBuilder.ToString());
+            yield return Fader.FadeOut(1f);
+            GameManager.Instance.PauseGame(false);
         }
 
     }
