@@ -33,7 +33,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         if (choices != null && choices.Count > 1)
         {
-            yield return choiceBox.ShowChoices(choices, onChoiceSelected, cancelX);
+            //yield return choiceBox.ShowChoices(choices, onChoiceSelected, cancelX);
         }
 
         if (autoClose)
@@ -72,7 +72,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
         if (choices != null && choices.Count > 1)
         {
-            yield return choiceBox.ShowChoices(choices, onChoiceSelected);
+            //yield return choiceBox.ShowChoices(choices, onChoiceSelected);
         }
 
         dialogueBox.SetActive(false);

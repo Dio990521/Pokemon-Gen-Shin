@@ -213,14 +213,14 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         {
             pokemonInfoUI.HandleUpdate();
         }
-        else if (State == GameState.Save)
-        {
-            saveLoadUI.HandleUpdate(save: true);
-        }
-        else if (State == GameState.Load)
-        {
-            saveLoadUI.HandleUpdate(save: false);
-        }
+        //else if (State == GameState.Save)
+        //{
+        //    saveLoadUI.HandleUpdate(save: true);
+        //}
+        //else if (State == GameState.Load)
+        //{
+        //    saveLoadUI.HandleUpdate(save: false);
+        //}
         //else if (State == GameState.PartyMenu)
         //{
         //    partyMenu.HandleUpdate();

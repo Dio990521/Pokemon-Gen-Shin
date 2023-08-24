@@ -37,6 +37,7 @@ namespace PokeGenshinUtils.StateMachine
 
         public void Pop(bool sfx=true)
         {
+            //Debug.Log("POP " + StateStack.Peek().ToString());
             StateStack.Pop();
             CurrentState.Exit(sfx);
             CurrentState = StateStack.Peek();

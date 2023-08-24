@@ -49,7 +49,7 @@ namespace PokeGenshinUtils.SelectionUI
             selectedItem = Mathf.Clamp(selectedItem, 0, _items.Count - 1);
         }
 
-        public virtual void HandleUpdate()
+        public virtual void HandleUpdate(bool allowCancel=true)
         {
             //UpdateSelectionTimer();
             if (_selectionType  == SelectionType.List)
@@ -63,7 +63,7 @@ namespace PokeGenshinUtils.SelectionUI
 
             ClampSelection();
 
-            if (selectedItem != prevSelection)
+            if (_items.Count > 0 && selectedItem != prevSelection)
             {
                 UpdateSelectionUI();
             }
@@ -75,8 +75,9 @@ namespace PokeGenshinUtils.SelectionUI
                 AudioManager.Instance.PlaySE(SFX.CONFIRM);
                 OnSelected?.Invoke(selectedItem);
             }
-            else if (Input.GetButtonDown("Back"))
+            else if (allowCancel && Input.GetButtonDown("Back"))
             {
+                //print(gameObject.name + " OnBack");
                 AudioManager.Instance.PlaySE(SFX.CANCEL);
                 OnBack?.Invoke();
             }

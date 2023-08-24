@@ -1,23 +1,26 @@
+using PokeGenshinUtils.SelectionUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public enum SaveLoadUIState { Select, Saving, Loading}
-
-public class SaveLoadUI : MonoBehaviour
+public class SaveLoadUI : SelectionUI<DataSlotUI>
 {
-    private int selection = 0;
-    private int prevSelection = -1;
     [SerializeField] private GameObject _selector;
     [SerializeField] private List<DataSlotUI> _dataSlotUIs;
-    private SaveLoadUIState _state;
 
     private string _dataFilePath;
+
+    private void Awake()
+    {
+        SetItems(_dataSlotUIs);
+    }
 
     private void Init()
     {
@@ -57,8 +60,6 @@ public class SaveLoadUI : MonoBehaviour
     public void Show()
     {
         Init();
-        selection = 0;
-        _state = SaveLoadUIState.Select;
         transform.GetChild(0).gameObject.SetActive(true);
     }
 
@@ -81,87 +82,57 @@ public class SaveLoadUI : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void HandleUpdate(bool save=true)
+    //public override void HandleUpdate()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Z))
+    //    {
+    //        AudioManager.Instance.PlaySE(SFX.CONFIRM);
+    //        if (true)
+    //        {
+    //            StartCoroutine(TryLoad());
+    //        }
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.X))
+    //    {
+    //        AudioManager.Instance.PlaySE(SFX.CANCEL);
+    //        Close();
+    //        //GameManager.Instance.StartFreeRoamState();
+    //    }
+
+    //}
+
+    public IEnumerator TrySave()
     {
-        if (_state == SaveLoadUIState.Select)
-        {
+        yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？", autoClose: false);
+        ChoiceState.I.Choices = new List<string>() { "是的aaaaa", "不了从" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
 
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                selection += 1;
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                selection -= 1;
-            }
-
-            selection = Mathf.Clamp(selection, 0, 2);
-
-            if (selection != prevSelection)
-            {
-                UpdateUI(selection);
-            }
-            prevSelection = selection;
-
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                AudioManager.Instance.PlaySE(SFX.CONFIRM);
-                if (save)
-                {
-                    _state = SaveLoadUIState.Saving;
-                    StartCoroutine(TrySave());
-                }
-                else
-                {
-                    _state = SaveLoadUIState.Loading;
-                    StartCoroutine(TryLoad());
-                }
-            }
-            else if (Input.GetKeyDown(KeyCode.X))
-            {
-                AudioManager.Instance.PlaySE(SFX.CANCEL);
-                Close();
-                //GameManager.Instance.StartFreeRoamState();
-            }
-        }
-
-    }
-
-    private void UpdateUI(int selection)
-    {
-        _selector.transform.position = _dataSlotUIs[selection].SelectorPos.position;
-    }
-
-    private IEnumerator TrySave()
-    {
-        int selectedChoice = 0;
-        yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？",
-            waitForInput: false,
-            choices: new List<string>() { "是的", "不了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-            cancelX: false);
+        int selectedChoice = ChoiceState.I.Selection;
+        //yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？",
+        //    waitForInput: false,
+        //    choices: new List<string>() { "是的", "不了" },
+        //    onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
+        //    cancelX: false);
         if (selectedChoice == 0)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("saveFile").Append(selection);
+            stringBuilder.Append("saveFile").Append(selectedItem);
             SavingSystem.i.Save(stringBuilder.ToString());
-            _dataSlotUIs[selection].GetComponent<Image>().color = Color.white;
-            _dataSlotUIs[selection].Scene.text = GameManager.Instance.CurrentScene.MapName;
-            _dataSlotUIs[selection].Date.text = System.DateTime.Now.ToString();
-            _dataSlotUIs[selection].PlayTime.text = GameManager.Instance.GamePlayTime;
-            _dataSlotUIs[selection].Achievement.text = $"{AchievementManager.Instance.GetTotalProgress().ToString("F1")}%";
-            _dataSlotUIs[selection].Active = true;
+            _dataSlotUIs[selectedItem].GetComponent<Image>().color = Color.white;
+            _dataSlotUIs[selectedItem].Scene.text = GameManager.Instance.CurrentScene.MapName;
+            _dataSlotUIs[selectedItem].Date.text = System.DateTime.Now.ToString();
+            _dataSlotUIs[selectedItem].PlayTime.text = GameManager.Instance.GamePlayTime;
+            _dataSlotUIs[selectedItem].Achievement.text = $"{AchievementManager.Instance.GetTotalProgress().ToString("F1")}%";
+            _dataSlotUIs[selectedItem].Active = true;
             SaveDataSlot();
         }
-        _state = SaveLoadUIState.Select;
+
     }
 
     private IEnumerator TryLoad()
     {
-        if (!_dataSlotUIs[selection].Active)
+        if (!_dataSlotUIs[selectedItem].Active)
         {
-            _state = SaveLoadUIState.Select;
             yield break;
         }
         int selectedChoice = 0;
@@ -173,12 +144,9 @@ public class SaveLoadUI : MonoBehaviour
         if (selectedChoice == 0)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("saveFile").Append(selection);
+            stringBuilder.Append("saveFile").Append(selectedItem);
             yield return GameManager.Instance.LoadGame(stringBuilder.ToString());
         }
-        else
-        {
-            _state = SaveLoadUIState.Select;
-        }
+
     }
 }

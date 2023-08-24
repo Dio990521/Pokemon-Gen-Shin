@@ -94,7 +94,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         UpdateCategory();
     }
 
-    public override void HandleUpdate()
+    public override void HandleUpdate(bool allowCancel = true)
     {
         base.HandleUpdate();
         //selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
@@ -133,10 +133,8 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         base.UpdateSelectionUI();
 
         var slots = inventory.GetSlotsByCategory(selectedCategory);
-
         if (slots.Count > 0 && selectedItem >= 0)
         {
-            base.ClampSelection();
             var item = slots[selectedItem].Item;
             itemIcon.sprite = item.Icon;
             itemDescription.text = item.Description;

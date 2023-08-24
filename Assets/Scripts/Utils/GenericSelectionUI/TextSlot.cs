@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TextSlot : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private Image _cursor;
+    private float _textWidth;
 
     public void Init()
     {
@@ -19,6 +20,13 @@ public class TextSlot : MonoBehaviour, ISelectableItem
 
     public void SetText(string text)
     {
-        GetComponentInChildren<Text>().text = text;
+        var textUI = GetComponentInChildren<Text>();
+        textUI.text = text;
+        _textWidth = textUI.preferredWidth;
+    }
+
+    public float GetTextWidth()
+    {
+        return _textWidth;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveToForgetState : State<GameManager>
 {
-    [SerializeField] private ForgetMoveSelectionUI _moveSelectionUI;
+    [SerializeField] private ForgetMoveSelectionUI _forgetMoveSelectionUI;
 
     public List<MoveBase> CurrentMoves { get; set; }
     public MoveBase NewMove { get; set; }
@@ -24,23 +24,23 @@ public class MoveToForgetState : State<GameManager>
     {
         _gameManager = owner;
         Selection = 0;
-        _moveSelectionUI.gameObject.SetActive(true);
-        _moveSelectionUI.SetMoveData(CurrentMoves, NewMove);
-        _moveSelectionUI.OnSelected += OnMoveSelected;
-        _moveSelectionUI.OnBack += OnBack;
+        _forgetMoveSelectionUI.gameObject.SetActive(true);
+        _forgetMoveSelectionUI.SetMoveData(CurrentMoves, NewMove);
+        _forgetMoveSelectionUI.OnSelected += OnMoveSelected;
+        _forgetMoveSelectionUI.OnBack += OnBack;
     }
 
     public override void Execute()
     {
-        _moveSelectionUI.HandleUpdate();
+        _forgetMoveSelectionUI.HandleUpdate();
     }
 
     public override void Exit(bool sfx)
     {
-        _moveSelectionUI.ResetSelection();
-        _moveSelectionUI.gameObject.SetActive(false);
-        _moveSelectionUI.OnSelected -= OnMoveSelected;
-        _moveSelectionUI.OnBack -= OnBack;
+        _forgetMoveSelectionUI.ResetSelection();
+        _forgetMoveSelectionUI.gameObject.SetActive(false);
+        _forgetMoveSelectionUI.OnSelected -= OnMoveSelected;
+        _forgetMoveSelectionUI.OnBack -= OnBack;
     }
 
     private void OnMoveSelected(int selection)

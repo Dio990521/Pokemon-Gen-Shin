@@ -76,9 +76,10 @@ public class PokemonSelectionUI : MonoBehaviour
     private IEnumerator HandleConfirm()
     {
         int selectedChoice = 0;
-        yield return _choiceBox.ShowChoices(new List<string>() { "就决定是你了！", "让我再看一看！" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-            cancelX: false);
+        //yield return _choiceBox.ShowChoices(new List<string>() { "就决定是你了！", "让我再看一看！" },
+        //    onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
+        //    cancelX: false);
+        yield return null;
 
         if (selectedChoice == 0)
         {

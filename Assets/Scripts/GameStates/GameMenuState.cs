@@ -43,11 +43,34 @@ public class GameMenuState : State<GameManager>
         print($"shit!fuck {selection} you!");
         if ( selection == 0 )
         {
+            // Party Screen
             _gameManager.StateMachine.Push(PartyState.I);
         }
         else if (selection == 1 )
         {
+            // Inventory Screen
             _gameManager.StateMachine.Push(InventoryState.I);
+        }
+        else if (selection == 2)
+        {
+            // Save Screen
+            _gameManager.StateMachine.Push(SaveState.I);
+        }
+        else if (selection == 3)
+        {
+            // Load Screen
+        }
+        else if (selection == 4)
+        {
+            // Achievement Screen
+        }
+        else if (selection == 5)
+        {
+            // Setting Screen
+        }
+        else if (selection == 6)
+        {
+            // Title Screen
         }
     }
 
