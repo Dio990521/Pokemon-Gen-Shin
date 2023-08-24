@@ -64,6 +64,7 @@ public class GameMenuState : State<GameManager>
         else if (selection == 4)
         {
             // Achievement Screen
+            _gameManager.StateMachine.Push(AchievementState.I);
         }
         else if (selection == 5)
         {

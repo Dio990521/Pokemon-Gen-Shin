@@ -58,6 +58,7 @@ public class AchievementUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             AudioManager.Instance.PlaySE(SFX.CANCEL);
+            GameManager.Instance.StateMachine.Pop();
             Close();
         }
     }
