@@ -94,7 +94,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         //};
 
         //menuController.OnMenuSelected += MenuSelected;
-        partyMenu.OnMenuSelected += PartyMenuSelected;
+        //partyMenu.OnMenuSelected += PartyMenuSelected;
         partyMenu.OnBack += () =>
         {
             State = GameState.PartyScreen;
@@ -302,26 +302,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         else if (selectedItem == 6)
         {
             // Title
-        }
-    }
-
-    private void PartyMenuSelected(int selectedItem, Pokemon selectedPokemon)
-    {
-        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
-        if (selectedItem == 0)
-        {
-            // Pokemon Summary
-            pokemonInfoUI.Show(selectedPokemon);
-            State = GameState.PokeInfo;
-        }
-        else if (selectedItem == 1)
-        {
-            // Switch Pokemon
-            //switchPokemon = partyScreen.Selection;
-            partyScreen.SetMessageText("选择要交换的宝可梦。");
-            partyMenu.Close();
-            State = GameState.PokemonSwitch;
-
         }
     }
 

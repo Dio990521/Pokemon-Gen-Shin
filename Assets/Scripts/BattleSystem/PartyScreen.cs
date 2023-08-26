@@ -177,4 +177,5 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
     {
         messageText.text = message;
     }
+
 }

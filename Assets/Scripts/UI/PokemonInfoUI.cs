@@ -94,15 +94,10 @@ public class PokemonInfoUI : MonoBehaviour
 
     }
 
-    private void Close()
-    {
-        GameManager.Instance.State = GameState.PartyScreen;
-        AudioManager.Instance.PlaySE(SFX.CANCEL);
-        gameObject.SetActive(false);
-    }
 
     public void HandleUpdate()
     {
+        
         if (_state == InfoState.Info1)
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -116,7 +111,8 @@ public class PokemonInfoUI : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
-                Close();
+                GameManager.Instance.StateMachine.Pop();
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
             }
         }
         else if (_state == InfoState.Info2)
@@ -139,7 +135,8 @@ public class PokemonInfoUI : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
-                Close();
+                GameManager.Instance.StateMachine.Pop();
+                AudioManager.Instance.PlaySE(SFX.CANCEL);
             }
         }
         else if (_state == InfoState.Detail)

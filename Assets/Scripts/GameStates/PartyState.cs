@@ -1,6 +1,7 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PartyState : State<GameManager>
@@ -11,6 +12,8 @@ public class PartyState : State<GameManager>
     public static PartyState I { get; private set; }
 
     private GameManager _gameManager;
+    private bool _swaping;
+    private int _swapIndex;
 
     private void Awake()
     {
@@ -20,9 +23,11 @@ public class PartyState : State<GameManager>
     public override void Enter(GameManager owner)
     {
         //AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        _swaping = false;
         _gameManager = owner;
         SelectedPokemon = null;
         _partyScreen.gameObject.SetActive(true);
+        GameManager.Instance.PartyScreen.SetMessageText("选择一个宝可梦。");
         _partyScreen.OnSelected += OnPokemonSelected;
         _partyScreen.OnBack += OnBack;
     }
@@ -52,6 +57,12 @@ public class PartyState : State<GameManager>
         }
         else
         {
+            if (_swaping)
+            {
+                _partyScreen.SwitchPokemonSlot(_swapIndex, selection);
+                _swaping = false;
+                return;
+            }
             //AudioManager.Instance.PlaySE(SFX.CONFIRM);
             SelectedPokemon = _partyScreen.SelectedMember;
             var prevState = _gameManager.StateMachine.GetPrevState();
@@ -77,15 +88,35 @@ public class PartyState : State<GameManager>
             }
             else
             {
-                // Summary screen
-                print($"open summary screen {selection}");
+                StartCoroutine(GoToPartyMenuState(selection));
             }
 
-            
-            
         }
         
     }
+    
+    private IEnumerator GoToPartyMenuState(int selection)
+    {
+        PartyMenuState.I.SelectedPokemon = SelectedPokemon;
+        PartyMenuState.I.Selection = selection;
+        yield return _gameManager.StateMachine.PushAndWait(PartyMenuState.I);
+
+        int choice = PartyMenuState.I.Selection;
+        if (choice == 0)
+        {
+            // Pokemon Info
+            PokemonInfoState.I.SelectedPokemon = SelectedPokemon;
+            _gameManager.StateMachine.Push(PokemonInfoState.I);
+        }
+        else if (choice == 1)
+        {
+            // Swap Pokemon
+            _swapIndex = selection;
+            GameManager.Instance.PartyScreen.SetMessageText("选择要交换的宝可梦。");
+            _swaping = true;
+        }
+    }
+
 
     private IEnumerator GoToUseItemState()
     {

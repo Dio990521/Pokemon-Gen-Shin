@@ -31,7 +31,6 @@ namespace PokeGenshinUtils.SelectionUI
 
         public void SetItems(List<T> items)
         {
-            
             _items = items;
             items.ForEach(i => i.Init());
             UpdateSelectionUI();

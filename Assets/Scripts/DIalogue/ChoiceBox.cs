@@ -11,19 +11,19 @@ public class ChoiceBox : SelectionUI<TextSlot>
 {
     [SerializeField] private TextSlot choiceTextPrefab;
 
-    private bool choiceSelected = false;
-    private bool cancel = false;
+    //private bool choiceSelected = false;
+    //private bool cancel = false;
 
     private List<TextSlot> choiceTexts;
-    private int currentChoice;
-    private bool _cancelX;
+    //private int currentChoice;
+    //private bool _cancelX;
 
     public void ShowChoices(List<string> choices, Action<int> onChoiceSelected=null, bool cancelX=true)
     {
-        choiceSelected = false;
-        cancel = false;
-        currentChoice = 0;
-        _cancelX = cancelX;
+        //choiceSelected = false;
+        //cancel = false;
+        //currentChoice = 0;
+        //_cancelX = cancelX;
         gameObject.SetActive(true);
 
         // Delete existing choices
