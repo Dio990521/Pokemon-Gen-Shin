@@ -41,7 +41,7 @@ public class ShopSellingState : State<GameManager>
         if (selectedItem != null )
         {
             yield return SellItem(selectedItem);
-            StartCoroutine(StartSellingState());
+            yield return StartSellingState();
         }
         else
         {

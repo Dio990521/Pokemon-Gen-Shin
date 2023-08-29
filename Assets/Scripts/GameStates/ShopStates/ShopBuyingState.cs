@@ -54,7 +54,16 @@ public class ShopBuyingState : State<GameManager>
 
     private void OnItemSelected(int selection)
     {
-        StartCoroutine(BuyItem(AvailableItems[selection]));
+        var prevState = _gameManager.StateMachine.GetPrevState();
+        if (prevState == ShopMenuState.I)
+        {
+            StartCoroutine(BuyItem(AvailableItems[selection]));
+        }
+        else if (prevState == PCMenuState.I)
+        {
+            StartCoroutine(BuyYuanshiItem(AvailableItems[selection]));
+        }
+
     }
 
     private void OnBack()
@@ -103,6 +112,40 @@ public class ShopBuyingState : State<GameManager>
             yield return DialogueManager.Instance.ShowDialogueText($"你没有那么多摩拉！");
         }
 
+        _browseItems = true;
+    }
+
+    private IEnumerator BuyYuanshiItem(ItemBase item)
+    {
+        _browseItems = false;
+        yield return DialogueManager.Instance.ShowDialogueText($"买多少个？", waitForInput: false, autoClose: false);
+
+        int countToBuy = 1;
+        yield return countSelectorUI.ShowSelector(99, item.YuanshiPrice,
+            (selectedCount) => countToBuy = selectedCount, true);
+
+        DialogueManager.Instance.CloseDialog();
+        int totalPrice = item.YuanshiPrice * countToBuy;
+        if (Inventory.GetInventory().GetItemCount(Wallet.i.Yuanshi) >= totalPrice)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"一共需要花费{totalPrice}原石，买吗？", autoClose: false);
+            ChoiceState.I.Choices = new List<string>() { "彳亍", "算了" };
+            yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+            int selectedChoice = ChoiceState.I.Selection;
+
+            if (selectedChoice == 0)
+            {
+                inventory.AddItem(item, countToBuy);
+                Inventory.GetInventory().RemoveItem(Wallet.i.Yuanshi, totalPrice);
+                Wallet.i.TakeMoney(0);
+                yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");
+            }
+        }
+        else
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"你没有那么多原石！");
+        }
         _browseItems = true;
     }
 

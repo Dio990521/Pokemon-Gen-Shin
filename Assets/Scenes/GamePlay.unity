@@ -6789,6 +6789,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _partyMenu: {fileID: 1157579770}
+--- !u!114 &2173388929618975131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4df03a75a395b34881a746578a297c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2173388929618975132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173388929618975060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c78cbd2d27288494cb444d15476e633f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableItems:
+  - {fileID: 11400000, guid: 07dc802c99f25ef49b71782f895145cd, type: 2}
+  - {fileID: 11400000, guid: 5935466f4afc7e54ea6035cca89cb518, type: 2}
+  walletUI: {fileID: 190008697}
+  yuanshiShopUI: {fileID: 2082832281}
+  countSelectorUI: {fileID: 1602842722}
+  pokemonRoom: {fileID: 0}
 --- !u!1001 &2219967225854741100
 PrefabInstance:
   m_ObjectHideFlags: 0

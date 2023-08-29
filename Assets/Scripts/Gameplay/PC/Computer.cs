@@ -16,6 +16,7 @@ public class Computer : MonoBehaviour, InteractableObject
 
     public IEnumerator Interact(Transform initiator)
     {
-        yield return ComputerController.Instance.Boost(this);
+        GameManager.Instance.StateMachine.Push(PCMenuState.I);
+        yield return null;
     }
 }

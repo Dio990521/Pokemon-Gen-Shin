@@ -17,12 +17,14 @@ public class CountSelectorUI : MonoBehaviour
 
     private int maxCount;
     private float pricePerUnit;
+    private bool _isYuanshi;
 
     public IEnumerator ShowSelector(int maxCount, float pricePerUnit,
-        Action<int> onCountSelected)
+        Action<int> onCountSelected, bool isYuanshi=false)
     {
         this.maxCount = maxCount;
         this.pricePerUnit = pricePerUnit;
+        _isYuanshi = isYuanshi;
 
         selected = false;
         currentCount = 1;
@@ -80,7 +82,14 @@ public class CountSelectorUI : MonoBehaviour
         countText.text = stringBuilder.ToString();
         stringBuilder.Clear();
         stringBuilder.Append(pricePerUnit * currentCount);
-        stringBuilder.Append("гд");
+        if (_isYuanshi)
+        {
+            stringBuilder.Append("╘н╩п");
+        }
+        else
+        {
+            stringBuilder.Append("гд");
+        }
         priceText.text = stringBuilder.ToString();
     }
 
