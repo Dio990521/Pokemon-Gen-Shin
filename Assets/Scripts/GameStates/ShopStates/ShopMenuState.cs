@@ -25,11 +25,11 @@ public class ShopMenuState : State<GameManager>
 
     private IEnumerator StartMenuState()
     {
-        int selectedChoice = 0;
-        yield return DialogueManager.Instance.ShowDialogueText("你要干啥？",
-            waitForInput: false,
-            choices: new List<string>() { "买", "卖" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex);
+        yield return DialogueManager.Instance.ShowDialogueText("欢迎光临，\n请问要做什么？", autoClose: false);
+        ChoiceState.I.Choices = new List<string>() { "想买东西", "想卖东西" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+        int selectedChoice = ChoiceState.I.Selection;
 
         if (selectedChoice == 0)
         {

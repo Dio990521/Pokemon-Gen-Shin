@@ -55,8 +55,8 @@ public class ComputerController : Singleton<ComputerController>
             GameManager.Instance.State = GameState.Computer;
             state = ComputerState.Buying;
             walletUI.Show();
-            yuanshiShopUI.Show(_computer.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
-            () => StartCoroutine(OnBackFromBuying()));
+            //yuanshiShopUI.Show(_computer.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
+            //() => StartCoroutine(OnBackFromBuying()));
         }
         else if (selectedChoice == 2)
         {

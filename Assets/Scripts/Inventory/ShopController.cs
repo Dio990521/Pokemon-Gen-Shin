@@ -44,8 +44,8 @@ public class ShopController : Singleton<ShopController>
             // Buy
             yield return GameManager.Instance.MoveCamera(shopCameraOffset);
             walletUI.Show();
-            shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
-                () => StartCoroutine(OnBackFromBuying()));
+            //shopUI.Show(merchant.AvailableItems, (item) => StartCoroutine(BuyItem(item)),
+            //    () => StartCoroutine(OnBackFromBuying()));
             state = ShopState.Buying;
         }
         else if (selectedChoice == 1)

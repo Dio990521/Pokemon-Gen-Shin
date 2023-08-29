@@ -32,6 +32,8 @@ public class ShopBuyingState : State<GameManager>
     {
         _gameManager = owner;
         _browseItems = false;
+        shopUI.OnSelected += OnItemSelected;
+        shopUI.OnBack += OnBack;
         StartCoroutine(StartBuyingState());
     }
 
@@ -43,13 +45,28 @@ public class ShopBuyingState : State<GameManager>
         }
     }
 
+    public override void Exit(bool sfx = true)
+    {
+        shopUI.OnSelected -= OnItemSelected;
+        shopUI.OnBack -= OnBack;
+        shopUI.ResetSelection();
+    }
+
+    private void OnItemSelected(int selection)
+    {
+        StartCoroutine(BuyItem(AvailableItems[selection]));
+    }
+
+    private void OnBack()
+    {
+        StartCoroutine(OnBackFromBuying());
+    }
+
     private IEnumerator StartBuyingState()
     {
         yield return GameManager.Instance.MoveCamera(shopCameraOffset);
         walletUI.Show();
-        shopUI.Show(AvailableItems, (item) => StartCoroutine(BuyItem(item)),
-            () => StartCoroutine(OnBackFromBuying()));
-
+        shopUI.Show(AvailableItems);
         _browseItems = true;
     }
 
@@ -68,12 +85,11 @@ public class ShopBuyingState : State<GameManager>
         int totalPrice = item.Price * countToBuy;
         if (Wallet.i.HasMoney(totalPrice))
         {
-            int selectedChoice = 0;
-            yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}摩拉，买吗？",
-            waitForInput: false,
-            choices: new List<string>() { "彳亍", "算了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-            cancelX: false);
+            yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}摩拉，买吗？", autoClose: false);
+            ChoiceState.I.Choices = new List<string>() { "彳亍", "算了" };
+            yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+            int selectedChoice = ChoiceState.I.Selection;
 
             if (selectedChoice == 0)
             {
@@ -97,4 +113,6 @@ public class ShopBuyingState : State<GameManager>
         walletUI.Close();
         _gameManager.StateMachine.Pop();
     }
+
+
 }

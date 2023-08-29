@@ -1,15 +1,15 @@
+using PokeGenshinUtils.SelectionUI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopUI : MonoBehaviour
+public class ShopUI : SelectionUI<ItemSlotUI>
 {
     [SerializeField] private GameObject itemList;
     [SerializeField] private ItemSlotUI itemSlotUI;
-    [SerializeField] private Image inventoryCursor;
-
     [SerializeField] private Image itemIcon;
     [SerializeField] private Text itemDescription;
 
@@ -18,26 +18,19 @@ public class ShopUI : MonoBehaviour
 
     private List<ItemBase> availableItems;
     private List<ItemSlotUI> slotUIList;
-    private int selectedItem;
-    private int prevSelection;
     private const int itemsInViewPort = 10;
     private RectTransform itemListRect;
-    private Action<ItemBase> onItemSelected;
-    private Action onBack;
 
     private void Awake()
     {
         itemListRect = itemList.GetComponent<RectTransform>();
     }
 
-    public void Show(List<ItemBase> availableItems, Action<ItemBase> onItemSelected,
-        Action onBack)
+    public void Show(List<ItemBase> availableItems)
     {
         selectedItem = 0;
         prevSelection = -1;
         this.availableItems = availableItems;
-        this.onItemSelected = onItemSelected;
-        this.onBack = onBack;
         gameObject.SetActive(true);
         UpdateItemList();
     }
@@ -47,31 +40,13 @@ public class ShopUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void HandleUpdate()
+    public override void HandleUpdate(bool allowCancel = true)
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            ++selectedItem;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            --selectedItem;
-        }
-        selectedItem = Mathf.Clamp(selectedItem, 0, availableItems.Count - 1);
+        base.HandleUpdate();
+
         if (selectedItem != prevSelection)
         {
-            UpdateUI();
-        }
-        prevSelection = selectedItem;
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            onItemSelected?.Invoke(availableItems[selectedItem]);
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            AudioManager.Instance.PlaySE(SFX.CANCEL);
-            onBack?.Invoke();
+            UpdateSelectionUI();
         }
     }
 
@@ -90,20 +65,21 @@ public class ShopUI : MonoBehaviour
             slotUIObj.SetNameAndPrice(item);
             slotUIList.Add(slotUIObj);
         }
-        UpdateUI();
+
+        SetItems(slotUIList);
+
+        UpdateSelectionUI();
     }
 
-    private void UpdateUI()
+    public override void UpdateSelectionUI()
     {
+        base.UpdateSelectionUI();
         selectedItem = Mathf.Clamp(selectedItem, 0, availableItems.Count - 1);
-
         var item = availableItems[selectedItem];
         itemIcon.sprite = item.Icon;
         itemDescription.text = item.Description;
 
         HandleScrolling();
-        UpdateCursor();
-
     }
 
     private void HandleScrolling()
@@ -121,9 +97,5 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    public void UpdateCursor()
-    {
-        //inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
-    }
 
 }

@@ -73,12 +73,11 @@ public class ShopSellingState : State<GameManager>
 
         sellingPrice *= countToSell;
 
-        int selectedChoice = 0;
-        yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？",
-            waitForInput: false,
-            choices: new List<string>() { "彳亍", "算了" },
-            onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-            cancelX: false);
+        yield return DialogueManager.Instance.ShowDialogueText($"我{sellingPrice}收了，你卖不卖？", autoClose: false);
+        ChoiceState.I.Choices = new List<string>() { "彳亍", "算了" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+        int selectedChoice = ChoiceState.I.Selection;
 
         if (selectedChoice == 0)
         {
