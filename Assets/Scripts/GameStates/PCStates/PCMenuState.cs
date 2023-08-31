@@ -54,7 +54,7 @@ public class PCMenuState : State<GameManager>
     {
  
         yield return DialogueManager.Instance.ShowDialogueText("使用电脑做些什么呢？", autoClose: false);
-        ChoiceState.I.Choices = new List<string>() { "原石充值", "原石商店", "宝可梦仓库" };
+        ChoiceState.I.Choices = new List<string>() { "原石充值", "原石商店", "宝可梦仓库", "找回技能" };
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
 
         int selectedChoice = ChoiceState.I.Selection;
@@ -76,8 +76,11 @@ public class PCMenuState : State<GameManager>
         else if (selectedChoice == 2)
         {
             AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
-            //state = ComputerState.Room;
             pokemonRoom.gameObject.SetActive(true);
+        }
+        else if (selectedChoice == 3)
+        {
+
         }
         else if (selectedChoice == -1)
         {
@@ -99,7 +102,6 @@ public class PCMenuState : State<GameManager>
         {
             case -1:
                 walletUI.Close();
-                yield return StartMenuState();
                 break;
             case 0:
                 yield return BuyYuanshiConfirm(60);

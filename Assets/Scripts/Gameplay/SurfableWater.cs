@@ -23,10 +23,12 @@ public class SurfableWater : MonoBehaviour, InteractableObject, IPlayerTriggerab
         var pokemonWithSurf = initiator.GetComponent<PokemonParty>().Pokemons.FirstOrDefault(p => p.PokemonBase.Type1 == PokemonType.±ù);
         if (pokemonWithSurf != null)
         {
-            int selectedChoice = 0;
-            yield return DialogueManager.Instance.ShowDialogueText($"ÈÃ{pokemonWithSurf.PokemonBase.PokemonName}°ïÃ¦¶ÉË®Âð£¿",
-                choices: new List<string>() { "áÜØ¡", "²»ÁË" },
-                onChoiceSelected: (selection) => selectedChoice = selection);
+
+            yield return DialogueManager.Instance.ShowDialogueText($"ÈÃ{pokemonWithSurf.PokemonBase.PokemonName}°ïÃ¦¶ÉË®Âð£¿", autoClose: false);
+            ChoiceState.I.Choices = new List<string>() { "áÜØ¡", "²»ÁË" };
+            yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+            int selectedChoice = ChoiceState.I.Selection;
 
             if (selectedChoice == 0)
             {

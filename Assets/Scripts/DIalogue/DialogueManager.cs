@@ -17,8 +17,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public bool IsShowing { get; private set; }
 
-    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true,
-        List<string> choices=null, Action<int> onChoiceSelected=null, bool cancelX=true)
+    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true)
     {
         OnShowDialogue?.Invoke();
         IsShowing = true;
@@ -29,11 +28,6 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
-        }
-
-        if (choices != null && choices.Count > 1)
-        {
-            //yield return choiceBox.ShowChoices(choices, onChoiceSelected, cancelX);
         }
 
         if (autoClose)
@@ -70,11 +64,6 @@ public class DialogueManager : Singleton<DialogueManager>
             
         }
 
-        if (choices != null && choices.Count > 1)
-        {
-            //yield return choiceBox.ShowChoices(choices, onChoiceSelected);
-        }
-
         dialogueBox.SetActive(false);
         IsShowing = false;
         OnDialogueFinished?.Invoke();
@@ -93,8 +82,4 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    public void HandleUpdate()
-    {
-
-    }
 }

@@ -3,25 +3,8 @@ using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
-public enum BattleStates
-{
-    Start,
-    ActionSelection,
-    MoveSelection,
-    RunningTurn,
-    Busy,
-    Bag,
-    PartyScreen,
-    AboutToUse,
-    MoveToForget,
-    BattleOver
-}
 
 public enum BattleAction 
 { 
@@ -35,37 +18,36 @@ public enum BattleTrigger { LongGrass, Water, Desert }
 
 public class BattleSystem : MonoBehaviour
 {
-    [SerializeField] private BattleUnit playerUnit;
-    [SerializeField] private BattleUnit enemyUnit;
+    [SerializeField] private BattleUnit _playerUnit;
+    [SerializeField] private BattleUnit _enemyUnit;
 
-    [SerializeField] private BattleDialogueBox dialogueBox;
-    [SerializeField] private PartyScreen partyScreen;
+    [SerializeField] private BattleDialogueBox _dialogueBox;
+    [SerializeField] private PartyScreen _partyScreen;
 
-    [SerializeField] private Image playerImage;
-    [SerializeField] private Image trainerImage;
-    [SerializeField] private GameObject pokeballSprite;
-    [SerializeField] private ForgetMoveSelectionUI moveSelectionUI;
-    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private Image _playerImage;
+    [SerializeField] private Image _trainerImage;
+    [SerializeField] private GameObject _pokeballSprite;
+    [SerializeField] private ForgetMoveSelectionUI _moveSelectionUI;
+    [SerializeField] private InventoryUI _inventoryUI;
 
-    [SerializeField] List<Sprite> backgroundImages;
-    [SerializeField] List<Sprite> enemyGroundSprites;
-    [SerializeField] List<Sprite> playerGroundSprites;
-    [SerializeField] Image backgroundImage;
+    [SerializeField] private List<Sprite> _backgroundImages;
+    [SerializeField] private List<Sprite> _enemyGroundSprites;
+    [SerializeField] private List<Sprite> _playerGroundSprites;
+    [SerializeField] private Image _backgroundImage;
 
-    public BattleStates state;
+    //public BattleStates state;
 
     public StateMachine<BattleSystem> StateMachine { get; private set; }
-    public BattleDialogueBox DialogueBox { get => dialogueBox; set => dialogueBox = value; }
-    public BattleUnit PlayerUnit { get => playerUnit; set => playerUnit = value; }
-    public BattleUnit EnemyUnit { get => enemyUnit; set => enemyUnit = value; }
-    public BattleDialogueBox DialogueBox1 { get => dialogueBox; set => dialogueBox = value; }
-    public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
+    public BattleDialogueBox DialogueBox { get => _dialogueBox; set => _dialogueBox = value; }
+    public BattleUnit PlayerUnit { get => _playerUnit; set => _playerUnit = value; }
+    public BattleUnit EnemyUnit { get => _enemyUnit; set => _enemyUnit = value; }
+    public BattleDialogueBox DialogueBox1 { get => _dialogueBox; set => _dialogueBox = value; }
+    public PartyScreen PartyScreen { get => _partyScreen; set => _partyScreen = value; }
     public Pokemon SelectedPokemon { get; set; }
     public ItemBase SelectedItem { get; set; }
 
     public int currentAction;
     public int currentMove;
-    private bool aboutToUseChoice = true;
     public int SelectedMove { get; set; }
 
     public bool IsBattleOver { get; private set; }
@@ -85,13 +67,11 @@ public class BattleSystem : MonoBehaviour
     public int EscapeAttempts { get; set; }
     public TrainerController Trainer { get => trainer; set => trainer = value; }
 
-    MoveBase moveToLearn;
-
     private BattleTrigger battleTrigger;
 
     public void StartBattle(PokemonParty playerParty, Pokemon wildPokemon, BattleTrigger trigger=BattleTrigger.LongGrass)
     {
-        dialogueBox.SetDialogue("");
+        _dialogueBox.SetDialogue("");
         this.IsTrainerBattle = false;
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.PlayerParty = playerParty;
@@ -103,7 +83,7 @@ public class BattleSystem : MonoBehaviour
 
     public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty, BattleTrigger trigger = BattleTrigger.LongGrass)
     {
-        dialogueBox.SetDialogue("");
+        _dialogueBox.SetDialogue("");
         AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
         this.PlayerParty = playerParty;
         this.TrainerParty = trainerParty;
@@ -122,64 +102,63 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator SetupBattle()
     {
 
-        playerUnit.SetDefaultPlayerSprite();
-        playerUnit.HideHud();
-        enemyUnit.HideHud();
+        _playerUnit.SetDefaultPlayerSprite();
+        _playerUnit.HideHud();
+        _enemyUnit.HideHud();
 
-        backgroundImage.sprite = backgroundImages[((int)battleTrigger)];
-        playerUnit.SetGroundImage(playerGroundSprites[((int)battleTrigger)]);
-        enemyUnit.SetGroundImage(enemyGroundSprites[((int)battleTrigger)]);
+        _backgroundImage.sprite = _backgroundImages[((int)battleTrigger)];
+        _playerUnit.SetGroundImage(_playerGroundSprites[((int)battleTrigger)]);
+        _enemyUnit.SetGroundImage(_enemyGroundSprites[((int)battleTrigger)]);
 
         if (!IsTrainerBattle)
         {
             // Wild Pokemon Battle
 
             // set up pokemons data
-            playerUnit.ResetAnimation();
-            enemyUnit.ResetAnimation();
-            enemyUnit.SetUp(WildPokemon);
-            playerUnit.UnitEnterAnimation();
-            enemyUnit.UnitEnterAnimation();
+            _playerUnit.ResetAnimation();
+            _enemyUnit.ResetAnimation();
+            _enemyUnit.SetUp(WildPokemon);
+            _playerUnit.UnitEnterAnimation();
+            _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
-            yield return dialogueBox.TypeDialogue($"野生的{enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
+            yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
             yield return new WaitForSeconds(2f);
         }
         else
         {
             // Trianer Battle
             
-            trainerImage.sprite = trainer.Sprite;
-            playerUnit.ResetAnimation();
-            enemyUnit.ResetAnimation();
-            playerUnit.UnitEnterAnimation();
-            enemyUnit.UnitEnterAnimation();
+            _trainerImage.sprite = trainer.Sprite;
+            _playerUnit.ResetAnimation();
+            _enemyUnit.ResetAnimation();
+            _playerUnit.UnitEnterAnimation();
+            _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
-            yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
+            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
             yield return new WaitForSeconds(2f);
 
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
-            enemyUnit.ChangeUnit(enemyPokemon);
+            _enemyUnit.ChangeUnit(enemyPokemon);
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-            yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
+            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
             
             yield return new WaitForSeconds(2f);
 
             // Send out first pokemon of the player
-            playerImage.gameObject.SetActive(false);
-            playerUnit.gameObject.SetActive(true);
+            _playerImage.gameObject.SetActive(false);
+            _playerUnit.gameObject.SetActive(true);
             
         }
-        partyScreen.Init();
+        _partyScreen.Init();
         var playerPokemon = PlayerParty.GetHealthyPokemon();
-        playerUnit.ChangeUnit(playerPokemon);
-        yield return dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
+        _playerUnit.ChangeUnit(playerPokemon);
+        yield return _dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        //dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
         yield return new WaitForSeconds(2f);
 
-        playerUnit.ShowHud();
-        enemyUnit.ShowHud();
+        _playerUnit.ShowHud();
+        _enemyUnit.ShowHud();
         IsBattleOver = false;
         EscapeAttempts = 0;
 
@@ -194,400 +173,97 @@ public class BattleSystem : MonoBehaviour
             if (IsTrainerBattle)
             {
                 AudioManager.Instance.PlayMusic(trainer.WinBGM);
-                yield return dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
+                yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
                 Wallet.i.AddMoney(trainer.WinMoney, false);
-                yield return dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
+                yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
             }
             else
             {
                 AudioManager.Instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
-                yield return dialogueBox.TypeDialogue($"你打败了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
-                if (enemyUnit.pokemon.PokemonBase.RewardProb != 0 && enemyUnit.pokemon.PokemonBase.Reward != null)
+                yield return _dialogueBox.TypeDialogue($"你打败了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
+                if (_enemyUnit.pokemon.PokemonBase.RewardProb != 0 && _enemyUnit.pokemon.PokemonBase.Reward != null)
                 {
                     float tmp = UnityEngine.Random.Range(0f, 1f);
-                    if (tmp <= enemyUnit.pokemon.PokemonBase.RewardProb)
+                    if (tmp <= _enemyUnit.pokemon.PokemonBase.RewardProb)
                     {
-                        Inventory.GetInventory().AddItem(enemyUnit.pokemon.PokemonBase.Reward, playSE: false);
-                        yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}掉落了{enemyUnit.pokemon.PokemonBase.Reward.ItemName}！");
+                        Inventory.GetInventory().AddItem(_enemyUnit.pokemon.PokemonBase.Reward, playSE: false);
+                        yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}掉落了{_enemyUnit.pokemon.PokemonBase.Reward.ItemName}！");
                     }
                 }
             }
             
         }
         PlayerParty.Pokemons.ForEach(p => p.OnBattleOver());
-        playerUnit.Hud.ClearData();
-        enemyUnit.Hud.ClearData();
+        _playerUnit.Hud.ClearData();
+        _enemyUnit.Hud.ClearData();
         yield return new WaitForSeconds(2f);
         OnBattleOver(won);
     }
 
-    // Player turn
-    private void ActionSelection()
-    {
-        SelectedAction = 0;
-        state = BattleStates.ActionSelection;
-        playerUnit.Hud.gameObject.SetActive(true);
-        enemyUnit.Hud.gameObject.SetActive(true);
-        StartCoroutine(dialogueBox.TypeDialogue($"想要\n{playerUnit.pokemon.PokemonBase.PokemonName}做什么？"));
-        dialogueBox.EnableActionSelector(true);
-    }
-
-    // Check action cursor and move cursor
     public void HandleUpdate()
     {
         StateMachine.Execute();
-
-        if (state == BattleStates.Bag)
-        {
-            Action onBack = () =>
-            {
-                inventoryUI.gameObject.SetActive(false);
-                state = BattleStates.ActionSelection;
-            };
-
-            Action<ItemBase> onItemUsed = (ItemBase usedItem) =>
-            {
-                StartCoroutine(OnItemUsed(usedItem));
-            };
-
-            //inventoryUI.HandleUpdate(onBack, onItemUsed);
-        }
-        else if (state == BattleStates.PartyScreen)
-        {
-            HandlePartyScreenSelection();
-        }
-        else if (state == BattleStates.AboutToUse)
-        {
-            HandleAboutToUse();
-        }
-        else if (state == BattleStates.MoveToForget)
-        {
-            Action<int> onMoveSelected = (moveIndex) =>
-            {
-                moveSelectionUI.gameObject.SetActive(false);
-                if (moveIndex == PokemonBase.MaxNumOfMoves)
-                {
-                    // Don't learn new move
-                    StartCoroutine(dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}放弃学习{moveToLearn.MoveName}！"));
-                }
-                else
-                {
-                    // Forget the selected move and learn new move
-                    var selevtedMove = playerUnit.pokemon.Moves[moveIndex].MoveBase;
-                    StartCoroutine(dialogueBox.TypeDialogue($"{playerUnit.pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！"));
-                    playerUnit.pokemon.Moves[moveIndex] = new Move(moveToLearn);
-                }
-
-                moveToLearn = null;
-                state = BattleStates.RunningTurn;
-            };
-
-            
-
-            //moveSelectionUI.HandleMoveSelection(onMoveSelected);
-        }
     }
 
-    // Press Z to open the move box
-    private void HandleActionSelection()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow)) 
-        {
-            currentAction += 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentAction -= 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentAction += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            currentAction -= 1;
-        }
-
-        currentAction = Mathf.Clamp(currentAction, 0, 3);
-
-        dialogueBox.UpdateActionSelection(currentAction);
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            if (currentAction == 0)
-            {
-                // Fight
-                MoveSelection();
-            }
-            else if (currentAction == 1)
-            {
-                // Bag
-                OpenBag();
-            }
-            else if (currentAction == 2)
-            {
-                // Pokemon party
-                OpenPartyScreen();
-
-            }
-            else if (currentAction == 3)
-            {
-                // Run
-               // StartCoroutine(RunTurns(BattleAction.Run));
-            }
-        }
-
-    }
-
-    // Open move box
-    private void MoveSelection()
-    {
-        state = BattleStates.MoveSelection;
-        dialogueBox.EnableActionSelector(false);
-        dialogueBox.EnableDialogueText(false);
-        dialogueBox.EnableMoveSelector(true);
-    }
-
-    private IEnumerator AboutToUse(Pokemon newPokemon)
-    {
-        state = BattleStates.Busy;
-        yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}想要让{newPokemon.PokemonBase.PokemonName}上场！\n是否要更换当前出战宝可梦？");
-        state = BattleStates.AboutToUse;
-        dialogueBox.EnableChoiceBox(true);
-    }
-
-    public IEnumerator ChooseMoveToForget(Pokemon pokemon, MoveBase newMove)
-    {
-        yield return dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
-        moveSelectionUI.gameObject.SetActive(true);
-        moveSelectionUI.SetMoveData(pokemon.Moves.Select(x => x.MoveBase).ToList(), newMove);
-        moveToLearn = newMove;
-    }
-
-    private void OpenBag()
-    {
-        state = BattleStates.Bag;
-        inventoryUI.Show();
-    }
-
-    private void OpenPartyScreen()
-    {
-        //partyScreen.CalledFrom = state;
-        state = BattleStates.PartyScreen;
-        partyScreen.Show();
-    }
-
-    // Press Z to use the selected move
-    private void HandleMoveSelection()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentMove += 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentMove -= 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentMove += 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            currentMove -= 1;
-        }
-
-        currentMove = Mathf.Clamp(currentMove, 0, playerUnit.pokemon.Moves.Count - 1);
-
-        dialogueBox.UpdateMoveSelection(currentMove, playerUnit.pokemon.Moves[currentMove]);
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            var move = playerUnit.pokemon.Moves[currentMove];
-            if (move.PP == 0) return;
-            AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            dialogueBox.EnableMoveSelector(false);
-            dialogueBox.EnableDialogueText(true);
-            //StartCoroutine(RunTurns(BattleAction.Move));
-        }
-        else if (Input.GetKeyDown(KeyCode.X))
-        {
-            dialogueBox.EnableMoveSelector(false);
-            dialogueBox.EnableDialogueText(true);
-            ActionSelection();
-        }
-    }
-
- 
-
-    private void HandlePartyScreenSelection()
-    {
-        Action onSelected = () =>
-        {
-            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            Pokemon seletedMember = partyScreen.SelectedMember;
-            if (seletedMember.Hp <= 0)
-            {
-                partyScreen.SetMessageText("它摸了，换一个吧！");
-                return;
-            }
-            if (seletedMember == playerUnit.pokemon)
-            {
-                partyScreen.SetMessageText("它已经上场了，换一个吧！");
-                return;
-            }
-
-            partyScreen.gameObject.SetActive(false);
-
-            //if (partyScreen.CalledFrom == BattleState.ActionSelection)
-            //{
-            //    StartCoroutine(RunTurns(BattleAction.SwitchPokemon));
-            //}
-            //else
-            //{
-            //    state = BattleState.Busy;
-            //    bool isTrainerAboutToUse = partyScreen.CalledFrom == BattleState.AboutToUse;
-            //    StartCoroutine(SwitchPokemon(seletedMember, isTrainerAboutToUse));
-            //}
-
-            //partyScreen.CalledFrom = null;
-        };
-
-        Action onBack = () =>
-        {
-            if (playerUnit.pokemon.Hp <= 0)
-            {
-                partyScreen.SetMessageText("必须要选择一个宝可梦！");
-                return;
-            }
-            partyScreen.gameObject.SetActive(false);
-
-            //if (partyScreen.CalledFrom == BattleState.AboutToUse)
-            //{
-            //    StartCoroutine(SendNextTrainerPokemon());
-            //}
-            //else
-            //{
-            //    ActionSelection();
-            //}
-
-            //partyScreen.CalledFrom = null;
-        };
-
-        //partyScreen.HandleUpdate(onSelected, onBack);
-    }
-
-    private void HandleAboutToUse()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow)) 
-        {
-            aboutToUseChoice = !aboutToUseChoice;
-        }
-
-        dialogueBox.UpdateChoiceBox(aboutToUseChoice);
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            dialogueBox.EnableChoiceBox(false);
-            if (aboutToUseChoice)
-            {
-                OpenPartyScreen();
-            }
-            else
-            {
-                StartCoroutine(SendNextTrainerPokemon());
-            }
-        }else if (Input.GetKeyDown(KeyCode.X))
-        {
-            //AudioManager.Instance.PlaySE(SFX.CANCEL);
-            dialogueBox.EnableChoiceBox(false);
-            StartCoroutine(SendNextTrainerPokemon());
-        }
-    }
-
-    public IEnumerator SwitchPokemon(Pokemon newPokemon)//, bool isTrainerAboutToUse=false)
+    public IEnumerator SwitchPokemon(Pokemon newPokemon)
     {
         
-        if (playerUnit.pokemon.Hp > 0)
+        if (_playerUnit.pokemon.Hp > 0)
         {
-            yield return dialogueBox.TypeDialogue($"做得好，{playerUnit.pokemon.PokemonBase.PokemonName}！");
-            playerUnit.PlayFaintAnimation();
+            yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！");
+            _playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
-        partyScreen.SwitchPokemonSlot(0, partyScreen.SelectedItem);
-        playerUnit.ChangeUnit(newPokemon);
-        //dialogueBox.SetMoveNames(newPokemon.Moves);
-        yield return dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
+        _partyScreen.SwitchPokemonSlot(0, _partyScreen.SelectedItem);
+        _playerUnit.ChangeUnit(newPokemon);
+        yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-
-        //if (isTrainerAboutToUse)
-        //{
-        //    StartCoroutine(SendNextTrainerPokemon());
-        //}
-
         
     }
 
     public IEnumerator SendNextTrainerPokemon()
     {
         var nextPokemon = TrainerParty.GetHealthyPokemon();
-        enemyUnit.SetUp(nextPokemon);
-        yield return dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
-    }
-
-    private IEnumerator OnItemUsed(ItemBase usedItem)
-    {
-        state = BattleStates.Busy;
-        inventoryUI.gameObject.SetActive(false);
-
-        if (usedItem is PokeballItem)
-        {
-            yield return ThrowPokeball((PokeballItem)usedItem);
-        }
-
-        //StartCoroutine(RunTurns(BattleAction.UseItem));
+        _enemyUnit.SetUp(nextPokemon);
+        yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
     }
 
     public IEnumerator ThrowPokeball(PokeballItem pokeballItem)
     {
-        dialogueBox.EnableActionSelector(false);
+        _dialogueBox.EnableActionSelector(false);
         if (IsTrainerBattle)
         {
-            yield return dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
-            //state = BattleStates.RunningTurn;
+            yield return _dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
             yield break;
         }
 
-        if (pokeballItem.BallType == PokeballType.Genshin && !enemyUnit.pokemon.PokemonBase.IsHuman)
+        if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
         {
-            yield return dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
-            //state = BattleStates.RunningTurn;
+            yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
             yield break;
         }
 
-        if (pokeballItem.BallType != PokeballType.Genshin && enemyUnit.pokemon.PokemonBase.IsHuman)
+        if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
         {
-            yield return dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
-            //state = BattleStates.RunningTurn;
+            yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
             yield break;
         }
 
         
-        yield return dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
+        yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         AudioManager.Instance.PlaySE(SFX.THROW_BALL);
 
-        var pokeballObj = Instantiate(pokeballSprite, playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
+        var pokeballObj = Instantiate(_pokeballSprite, _playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
         pokeball.sprite = pokeballItem.InBattleIcon;
 
         // Animations
-        yield return pokeball.transform.DOJump(enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
+        yield return pokeball.transform.DOJump(_enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        yield return enemyUnit.PlayCaptureAnimation();
-        pokeball.transform.DOMoveY(enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
+        yield return _enemyUnit.PlayCaptureAnimation();
+        pokeball.transform.DOMoveY(_enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
 
-        int shakeCount = TryToCatchPokemon(enemyUnit.pokemon, pokeballItem);
+        int shakeCount = TryToCatchPokemon(_enemyUnit.pokemon, pokeballItem);
 
         for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
         {
@@ -599,12 +275,12 @@ public class BattleSystem : MonoBehaviour
         {
             // Pokemon is caught
             AudioManager.Instance.PlayMusic(BGM.CATCH_POKEMON);
-            yield return dialogueBox.TypeDialogue($"抓到了{enemyUnit.pokemon.PokemonBase.PokemonName}！");
+            yield return _dialogueBox.TypeDialogue($"抓到了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
-            enemyUnit.pokemon.PokeballSprite = pokeballItem.InBattleIcon;
-            enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
-            PlayerParty.AddPokemon(enemyUnit.pokemon);
-            yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
+            _enemyUnit.pokemon.PokeballSprite = pokeballItem.InBattleIcon;
+            _enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
+            PlayerParty.AddPokemon(_enemyUnit.pokemon);
+            yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
 
             Destroy(pokeball);
             yield return BattleOver(true, true);
@@ -614,10 +290,10 @@ public class BattleSystem : MonoBehaviour
             // Pokemon broke out
             yield return new WaitForSeconds(1f);
             pokeball.DOFade(0, 0.2f);
-            yield return enemyUnit.PlayBreakOutAnimation();
+            yield return _enemyUnit.PlayBreakOutAnimation();
 
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-            yield return dialogueBox.TypeDialogue($"{enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
+            yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
             Destroy(pokeball);
         }
@@ -668,7 +344,6 @@ public class BattleSystem : MonoBehaviour
 
         return shakeCount;
     }
-
 
 
 }

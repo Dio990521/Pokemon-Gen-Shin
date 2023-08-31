@@ -10,6 +10,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private Dialogue dialogueAfterBattle;
     [SerializeField] private int winMoney;
     [SerializeField] private BGM meetBGM = BGM.TRAINER_EYE_MEET_YOUNG;
+    [SerializeField] private BGM startBGM = BGM.BATTLE_TRAINER;
     [SerializeField] private BGM winBGM = BGM.VICTORY_TRAINER;
     [SerializeField] private GameObject fov;
     [SerializeField] private Sprite sprite;

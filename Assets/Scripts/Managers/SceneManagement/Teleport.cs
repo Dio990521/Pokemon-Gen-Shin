@@ -43,7 +43,6 @@ public class Teleport : MonoBehaviour, InteractableObject
             yield break;
         }
 
-        int selectedChoice = 0;
         List<string> teleports = TeleportManager.Instance.GetActiveList();
         List<int> indices = TeleportManager.Instance.GetActiveTeleportIndex();
         if (teleports.Count == 1)
@@ -51,9 +50,12 @@ public class Teleport : MonoBehaviour, InteractableObject
             yield return DialogueManager.Instance.ShowDialogueText("已激活的传送锚点只有这里！");
             yield break;
         }
-        yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？",
-            choices: teleports,
-            onChoiceSelected: (selection) => selectedChoice = selection);
+
+        yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？", autoClose: false);
+        ChoiceState.I.Choices = new List<string>() { "彳亍", "不了" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+        int selectedChoice = ChoiceState.I.Selection;
 
         if (selectedChoice != - 1)
         {
@@ -72,7 +74,6 @@ public class Teleport : MonoBehaviour, InteractableObject
         player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
-        //GameManager.Instance.StartFreeRoamState();
 
     }
 

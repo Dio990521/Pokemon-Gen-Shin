@@ -25,10 +25,11 @@ public class CuttableTree : MonoBehaviour, InteractableObject, ISavable
         var pokemonWithCut = initiator.GetComponent<PokemonParty>().Pokemons.FirstOrDefault(p => p.PokemonBase.Type1 == PokemonType.≤›);
         if (pokemonWithCut != null )
         {
-            int selectedChoice = 0;
-            yield return DialogueManager.Instance.ShowDialogueText($"»√{pokemonWithCut.PokemonBase.PokemonName}ø≥∂œÀ¸¬£ø",
-                choices: new List<string>() { "·‹ÿ°", "≤ª¡À"},
-                onChoiceSelected: (selection) => selectedChoice = selection);
+            yield return DialogueManager.Instance.ShowDialogueText($"»√{pokemonWithCut.PokemonBase.PokemonName}ø≥∂œÀ¸¬£ø", autoClose: false);
+            ChoiceState.I.Choices = new List<string>() { "·‹ÿ°", "≤ª¡À" };
+            yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+            int selectedChoice = ChoiceState.I.Selection;
 
             if (selectedChoice == 0)
             {

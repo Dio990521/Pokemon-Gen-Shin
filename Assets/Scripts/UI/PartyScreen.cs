@@ -17,19 +17,11 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
     private List<Pokemon> pokemons;
     private PokemonParty party;
 
-    //private int selection = 0;
-    //private int prevSelection = -1;
-
     public Pokemon SelectedMember => pokemons[selectedItem];
 
     public List<Pokemon> Pokemons { get => pokemons; set => pokemons = value; }
 
     public int SelectedItem => selectedItem;
-
-    /// <summary>
-    /// Party screen can be called from different states like ActionSelection, RuuningTurn, AboutToUse
-    /// </summary>
-    //public BattleState? CalledFrom { get; set; }
 
     public void Init()
     {
@@ -65,10 +57,7 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
             }
         }
 
-        //var partyMembers = memberSlots.Select(m => m.GetComponent<PartyMemberUI>());
         SetItems(memberSlots.Take(pokemons.Count).ToList());
-
-        //UpdateMemberSelection(selection);
 
         SetMessageText("选择一个宝可梦。");
     }
@@ -78,53 +67,6 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
         (pokemons[index2], pokemons[index1]) = (pokemons[index1], pokemons[index2]);
         SetPartyData();
     }
-
-    //public void HandleUpdate(Action onSelected, Action onBack)
-    //{
-    //    if (Input.GetKeyDown(KeyCode.DownArrow))
-    //    {
-    //        selection += 1;
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.UpArrow))
-    //    {
-    //        selection -= 1;
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.RightArrow))
-    //    {
-    //        selection += 1;
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.LeftArrow))
-    //    {
-    //        selection -= 1;
-    //    }
-
-    //    selection = Mathf.Clamp(selection, 0, pokemons.Count);
-
-    //    if (selection != prevSelection)
-    //    {
-    //        UpdateMemberSelection(selection);
-    //    }
-    //    prevSelection = selection;
-
-    //    if (Input.GetKeyDown(KeyCode.Z))
-    //    {
-    //        if (selection == pokemons.Count)
-    //        {
-    //            AudioManager.Instance.PlaySE(SFX.CANCEL);
-    //            onBack?.Invoke();
-    //        }
-    //        else
-    //        {
-    //            AudioManager.Instance.PlaySE(SFX.CONFIRM);
-    //            onSelected?.Invoke();
-    //        }
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.X))
-    //    {
-    //        AudioManager.Instance.PlaySE(SFX.CANCEL);
-    //        onBack?.Invoke();
-    //    }
-    //}
 
     public override void ClampSelection()
     {
