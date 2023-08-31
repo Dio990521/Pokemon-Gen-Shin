@@ -83,7 +83,7 @@ public class ShopSellingState : State<GameManager>
         {
             // Yes
             inventory.RemoveItem(item, countToSell);
-            Wallet.i.AddMoney(sellingPrice);
+            Wallet.I.AddMoney(sellingPrice);
             yield return DialogueManager.Instance.ShowDialogueText($"成功卖掉{item.ItemName}！\n获得了{sellingPrice}摩拉！");
 
         }

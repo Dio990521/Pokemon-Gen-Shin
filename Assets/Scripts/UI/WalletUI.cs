@@ -11,7 +11,7 @@ public class WalletUI : MonoBehaviour
 
     private void Start()
     {
-        Wallet.i.OnMoneyChanged += SetMoneyText;
+        Wallet.I.OnMoneyChanged += SetMoneyText;
     }
 
     public void Show()
@@ -28,10 +28,10 @@ public class WalletUI : MonoBehaviour
     private void SetMoneyText()
     {
         StringBuilder money = new StringBuilder();
-        money.Append("持有摩拉：").Append(Wallet.i.Money).Append("￥");
+        money.Append("持有摩拉：").Append(Wallet.I.Money).Append("￥");
         moneyText.text = money.ToString();
         money.Clear();
-        money.Append("持有原石：").Append(Inventory.GetInventory().GetItemCount(Wallet.i.Yuanshi));
+        money.Append("持有原石：").Append(Inventory.GetInventory().GetItemCount(Wallet.I.Yuanshi));
         yuanshiText.text = money.ToString();
     }
 

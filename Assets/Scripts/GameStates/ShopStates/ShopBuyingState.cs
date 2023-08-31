@@ -92,7 +92,7 @@ public class ShopBuyingState : State<GameManager>
 
         DialogueManager.Instance.CloseDialog();
         int totalPrice = item.Price * countToBuy;
-        if (Wallet.i.HasMoney(totalPrice))
+        if (Wallet.I.HasMoney(totalPrice))
         {
             yield return DialogueManager.Instance.ShowDialogueText($"一共{totalPrice}摩拉，买吗？", autoClose: false);
             ChoiceState.I.Choices = new List<string>() { "彳亍", "算了" };
@@ -103,7 +103,7 @@ public class ShopBuyingState : State<GameManager>
             if (selectedChoice == 0)
             {
                 inventory.AddItem(item, countToBuy);
-                Wallet.i.TakeMoney(totalPrice);
+                Wallet.I.TakeMoney(totalPrice);
                 yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");
             }
         }
@@ -126,7 +126,7 @@ public class ShopBuyingState : State<GameManager>
 
         DialogueManager.Instance.CloseDialog();
         int totalPrice = item.YuanshiPrice * countToBuy;
-        if (Inventory.GetInventory().GetItemCount(Wallet.i.Yuanshi) >= totalPrice)
+        if (Inventory.GetInventory().GetItemCount(Wallet.I.Yuanshi) >= totalPrice)
         {
             yield return DialogueManager.Instance.ShowDialogueText($"一共需要花费{totalPrice}原石，买吗？", autoClose: false);
             ChoiceState.I.Choices = new List<string>() { "彳亍", "算了" };
@@ -137,8 +137,8 @@ public class ShopBuyingState : State<GameManager>
             if (selectedChoice == 0)
             {
                 inventory.AddItem(item, countToBuy);
-                Inventory.GetInventory().RemoveItem(Wallet.i.Yuanshi, totalPrice);
-                Wallet.i.TakeMoney(0);
+                Inventory.GetInventory().RemoveItem(Wallet.I.Yuanshi, totalPrice);
+                Wallet.I.TakeMoney(0);
                 yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");
             }
         }

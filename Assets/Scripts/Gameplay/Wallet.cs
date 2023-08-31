@@ -8,18 +8,22 @@ public class Wallet : MonoBehaviour, ISavable
     [SerializeField] private int money;
     [SerializeField] private ItemBase yuanshi;
 
+    private int _visaLimit;
     public event Action OnMoneyChanged;
 
-    public static Wallet i { get; private set; }
+    public static Wallet I { get; private set; }
 
     private void Awake()
     {
-        i = this;
+        I = this;
+        _visaLimit = 100000;
     }
 
     public int Money => money;
 
     public ItemBase Yuanshi { get {  return yuanshi; } }
+
+    public int VisaLimit { get => _visaLimit; set => _visaLimit = value; }
 
     public void AddMoney(int amount, bool playSE=true)
     {
@@ -42,13 +46,37 @@ public class Wallet : MonoBehaviour, ISavable
         return amount <= money;
     }
 
+    public void IncreaseVisaLimit(int amount)
+    {
+        _visaLimit += amount;
+    }
+
+    public void DecreaseVisaLimit(int amount)
+    {
+        _visaLimit -= amount;
+    }
+
     public object CaptureState()
     {
-        return money;
+        var saveData = new WalletSaveData
+        {
+            money = money,
+            visaLimit = _visaLimit
+        };
+        return saveData;
     }
 
     public void RestoreState(object state)
     {
-        money = (int)state;
+        var saveData = (WalletSaveData)state;
+        money = saveData.money;
+        _visaLimit = saveData.visaLimit;
     }
+}
+
+[Serializable]
+public class WalletSaveData
+{
+    public int money;
+    public int visaLimit;
 }

@@ -16,7 +16,7 @@ public class AchievementUI : MonoBehaviour
 
     public void Show()
     {
-        _money.text = Wallet.i.Money.ToString();
+        _money.text = Wallet.I.Money.ToString();
         _pokeDex.text = $"{AchievementManager.Instance.GetTotalProgress().ToString("F1")}%";
         _playtime.text = GameManager.Instance.GamePlayTime;
         foreach (Achievement tag in Enum.GetValues(typeof(Achievement)))

@@ -38,7 +38,7 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
             }
             if (isMoney)
             {
-                Wallet.i.AddMoney(moneyAmt);
+                Wallet.I.AddMoney(moneyAmt);
                 yield return DialogueManager.Instance.ShowDialogueText($"你获得了{moneyAmt}摩拉！");
             }
             else

@@ -1,6 +1,7 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PCMenuState : State<GameManager>
@@ -91,7 +92,7 @@ public class PCMenuState : State<GameManager>
 
     private IEnumerator BuyYuanshi()
     {
-        yield return DialogueManager.Instance.ShowDialogueText("小氪怡情，大氪伤身，请您注意节制。\n请注意：本服务不会对米哈游的营收数据造成影响。");
+        yield return DialogueManager.Instance.ShowDialogueText($"小氪怡情，大氪伤身，请您注意节制。\n您的信用卡可用额度还剩：{Wallet.I.VisaLimit}摩拉");
         yield return DialogueManager.Instance.ShowDialogueText("您要充值多少原石呢？", autoClose: false);
         ChoiceState.I.Choices = new List<string>() { "60", "300", "980", "1980", "3280", "6480" };
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
@@ -128,6 +129,12 @@ public class PCMenuState : State<GameManager>
     {
         DialogueManager.Instance.CloseDialog();
         int totalPrice = yuanshiAmount * 10;
+        if (totalPrice > Wallet.I.VisaLimit)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"充值{yuanshiAmount}原石需要消费{totalPrice}摩拉。\n但是您的信用卡可用额度不足！", autoClose: false);
+            walletUI.Close();
+            yield break;
+        }
         yield return DialogueManager.Instance.ShowDialogueText($"充值{yuanshiAmount}原石需要消费{totalPrice}摩拉。\n确认充值吗？", autoClose: false);
         ChoiceState.I.Choices = new List<string>() { "狠狠地充", "克制自己" };
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
@@ -136,10 +143,11 @@ public class PCMenuState : State<GameManager>
 
         if (selectedChoice == 0)
         {
-            if (Wallet.i.HasMoney(totalPrice))
+            if (Wallet.I.HasMoney(totalPrice))
             {
-                _inventory.AddItem(Wallet.i.Yuanshi, yuanshiAmount);
-                Wallet.i.TakeMoney(totalPrice);
+                _inventory.AddItem(Wallet.I.Yuanshi, yuanshiAmount);
+                Wallet.I.TakeMoney(totalPrice);
+                Wallet.I.DecreaseVisaLimit(totalPrice);
                 yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，氪金的快感止不住！");
             }
             else
