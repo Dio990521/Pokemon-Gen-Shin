@@ -32,7 +32,6 @@ public class PokemonSelectionUI : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
-        //GameManager.Instance.StartFreeRoamState();
     }
 
     public void HandleUpdate()
@@ -75,11 +74,10 @@ public class PokemonSelectionUI : MonoBehaviour
 
     private IEnumerator HandleConfirm()
     {
-        int selectedChoice = 0;
-        //yield return _choiceBox.ShowChoices(new List<string>() { "就决定是你了！", "让我再看一看！" },
-        //    onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-        //    cancelX: false);
-        yield return null;
+        ChoiceState.I.Choices = new List<string>() { "就决定是你了！", "让我再看一看！" };
+        yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+        int selectedChoice = ChoiceState.I.Selection;
 
         if (selectedChoice == 0)
         {

@@ -82,25 +82,6 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    //public override void HandleUpdate()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Z))
-    //    {
-    //        AudioManager.Instance.PlaySE(SFX.CONFIRM);
-    //        if (true)
-    //        {
-    //            StartCoroutine(TryLoad());
-    //        }
-    //    }
-    //    else if (Input.GetKeyDown(KeyCode.X))
-    //    {
-    //        AudioManager.Instance.PlaySE(SFX.CANCEL);
-    //        Close();
-    //        //GameManager.Instance.StartFreeRoamState();
-    //    }
-
-    //}
-
     public IEnumerator TrySave()
     {
         yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？", autoClose: false);
@@ -108,11 +89,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
 
         int selectedChoice = ChoiceState.I.Selection;
-        //yield return DialogueManager.Instance.ShowDialogueText("要在这里保存吗？",
-        //    waitForInput: false,
-        //    choices: new List<string>() { "是的", "不了" },
-        //    onChoiceSelected: choiceIndex => selectedChoice = choiceIndex,
-        //    cancelX: false);
+
         if (selectedChoice == 0)
         {
             StringBuilder stringBuilder = new StringBuilder();

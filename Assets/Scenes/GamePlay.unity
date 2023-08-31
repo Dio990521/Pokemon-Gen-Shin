@@ -6525,22 +6525,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8343113941151216219, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
   m_PrefabInstance: {fileID: 2173388929618975059}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2173388929618975061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2173388929618975060}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bdeca03ff1708a4e8e4dab06bb00eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walletUI: {fileID: 190008697}
-  yuanshiShopUI: {fileID: 2082832281}
-  countSelectorUI: {fileID: 1602842722}
-  pokemonRoom: {fileID: 0}
 --- !u!114 &2173388929618975062
 MonoBehaviour:
   m_ObjectHideFlags: 0
