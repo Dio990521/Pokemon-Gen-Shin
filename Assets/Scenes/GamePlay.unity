@@ -6051,6 +6051,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ba5183a33e54d439eb2409f7db3bdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2093738214 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3528544617280331204, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e166d74a655d364fbbdcc13ce67ec1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2100588369
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6602,7 +6613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6efeed02b4a0ea48b307859920f4f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _forgetMoveSelectionUI: {fileID: 0}
+  _forgetMoveSelectionUI: {fileID: 2093738214}
 --- !u!114 &2173388929618975083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8175,8 +8186,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: tmSlots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: tmSlots.Array.data[1].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 76fd4b9a57a658f4698fe6190d5504d7, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: tmSlots.Array.data[1].count
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[2].item

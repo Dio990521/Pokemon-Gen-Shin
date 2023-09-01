@@ -187,6 +187,11 @@ public class Pokemon
         return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
+    public List<LearnableMove> GetLearnableMovesAtCurrentLevel()
+    {
+        return PokemonBase.LearnableMoves.Where(x => x.Level <= level).ToList();
+    }
+
     public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves) return;

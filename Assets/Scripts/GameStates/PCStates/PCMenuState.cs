@@ -1,6 +1,7 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -81,6 +82,63 @@ public class PCMenuState : State<GameManager>
         }
         else if (selectedChoice == 3)
         {
+            AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
+            GameManager.Instance.PartyScreen.SetMessageText("选择想要找回技能的宝可梦。");
+            yield return GameManager.Instance.StateMachine.PushAndWait(PartyState.I);
+            var selectedPokemon = PartyState.I.SelectedPokemon;
+            if (selectedPokemon != null)
+            {
+                var currentLearnableMoves = selectedPokemon.GetLearnableMovesAtCurrentLevel();
+                if (currentLearnableMoves.Count > 0)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("选择想要找回的技能。", autoClose: false);
+                    ChoiceState.I.Choices = currentLearnableMoves.Select(move => move.MoveBase.MoveName).ToList();
+                    yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+                    int selection = ChoiceState.I.Selection;
+                    if (selection == -1)
+                    {
+                        _gameManager.StateMachine.Pop();
+                        yield break;
+                    }
+                    var selectedLearnableMove = currentLearnableMoves[selection];
+                    if (selectedPokemon.Moves.Select(move => move.MoveBase).ToList().Contains(selectedLearnableMove.MoveBase))
+                    {
+                        yield return DialogueManager.Instance.ShowDialogueText("这个技能已经学会了！", autoClose: false);
+                        yield return StartMenuState();
+                        yield break;
+                    }
+                    yield return DialogueManager.Instance.ShowDialogueText($"想要让{selectedPokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", autoClose: false);
+                    MoveToForgetState.I.NewMove = selectedLearnableMove.MoveBase;
+                    MoveToForgetState.I.CurrentMoves = selectedPokemon.Moves.Select(m => m.MoveBase).ToList();
+                    yield return GameManager.Instance.StateMachine.PushAndWait(MoveToForgetState.I);
+
+                    int moveIndex = MoveToForgetState.I.Selection;
+                    if (moveIndex == PokemonBase.MaxNumOfMoves || moveIndex == -1)
+                    {
+                        // Don't learn the new move
+                        yield return DialogueManager.Instance.ShowDialogueText($"{selectedPokemon.PokemonBase.PokemonName}放弃学习{selectedLearnableMove.MoveBase.MoveName}！", autoClose: false);
+                    }
+                    else
+                    {
+                        // Forget the selected move and learn new move
+                        var selevtedMove = selectedPokemon.Moves[moveIndex].MoveBase;
+                        yield return DialogueManager.Instance.ShowDialogueText($"{selectedPokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！", autoClose: false);
+                        selectedPokemon.Moves[moveIndex] = new Move(selectedLearnableMove.MoveBase);
+                    }
+                    yield return StartMenuState();
+                }
+                else
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("没有可以找回的技能！", autoClose: false);
+                    yield return StartMenuState();
+                }
+            }
+            else
+            {
+                yield return StartMenuState();
+            }
+            
 
         }
         else if (selectedChoice == -1)

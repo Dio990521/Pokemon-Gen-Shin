@@ -22,8 +22,9 @@ public class Door : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 var player = collision.GetComponent<PlayerController>();
-                if (Input.GetKey(KeyCode.UpArrow))
+                if (!player.Character.IsMoving && Input.GetKey(KeyCode.UpArrow))
                 {
+                    GameManager.Instance.PauseGame(true);
                     StartCoroutine(PlayDoorAnimation(player));
                 }
             }
@@ -41,7 +42,6 @@ public class Door : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.OPEN_DOOR);
         }
-        GameManager.Instance.PauseGame(true);
         opened = true;
         animator.SetBool("isOpen", true);
         player.Character.Animator.IsMoving = false;

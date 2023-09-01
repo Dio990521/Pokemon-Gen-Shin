@@ -22,7 +22,6 @@ public class PartyState : State<GameManager>
 
     public override void Enter(GameManager owner)
     {
-        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         _swaping = false;
         _gameManager = owner;
         SelectedPokemon = null;
@@ -84,6 +83,10 @@ public class PartyState : State<GameManager>
                     return;
                 }
 
+                _gameManager.StateMachine.Pop();
+            }
+            else if (prevState == PCMenuState.I)
+            {
                 _gameManager.StateMachine.Pop();
             }
             else
