@@ -35,6 +35,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     }
 
     public BGM WinBGM { get => winBGM; }
+    public BGM StartBGM { get => startBGM; set => startBGM = value; }
 
     private void Awake()
     {

@@ -10,7 +10,7 @@ public class AnimatedSprite : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Image image;
-    private int frame = 0;
+    private int _frame = 0;
 
     public bool isLoop = true;
 
@@ -43,14 +43,14 @@ public class AnimatedSprite : MonoBehaviour
 
     private void LoopAnimate()
     {
-        frame++;
+        _frame++;
 
-        if (frame >= sprites.Length)
+        if (_frame >= sprites.Length)
         {
-            frame = 0;
+            _frame = 0;
         }
 
-        if (frame >= 0 && frame < sprites.Length)
+        if (_frame >= 0 && _frame < sprites.Length)
         {
             SetSprite();
         }
@@ -59,11 +59,11 @@ public class AnimatedSprite : MonoBehaviour
 
     private IEnumerator Animate()
     {
-        while (frame >= 0 && frame < sprites.Length)
+        while (_frame >= 0 && _frame < sprites.Length)
         {
             SetSprite();
             yield return new WaitForSeconds(frameRate);
-            frame++;
+            _frame++;
         }
 
         Destroy(gameObject);
@@ -73,11 +73,11 @@ public class AnimatedSprite : MonoBehaviour
     {
         if (spriteRenderer != null)
         {
-            spriteRenderer.sprite = sprites[frame];
+            spriteRenderer.sprite = sprites[_frame];
         }
         else
         {
-            image.sprite = sprites[frame];
+            image.sprite = sprites[_frame];
         }
     }
 

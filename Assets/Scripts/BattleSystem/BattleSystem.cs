@@ -84,7 +84,7 @@ public class BattleSystem : MonoBehaviour
     public void StartTrainerBattle(PokemonParty playerParty, PokemonParty trainerParty, BattleTrigger trigger = BattleTrigger.LongGrass)
     {
         _dialogueBox.SetDialogue("");
-        AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
+        AudioManager.Instance.PlayMusic(trainer.StartBGM);
         this.PlayerParty = playerParty;
         this.TrainerParty = trainerParty;
         this.IsTrainerBattle = true;

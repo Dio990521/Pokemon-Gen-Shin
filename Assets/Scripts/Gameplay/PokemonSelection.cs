@@ -10,7 +10,6 @@ public class PokemonSelection : MonoBehaviour, InteractableObject
     public IEnumerator Interact(Transform initiator)
     {
         _pokemonSelectionUI.Show();
-        //GameManager.Instance.State = GameState.PokemonSelection;
         yield return null;
     }
 

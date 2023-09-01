@@ -31,7 +31,6 @@ public class GameMenuState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
-        //AudioManager.Instance.PlaySE(SFX.CANCEL);
         _menuController.ResetSelection();
         _menuController.OnSelected -= OnMenuItemSelected;
         _menuController.OnBack -= OnBack;
@@ -68,6 +67,7 @@ public class GameMenuState : State<GameManager>
         else if (selection == 5)
         {
             // Setting Screen
+            _gameManager.StateMachine.Push(PokemonSelectionState.I);
         }
         else if (selection == 6)
         {
