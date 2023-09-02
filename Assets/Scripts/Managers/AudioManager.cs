@@ -26,7 +26,6 @@ public enum SFX
     SWITCH,
     CHEST,
     HEALTH_CENTER_IN,
-    LEVEL_UP2,
     OBTAIN_TM,
     OBTAIN_ITEM,
     OBTAIN_BERRY,
@@ -105,6 +104,11 @@ public class AudioManager : Singleton<AudioManager>
     public void StopMusic()
     {
         musicPlayer.Stop();
+    }
+
+    public void StopSE()
+    {
+        sfxPlayer.Stop();
     }
 
     public void PlaySE(SFX id, bool pauseMusic=false)

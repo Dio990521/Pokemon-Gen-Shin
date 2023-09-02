@@ -66,7 +66,9 @@ public class BattleHud : MonoBehaviour
         }
 
         float normalizedExp = battlePokemon.GetNormalizedExp();
+        AudioManager.Instance.PlaySE(SFX.EXP_UP);
         yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+        AudioManager.Instance.StopSE();
     }
 
     public void UpdateHP()

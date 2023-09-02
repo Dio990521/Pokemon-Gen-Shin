@@ -305,6 +305,7 @@ public class RunTurnState : State<BattleSystem>
             while (_playerUnit.pokemon.CheckForLevelUp())
             {
                 _playerUnit.Hud.SetLevel();
+                AudioManager.Instance.PlaySE(SFX.LEVEL_UP, true);
                 yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}升级了！\n等级提升至{_playerUnit.pokemon.Level}！");
 
                 // Try to learn a new Move
@@ -315,14 +316,12 @@ public class RunTurnState : State<BattleSystem>
                     {
                         _playerUnit.pokemon.LearnMove(newMove.MoveBase);
                         yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}习得了新技能\n{newMove.MoveBase.MoveName}！");
-                        //dialogueBox.SetMoveNames(playerUnit.pokemon.Moves);
                     }
                     else
                     {
                         yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
                         yield return _dialogueBox.TypeDialogue($"但是{_playerUnit.pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
                         yield return _dialogueBox.TypeDialogue($"想要让{_playerUnit.pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
-                        //yield return DialogueManager.Instance.ShowDialogueText($"想要让{_playerUnit.pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？", true, false);
 
                         MoveToForgetState.I.NewMove = newMove.MoveBase;
                         MoveToForgetState.I.CurrentMoves = _playerUnit.pokemon.Moves.Select(m => m.MoveBase).ToList();
