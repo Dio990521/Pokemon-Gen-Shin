@@ -21,9 +21,12 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     [SerializeField] private SaveLoadUI saveLoadUI;
     [SerializeField] private AchievementUI achievementUI;
     [SerializeField] private PokemonSelectionUI _pokesSelectionUI;
+    [SerializeField] private StoragePartyListUI _storagePartyListUI;
+    [SerializeField] private StorageListUI _storageListUI;
     [SerializeField] private RouteIcon routeIcon;
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
+    [SerializeField] private Storage _storage;
 
     private TrainerController trainer;
 
@@ -38,6 +41,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     public TransitionManager WorldTransitionManager { get => _worldTransitionManager; set => _worldTransitionManager = value; }
     public TransitionManager BattleTransitionManager { get => _battleTransitionManager; set => _battleTransitionManager = value; }
     public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
+    public Storage Storage { get => _storage; set => _storage = value; }
 
     private float _gameTimeSpend;
     public string GamePlayTime;
@@ -70,7 +74,8 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         battleSystem.OnBattleOver += EndBattle;
 
         partyScreen.Init();
-
+        _storagePartyListUI.Init();
+        _storageListUI.Init();
         DialogueManager.Instance.OnShowDialogue += () =>
         {
             StateMachine.Push(DialogueState.I);

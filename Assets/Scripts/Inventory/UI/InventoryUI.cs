@@ -9,8 +9,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public enum InventoryUIState { ItemSelection, PartySelection, MoveToForget, Busy}
-
 public class InventoryUI : SelectionUI<ItemSlotUI>
 {
     [SerializeField] private GameObject itemList;
@@ -40,7 +38,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
 
     public ItemBase SelectedItem => inventory.GetItem(selectedItem, selectedCategory);
 
-    //[SerializeField] private Image inventoryCursor;
     [SerializeField] private List<Image> categoryPoints;
 
     public int PrevCategory { get => prevCategory; set => prevCategory = value; }
@@ -97,7 +94,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     public override void HandleUpdate(bool allowCancel = true)
     {
         base.HandleUpdate();
-        //selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
 
         if (prevCategory != selectedCategory)
         {
@@ -161,91 +157,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         }
     }
 
-    //public void HandleUpdate(Action onBack, Action<ItemBase> onItemUsed=null)
-    //{
-    //    this.onItemUsed = onItemUsed;
-    //    if (state == InventoryUIState.ItemSelection)
-    //    {
-    //        if (Input.GetKeyDown(KeyCode.DownArrow))
-    //        {
-    //            ++selectedItem;
-    //        }
-    //        else if (Input.GetKeyDown(KeyCode.UpArrow))
-    //        {
-    //            --selectedItem;
-    //        }
-    //        else if (Input.GetKeyDown(KeyCode.RightArrow))
-    //        {
-    //            ++selectedCategory;
-    //        }
-    //        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-    //        {
-    //            --selectedCategory;
-    //        }
-
-    //        if (selectedCategory > Inventory.ItemCategories.Count - 1)
-    //        {
-    //            selectedCategory = 0;
-    //        }
-    //        else if (selectedCategory < 0)
-    //        {
-    //            selectedCategory = Inventory.ItemCategories.Count - 1;
-    //        }
-    //        selectedItem = Mathf.Clamp(selectedItem, 0, inventory.GetSlotsByCategory(selectedCategory).Count - 1);
-
-    //        if (prevCategory != selectedCategory)
-    //        {
-    //            ResetSelection();
-    //            UpdateCategory();
-    //            UpdateItemList();
-    //        }
-    //        prevCategory = selectedCategory;
-
-    //        if (prevSelection != selectedItem || selectedItem == 0)
-    //        {
-    //            UpdateUI();
-    //        }
-    //        prevSelection = selectedItem;
-
-    //        if (Input.GetKeyDown(KeyCode.Z))
-    //        {
-    //            AudioManager.Instance.PlaySE(SFX.CONFIRM);
-    //            StartCoroutine(ItemSelected());
-    //        }
-    //        else if (Input.GetKeyDown(KeyCode.X))
-    //        {
-    //            AudioManager.Instance.PlaySE(SFX.CANCEL);
-    //            onBack?.Invoke();
-    //        }
-    //    } 
-    //    else if (state == InventoryUIState.PartySelection)
-    //    {
-    //        Action onSelected = () =>
-    //        {
-    //            StartCoroutine(UseItem());
-    //        };
-
-    //        Action onBackPartyScreen = () => 
-    //        { 
-    //            ClosePartyScreen();
-    //        };
-
-    //        //partyScreen.HandleUpdate(onSelected, onBackPartyScreen);
-    //    }
-    //    else if (state == InventoryUIState.MoveToForget)
-    //    {
-
-    //        Action<int> onMoveSelected = (int moveIndex) =>
-    //        {
-    //            StartCoroutine(OnMoveToForgetSelected(moveIndex));
-    //        };
-
-    //        moveSelectionUI.HandleMoveSelection(onMoveSelected);
-    //    }
-
-
-    //}
-
     private void UpdateUI()
     {
         var slots = inventory.GetSlotsByCategory(selectedCategory);
@@ -259,17 +170,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         }
         
         HandleScrolling();
-
-        //if (slots.Count > 0)
-        //{
-        //    inventoryCursor.gameObject.SetActive(true);
-        //    //UpdateCursor();
-        //}
-        //else
-        //{
-        //    inventoryCursor.gameObject.SetActive(false);
-        //}
-            
     }
 
     private void HandleScrolling()
@@ -287,11 +187,6 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         }
     }
 
-    //public void UpdateCursor()
-    //{
-    //    inventoryCursor.rectTransform.position = slotUIList[selectedItem].cursorPos.transform.position;
-    //}
-
     private void UpdateCategory()
     {
         categoryText.text = Inventory.ItemCategories[selectedCategory];
@@ -302,15 +197,4 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         bagIcon.sprite = bagIcons[selectedCategory];
         categoryPoints[selectedCategory].gameObject.SetActive(true);
     }
-
-    //private void ResetSelection()
-    //{
-    //    selectedItem = 0;
-    //    prevSelection = -1;
-    //    upArrow.gameObject.SetActive(false);
-    //    downArrow.gameObject.SetActive(false);
-    //    itemIcon.sprite = null;
-    //    itemDescription.text = "";
-    //}
-
 }

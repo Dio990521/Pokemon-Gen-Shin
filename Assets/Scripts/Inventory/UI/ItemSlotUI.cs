@@ -25,6 +25,13 @@ public class ItemSlotUI : MonoBehaviour, ISelectableItem
         countText.text = $"x{itemSlot.Count}";
     }
 
+    public void SetPokeData(Pokemon pokemon)
+    {
+        rectTransform = GetComponent<RectTransform>();
+        nameText.text = pokemon.PokemonBase.PokemonName;
+        countText.text = $"Lv.{pokemon.Level}";
+    }
+
     public void SetNameAndPrice(ItemBase item)
     {
         rectTransform = GetComponent<RectTransform>();

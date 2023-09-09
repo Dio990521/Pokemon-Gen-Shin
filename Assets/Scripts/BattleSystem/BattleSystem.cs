@@ -281,6 +281,10 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
             PlayerParty.AddPokemon(_enemyUnit.pokemon);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
+            if (_partyScreen.Pokemons.Count >= 6)
+            {
+                yield return _dialogueBox.TypeDialogue($"由于队伍已满，\n{_enemyUnit.pokemon.PokemonBase.PokemonName}被送进了仓库！");
+            }
 
             Destroy(pokeball);
             yield return BattleOver(true, true);

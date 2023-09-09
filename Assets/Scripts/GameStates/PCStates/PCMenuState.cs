@@ -78,7 +78,8 @@ public class PCMenuState : State<GameManager>
         else if (selectedChoice == 2)
         {
             AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
-            pokemonRoom.gameObject.SetActive(true);
+            yield return GameManager.Instance.StateMachine.PushAndWait(StorageState.I);
+            yield return StartMenuState();
         }
         else if (selectedChoice == 3)
         {

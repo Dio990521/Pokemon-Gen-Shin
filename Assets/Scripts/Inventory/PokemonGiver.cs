@@ -17,6 +17,10 @@ public class PokemonGiver : MonoBehaviour, ISavable
         used = true;
         string dialogueText = $"{pokemonToGive.PokemonBase.PokemonName}加入了你的队伍！";
         yield return DialogueManager.Instance.ShowDialogueText(dialogueText);
+        if (GameManager.Instance.PartyScreen.Pokemons.Count >= 6)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"由于队伍已满，\n{pokemonToGive.PokemonBase.PokemonName}被送进了仓库！");
+        }
     }
 
     public bool CanBeGiven()

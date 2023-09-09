@@ -23,15 +23,17 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
 
     public int SelectedItem => selectedItem;
 
+    public PokemonParty Party { get => party; set => party = value; }
+
     public void Init()
     {
         memberSlots = GetComponentsInChildren<PartyMemberUI>(true);
         SetSelectionSettings(SelectionType.List, 1);
 
-        party = PokemonParty.GetPlayerParty();
+        Party = PokemonParty.GetPlayerParty();
         SetPartyData();
 
-        party.OnUpdated += SetPartyData;
+        Party.OnUpdated += SetPartyData;
     }
 
     public void Show()
@@ -41,7 +43,7 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
 
     public void SetPartyData()
     {
-        pokemons = party.Pokemons;
+        pokemons = Party.Pokemons;
 
         for (int i = 0; i < memberSlots.Length; i++)
         {

@@ -48,7 +48,8 @@ public class PokemonParty : MonoBehaviour
         }
         else
         {
-            // TODO
+            AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
+            GameManager.Instance.Storage.PushPokemon(newPokemon);
         }
     }
 

@@ -26,6 +26,7 @@ public class PartyState : State<GameManager>
         _gameManager = owner;
         SelectedPokemon = null;
         _partyScreen.gameObject.SetActive(true);
+        _partyScreen.Party.PartyUpdated();
         GameManager.Instance.PartyScreen.SetMessageText("选择一个宝可梦。");
         _partyScreen.OnSelected += OnPokemonSelected;
         _partyScreen.OnBack += OnBack;
@@ -38,10 +39,6 @@ public class PartyState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
-        if (sfx)
-        {
-            //AudioManager.Instance.PlaySE(SFX.CANCEL);
-        }
         _partyScreen.ResetSelection();
         _partyScreen.gameObject.SetActive(false);
         _partyScreen.OnSelected -= OnPokemonSelected;
@@ -62,7 +59,6 @@ public class PartyState : State<GameManager>
                 _swaping = false;
                 return;
             }
-            //AudioManager.Instance.PlaySE(SFX.CONFIRM);
             SelectedPokemon = _partyScreen.SelectedMember;
             var prevState = _gameManager.StateMachine.GetPrevState();
             if (prevState == InventoryState.I)
