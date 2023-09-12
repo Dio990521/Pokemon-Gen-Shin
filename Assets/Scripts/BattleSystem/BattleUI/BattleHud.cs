@@ -53,7 +53,6 @@ public class BattleHud : MonoBehaviour
 
     private void SetStatusText()
     {
-        //print(battlePokemon.Status);
         if (battlePokemon.Status == null)
         {
             statusText.text = "";

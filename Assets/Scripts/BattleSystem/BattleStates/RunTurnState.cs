@@ -182,10 +182,15 @@ public class RunTurnState : State<BattleSystem>
                     AudioManager.Instance.PlaySE(SFX.ATTACK);
                 }
                 yield return targetUnit.Hud.WaitForHPUpdate();
-                yield return ShowDamageDetials(damageDetails);
+                yield return ShowDamageDetials(targetUnit.pokemon, damageDetails);
             }
 
-            if (move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
+            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Hp > 0)
+            {
+                yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
+            }
+
+            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
                 && targetUnit.pokemon.Hp > 0)
             {
                 foreach (var secondary in move.MoveBase.SecondaryEffects)
@@ -221,20 +226,20 @@ public class RunTurnState : State<BattleSystem>
             {
                 target.ApplyBoosts(effects.Boosts);
             }
-
-            if (effects.Status != ConditionID.none)
-            {
-                target.SetStatus(effects.Status);
-            }
-
-            if (effects.ElementStatus != ConditionID.none)
-            {
-                target.SetElementStatus(effects.ElementStatus);
-            }
-
-            yield return ShowStatusChanges(source);
-            yield return ShowStatusChanges(target);
         }
+
+        if (effects.Status != ConditionID.none)
+        {
+            target.SetStatus(effects.Status);
+        }
+
+        if (effects.ElementStatus != ConditionID.none)
+        {
+            target.SetElementStatus(effects.ElementStatus);
+        }
+
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
     }
 
     private IEnumerator RunAfterTurn(BattleUnit sourceUnit)
@@ -393,11 +398,11 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator ShowDamageDetials(DamageDetails damageDetails)
+    private IEnumerator ShowDamageDetials(Pokemon targetUnit, DamageDetails damageDetails)
     {
-        if (damageDetails.Critical > 1f)
+        if (targetUnit.Status != null&& targetUnit.Status.Name != damageDetails.StatusName && damageDetails.StatusName != null)
         {
-            yield return _dialogueBox.TypeDialogue("震惊！是会心一击！");
+            yield return _dialogueBox.TypeDialogue($"打出了{damageDetails.StatusName}的元素反应！");
         }
 
         if (damageDetails.TypeEffectiveness > 1f)

@@ -53,7 +53,7 @@ public class ConditionsDB
                 }
 
             },
-                                    {
+            {
                 ConditionID.cryo, new Condition()
                 {
                     Name = "冰",
@@ -76,7 +76,7 @@ public class ConditionsDB
                 }
 
             },
-                                                {
+            {
                 ConditionID.dendro, new Condition()
                 {
                     Name = "草",
@@ -99,7 +99,7 @@ public class ConditionsDB
                 }
 
             },
-                                                            {
+            {
                 ConditionID.electro, new Condition()
                 {
                     Name = "雷",
@@ -122,7 +122,29 @@ public class ConditionsDB
                 }
 
             },
+            {
+                ConditionID.jiejing, new Condition()
+                {
+                    Name = "结晶",
+                    StartMessage = "结晶化！",
+                    OnStart= (Pokemon pokemon) =>
+                    {
+                        pokemon.ElementStatusTime = 2;
+                    },
+                    OnBeforeMove = (Pokemon pokemon) =>
+                    {
+                        if (pokemon.ElementStatusTime <= 0)
+                        {
+                            pokemon.CureElementStatus();
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}结晶化解除了！");
+                            return true;
+                        }
+                        pokemon.ElementStatusTime--;
+                        return true;
+                    },
+                }
 
+            },
             {
                 ConditionID.psn, new Condition()
                 {
@@ -312,9 +334,75 @@ public class ConditionsDB
 
         return 1f;
     }
+
+    public static ConditionID GetElementReaction(ConditionID elementA, ConditionID elementB)
+    {
+        Debug.Log(elementA.ToString() + ", " + elementB.ToString());
+        if (elementA == ConditionID.hydro && elementB == ConditionID.dendro || elementA == ConditionID.dendro && elementB == ConditionID.hydro)
+        {
+            return ConditionID.zhanfang;
+        }
+        else if (elementA == ConditionID.electro && elementB == ConditionID.dendro || elementA == ConditionID.dendro && elementB == ConditionID.electro)
+        {
+            return ConditionID.slp;
+        }
+        else if (elementA == ConditionID.pyro && elementB == ConditionID.dendro || elementA == ConditionID.dendro && elementB == ConditionID.pyro)
+        {
+            return ConditionID.brn;
+        }
+        else if (elementA == ConditionID.hydro && elementB == ConditionID.pyro || elementA == ConditionID.pyro && elementB == ConditionID.hydro)
+        {
+            return ConditionID.zhengfa;
+        }
+        else if (elementA == ConditionID.hydro && elementB == ConditionID.cryo || elementA == ConditionID.cryo && elementB == ConditionID.hydro)
+        {
+            return ConditionID.frz;
+        }
+        else if (elementA == ConditionID.hydro && elementB == ConditionID.electro || elementA == ConditionID.electro && elementB == ConditionID.hydro)
+        {
+            return ConditionID.par;
+        }
+        else if (elementA == ConditionID.pyro && elementB == ConditionID.cryo || elementA == ConditionID.cryo && elementB == ConditionID.pyro)
+        {
+            return ConditionID.ronghua;
+        }
+        else if (elementA == ConditionID.pyro && elementB == ConditionID.electro || elementA == ConditionID.electro && elementB == ConditionID.pyro)
+        {
+            return ConditionID.psn;
+        }
+        else if (elementA == ConditionID.cryo && elementB == ConditionID.electro || elementA == ConditionID.electro && elementB == ConditionID.cryo)
+        {
+            return ConditionID.confusion;
+        }
+        else if (IsElementCondition(elementA) && elementB == ConditionID.anemo || IsElementCondition(elementB) && elementA == ConditionID.anemo)
+        {
+            return ConditionID.kuosan;
+        }
+        else if (IsElementCondition(elementA) && elementB == ConditionID.geo || IsElementCondition(elementB) && elementA == ConditionID.geo)
+        {
+            return ConditionID.jiejing;
+        }
+        return ConditionID.none;
+    }
+
+    public static bool IsElementCondition(ConditionID conditionID)
+    {
+        return conditionID == ConditionID.hydro || conditionID == ConditionID.pyro 
+            || conditionID == ConditionID.dendro || conditionID == ConditionID.cryo
+            || conditionID == ConditionID.electro || conditionID == ConditionID.geo
+            || conditionID == ConditionID.anemo;
+    }
+
+    public static bool IsContinuousElementReaction(ConditionID conditionID)
+    {
+        return conditionID == ConditionID.psn || conditionID == ConditionID.brn
+            || conditionID == ConditionID.slp || conditionID == ConditionID.par
+            || conditionID == ConditionID.frz || conditionID == ConditionID.confusion
+            || conditionID == ConditionID.anemo;
+    }
 }
 
 public enum ConditionID
 {
-    none, psn, brn, slp, par, frz, confusion, hydro, pyro, dendro, cryo, electro
+    none, psn, brn, slp, par, frz, confusion, hydro, pyro, dendro, cryo, electro, geo, anemo, jiejing, zhanfang, zhengfa, ronghua, kuosan
 }

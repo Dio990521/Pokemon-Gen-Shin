@@ -262,12 +262,22 @@ public class Pokemon
 
         float type = TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type1)
             * TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type2);
+        if (ElementStatus != null)
+        {
+            ConditionID elementReactionRes = ConditionsDB.GetElementReaction(ElementStatus.Id, move.MoveBase.Effects.ElementStatus);
+            if (ConditionsDB.IsContinuousElementReaction(elementReactionRes))
+            {
+                CureElementStatus();
+                SetStatus(elementReactionRes);
+            }
+        }
 
         DamageDetails damageDetails = new DamageDetails()
         {
             TypeEffectiveness = type,
             Critical= critical,
             Fainted = false,
+            StatusName = Status?.Name,
         };
 
         float attack = move.MoveBase.Category == MoveCategory.Special ? attacker.SpAttack : attacker.Attack;
@@ -325,7 +335,6 @@ public class Pokemon
 
     public void SetStatus(ConditionID conditionId)
     {
-        if (Status != null) return;
         Status = ConditionsDB.Conditions[conditionId];
         Status?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{pokemonBase.PokemonName}{Status.StartMessage}");

@@ -4,13 +4,13 @@
     {
         //                    普    水    火    草    冰    雷    岩    风
         /*普*/ new float[] {  1f,  1f,   1f,   1f,   1f,   1f,   1f,  1f},
-        /*水*/ new float[] {  1f, 0.5f,  2f, 0.5f, 0.5f,   1f,   2f,  1f},
-        /*火*/ new float[] {  1f, 0.5f, 0.5f,  2f,   2f, 0.5f,   1f,  1f},
-        /*草*/ new float[] {  1f,   2f, 0.5f, 0.5f,0.5f,   2f,   1f,  1f},
-        /*冰*/ new float[] {  1f,   2f, 0.5f,  2f, 0.5f,   1f,   1f, 0.5f},
-        /*雷*/ new float[] {  1f,   1f,   2f, 0.5f,  1f, 0.5f, 0.5f,  2f},
-        /*岩*/ new float[] {  1f, 0.5f,   1f,  1f,   1f,   2f, 0.5f,  2f},
-        /*风*/ new float[] {  1f,   1f,   1f,  1f,   2f, 0.5f,   2f, 0.5f}
+        /*水*/ new float[] {  1f, 1f,  1f, 1f, 1f,   1f,   1f,  1f},
+        /*火*/ new float[] {  1f, 1f, 1f,  1f,   1f, 1f,   1f,  1f},
+        /*草*/ new float[] {  1f,   1f, 1f, 1f,1f,   1f,   1f,  1f},
+        /*冰*/ new float[] {  1f,   1f, 1f,  1f, 1f,   1f,   1f, 1f},
+        /*雷*/ new float[] {  1f,   1f,   1f, 1f,  1f, 1f, 1f,  1f},
+        /*岩*/ new float[] {  1f, 1f,   1f,  1f,   1f,   1f, 1f,  1f},
+        /*风*/ new float[] {  1f,   1f,   1f,  1f,   1f, 1f,   1f, 1f}
     };
 
     // Return the effectiveness of the used move
