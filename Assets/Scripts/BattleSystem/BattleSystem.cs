@@ -35,8 +35,6 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private List<Sprite> _playerGroundSprites;
     [SerializeField] private Image _backgroundImage;
 
-    //public BattleStates state;
-
     public StateMachine<BattleSystem> StateMachine { get; private set; }
     public BattleDialogueBox DialogueBox { get => _dialogueBox; set => _dialogueBox = value; }
     public BattleUnit PlayerUnit { get => _playerUnit; set => _playerUnit = value; }

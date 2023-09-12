@@ -97,6 +97,8 @@ public class RunTurnState : State<BattleSystem>
             {
                 _dialogueBox.EnableActionSelector(false);
                 yield return _battleSystem.SwitchPokemon(_battleSystem.SelectedPokemon);
+                _battleSystem.StateMachine.ChangeState(ActionSelectionState.I);
+                yield break;
             }
             else if (playerAction == BattleAction.UseItem)
             {
@@ -225,9 +227,9 @@ public class RunTurnState : State<BattleSystem>
                 target.SetStatus(effects.Status);
             }
 
-            if (effects.VolatileStatus != ConditionID.none)
+            if (effects.ElementStatus != ConditionID.none)
             {
-                target.SetVolatileStatus(effects.VolatileStatus);
+                target.SetElementStatus(effects.ElementStatus);
             }
 
             yield return ShowStatusChanges(source);

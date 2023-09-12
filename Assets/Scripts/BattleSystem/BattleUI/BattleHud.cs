@@ -9,8 +9,10 @@ public class BattleHud : MonoBehaviour
     [SerializeField] private Text nameText;
     [SerializeField] private Text levelText;
     [SerializeField] private HpBar hpBar;
+    [SerializeField] private Text elementStatusText;
     [SerializeField] private Text statusText;
-    [SerializeField] private Image statusBg;
+    [SerializeField] private Image elementStatusBG;
+    [SerializeField] private Image statusBG;
     [SerializeField] private GameObject expBar;
 
     private Pokemon battlePokemon;
@@ -24,22 +26,43 @@ public class BattleHud : MonoBehaviour
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         SetLevel();
         SetExp();
-        SetStatusText();
-        battlePokemon.OnStatusChanged += SetStatusText;
+        UpdateStatus();
+        battlePokemon.OnStatusChanged += UpdateStatus;
         battlePokemon.OnHpChanged += UpdateHP;
+    }
+
+    private void UpdateStatus()
+    {
+        SetStatusText();
+        SetElementStatusText();
+    }
+
+    private void SetElementStatusText()
+    {
+        if (battlePokemon.ElementStatus == null)
+        {
+            elementStatusText.text = "";
+            elementStatusBG.color = new Color32(0, 0, 0, 0);
+        }
+        else
+        {
+            elementStatusText.text = battlePokemon.ElementStatus.Name;
+            elementStatusBG.color = ColorDB.statusColors[battlePokemon.ElementStatus.Id];
+        }
     }
 
     private void SetStatusText()
     {
+        //print(battlePokemon.Status);
         if (battlePokemon.Status == null)
         {
             statusText.text = "";
-            statusBg.color = new Color32(0, 0, 0, 0);
+            statusBG.color = new Color32(0, 0, 0, 0);
         }
         else
         {
             statusText.text = battlePokemon.Status.Name;
-            statusBg.color = ColorDB.statusColors[battlePokemon.Status.Id];
+            statusBG.color = ColorDB.statusColors[battlePokemon.Status.Id];
         }
     }
 
@@ -92,7 +115,7 @@ public class BattleHud : MonoBehaviour
     {
         if (battlePokemon != null)
         {
-            battlePokemon.OnStatusChanged -= SetStatusText;
+            battlePokemon.OnStatusChanged -= UpdateStatus;
             battlePokemon.OnHpChanged -= UpdateHP;
         }
     }

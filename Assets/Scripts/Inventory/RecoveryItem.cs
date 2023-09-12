@@ -79,7 +79,7 @@ public class RecoveryItem : ItemBase
         // Recover Status
         if (recoverAllStatus || status != ConditionID.none)
         {
-            if (pokemon.Status == null && pokemon.VolatileStatus == null)
+            if (pokemon.Status == null && pokemon.ElementStatus == null)
             {
                 return false;
             }
@@ -87,7 +87,7 @@ public class RecoveryItem : ItemBase
             if (recoverAllStatus)
             {
                 pokemon.CureStatus();
-                pokemon.CureVolatileStatus();
+                pokemon.CureElementStatus();
             }
             else
             {
@@ -95,9 +95,9 @@ public class RecoveryItem : ItemBase
                 {
                     pokemon.CureStatus();
                 }
-                else if (pokemon.VolatileStatus.Id == status)
+                else if (pokemon.ElementStatus.Id == status)
                 {
-                    pokemon.CureVolatileStatus();
+                    pokemon.CureElementStatus();
                 }
                 else
                 {

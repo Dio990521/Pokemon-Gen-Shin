@@ -38,8 +38,8 @@ public class Pokemon
     public Dictionary<Stat, int> StatBoosts { get; private set; }
     public Condition Status { get; private set; }
     public int StatusTime { get; set; }
-    public Condition VolatileStatus { get; private set; }
-    public int VolatileStatusTime { get; set; }
+    public Condition ElementStatus { get; private set; }
+    public int ElementStatusTime { get; set; }
     public Queue<string> StatusChanges { get; private set; }
     public Sprite PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
     public string CatchPlace { get => _catchPlace; set => _catchPlace = value; }
@@ -68,7 +68,7 @@ public class Pokemon
         CalculateStats();
         StatusChanges = new Queue<string>();
         ResetStatBoost();
-        VolatileStatus = null;
+        ElementStatus = null;
     }
 
     // Initialize the pokemon
@@ -94,7 +94,7 @@ public class Pokemon
         StatusChanges = new Queue<string>();
         ResetStatBoost();
         Status = null;
-        VolatileStatus = null;
+        ElementStatus = null;
     }
 
     public PokemonSaveData GetSaveData()
@@ -294,9 +294,9 @@ public class Pokemon
             }
         }
 
-        if (VolatileStatus?.OnBeforeMove != null)
+        if (ElementStatus?.OnBeforeMove != null)
         {
-            if (!VolatileStatus.OnBeforeMove(this))
+            if (!ElementStatus.OnBeforeMove(this))
             {
                 canPerformMove = false;
             }
@@ -308,7 +308,7 @@ public class Pokemon
     public void AfterTurn()
     {
         Status?.OnAfterTurn?.Invoke(this);
-        VolatileStatus?.OnAfterTurn?.Invoke(this);
+        ElementStatus?.OnAfterTurn?.Invoke(this);
     }
 
     public void DecreaseHP(int damage)
@@ -338,17 +338,19 @@ public class Pokemon
         OnStatusChanged?.Invoke();
     }
 
-    public void SetVolatileStatus(ConditionID conditionId)
+    public void SetElementStatus(ConditionID conditionId)
     {
-        if (VolatileStatus != null) return;
-        VolatileStatus = ConditionsDB.Conditions[conditionId];
-        VolatileStatus?.OnStart?.Invoke(this);
-        StatusChanges.Enqueue($"{pokemonBase.PokemonName}{VolatileStatus.StartMessage}");
+        if (ElementStatus != null) return;
+        ElementStatus = ConditionsDB.Conditions[conditionId];
+        ElementStatus?.OnStart?.Invoke(this);
+        StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");
+        OnStatusChanged?.Invoke();
     }
 
-    public void CureVolatileStatus()
+    public void CureElementStatus()
     {
-        VolatileStatus = null;
+        ElementStatus = null;
+        OnStatusChanged?.Invoke();
     }
 
     // used when it's enemy pokemon's turn 
@@ -362,7 +364,7 @@ public class Pokemon
 
     public void OnBattleOver()
     {
-        VolatileStatus = null;
+        ElementStatus = null;
         ResetStatBoost();
     }
 

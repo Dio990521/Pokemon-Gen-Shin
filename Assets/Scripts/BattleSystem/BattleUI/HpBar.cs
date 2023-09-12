@@ -23,6 +23,7 @@ public class HpBar : MonoBehaviour
         _hpScale = hpNormalized;
         _maxHp = maxHp;
         _curHp = curHp;
+        UpdateHpBar();
         SetHpText(_curHp);
     }
 
