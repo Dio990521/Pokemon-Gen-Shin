@@ -11,5 +11,5 @@ public class MoveEffects
     public List<StatBoost> Boosts { get { return boosts; } }
     public ConditionID Status { get { return status; } }
 
-    public ConditionID ElementStatus { get { return elementStatus; } }
+    public ConditionID ElementStatus { get { return elementStatus; }  set { elementStatus = value; } }
 }

@@ -17,4 +17,5 @@
     public bool IsPsn { get; set; }
     public int Damage { get; set;}
     public bool IsElementReaction { get; set;}
+    public bool IsNoneElement { get; set; }
 }

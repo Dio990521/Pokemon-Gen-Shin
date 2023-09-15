@@ -271,9 +271,29 @@ public class Pokemon
         float modifiers = Random.Range(0.85f, 1f) * type;
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
-        
 
-        float elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+        float elementReactionRate = 1f;
+        if (move.MoveBase.Effects.ElementStatus == ConditionID.none)
+        {
+            if (attacker.ElementStatus != null)
+            {
+                damageDetails.IsNoneElement = true;
+                if (ElementStatus == null)
+                {
+                    SetElementStatus(attacker.ElementStatus.Id);
+                }
+                else
+                {
+                    move.MoveBase.Effects.ElementStatus = attacker.ElementStatus.Id;
+                    elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+                    move.MoveBase.Effects.ElementStatus = ConditionID.none;
+                }
+            }
+        }
+        else
+        {
+            elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+        }
         damageDetails.StatusName = Status?.Name;
         damageDetails.Critical = elementReactionRate;
         int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
@@ -288,6 +308,7 @@ public class Pokemon
         {
             return 1f;
         }
+        
         if (attackerMove.MoveBase.Effects.ElementStatus == ConditionID.anemo)
         {
             if (attacker.ElementStatus != null)

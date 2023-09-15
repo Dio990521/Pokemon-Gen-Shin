@@ -178,7 +178,7 @@ public class RunTurnState : State<BattleSystem>
                     AudioManager.Instance.PlaySE(SFX.ATTACK);
                 }
                 yield return targetUnit.Hud.WaitForHPUpdate();
-                yield return ShowDamageDetials(targetUnit.pokemon, damageDetails);
+                yield return ShowDamageDetials(sourceUnit.pokemon, targetUnit.pokemon, damageDetails);
             }
 
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
@@ -394,13 +394,18 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator ShowDamageDetials(Pokemon targetUnit, DamageDetails damageDetails)
+    private IEnumerator ShowDamageDetials(Pokemon sourceUnit, Pokemon targetUnit, DamageDetails damageDetails)
     {
         if (damageDetails.IsKuosan)
         {
             yield return _dialogueBox.TypeDialogue("扩散的元素反应发生了！");
-            yield return _dialogueBox.TypeDialogue($"我方的元素附着\n被转移到了{targetUnit.PokemonBase.PokemonName}！");
+            yield return _dialogueBox.TypeDialogue($"{sourceUnit.PokemonBase.PokemonName}的元素附着\n被转移到了{targetUnit.PokemonBase.PokemonName}！");
         }
+        else if (damageDetails.IsNoneElement)
+        {
+            yield return _dialogueBox.TypeDialogue($"{sourceUnit.PokemonBase.PokemonName}的攻击附加了\n自身的元素附着！");
+        }
+
         if (damageDetails.IsPsn || damageDetails.IsPar || damageDetails.IsCfs || damageDetails.IsSlp || damageDetails.IsFrz || damageDetails.IsBrn)
         {
             yield return _dialogueBox.TypeDialogue($"打出了元素反应！");
@@ -413,11 +418,11 @@ public class RunTurnState : State<BattleSystem>
         }
         else if (damageDetails.IsZhengfa)
         {
-            yield return _dialogueBox.TypeDialogue("蒸发的元素反应发生了！\n造成了大量伤害！");
+            yield return _dialogueBox.TypeDialogue($"蒸发的元素反应发生了！\n对{targetUnit.PokemonBase.PokemonName}造成了大量伤害！");
         }
         else if (damageDetails.IsRonghua)
         {
-            yield return _dialogueBox.TypeDialogue("融化的元素反应发生了！\n造成了大量伤害！");
+            yield return _dialogueBox.TypeDialogue($"融化的元素反应发生了！\n对{targetUnit.PokemonBase.PokemonName}造成了大量伤害！");
         }
 
         if (damageDetails.TypeEffectiveness > 1f)
