@@ -129,19 +129,23 @@ public class ConditionsDB
                     StartMessage = "结晶化！",
                     OnStart= (Pokemon pokemon) =>
                     {
-                        pokemon.ElementStatusTime = 2;
+                        pokemon.StatusTime = 2;
                     },
                     OnBeforeMove = (Pokemon pokemon) =>
                     {
-                        if (pokemon.ElementStatusTime <= 0)
+                        if (pokemon.StatusTime <= 0)
                         {
-                            pokemon.CureElementStatus();
+                            pokemon.CureStatus();
                             pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}结晶化解除了！");
                             return true;
                         }
-                        pokemon.ElementStatusTime--;
+                        pokemon.StatusTime--;
                         return true;
                     },
+                    OnAfterTurn = (Pokemon pokemon) =>
+                    {
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正在免疫一切元素附着！");
+                    }
                 }
 
             },
@@ -163,7 +167,7 @@ public class ConditionsDB
                             return true;
                         }
                         pokemon.StatusTime--;
-                        return false;
+                        return true;
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
@@ -191,7 +195,7 @@ public class ConditionsDB
                             return true;
                         }
                         pokemon.StatusTime--;
-                        return false;
+                        return true;
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
@@ -219,11 +223,12 @@ public class ConditionsDB
                         }
                         if (Random.Range(1, 5) <= 2)
                         {
+                            pokemon.StatusTime--;
                             pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}麻到动不了！");
                             return false;
                         }
                         pokemon.StatusTime--;
-                        return false;
+                        return true;
                     },
                 }
             },
@@ -302,7 +307,7 @@ public class ConditionsDB
                         return false;
                     }
                 }
-            }
+            },
 
         };
 
@@ -337,7 +342,6 @@ public class ConditionsDB
 
     public static ConditionID GetElementReaction(ConditionID elementA, ConditionID elementB)
     {
-        Debug.Log(elementA.ToString() + ", " + elementB.ToString());
         if (elementA == ConditionID.hydro && elementB == ConditionID.dendro || elementA == ConditionID.dendro && elementB == ConditionID.hydro)
         {
             return ConditionID.zhanfang;

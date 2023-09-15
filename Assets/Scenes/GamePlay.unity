@@ -2429,14 +2429,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wildPokemons:
   - pokemon: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
-    levelRange: {x: 22, y: 23}
+    levelRange: {x: 100, y: 100}
     chancePercentage: 100
-  wildPokemonsInWater:
-  - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
-    levelRange: {x: 1, y: 2}
-    chancePercentage: 100
+  wildPokemonsInWater: []
   totalChance: 100
-  totalChanceInWater: 100
+  totalChanceInWater: -1
 --- !u!114 &924262660 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -9885,7 +9882,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 50
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokemons.Array.data[3].level
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589622, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
@@ -12165,11 +12166,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 71.65
+      value: 63.65
       objectReference: {fileID: 0}
     - target: {fileID: 8742359741750456979, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

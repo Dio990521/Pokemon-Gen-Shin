@@ -15,6 +15,8 @@ public class PartyState : State<GameManager>
     private bool _swaping;
     private int _swapIndex;
 
+    public int Selection;
+
     private void Awake()
     {
         I = this;
@@ -59,6 +61,7 @@ public class PartyState : State<GameManager>
                 _swaping = false;
                 return;
             }
+            Selection = selection;
             SelectedPokemon = _partyScreen.SelectedMember;
             var prevState = _gameManager.StateMachine.GetPrevState();
             if (prevState == InventoryState.I)

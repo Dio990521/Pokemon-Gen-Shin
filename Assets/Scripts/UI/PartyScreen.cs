@@ -21,7 +21,7 @@ public class PartyScreen : SelectionUI<PartyMemberUI>
 
     public List<Pokemon> Pokemons { get => pokemons; set => pokemons = value; }
 
-    public int SelectedItem => selectedItem;
+    public int SelectedItem { get => selectedItem; set => selectedItem = value; }
 
     public PokemonParty Party { get => party; set => party = value; }
 

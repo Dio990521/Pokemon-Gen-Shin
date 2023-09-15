@@ -156,7 +156,7 @@ public class RunTurnState : State<BattleSystem>
                 targetUnit.PlayHitAnimation();
             }
 
-
+            bool isElementReaction = false;
             if (move.MoveBase.Category == MoveCategory.Status)
             {
                 yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
@@ -164,12 +164,8 @@ public class RunTurnState : State<BattleSystem>
             else
             {
                 DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
-                if (damageDetails.Critical > 1f)
-                {
-                    AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
-                }
-
-                if (damageDetails.TypeEffectiveness > 1f)
+                isElementReaction = damageDetails.IsElementReaction;
+                if (damageDetails.Critical > 1f || damageDetails.TypeEffectiveness > 1f)
                 {
                     AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
                 }
@@ -185,9 +181,9 @@ public class RunTurnState : State<BattleSystem>
                 yield return ShowDamageDetials(targetUnit.pokemon, damageDetails);
             }
 
-            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Hp > 0)
+            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
             {
-                yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
+                yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
             }
 
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
@@ -214,7 +210,7 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator RunMoveEffects(MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget)
+    private IEnumerator RunMoveEffects(MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget, bool isElementReaction=false)
     {
         if (effects.Boosts != null)
         {
@@ -233,7 +229,7 @@ public class RunTurnState : State<BattleSystem>
             target.SetStatus(effects.Status);
         }
 
-        if (effects.ElementStatus != ConditionID.none)
+        if (!isElementReaction && effects.ElementStatus != ConditionID.none)
         {
             target.SetElementStatus(effects.ElementStatus);
         }
@@ -400,9 +396,28 @@ public class RunTurnState : State<BattleSystem>
 
     private IEnumerator ShowDamageDetials(Pokemon targetUnit, DamageDetails damageDetails)
     {
-        if (targetUnit.Status != null&& targetUnit.Status.Name != damageDetails.StatusName && damageDetails.StatusName != null)
+        if (damageDetails.IsKuosan)
         {
-            yield return _dialogueBox.TypeDialogue($"打出了{damageDetails.StatusName}的元素反应！");
+            yield return _dialogueBox.TypeDialogue("扩散的元素反应发生了！");
+            yield return _dialogueBox.TypeDialogue($"我方的元素附着\n被转移到了{targetUnit.PokemonBase.PokemonName}！");
+        }
+        if (damageDetails.IsPsn || damageDetails.IsPar || damageDetails.IsCfs || damageDetails.IsSlp || damageDetails.IsFrz || damageDetails.IsBrn)
+        {
+            yield return _dialogueBox.TypeDialogue($"打出了元素反应！");
+        }
+        else if (damageDetails.IsZhanfang)
+        {
+            yield return _dialogueBox.TypeDialogue("绽放的元素反应发生了！");
+            yield return _dialogueBox.TypeDialogue($"从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
+            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.3f));
+        }
+        else if (damageDetails.IsZhengfa)
+        {
+            yield return _dialogueBox.TypeDialogue("蒸发的元素反应发生了！\n造成了大量伤害！");
+        }
+        else if (damageDetails.IsRonghua)
+        {
+            yield return _dialogueBox.TypeDialogue("融化的元素反应发生了！\n造成了大量伤害！");
         }
 
         if (damageDetails.TypeEffectiveness > 1f)
@@ -413,6 +428,7 @@ public class RunTurnState : State<BattleSystem>
         {
             yield return _dialogueBox.TypeDialogue("呃，效果一般！");
         }
+
     }
 
     private IEnumerator TryToEspace()

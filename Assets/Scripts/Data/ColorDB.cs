@@ -16,6 +16,8 @@ public class ColorDB
             { ConditionID.electro, new Color32(140, 79, 236, 255) },
             { ConditionID.dendro, new Color32(109, 163, 63, 255) },
             { ConditionID.cryo, new Color32(74, 201, 234, 255) },
+            { ConditionID.jiejing, new Color32(215, 168, 0, 255) },
+            { ConditionID.confusion, new Color32(200, 155, 5, 255) },
         };
 
     public static Dictionary<string, Color> textColors = new Dictionary<string, Color>()

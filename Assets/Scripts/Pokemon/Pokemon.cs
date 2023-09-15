@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -254,42 +255,141 @@ public class Pokemon
     // Calculate the damage when the pokemon get hurt
     public DamageDetails TakeDamage(Move move, Pokemon attacker)
     {
-        float critical = 1f;
-        if (Random.value * 100f <= 6.25f)
-        {
-            critical = 2f;
-        }
 
         float type = TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type1)
             * TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type2);
-        if (ElementStatus != null)
-        {
-            ConditionID elementReactionRes = ConditionsDB.GetElementReaction(ElementStatus.Id, move.MoveBase.Effects.ElementStatus);
-            if (ConditionsDB.IsContinuousElementReaction(elementReactionRes))
-            {
-                CureElementStatus();
-                SetStatus(elementReactionRes);
-            }
-        }
 
         DamageDetails damageDetails = new DamageDetails()
         {
             TypeEffectiveness = type,
-            Critical= critical,
             Fainted = false,
-            StatusName = Status?.Name,
         };
 
         float attack = move.MoveBase.Category == MoveCategory.Special ? attacker.SpAttack : attacker.Attack;
         float defense = move.MoveBase.Category == MoveCategory.Special ? SpDefense : Defense;
 
-        float modifiers = Random.Range(0.85f, 1f) * type * critical;
+        float modifiers = Random.Range(0.85f, 1f) * type;
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
-        int damage = Mathf.FloorToInt(d * modifiers);
-        DecreaseHP(damage);
+        
 
+        float elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+        damageDetails.StatusName = Status?.Name;
+        damageDetails.Critical = elementReactionRate;
+        int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
+        DecreaseHP(damage);
+        damageDetails.Damage = damage;
         return damageDetails;
+    }
+
+    private float CheckElementReaction(Condition elementStatus, Move attackerMove, Pokemon attacker, DamageDetails damageDetails)
+    {
+        if (Status != null && Status.Id == ConditionID.jiejing)
+        {
+            return 1f;
+        }
+        if (attackerMove.MoveBase.Effects.ElementStatus == ConditionID.anemo)
+        {
+            if (attacker.ElementStatus != null)
+            {
+                damageDetails.IsKuosan = true;
+                if (ElementStatus != null)
+                {
+                    
+                    float elementReactionRate = PerformElementReaction(ElementStatus.Id, attacker.ElementStatus.Id, damageDetails);
+                    attacker.CureElementStatus();
+                    return elementReactionRate;
+                }
+                else
+                {
+                    SetElementStatus(attacker.ElementStatus.Id);
+                }
+            }
+            attacker.CureElementStatus();
+        }
+        else if (ElementStatus != null && attackerMove.MoveBase.Effects.ElementStatus == ConditionID.geo)
+        {
+            if (ElementStatus != null)
+            {
+                CureElementStatus();
+            }
+            attacker.SetStatus(ConditionID.jiejing);
+            damageDetails.IsJiejing = true;
+        }
+        else if (elementStatus != null)
+        {
+            return PerformElementReaction(elementStatus.Id, attackerMove.MoveBase.Effects.ElementStatus, damageDetails);
+        }
+
+        return 1f;
+    }
+
+    private float PerformElementReaction(ConditionID element, ConditionID attackerElement, DamageDetails damageDetails)
+    {
+        ConditionID elementReactionRes = ConditionsDB.GetElementReaction(element, attackerElement);
+        damageDetails.IsElementReaction = true;
+        if (elementReactionRes == ConditionID.psn)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsPsn = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.brn)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsBrn = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.par)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsPar = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.slp)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsSlp = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.confusion)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsCfs = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.frz)
+        {
+            CureElementStatus();
+            SetStatus(elementReactionRes);
+            damageDetails.IsFrz = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.zhanfang)
+        {
+            CureElementStatus();
+            damageDetails.IsZhanfang = true;
+            return 1f;
+        }
+        else if (elementReactionRes == ConditionID.zhengfa)
+        {
+            CureElementStatus();
+            damageDetails.IsZhengfa = true;
+            return 1.5f;
+        }
+        else if (elementReactionRes == ConditionID.ronghua)
+        {
+            CureElementStatus();
+            damageDetails.IsRonghua = true;
+            return 1.5f;
+        }
+        SetElementStatus(attackerElement);
+        return 1f;
     }
 
     // Check if the pokemon can perform a move before the action
@@ -349,7 +449,7 @@ public class Pokemon
 
     public void SetElementStatus(ConditionID conditionId)
     {
-        if (ElementStatus != null) return;
+        if (ElementStatus != null || conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];
         ElementStatus?.OnStart?.Invoke(this);
         StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");

@@ -212,7 +212,7 @@ public class BattleSystem : MonoBehaviour
             _playerUnit.PlayFaintAnimation();
             yield return new WaitForSeconds(2f);
         }
-        _partyScreen.SwitchPokemonSlot(0, _partyScreen.SelectedItem);
+        _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
         _playerUnit.ChangeUnit(newPokemon);
         yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
