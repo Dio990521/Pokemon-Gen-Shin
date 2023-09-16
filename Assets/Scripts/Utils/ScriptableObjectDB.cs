@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
 {
-    private static Dictionary<string, T> objects;
+    protected static Dictionary<string, T> objects;
     
     public static void Init()
     {
@@ -25,6 +26,7 @@ public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
             }
             objects[obj.name] = obj;
         }
+        //Debug.Log($"{className}初始化完成！" + " 已加载数据量： " + objects?.Count);
     }
 
     public static T GetObjectByName(string name)
@@ -40,6 +42,21 @@ public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
     public static ICollection<string> GetAllKeys()
     {
         return objects.Keys;
+    }
+
+    public static string GetRandomKey()
+    {
+        int randomIndex = UnityEngine.Random.Range(0, objects.Count);
+        int currentIndex = 0;
+        foreach (var key in objects.Keys)
+        {
+            if (currentIndex == randomIndex)
+            {
+                return key;
+            }
+            currentIndex++;
+        }
+        throw new InvalidOperationException("字典为空或索引越界。");
     }
 
 

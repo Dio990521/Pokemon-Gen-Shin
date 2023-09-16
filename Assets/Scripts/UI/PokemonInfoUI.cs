@@ -76,6 +76,10 @@ public class PokemonInfoUI : MonoBehaviour
         _curExp.text = pokemon.Exp.ToString();
         _expLeft.text = pokemon.GetNextLevelExpLeft().ToString();
         _expBar.transform.localScale = new Vector3(pokemon.GetNormalizedExp(), _expBar.transform.localScale.y, _expBar.transform.localScale.z);
+        for (int i = 0; i < 4; ++i)
+        {
+            _moveInfoUIList[i].Clear();
+        }
         for (int i = 0; i < pokemon.Moves.Count; ++i)
         {
             _moveInfoUIList[i].MoveName = pokemon.Moves[i].MoveBase.MoveName;
@@ -83,6 +87,10 @@ public class PokemonInfoUI : MonoBehaviour
             _moveInfoUIList[i].PP = $"PP {pokemon.Moves[i].PP}/{pokemon.Moves[i].MoveBase.PP}";
             _moveInfoUIList[i].MoveTypeBG.color = Color.gray;
             _moveInfoUIList[i].MoveType.SetActive(true);
+        }
+        if (pokemon.PassiveMove != null)
+        {
+            _moveInfoUIList[4].MoveName = pokemon.PassiveMove.MoveName;
         }
         _tag.sprite = _tagImage1;
         gameObject.SetActive(true);
@@ -127,11 +135,15 @@ public class PokemonInfoUI : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Z))
             {
                 AudioManager.Instance.PlaySE(SFX.CONFIRM);
-                _selectedMove = 0;
-                _state = InfoState.Detail;
-                _button.text = "X   ·µ»Ø";
-                _selector.SetActive(true);
-                _moveDetail.SetActive(true);
+                if (_pokemon.Moves.Count > 0)
+                {
+                    _selectedMove = 0;
+                    _state = InfoState.Detail;
+                    _button.text = "X   ·µ»Ø";
+                    _selector.SetActive(true);
+                    _moveDetail.SetActive(true);
+                }
+                    
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
@@ -154,10 +166,29 @@ public class PokemonInfoUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            --_selectedMove;
+            if (_pokemon.PassiveMove != null && _selectedMove == 4)
+            {
+                _selectedMove = _pokemon.Moves.Count - 1;
+            }
+            else
+            {
+                --_selectedMove;
+            }
+            
         }
 
-        _selectedMove = Mathf.Clamp(_selectedMove, 0, _pokemon.Moves.Count - 1);
+        if (_selectedMove == _pokemon.Moves.Count)
+        {
+            _selectedMove = 4;
+        }
+        if (_pokemon.PassiveMove != null)
+        {
+            _selectedMove = Mathf.Clamp(_selectedMove, 0, 4);
+        }
+        else
+        {
+            _selectedMove = Mathf.Clamp(_selectedMove, 0, _pokemon.Moves.Count - 1);
+        }
         UpdateUI(_selectedMove);
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -172,10 +203,21 @@ public class PokemonInfoUI : MonoBehaviour
 
     private void UpdateUI(int selectedMove)
     {
-        _moveDes.text = _pokemon.Moves[selectedMove].MoveBase.Description;
-        _dmg.text = _pokemon.Moves[selectedMove].MoveBase.Power.ToString();
-        _acc.text = _pokemon.Moves[selectedMove].MoveBase.Accuracy.ToString();
-        _selector.transform.position = _moveInfoUIList[selectedMove].SelectorPos.position;
+        if (selectedMove < 4)
+        {
+            _moveDes.text = _pokemon.Moves[selectedMove].MoveBase.Description;
+            _dmg.text = _pokemon.Moves[selectedMove].MoveBase.Power.ToString();
+            _acc.text = _pokemon.Moves[selectedMove].MoveBase.Accuracy.ToString();
+            _selector.transform.position = _moveInfoUIList[selectedMove].SelectorPos.position;
+        }
+        else
+        {
+            _moveDes.text = _pokemon.PassiveMove.Description;
+            _dmg.text = "-";
+            _acc.text = "-";
+            _selector.transform.position = _moveInfoUIList[selectedMove].SelectorPos.position;
+        }
+
     }
 
 }

@@ -57,6 +57,7 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         MoveDB.Init();
         ItemDB.Init();
         QuestDB.Init();
+        PassiveMoveDB.Init();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         //menuController = GetComponent<MenuController>();

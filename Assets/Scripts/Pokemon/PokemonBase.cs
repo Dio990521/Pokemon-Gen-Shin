@@ -29,6 +29,8 @@ public class PokemonBase : ScriptableObject
 
     [SerializeField] private int catchRate = 255;
 
+    public bool HasPassiveMove = true;
+
     [SerializeField] private List<LearnableMove> learnableMoves;
 
     [SerializeField] private List<Evolution> evolutions;

@@ -1,8 +1,7 @@
 ﻿public class DamageDetails
 {
     public bool Fainted { get; set;}
-    public float Critical { get; set;}
-    public float TypeEffectiveness { get; set;}
+    public float Effectiveness { get; set;}
     public string StatusName { get; set;}
     public bool IsZhanfang { get; set;}
     public bool IsSlp { get; set; }

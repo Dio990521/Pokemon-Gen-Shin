@@ -165,11 +165,11 @@ public class RunTurnState : State<BattleSystem>
             {
                 DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
                 isElementReaction = damageDetails.IsElementReaction;
-                if (damageDetails.Critical > 1f || damageDetails.TypeEffectiveness > 1f)
+                if (damageDetails.Effectiveness > 1f)
                 {
                     AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
                 }
-                else if (damageDetails.TypeEffectiveness < 1f)
+                else if (damageDetails.Effectiveness < 1f)
                 {
                     AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
                 }
@@ -425,13 +425,13 @@ public class RunTurnState : State<BattleSystem>
             yield return _dialogueBox.TypeDialogue($"融化的元素反应发生了！\n对{targetUnit.PokemonBase.PokemonName}造成了大量伤害！");
         }
 
-        if (damageDetails.TypeEffectiveness > 1f)
+        if (damageDetails.Effectiveness > 1f)
         {
-            yield return _dialogueBox.TypeDialogue("牛逼！效果拔群！");
+            yield return _dialogueBox.TypeDialogue("并且，效果拔群！");
         }
-        else if (damageDetails.TypeEffectiveness < 1f)
+        else if (damageDetails.Effectiveness < 1f)
         {
-            yield return _dialogueBox.TypeDialogue("呃，效果一般！");
+            yield return _dialogueBox.TypeDialogue("不过，效果一般！");
         }
 
     }

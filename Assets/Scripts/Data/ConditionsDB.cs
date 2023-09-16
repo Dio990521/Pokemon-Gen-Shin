@@ -274,6 +274,8 @@ public class ConditionsDB
                         }
                         pokemon.StatusTime--;
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}睡的很香！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}的HP恢复了一点！");
+                        pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.1f));
                         return false;
                     }
                 }
@@ -302,8 +304,8 @@ public class ConditionsDB
                             return true;
                         }
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不知所措！");
-                        pokemon.DecreaseHP(pokemon.MaxHp / 10);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}给了自己一拳！");
+                        pokemon.DecreaseHP(pokemon.MaxHp / 10);
                         return false;
                     }
                 }
@@ -408,5 +410,5 @@ public class ConditionsDB
 
 public enum ConditionID
 {
-    none, psn, brn, slp, par, frz, confusion, hydro, pyro, dendro, cryo, electro, geo, anemo, jiejing, zhanfang, zhengfa, ronghua, kuosan
+    psn, brn, slp, par, frz, confusion, jiejing, zhanfang, zhengfa, ronghua, kuosan, hydro, pyro, dendro, cryo, electro, geo, anemo, none
 }

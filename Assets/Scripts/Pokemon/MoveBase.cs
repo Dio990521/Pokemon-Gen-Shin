@@ -22,6 +22,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] private List<SecondaryEffects> secondaryEffects;
     [SerializeField] private MoveTarget target;
 
+
+
     public string MoveName
     {
         get { return moveName; }
@@ -82,6 +84,7 @@ public class MoveBase : ScriptableObject
             return false;
         }
     }
+
 }
 
 public enum MoveCategory
@@ -95,4 +98,20 @@ public enum MoveTarget
 {
     Foe, 
     Self
+}
+
+public enum PassiveMoveType
+{
+    Slp,
+    Frz,
+    Psn,
+    Brn,
+    Par,
+    Cfs,
+    Kuosan,
+    Jiejing,
+    Zhengfa,
+    Ronghua,
+    Zhanfang,
+    None
 }

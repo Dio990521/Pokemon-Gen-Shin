@@ -25,7 +25,7 @@ public class PokemonParty : MonoBehaviour
         return FindObjectOfType<PlayerController>().GetComponent<PokemonParty>();
     }
 
-    private void Awake()
+    private void Start()
     {
         foreach (Pokemon pokemon in pokemons)
         {

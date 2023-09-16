@@ -11,6 +11,7 @@ public class Pokemon
 {
     [SerializeField] private PokemonBase pokemonBase;
     [SerializeField] private int level;
+    private PassiveMoveBase passiveMove;
     private Sprite _pokeballSprite;
     private string _catchPlace;
 
@@ -44,6 +45,7 @@ public class Pokemon
     public Queue<string> StatusChanges { get; private set; }
     public Sprite PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
     public string CatchPlace { get => _catchPlace; set => _catchPlace = value; }
+    public PassiveMoveBase PassiveMove { get => passiveMove; set => passiveMove = value; }
 
     public event System.Action OnStatusChanged;
     public event System.Action OnHpChanged;
@@ -66,6 +68,11 @@ public class Pokemon
 
         Moves = saveData.moves.Select(s => new Move(s)).ToList();
 
+        if (pokemonBase.HasPassiveMove)
+        {
+            passiveMove = PassiveMoveDB.GetObjectByName(saveData.passiveMoveName);
+        }
+
         CalculateStats();
         StatusChanges = new Queue<string>();
         ResetStatBoost();
@@ -87,6 +94,10 @@ public class Pokemon
                 break;
             }
         }
+        if (pokemonBase.HasPassiveMove)
+        {
+            passiveMove = PassiveMoveDB.GetObjectByName(PassiveMoveDB.GetRandomKey());
+        }
 
         CalculateStats();
 
@@ -107,9 +118,13 @@ public class Pokemon
             level = Level,
             exp = Exp,
             statusId = Status?.Id,
-            moves = Moves.Select(m => m.GetSaveData()).ToList()
+            moves = Moves.Select(m => m.GetSaveData()).ToList(),
         };
 
+        if (PassiveMove != null)
+        {
+            saveData.passiveMoveName = PassiveMove.MoveName;
+        }
         return saveData;
     }
 
@@ -256,19 +271,15 @@ public class Pokemon
     public DamageDetails TakeDamage(Move move, Pokemon attacker)
     {
 
-        float type = TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type1)
-            * TypeChart.GetEffectiveness(move.MoveBase.Type, this.pokemonBase.Type2);
-
         DamageDetails damageDetails = new DamageDetails()
         {
-            TypeEffectiveness = type,
             Fainted = false,
+            Effectiveness = 1f
         };
 
         float attack = move.MoveBase.Category == MoveCategory.Special ? attacker.SpAttack : attacker.Attack;
         float defense = move.MoveBase.Category == MoveCategory.Special ? SpDefense : Defense;
 
-        float modifiers = Random.Range(0.85f, 1f) * type;
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
 
@@ -295,7 +306,7 @@ public class Pokemon
             elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
         }
         damageDetails.StatusName = Status?.Name;
-        damageDetails.Critical = elementReactionRate;
+        float modifiers = Random.Range(0.85f, 1f);
         int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
         DecreaseHP(damage);
         damageDetails.Damage = damage;
@@ -349,68 +360,70 @@ public class Pokemon
     {
         ConditionID elementReactionRes = ConditionsDB.GetElementReaction(element, attackerElement);
         damageDetails.IsElementReaction = true;
+        float effectiveness = EffectivenessChart.GetEffectiveness(elementReactionRes, PassiveMove.PassiveMoveType);
+        damageDetails.Effectiveness = effectiveness;
         if (elementReactionRes == ConditionID.psn)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPsn = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.brn)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsBrn = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.par)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPar = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.slp)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsSlp = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.confusion)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsCfs = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.frz)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsFrz = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhanfang)
         {
             CureElementStatus();
             damageDetails.IsZhanfang = true;
-            return 1f;
+            return effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhengfa)
         {
             CureElementStatus();
             damageDetails.IsZhengfa = true;
-            return 1.5f;
+            return 1.5f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.ronghua)
         {
             CureElementStatus();
             damageDetails.IsRonghua = true;
-            return 1.5f;
+            return 1.5f * effectiveness;
         }
         SetElementStatus(attackerElement);
-        return 1f;
+        return effectiveness;
     }
 
     // Check if the pokemon can perform a move before the action

@@ -11,4 +11,5 @@ public class PokemonSaveData
     public int exp;
     public ConditionID? statusId;
     public List<MoveSaveData> moves;
+    public string passiveMoveName;
 }

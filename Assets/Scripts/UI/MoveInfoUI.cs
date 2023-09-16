@@ -18,4 +18,11 @@ public class MoveInfoUI : MonoBehaviour
     public Image MoveTypeBG { get { return _moveTypeBG; } set { _moveTypeBG = value; } }
     public GameObject MoveType { get { return _moveType; } }
     public Transform SelectorPos { get { return _selectorPos; } }
+
+    public void Clear()
+    {
+        MoveName = "-";
+        PP = "- -";
+        MoveType.SetActive(false);
+    }
 }
