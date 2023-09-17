@@ -31,7 +31,7 @@ public class BattleDialogueBox : MonoBehaviour
     }
 
     // Show dialogue texts by one character after one character
-    public IEnumerator TypeDialogue(string dialogue)
+    public IEnumerator TypeDialogue(string dialogue, float duration=1f)
     {
         dialogueText.text = "";
         foreach (var letter in dialogue.ToCharArray())
@@ -40,7 +40,7 @@ public class BattleDialogueBox : MonoBehaviour
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(duration);
     }
 
     public void EnableDialogueText(bool isEnable)

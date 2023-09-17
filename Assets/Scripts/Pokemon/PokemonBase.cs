@@ -42,6 +42,8 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private ItemBase reward;
     [SerializeField] private float rewardProb;
 
+    public Sprite pokeball;
+
     public static int MaxNumOfMoves { get; set; } = 4;
 
     public int GetExpForLevel(int level)

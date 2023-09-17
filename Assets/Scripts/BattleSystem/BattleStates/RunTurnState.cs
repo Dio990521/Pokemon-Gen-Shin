@@ -151,6 +151,8 @@ public class RunTurnState : State<BattleSystem>
 
         if (CheckIfMoveHits(move, sourceUnit.pokemon, targetUnit.pokemon))
         {
+
+            targetUnit.PlayPerformMoveAnimation(move.MoveBase.MoveEffectSprites);
             if (move.MoveBase.Target == MoveTarget.Foe)
             {
                 targetUnit.PlayHitAnimation();
@@ -185,19 +187,6 @@ public class RunTurnState : State<BattleSystem>
             {
                 yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
             }
-
-            //if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
-            //    && targetUnit.pokemon.Hp > 0)
-            //{
-            //    foreach (var secondary in move.MoveBase.SecondaryEffects)
-            //    {
-            //        var rnd = UnityEngine.Random.Range(1, 101);
-            //        if (rnd <= secondary.Chance)
-            //        {
-            //            yield return RunMoveEffects(secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
-            //        }
-            //    }
-            //}
 
             if (targetUnit.pokemon.Hp <= 0)
             {

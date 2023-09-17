@@ -2,7 +2,10 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using static UnityEditorInternal.ReorderableList;
 
 public class BattleUnit : MonoBehaviour
 {
@@ -11,6 +14,7 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] private bool isPlayerUnit;
     [SerializeField] private BattleHud hud;
     [SerializeField] private Sprite defaultPlayerSprite;
+    [SerializeField] private Image moveEffectSprite;
 
     public Pokemon pokemon { get; set; }
 
@@ -18,12 +22,16 @@ public class BattleUnit : MonoBehaviour
 
     public bool IsPlayerUnit { get { return isPlayerUnit; } }
 
+    public Image MoveEffectSprite { get => moveEffectSprite; set => moveEffectSprite = value; }
+
     private Image unitSprite;
     public Image groundSprite;
 
     private Vector3 unitOriginPos;
     private Vector3 groundOriginPos;
     private Color originalColor;
+
+    private Vector3 playerPokeballPos;
 
     private void Awake()
     {
@@ -108,13 +116,45 @@ public class BattleUnit : MonoBehaviour
 
     public void UnitChangeAnimation()
     {
-        if (isPlayerUnit)
-        {
-            unitSprite.transform.localPosition = isPlayerUnit ?
-            new Vector3(unitOriginPos.x - 500f, unitOriginPos.y) :
-            new Vector3(unitOriginPos.x + 500f, unitOriginPos.y);
-            unitSprite.transform.DOLocalMoveX(unitOriginPos.x, 2f);
-        }
+        var color = unitSprite.color;
+        color.a = 1f;
+        unitSprite.color = color;
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
+        unitSprite.transform.localScale = new Vector3(0f, 0f, 0f);
+        unitSprite.transform.DOScale(new Vector3(1f, 1f, 1f), 1f);
+    }
+
+    public IEnumerator ThrowBallAnimation(BattleSystem battleSystem)
+    {
+        unitSprite.transform.localPosition = new Vector3(-228f, -215f, 0f);
+        var pokeballObj = Instantiate(battleSystem.PokeballSprite, playerPokeballPos, Quaternion.identity);
+        var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
+        pokeball.sprite = pokemon.PokeballSprite;
+        var sequence = DOTween.Sequence();
+        sequence.Append(pokeball.transform.DOJump(unitSprite.transform.position, 4f, 1, 1.5f));
+        sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));
+        Destroy(pokeballObj, 1.6f);
+        yield return null;
+    }
+
+    public IEnumerator PlayerThrowBallAnimation(BattleSystem battleSystem, Pokemon playerFirstPokemon)
+    {
+        Vector3 defaultPos = unitSprite.transform.position;
+        yield return unitSprite.transform.DOLocalMoveX(defaultPos.x - 600, 1.5f, false);
+        yield return new WaitForSeconds(1f);
+        var color = unitSprite.color;
+        color.a = 0f;
+        unitSprite.color = color;
+        playerPokeballPos = unitSprite.transform.position;
+        var pokeballObj = Instantiate(battleSystem.PokeballSprite, unitSprite.transform.position, Quaternion.identity);
+        var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
+        pokeball.sprite = playerFirstPokemon.PokeballSprite;
+        var sequence = DOTween.Sequence();
+        sequence.Append(pokeball.transform.DOJump(defaultPos, 4f, 1, 1.5f));
+        sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));
+        unitSprite.transform.localPosition = defaultPos;
+        Destroy(pokeballObj, 1.6f);
+
     }
 
     public void PlayAttackAnimation()
@@ -136,9 +176,28 @@ public class BattleUnit : MonoBehaviour
                 ));
     }
 
-    public void PlayPerformMoveAnimation()
+    public void PlayPerformMoveAnimation(List<Sprite> moveEffectSprites)
     {
+        if (moveEffectSprites.Count > 0)
+        {
+            StartCoroutine(Animate(moveEffectSprites, 0.15f));
+        }
+    }
 
+    private IEnumerator Animate(List<Sprite> moveEffectSprites, float frameRate)
+    {
+        int frame = 0;
+        Color imageColor = moveEffectSprite.color;
+        imageColor.a = 1f;
+        moveEffectSprite.color = imageColor;
+        while (frame >= 0 && frame < moveEffectSprites.Count)
+        {
+            moveEffectSprite.sprite = moveEffectSprites[frame];
+            yield return new WaitForSeconds(frameRate);
+            frame++;
+        }
+        imageColor.a = 0f;
+        moveEffectSprite.color = imageColor;
     }
 
     public void PlayHitAnimation()

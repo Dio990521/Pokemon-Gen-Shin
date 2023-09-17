@@ -64,6 +64,7 @@ public class BattleSystem : MonoBehaviour
 
     public int EscapeAttempts { get; set; }
     public TrainerController Trainer { get => trainer; set => trainer = value; }
+    public GameObject PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
 
     private BattleTrigger battleTrigger;
 
@@ -120,7 +121,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
             yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
         }
         else
         {
@@ -138,10 +139,9 @@ public class BattleSystem : MonoBehaviour
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
             _enemyUnit.ChangeUnit(enemyPokemon);
-            AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
 
             // Send out first pokemon of the player
             _playerImage.gameObject.SetActive(false);
@@ -150,10 +150,10 @@ public class BattleSystem : MonoBehaviour
         }
         _partyScreen.Init();
         var playerPokemon = PlayerParty.GetHealthyPokemon();
+        yield return _playerUnit.PlayerThrowBallAnimation(this, playerPokemon);
+        yield return _dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！", 0.9f);
         _playerUnit.ChangeUnit(playerPokemon);
-        yield return _dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！");
-        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         _playerUnit.ShowHud();
         _enemyUnit.ShowHud();
@@ -210,13 +210,14 @@ public class BattleSystem : MonoBehaviour
         {
             yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！");
             _playerUnit.PlayFaintAnimation();
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
         }
         _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
+        yield return _playerUnit.ThrowBallAnimation(this);
+        yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！", 0.7f);
         _playerUnit.ChangeUnit(newPokemon);
-        yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！");
-        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        
+        yield return new WaitForSeconds(1.5f);
+
     }
 
     public IEnumerator SendNextTrainerPokemon()
@@ -251,7 +252,7 @@ public class BattleSystem : MonoBehaviour
         yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         AudioManager.Instance.PlaySE(SFX.THROW_BALL);
 
-        var pokeballObj = Instantiate(_pokeballSprite, _playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
+        var pokeballObj = Instantiate(PokeballSprite, _playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
         pokeball.sprite = pokeballItem.InBattleIcon;
 
@@ -284,7 +285,7 @@ public class BattleSystem : MonoBehaviour
                 yield return _dialogueBox.TypeDialogue($"由于队伍已满，\n{_enemyUnit.pokemon.PokemonBase.PokemonName}被送进了仓库！");
             }
 
-            Destroy(pokeball);
+            Destroy(pokeballObj);
             yield return BattleOver(true, true);
         }
         else
@@ -297,7 +298,7 @@ public class BattleSystem : MonoBehaviour
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
 
-            Destroy(pokeball);
+            Destroy(pokeballObj);
         }
     }
 

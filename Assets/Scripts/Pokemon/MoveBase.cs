@@ -19,10 +19,9 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] private MoveCategory category;
     [SerializeField] private MoveEffects effects;
-    [SerializeField] private List<SecondaryEffects> secondaryEffects;
     [SerializeField] private MoveTarget target;
 
-
+    [SerializeField] private List<Sprite> moveEffectSprites;
 
     public string MoveName
     {
@@ -68,8 +67,6 @@ public class MoveBase : ScriptableObject
 
     public MoveEffects Effects { get { return effects; } }
 
-    public List<SecondaryEffects> SecondaryEffects { get { return secondaryEffects; } }
-
     public MoveTarget Target { get { return target; } }
 
     public bool IsSpecial
@@ -85,6 +82,7 @@ public class MoveBase : ScriptableObject
         }
     }
 
+    public List<Sprite> MoveEffectSprites { get => moveEffectSprites; set => moveEffectSprites = value; }
 }
 
 public enum MoveCategory

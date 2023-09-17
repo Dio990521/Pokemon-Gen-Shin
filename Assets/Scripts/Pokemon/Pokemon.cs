@@ -82,6 +82,7 @@ public class Pokemon
     // Initialize the pokemon
     public void Init()
     {
+        _pokeballSprite = pokemonBase.pokeball;
         Moves = new List<Move>();
         foreach (var move in pokemonBase.LearnableMoves)
         {
