@@ -1384,6 +1384,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC31
       objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 89cd91d3482077048809c738a6ebdb8d, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679993, guid: 89cd91d3482077048809c738a6ebdb8d, type: 3}
+      propertyPath: m_Offset.y
+      value: -1.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 89cd91d3482077048809c738a6ebdb8d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1434,6 +1442,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89cd91d3482077048809c738a6ebdb8d, type: 3}
+--- !u!1 &583230097 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3192666759394679989, guid: 89cd91d3482077048809c738a6ebdb8d, type: 3}
+  m_PrefabInstance: {fileID: 583230096}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &583230098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583230097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ea560f0a947d24ca908b5d0d43574e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &605243844
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -92,6 +92,10 @@ public class PokemonInfoUI : MonoBehaviour
         {
             _moveInfoUIList[4].MoveName = pokemon.PassiveMove.MoveName;
         }
+        else
+        {
+            _moveInfoUIList[4].MoveName = "-";
+        }
         _tag.sprite = _tagImage1;
         gameObject.SetActive(true);
         _infoUI1.SetActive(true);
@@ -162,7 +166,14 @@ public class PokemonInfoUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            ++_selectedMove;
+            if (_pokemon.PassiveMove != null && _selectedMove == _pokemon.Moves.Count - 1)
+            {
+                _selectedMove = 4;
+            }
+            else
+            {
+                ++_selectedMove;
+            }
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {

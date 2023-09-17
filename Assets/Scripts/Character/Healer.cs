@@ -15,14 +15,16 @@ public class Healer : MonoBehaviour
         if (selectedChoice == 0)
         {
             // Yes
+            GameManager.Instance.PauseGame(true);
             yield return Fader.FadeIn(0.5f);
             AudioManager.Instance.PlaySE(SFX.POKEMON_HEAL, true);
             var playerParty = player.GetComponent<PokemonParty>();
             playerParty.Pokemons.ForEach(p => p.Heal());
             playerParty.PartyUpdated();
-
+            yield return new WaitForSeconds(3f);
             yield return Fader.FadeOut(0.5f);
             yield return DialogueManager.Instance.ShowDialogueText($"你的宝可梦们都恢复健康了！");
+            GameManager.Instance.PauseGame(false);
 
         }
         else if (selectedChoice == 1)
