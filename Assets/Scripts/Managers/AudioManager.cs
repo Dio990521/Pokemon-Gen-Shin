@@ -101,8 +101,12 @@ public class AudioManager : Singleton<AudioManager>
         musicPlayer.Play();
     }
 
-    public void StopMusic()
+    public IEnumerator StopMusic(bool fade=false)
     {
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(0, fadeDuration).WaitForCompletion();
+        }
         musicPlayer.Stop();
     }
 

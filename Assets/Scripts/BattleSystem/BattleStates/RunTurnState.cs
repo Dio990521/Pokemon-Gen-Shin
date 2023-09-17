@@ -186,18 +186,18 @@ public class RunTurnState : State<BattleSystem>
                 yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
             }
 
-            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
-                && targetUnit.pokemon.Hp > 0)
-            {
-                foreach (var secondary in move.MoveBase.SecondaryEffects)
-                {
-                    var rnd = UnityEngine.Random.Range(1, 101);
-                    if (rnd <= secondary.Chance)
-                    {
-                        yield return RunMoveEffects(secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
-                    }
-                }
-            }
+            //if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
+            //    && targetUnit.pokemon.Hp > 0)
+            //{
+            //    foreach (var secondary in move.MoveBase.SecondaryEffects)
+            //    {
+            //        var rnd = UnityEngine.Random.Range(1, 101);
+            //        if (rnd <= secondary.Chance)
+            //        {
+            //            yield return RunMoveEffects(secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
+            //        }
+            //    }
+            //}
 
             if (targetUnit.pokemon.Hp <= 0)
             {
@@ -367,7 +367,13 @@ public class RunTurnState : State<BattleSystem>
             }
             else
             {
+                yield return _dialogueBox.TypeDialogue("莹手上已经没有\n可以上场的宝可梦！");
+                yield return _dialogueBox.TypeDialogue("莹眼前一黑...");
+                yield return Fader.FadeIn(1f);
+                yield return TeleportManager.Instance.GameOverTransport();
                 yield return _battleSystem.BattleOver(false);
+                
+
             }
         }
         else

@@ -1,5 +1,6 @@
 ﻿using Game.Tool.Singleton;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,6 +34,20 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable
             }
         }
         return teleIndex;
+    }
+
+    public IEnumerator GameOverTransport()
+    {
+        yield return AudioManager.Instance.StopMusic(true);
+        GameManager.Instance.PauseGame(true);
+        var player = GameManager.Instance.PlayerController;
+        player.Character.SetPositionAndSnapToTile(new Vector2(-64.5f, 135.65f));
+        player.Character.Animator.SetFacingDirection(FacingDirection.Down);
+        var playerParty = player.GetComponent<PokemonParty>();
+        playerParty.Pokemons.ForEach(p => p.Heal());
+        playerParty.PartyUpdated();
+        yield return new WaitForSeconds(1f);
+        GameManager.Instance.PauseGame(false);
     }
 
     public object CaptureState()

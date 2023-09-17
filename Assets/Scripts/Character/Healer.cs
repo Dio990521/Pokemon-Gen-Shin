@@ -16,7 +16,7 @@ public class Healer : MonoBehaviour
         {
             // Yes
             yield return Fader.FadeIn(0.5f);
-
+            AudioManager.Instance.PlaySE(SFX.POKEMON_HEAL, true);
             var playerParty = player.GetComponent<PokemonParty>();
             playerParty.Pokemons.ForEach(p => p.Heal());
             playerParty.PartyUpdated();

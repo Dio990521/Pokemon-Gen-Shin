@@ -78,7 +78,7 @@ public class BattleState : State<GameManager>
             Trainer.BattleLost();
             Trainer = null;
         }
-
+        StartCoroutine(Fader.FadeOut(1f));
         _gameManager.StateMachine.Pop();
 
     }

@@ -74,7 +74,6 @@ public class Teleport : MonoBehaviour, InteractableObject
         player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
-
     }
 
 }

@@ -16,11 +16,19 @@ public class Fader : MonoBehaviour
 
     public static IEnumerator FadeOut(float time)
     {
+        if (image.color.a == 0)
+        {
+            yield break;
+        }
         yield return image.DOFade(0f, time).WaitForCompletion();
     }
 
     public static IEnumerator FadeIn(float time)
     {
+        if (image.color.a == 1)
+        {
+            yield break;
+        }
         yield return image.DOFade(1f, time).WaitForCompletion();
     }
 }
