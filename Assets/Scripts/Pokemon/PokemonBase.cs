@@ -7,42 +7,40 @@ public class PokemonBase : ScriptableObject
 {
     [SerializeField] private string pokemonName;
 
-    [TextArea]
-    [SerializeField] private string description;
-
-    [SerializeField] private Sprite frontSprite;
-    [SerializeField] private Sprite backSprite;
-
+    [Header("Status")]
     [SerializeField] private PokemonType type1;
     [SerializeField] private PokemonType type2;
     [SerializeField] private bool isHuman;
-
     [SerializeField] private int maxHp;
     [SerializeField] private int attack;
     [SerializeField] private int defense;
     [SerializeField] private int spAttack;
     [SerializeField] private int spDefense;
     [SerializeField] private int speed;
-
-    [SerializeField] private int expYield;
     [SerializeField] private GrowthRate growthRate;
 
-    [SerializeField] private int catchRate = 255;
-
-    public bool HasPassiveMove = true;
-
+    [Header("Moves")]
     [SerializeField] private List<LearnableMove> learnableMoves;
 
+    [Header("Evolution")]
     [SerializeField] private List<Evolution> evolutions;
-
     [SerializeField] private bool _isEvoState;
-    [SerializeField] private Achievement _achievement;
+
+    [Header("Sprites")]
+    public Sprite pokeball;
+    [SerializeField] private Sprite frontSprite;
+    [SerializeField] private Sprite backSprite;
 
     [Header("Battle Rewards")]
     [SerializeField] private ItemBase reward;
     [SerializeField] private float rewardProb;
 
-    public Sprite pokeball;
+    [Header("Others")]
+    [SerializeField] private int expYield;
+    [SerializeField] private int catchRate = 255;
+    [SerializeField] private Achievement _achievement;
+    public bool HasPassiveMove = true;
+    [SerializeField] private PassiveMoveBase passiveMove;
 
     public static int MaxNumOfMoves { get; set; } = 4;
 
@@ -71,7 +69,6 @@ public class PokemonBase : ScriptableObject
     public PokemonType Type2 { get { return type2; } }
     public bool IsHuman { get { return isHuman; } }
     public string PokemonName { get { return pokemonName; } }
-    public string Description { get { return description; } }
     public int CatchRate { get { return catchRate; } }
     public int ExpYield { get { return expYield; } }
     public GrowthRate GrowthRate { get { return growthRate; } }
@@ -79,6 +76,9 @@ public class PokemonBase : ScriptableObject
     public List<Evolution> Evolutions { get { return evolutions; } }   
     public ItemBase Reward { get { return reward; } }
     public float RewardProb { get { return rewardProb; } }
+
+    public PassiveMoveBase PassiveMove { get => passiveMove; set => passiveMove = value; }
+
 
     public bool IsEvoState { get => _isEvoState; set => _isEvoState = value; }
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
@@ -93,7 +93,7 @@ public enum Stat
     特防,
     速度,
     命中率,
-    闪避率
+    闪避率,
 }
 
 public enum GrowthRate

@@ -68,11 +68,32 @@ public class PokemonInfoUI : MonoBehaviour
         stringBuilder.Clear();
         stringBuilder.Append(pokemon.Hp.ToString()).Append("/").Append(pokemon.MaxHp.ToString());
         _hp.text = stringBuilder.ToString();
-        _atk.text = pokemon.PokemonBase.Attack.ToString();
-        _dfs.text = pokemon.PokemonBase.Defense.ToString();
-        _satk.text = pokemon.PokemonBase.SpAttack.ToString();
-        _sdfs.text = pokemon.PokemonBase.SpDefense.ToString();
-        _spd.text = pokemon.PokemonBase.Speed.ToString();
+        _atk.text = pokemon.Attack.ToString();
+        _dfs.text = pokemon.Defense.ToString();
+        _satk.text = pokemon.SpAttack.ToString();
+        _sdfs.text = pokemon.SpDefense.ToString();
+        _spd.text = pokemon.Speed.ToString();
+        if (pokemon.IsBestStatus(Stat.攻击))
+        {
+            _atk.color = Color.red;
+        }
+        if (pokemon.IsBestStatus(Stat.防御))
+        {
+            _dfs.color = Color.red;
+        }
+        if (pokemon.IsBestStatus(Stat.特攻))
+        {
+            _satk.color = Color.red;
+        }
+        if (pokemon.IsBestStatus(Stat.特防))
+        {
+            _sdfs.color = Color.red;
+        }
+        if (pokemon.IsBestStatus(Stat.速度))
+        {
+            _spd.color = Color.red;
+        }
+
         _curExp.text = pokemon.Exp.ToString();
         _expLeft.text = pokemon.GetNextLevelExpLeft().ToString();
         _expBar.transform.localScale = new Vector3(pokemon.GetNormalizedExp(), _expBar.transform.localScale.y, _expBar.transform.localScale.z);
@@ -88,9 +109,9 @@ public class PokemonInfoUI : MonoBehaviour
             _moveInfoUIList[i].MoveTypeBG.color = Color.gray;
             _moveInfoUIList[i].MoveType.SetActive(true);
         }
-        if (pokemon.PassiveMove != null)
+        if (pokemon.PokemonBase.PassiveMove != null)
         {
-            _moveInfoUIList[4].MoveName = pokemon.PassiveMove.MoveName;
+            _moveInfoUIList[4].MoveName = pokemon.PokemonBase.PassiveMove.MoveName;
         }
         else
         {
@@ -166,7 +187,7 @@ public class PokemonInfoUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (_pokemon.PassiveMove != null && _selectedMove == _pokemon.Moves.Count - 1)
+            if (_pokemon.PokemonBase.PassiveMove != null && _selectedMove == _pokemon.Moves.Count - 1)
             {
                 _selectedMove = 4;
             }
@@ -177,7 +198,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (_pokemon.PassiveMove != null && _selectedMove == 4)
+            if (_pokemon.PokemonBase.PassiveMove != null && _selectedMove == 4)
             {
                 _selectedMove = _pokemon.Moves.Count - 1;
             }
@@ -192,7 +213,7 @@ public class PokemonInfoUI : MonoBehaviour
         {
             _selectedMove = 4;
         }
-        if (_pokemon.PassiveMove != null)
+        if (_pokemon.PokemonBase.PassiveMove != null)
         {
             _selectedMove = Mathf.Clamp(_selectedMove, 0, 4);
         }
@@ -223,7 +244,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         else
         {
-            _moveDes.text = _pokemon.PassiveMove.Description;
+            _moveDes.text = _pokemon.PokemonBase.PassiveMove.Description;
             _dmg.text = "-";
             _acc.text = "-";
             _selector.transform.position = _moveInfoUIList[selectedMove].SelectorPos.position;

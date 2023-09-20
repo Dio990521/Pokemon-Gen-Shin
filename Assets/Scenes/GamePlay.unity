@@ -9883,19 +9883,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].level
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].level
-      value: 99
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[3].level
@@ -9908,7 +9908,7 @@ PrefabInstance:
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+      objectReference: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
     - target: {fileID: 4671520593820589622, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
       value: 0
