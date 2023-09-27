@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
-using static UnityEditorInternal.ReorderableList;
 
 public class BattleUnit : MonoBehaviour
 {
@@ -45,6 +43,14 @@ public class BattleUnit : MonoBehaviour
     {
         pokemon = selectedPokemon;
         level = pokemon.Level;
+        if (selectedPokemon.PokemonBase.IsLargePortrait)
+        {
+            unitSprite.rectTransform.sizeDelta = new Vector2(800f, 500f);
+        }
+        else
+        {
+            unitSprite.rectTransform.sizeDelta = new Vector2(400f, 450f);
+        }
         unitSprite.sprite = isPlayerUnit? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
         unitSprite.color = originalColor;
         ResetAnimation();
@@ -91,7 +97,7 @@ public class BattleUnit : MonoBehaviour
         }
         else
         {
-            unitSprite.transform.localPosition = new Vector3(275f, 131f, 0f);
+            unitSprite.transform.localPosition = new Vector3(275f, -94f, 0f);
         }
         var sequence = DOTween.Sequence();
         sequence.Append(unitSprite.DOFade(1f, 0.01f));

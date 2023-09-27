@@ -156,7 +156,7 @@ public class ConditionsDB
                     StartMessage = "超载了！",
                     OnStart= (Pokemon pokemon) =>
                     {
-                        pokemon.StatusTime = Random.Range(2, 4);
+                        pokemon.StatusTime = 5;
                     },
                     OnBeforeMove = (Pokemon pokemon) =>
                     {
@@ -171,7 +171,7 @@ public class ConditionsDB
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.DecreaseHP(pokemon.MaxHp / 16);
+                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.04f));
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正遭受超载的折磨！");
                     }
                 }
@@ -184,7 +184,7 @@ public class ConditionsDB
                     StartMessage = "烧起来了！",
                     OnStart= (Pokemon pokemon) =>
                     {
-                        pokemon.StatusTime = Random.Range(1, 3);
+                        pokemon.StatusTime = 2;
                     },
                     OnBeforeMove = (Pokemon pokemon) =>
                     {
@@ -199,7 +199,7 @@ public class ConditionsDB
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.DecreaseHP(pokemon.MaxHp / 8);
+                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.06f));
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正在燃烧！");
                     }
                 }
@@ -211,7 +211,7 @@ public class ConditionsDB
                     StartMessage = "麻了个痹了！",
                     OnStart= (Pokemon pokemon) =>
                     {
-                        pokemon.StatusTime = Random.Range(2, 4);
+                        pokemon.StatusTime = 2;
                     },
                     OnBeforeMove = (Pokemon pokemon) =>
                     {
@@ -221,13 +221,13 @@ public class ConditionsDB
                             pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不麻了！");
                             return true;
                         }
+
+                        pokemon.StatusTime--;
                         if (Random.Range(1, 5) <= 2)
                         {
-                            pokemon.StatusTime--;
                             pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}麻到动不了！");
                             return false;
                         }
-                        pokemon.StatusTime--;
                         return true;
                     },
                 }
@@ -262,7 +262,7 @@ public class ConditionsDB
                     StartMessage = "昏昏欲睡！",
                     OnStart= (Pokemon pokemon) =>
                     {
-                        pokemon.StatusTime = Random.Range(2, 4);
+                        pokemon.StatusTime = 2;
                     },
                     OnBeforeMove = (Pokemon pokemon) =>
                     {
@@ -275,7 +275,7 @@ public class ConditionsDB
                         pokemon.StatusTime--;
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}睡的很香！");
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}的HP恢复了一点！");
-                        pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.1f));
+                        pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.05f));
                         return false;
                     }
                 }
@@ -305,7 +305,7 @@ public class ConditionsDB
                         }
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不知所措！");
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}给了自己一拳！");
-                        pokemon.DecreaseHP(pokemon.MaxHp / 10);
+                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.05f));
                         return false;
                     }
                 }

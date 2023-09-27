@@ -30,7 +30,6 @@ public class StorageListUI : SelectionUI<ItemSlotUI>
     private void Awake()
     {
         itemListRect = itemList.GetComponent<RectTransform>();
-        print(itemListRect);
     }
 
     public void Init()

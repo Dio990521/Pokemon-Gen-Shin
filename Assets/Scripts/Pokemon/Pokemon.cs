@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +11,7 @@ public class Pokemon
     [SerializeField] private int level;
     private Sprite _pokeballSprite;
     private string _catchPlace;
+    private int[] _statusBias;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
@@ -80,6 +79,12 @@ public class Pokemon
     // Initialize the pokemon
     public void Init()
     {
+        _statusBias = new int[6];
+        for (int i = 0; i < _statusBias.Length; ++i)
+        {
+            _statusBias[i] = Random.Range(0, 8) + Random.Range(0, 4);
+        }
+        _statusBias[5] = Random.Range(10, 16) + Random.Range(0, 6);
         _pokeballSprite = pokemonBase.pokeball;
         Moves = new List<Move>();
         foreach (var move in pokemonBase.LearnableMoves)
@@ -130,17 +135,20 @@ public class Pokemon
     // Calculate the pokemon's status by based status
     private void CalculateStats()
     {
+
+
         Stats = new Dictionary<Stat, int>
-        {
-            { Stat.攻击, Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + Random.Range(-5, 6) },
-            { Stat.防御, Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + Random.Range(-5, 6) },
-            { Stat.特攻, Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + Random.Range(-5, 6) },
-            { Stat.特防, Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + Random.Range(-5, 6) },
-            { Stat.速度, Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + Random.Range(-5, 6) }
-        };
+            {
+                { Stat.攻击, Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + _statusBias[0] },
+                { Stat.防御, Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + _statusBias[1] },
+                { Stat.特攻, Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + _statusBias[2] },
+                { Stat.特防, Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + _statusBias[3] },
+                { Stat.速度, Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + _statusBias[4] }
+            };
+
 
         int oldMaxHp = MaxHp;
-        MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + Random.Range(-10, 11);
+        MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + _statusBias[5];
 
         if (oldMaxHp != 0)
         {
@@ -154,15 +162,15 @@ public class Pokemon
         switch (status)
         {
             case Stat.攻击:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + 5;
+                return Stats[status] == Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + 10;
             case Stat.防御:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + 5;
+                return Stats[status] == Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + 10;
             case Stat.特攻:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + 5;
+                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + 10;
             case Stat.特防:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + 5;
+                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + 10;
             case Stat.速度:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + 5;
+                return Stats[status] == Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + 10;
             default:
                 break;
         }
@@ -171,6 +179,10 @@ public class Pokemon
 
     public int GetNextLevelExpLeft()
     {
+        if (level == 100)
+        {
+            return 0;
+        }
         return pokemonBase.GetExpForLevel(level + 1) - Exp;
     }
 
@@ -185,6 +197,10 @@ public class Pokemon
     }
     public bool CheckForLevelUp()
     {
+        if (level == 100)
+        {
+            return false;
+        }
         if (Exp > pokemonBase.GetExpForLevel(level + 1))
         {
             ++level;
@@ -248,6 +264,8 @@ public class Pokemon
             { Stat.特攻, 0},
             { Stat.特防, 0},
             { Stat.速度, 0},
+            { Stat.命中率, 0 },
+            { Stat.闪避率, 0 },
         };
     }
 
@@ -377,7 +395,11 @@ public class Pokemon
     {
         ConditionID elementReactionRes = ConditionsDB.GetElementReaction(element, attackerElement);
         damageDetails.IsElementReaction = true;
-        float effectiveness = EffectivenessChart.GetEffectiveness(elementReactionRes, pokemonBase.PassiveMove.PassiveMoveType);
+        float effectiveness = 1f;
+        if (pokemonBase.PassiveMove != null)
+        {
+            effectiveness = EffectivenessChart.GetEffectiveness(elementReactionRes, pokemonBase.PassiveMove.PassiveMoveType);
+        }
         damageDetails.Effectiveness = effectiveness;
         if (elementReactionRes == ConditionID.psn)
         {

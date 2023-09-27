@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class ItemBase : ScriptableObject
 {
     [SerializeField] private string itemName;
+
+    [TextArea]
     [SerializeField] private string description;
+
     [SerializeField] private Sprite icon;
     [SerializeField] private int price;
     [SerializeField] private bool isSellable;

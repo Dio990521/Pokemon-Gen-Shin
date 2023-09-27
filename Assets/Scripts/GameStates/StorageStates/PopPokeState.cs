@@ -58,7 +58,7 @@ public class PopPokeState : State<GameManager>
 
         if (selectedChoice == 0)
         {
-            if (_gameManager.PartyScreen.Pokemons.Count > 1)
+            if (_gameManager.PartyScreen.Pokemons.Count <= 5)
             {
                 _gameManager.Storage.PopPokemon(selectedPokemon);
                 StorageState.I.StorageUI.MessageText.text = "想要存放还是取出宝可梦？";

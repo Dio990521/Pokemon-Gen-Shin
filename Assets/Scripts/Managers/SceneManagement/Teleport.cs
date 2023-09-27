@@ -52,7 +52,7 @@ public class Teleport : MonoBehaviour, InteractableObject
         }
 
         yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？", autoClose: false);
-        ChoiceState.I.Choices = new List<string>() { "彳亍", "不了" };
+        ChoiceState.I.Choices = TeleportManager.Instance.GetActiveList();
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
 
         int selectedChoice = ChoiceState.I.Selection;
@@ -69,11 +69,11 @@ public class Teleport : MonoBehaviour, InteractableObject
         GameManager.Instance.PauseGame(true);
         AudioManager.Instance.PlaySE(SFX.TELEPORT);
         yield return Fader.FadeIn(1f);
-
         player.Character.SetPositionAndSnapToTile(telePos);
         player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
+        GameManager.Instance.PauseGame(false);
     }
 
 }

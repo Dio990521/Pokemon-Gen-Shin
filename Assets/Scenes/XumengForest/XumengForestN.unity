@@ -10372,6 +10372,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 617439778}
     m_Modifications:
+    - target: {fileID: 463200882922002848, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: pokemons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 463200882922002848, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: pokemons.Array.data[0].level
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 463200882922002848, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: pokemons.Array.data[0].pokemonBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: winMoney
+      value: 1234
+      objectReference: {fileID: 0}
+    - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: tainerName
+      value: "\u8FEA\u5362\u514B\u7231\u597D\u8005"
+      objectReference: {fileID: 0}
+    - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: "\u7ED9\u4F60\u770B\u770B\u6211\u8001\u516C~"
+      objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679989, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
       propertyPath: m_Name
       value: NPC22 - T

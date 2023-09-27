@@ -2059,12 +2059,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: pokemons.Array.size
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: pokemons.Array.data[0].level
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: pokemons.Array.data[1].level
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: pokemons.Array.data[0].pokemonBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
     - target: {fileID: 570150498155046640, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: pokemons.Array.data[1].pokemonBase
       value: 
@@ -2072,6 +2080,14 @@ PrefabInstance:
     - target: {fileID: 3192666759394679989, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: m_Name
       value: NPC1 - T
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: m_RootOrder
@@ -2116,6 +2132,18 @@ PrefabInstance:
     - target: {fileID: 3192666759394679995, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909564898401303949, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: tainerName
+      value: "\u672A\u767D\u9547\u5C0F\u7237"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909564898401303949, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909564898401303949, guid: d8b8258f294b3b849932020de048da41, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: "\u672A\u767D\u9547\u7684\u7237\u9664\u4E86\u5403\u5C31\u662F\u559D\uFF0C\u6CA1\u522B\u54D2\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 7530689316906109295, guid: d8b8258f294b3b849932020de048da41, type: 3}
       propertyPath: m_Size.y

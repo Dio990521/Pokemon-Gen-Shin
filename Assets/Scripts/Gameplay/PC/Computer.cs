@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class Computer : MonoBehaviour, InteractableObject
 {
-    [SerializeField] private List<ItemBase> availableItems;
     private SpriteRenderer _spriteRenderer;
-
-    public List<ItemBase> AvailableItems => availableItems;
 
     private void Awake()
     {

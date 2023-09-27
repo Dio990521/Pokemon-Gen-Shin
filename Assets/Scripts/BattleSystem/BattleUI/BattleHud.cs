@@ -80,7 +80,10 @@ public class BattleHud : MonoBehaviour
 
     public IEnumerator SetExpSmooth(bool reset=false)
     {
-        if (expBar == null) yield break;
+        if (expBar == null || battlePokemon.Level == 100)
+        {
+            yield break;
+        }
 
         if (reset)
         {
@@ -89,7 +92,7 @@ public class BattleHud : MonoBehaviour
 
         float normalizedExp = battlePokemon.GetNormalizedExp();
         AudioManager.Instance.PlaySE(SFX.EXP_UP);
-        yield return expBar.transform.DOScaleX(normalizedExp, 1.5f).WaitForCompletion();
+        yield return expBar.transform.DOScaleX(normalizedExp, (normalizedExp - expBar.transform.localScale.x) * 2f).WaitForCompletion();
         AudioManager.Instance.StopSE();
     }
 

@@ -30,6 +30,7 @@ public class PokemonBase : ScriptableObject
     public Sprite pokeball;
     [SerializeField] private Sprite frontSprite;
     [SerializeField] private Sprite backSprite;
+    [SerializeField] private bool isLargePortrait;
 
     [Header("Battle Rewards")]
     [SerializeField] private ItemBase reward;
@@ -82,6 +83,7 @@ public class PokemonBase : ScriptableObject
 
     public bool IsEvoState { get => _isEvoState; set => _isEvoState = value; }
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
+    public bool IsLargePortrait { get => isLargePortrait; set => isLargePortrait = value; }
 }
 
 

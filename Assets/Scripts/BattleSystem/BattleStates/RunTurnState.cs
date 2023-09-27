@@ -1,9 +1,7 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class RunTurnState : State<BattleSystem>
 {
@@ -186,6 +184,19 @@ public class RunTurnState : State<BattleSystem>
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
             {
                 yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
+            }
+
+            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
+                && targetUnit.pokemon.Hp > 0)
+            {
+                foreach (var secondary in move.MoveBase.SecondaryEffects)
+                {
+                    var rnd = UnityEngine.Random.Range(1, 101);
+                    if (rnd <= secondary.Chance)
+                    {
+                        yield return RunMoveEffects(secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
+                    }
+                }
             }
 
             if (targetUnit.pokemon.Hp <= 0)
@@ -409,7 +420,8 @@ public class RunTurnState : State<BattleSystem>
         {
             yield return _dialogueBox.TypeDialogue("绽放的元素反应发生了！");
             yield return _dialogueBox.TypeDialogue($"从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
-            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.3f));
+            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.25f));
+            yield return new WaitForSeconds(0.5f);
         }
         else if (damageDetails.IsZhengfa)
         {

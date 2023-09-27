@@ -21,6 +21,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] private MoveEffects effects;
     [SerializeField] private MoveTarget target;
 
+    [SerializeField] private List<SecondaryEffects> secondaryEffects;
+
     [SerializeField] private List<Sprite> moveEffectSprites;
 
     public string MoveName
@@ -66,6 +68,8 @@ public class MoveBase : ScriptableObject
     public MoveCategory Category { get { return category; } }
 
     public MoveEffects Effects { get { return effects; } }
+
+    public List<SecondaryEffects> SecondaryEffects { get { return secondaryEffects; } }
 
     public MoveTarget Target { get { return target; } }
 

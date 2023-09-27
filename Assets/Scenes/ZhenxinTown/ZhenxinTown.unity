@@ -19714,26 +19714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd117470e2ca1a40b9f391b3593d99b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkDownSprites:
-  - {fileID: 378536647, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 913427145, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 87652781, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 913427145, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  walkUpSprites:
-  - {fileID: 1812534224, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 203300125, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: -795347228, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 203300125, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  walkLeftSprites:
-  - {fileID: 739133725, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 1681494665, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: -1032396851, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: 1681494665, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  walkRightSprites:
-  - {fileID: -529008470, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: -1786720812, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: -642900423, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
-  - {fileID: -1786720812, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
+  walkDownSprites: []
+  walkUpSprites: []
+  walkLeftSprites: []
+  walkRightSprites: []
   defaultDirection: 3
   runDownSprites: []
   runUpSprites: []
@@ -19753,6 +19737,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   OffsetY: 0.15
+  stepSystem: {fileID: 0}
+  footStepMaterial: {fileID: 0}
+  IsDesert: 0
+  delta: 0.8
+  gap: 0.1
+  systemYOffset: -0.5
 --- !u!114 &981488788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19862,7 +19852,7 @@ SpriteRenderer:
   m_SortingLayerID: -1370308061
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 913427145, guid: 7b275949c24b8444e8d1d8c72166c47d, type: 3}
+  m_Sprite: {fileID: -925566201, guid: 43e77bb7af292ed4f9cc7a9a61dc1679, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

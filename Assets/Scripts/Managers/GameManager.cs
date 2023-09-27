@@ -3,11 +3,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-//public enum GameState 
-//{ 
-//    FreeRoam, Battle, Dialogue, Menu, Bag, Shop, PartyScreen, Cutscene, Pause, Evolution, Computer, 
-//    PokeInfo, Save, Load, PartyMenu, PokemonSwitch, Achievement, PokemonSelection
-//}
 
 public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 {
@@ -162,7 +157,6 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
 
         // 格式化为“小时:分钟”的字符串
         GamePlayTime = string.Format("{0:00}:{1:00}", hours, minutes);
-
         StateMachine.Execute();
 
     }
@@ -210,14 +204,14 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         _gameTimeSpend = (float)state;
     }
 
-    private void OnGUI()
-    {
-        var style = new GUIStyle();
-        style.fontSize = 25;
-        GUILayout.Label("STATE STACK", style);
-        foreach (var state in StateMachine.StateStack)
-        {
-            GUILayout.Label(state.GetType().ToString(), style);
-        }
-    }
+    //private void OnGUI()
+    //{
+    //    var style = new GUIStyle();
+    //    style.fontSize = 25;
+    //    GUILayout.Label("STATE STACK", style);
+    //    foreach (var state in StateMachine.StateStack)
+    //    {
+    //        GUILayout.Label(state.GetType().ToString(), style);
+    //    }
+    //}
 }

@@ -8,7 +8,6 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class SaveLoadUI : SelectionUI<DataSlotUI>
 {
