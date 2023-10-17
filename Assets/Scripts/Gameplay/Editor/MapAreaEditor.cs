@@ -13,6 +13,8 @@ public class MapAreaEditor : Editor
 
         int totalChanceInGrass = serializedObject.FindProperty("totalChance").intValue;
         int totalChanceInWater = serializedObject.FindProperty("totalChanceInWater").intValue;
+        int totalChanceInDesert = serializedObject.FindProperty("totalChanceInDesert").intValue;
+        int totalChanceInCave = serializedObject.FindProperty("totalChanceInCave").intValue;
 
         //var style = new GUIStyle();
         //style.fontStyle = FontStyle.Bold;
@@ -26,6 +28,14 @@ public class MapAreaEditor : Editor
         if (totalChanceInWater != 100 && totalChanceInWater != -1)
         {
             EditorGUILayout.HelpBox($"The total chance percentage in water is {totalChanceInWater}%, not 100%", MessageType.Error);
+        }
+        if (totalChanceInDesert != 100 && totalChanceInDesert != -1)
+        {
+            EditorGUILayout.HelpBox($"The total chance percentage in desert is {totalChanceInDesert}%, not 100%", MessageType.Error);
+        }
+        if (totalChanceInCave != 100 && totalChanceInCave != -1)
+        {
+            EditorGUILayout.HelpBox($"The total chance percentage in desert is {totalChanceInCave}%, not 100%", MessageType.Error);
         }
     }
 }

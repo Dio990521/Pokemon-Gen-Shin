@@ -93,7 +93,8 @@ public enum MoveCategory
 {
     Physical,
     Special,
-    Status
+    Status,
+    Healing
 }
 
 public enum MoveTarget

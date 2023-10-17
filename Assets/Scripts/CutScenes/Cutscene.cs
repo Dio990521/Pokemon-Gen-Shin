@@ -10,6 +10,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     [SerializeField] private List<CutsceneAction> actions;
 
     [SerializeField] private FacingDirection direction = FacingDirection.None;
+    [SerializeField] private CutsceneName cutsceneName;
 
     public bool TriggerRepeatedly => false;
 
@@ -28,6 +29,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
             }
             
         }
+        GameKeyManager.Instance.SetBoolValue(cutsceneName.ToString(), true);
         GameManager.Instance.StateMachine.Pop();
     }
 
@@ -42,12 +44,13 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
-        if (direction == FacingDirection.None || 
-            player.Character.GetCharacterDirection() == direction)
+        if (!GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()))
         {
-            player.Character.IsMoving = false;
-            StartCoroutine(Play());
+            if (direction == FacingDirection.None || player.Character.GetCharacterDirection() == direction)
+            {
+                player.Character.Animator.IsMoving = false;
+                StartCoroutine(Play());
+            }
         }
-        
     }
 }

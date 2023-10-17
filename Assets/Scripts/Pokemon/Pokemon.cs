@@ -49,25 +49,26 @@ public class Pokemon
 
     public Pokemon(PokemonSaveData saveData)
     {
-        pokemonBase = PokemonDB.GetObjectByName(saveData.pokemonName);
-        Hp = saveData.hp;
-        Level = saveData.level;
-        Exp = saveData.exp;
+        pokemonBase = PokemonDB.GetObjectByName(saveData.PokemonName);
+        Hp = saveData.Hp;
+        Level = saveData.Level;
+        Exp = saveData.Exp;
+        _statusBias = saveData.StatusBias;
 
-        if (saveData.statusId != null)
+        if (saveData.StatusId != null)
         {
-            Status = ConditionsDB.Conditions[saveData.statusId.Value];
+            Status = ConditionsDB.Conditions[saveData.StatusId.Value];
         }
         else
         {
             Status = null;
         }
 
-        Moves = saveData.moves.Select(s => new Move(s)).ToList();
+        Moves = saveData.Moves.Select(s => new Move(s)).ToList();
 
         if (pokemonBase.HasPassiveMove)
         {
-            pokemonBase.PassiveMove = PassiveMoveDB.GetObjectByName(saveData.passiveMoveName);
+            pokemonBase.PassiveMove = PassiveMoveDB.GetObjectByName(saveData.PassiveMoveName);
         }
 
         CalculateStats();
@@ -117,17 +118,18 @@ public class Pokemon
     {
         var saveData = new PokemonSaveData()
         {
-            pokemonName = pokemonBase.name,
-            hp = Hp,
-            level = Level,
-            exp = Exp,
-            statusId = Status?.Id,
-            moves = Moves.Select(m => m.GetSaveData()).ToList(),
+            PokemonName = pokemonBase.name,
+            Hp = Hp,
+            Level = Level,
+            Exp = Exp,
+            StatusId = Status?.Id,
+            Moves = Moves.Select(m => m.GetSaveData()).ToList(),
+            StatusBias = _statusBias
         };
 
         if (pokemonBase.PassiveMove != null)
         {
-            saveData.passiveMoveName = pokemonBase.PassiveMove.MoveName;
+            saveData.PassiveMoveName = pokemonBase.PassiveMove.MoveName;
         }
         return saveData;
     }
@@ -135,8 +137,6 @@ public class Pokemon
     // Calculate the pokemon's status by based status
     private void CalculateStats()
     {
-
-
         Stats = new Dictionary<Stat, int>
             {
                 { Stat.¹¥»÷, Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + _statusBias[0] },

@@ -161,6 +161,36 @@ public class RunTurnState : State<BattleSystem>
             {
                 yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
             }
+            else if (move.MoveBase.Category == MoveCategory.Healing)
+            {
+                if (sourceUnit.IsPlayerUnit)
+                {
+                    foreach (var pokemon in _playerParty.Pokemons)
+                    {
+                        pokemon.IncreaseHP(move.MoveBase.Power);
+                    }
+                    yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                }
+                else
+                {
+                    if (_isTrainerBattle)
+                    {
+                        foreach (var pokemon in _trainerParty.Pokemons)
+                        {
+                            pokemon.IncreaseHP(move.MoveBase.Power);
+                        }
+                        yield return _dialogueBox.TypeDialogue($"对方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                    }
+                    else
+                    {
+                        _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power);
+                        yield return _dialogueBox.TypeDialogue($"对方恢复了{move.MoveBase.Power}HP！");
+                    }
+                    
+                }
+                
+                yield return new WaitForSeconds(1f);
+            }
             else
             {
                 DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);

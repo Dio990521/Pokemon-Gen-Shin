@@ -25,7 +25,9 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
     private Quest activeQuest;
     private Healer healer;
     private Merchant merchant;
-    
+
+    [SerializeField] private CutsceneName cutsceneName = CutsceneName.None;
+
 
     private void Awake()
     {
@@ -34,6 +36,14 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
         pokemonGiver = GetComponent<PokemonGiver>();
         healer = GetComponent<Healer>();
         merchant = GetComponent<Merchant>();
+    }
+
+    private void Start()
+    {
+        if (GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public IEnumerator Interact(Transform initiator)

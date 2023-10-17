@@ -14,7 +14,7 @@ public enum BattleAction
     Run 
 }
 
-public enum BattleTrigger { LongGrass, Water, Desert }
+public enum BattleTrigger { LongGrass, Water, Desert, Cave, Land, Arena1, Arena2, Arena3 }
 
 public class BattleSystem : MonoBehaviour
 {

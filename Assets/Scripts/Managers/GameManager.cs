@@ -204,14 +204,14 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
         _gameTimeSpend = (float)state;
     }
 
-    //private void OnGUI()
-    //{
-    //    var style = new GUIStyle();
-    //    style.fontSize = 25;
-    //    GUILayout.Label("STATE STACK", style);
-    //    foreach (var state in StateMachine.StateStack)
-    //    {
-    //        GUILayout.Label(state.GetType().ToString(), style);
-    //    }
-    //}
+    private void OnGUI()
+    {
+        var style = new GUIStyle();
+        style.fontSize = 25;
+        GUILayout.Label("STATE STACK", style);
+        foreach (var state in StateMachine.StateStack)
+        {
+            GUILayout.Label(state.GetType().ToString(), style);
+        }
+    }
 }

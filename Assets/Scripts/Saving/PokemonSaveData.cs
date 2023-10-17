@@ -5,11 +5,12 @@ using UnityEngine;
 [Serializable]
 public class PokemonSaveData
 {
-    public string pokemonName;
-    public int hp;
-    public int level;
-    public int exp;
-    public ConditionID? statusId;
-    public List<MoveSaveData> moves;
-    public string passiveMoveName;
+    public string PokemonName;
+    public int Hp;
+    public int Level;
+    public int Exp;
+    public ConditionID? StatusId;
+    public List<MoveSaveData> Moves;
+    public string PassiveMoveName;
+    public int[] StatusBias;
 }

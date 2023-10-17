@@ -310,6 +310,29 @@ public class ConditionsDB
                     }
                 }
             },
+            {
+                ConditionID.shihua, new Condition()
+                {
+                    Name = "石化",
+                    StartMessage = "石化了！",
+                    OnStart= (Pokemon pokemon) =>
+                    {
+                        pokemon.StatusTime = 1;
+                    },
+                    OnBeforeMove = (Pokemon pokemon) =>
+                    {
+                        if (pokemon.StatusTime <= 0)
+                        {
+                            pokemon.CureStatus();
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}可以动了！");
+                            return true;
+                        }
+                        pokemon.StatusTime--;
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}像一座美丽的雕像！");
+                        return false;
+                    }
+                }
+            },
 
         };
 
@@ -410,5 +433,5 @@ public class ConditionsDB
 
 public enum ConditionID
 {
-    psn, brn, slp, par, frz, confusion, jiejing, zhanfang, zhengfa, ronghua, kuosan, hydro, pyro, dendro, cryo, electro, geo, anemo, none
+    psn, brn, slp, par, frz, confusion, jiejing, zhanfang, zhengfa, ronghua, kuosan, hydro, pyro, dendro, cryo, electro, geo, anemo, none, shihua
 }

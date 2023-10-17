@@ -7,6 +7,8 @@ public class MapArea : MonoBehaviour
 {
     [SerializeField] private List<PokemonEncounterRecord> wildPokemons;
     [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInWater;
+    [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInDesert;
+    [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInCave;
 
 
     [HideInInspector]
@@ -14,6 +16,12 @@ public class MapArea : MonoBehaviour
 
     [HideInInspector]
     [SerializeField] private int totalChanceInWater = 0;
+
+    [HideInInspector]
+    [SerializeField] private int totalChanceInDesert = 0;
+
+    [HideInInspector]
+    [SerializeField] private int totalChanceInCave = 0;
 
     private void OnValidate()
     {
@@ -29,6 +37,8 @@ public class MapArea : MonoBehaviour
     {
         totalChance = -1;
         totalChanceInWater = -1;
+        totalChanceInDesert = -1;
+        totalChanceInCave = -1;
 
         if (wildPokemons.Count > 0)
         {
@@ -53,11 +63,43 @@ public class MapArea : MonoBehaviour
                 totalChanceInWater += record.chancePercentage;
             }
         }
+
+        if (wildPokemonsInDesert.Count > 0)
+        {
+            totalChanceInDesert = 0;
+            foreach (var record in wildPokemonsInDesert)
+            {
+                record.chanceLower = totalChanceInDesert;
+                record.chanceUpper = totalChanceInDesert + record.chancePercentage;
+
+                totalChanceInDesert += record.chancePercentage;
+            }
+        }
+
+        if (wildPokemonsInCave.Count > 0)
+        {
+            totalChanceInCave = 0;
+            foreach (var record in wildPokemonsInCave)
+            {
+                record.chanceLower = totalChanceInCave;
+                record.chanceUpper = totalChanceInCave + record.chancePercentage;
+
+                totalChanceInCave += record.chancePercentage;
+            }
+        }
     }
 
     public Pokemon GetRandomWildPokemon(BattleTrigger trigger)
     {
-        var pokemonList = (trigger == BattleTrigger.LongGrass) ? wildPokemons : wildPokemonsInWater;
+        var pokemonList = wildPokemons;
+        if (trigger == BattleTrigger.Water)
+        {
+            pokemonList = wildPokemonsInWater;
+        }
+        else if (trigger == BattleTrigger.Desert)
+        {
+            pokemonList = wildPokemonsInDesert;
+        }
 
         int randVal = Random.Range(1, 101);
         var pokemonRecord = pokemonList.First(p => randVal >= p.chanceLower && randVal <= p.chanceUpper);

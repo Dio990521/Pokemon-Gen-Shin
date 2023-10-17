@@ -15,7 +15,7 @@ public class Desert : MonoBehaviour, IPlayerTriggerable
         if (NeedBattle && Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;
-            GameManager.Instance.StartBattle(BattleTrigger.Water);
+            GameManager.Instance.StartBattle(BattleTrigger.Desert);
         }
     }
 

@@ -9,6 +9,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private Dialogue dialogue;
     [SerializeField] private Dialogue dialogueAfterBattle;
     [SerializeField] private int winMoney;
+    [SerializeField] private BattleTrigger _battleTrigger;
     [SerializeField] private BGM meetBGM = BGM.TRAINER_EYE_MEET_YOUNG;
     [SerializeField] private BGM startBGM = BGM.BATTLE_TRAINER;
     [SerializeField] private BGM winBGM = BGM.VICTORY_TRAINER;
@@ -36,6 +37,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public BGM WinBGM { get => winBGM; }
     public BGM StartBGM { get => startBGM; set => startBGM = value; }
+    public BattleTrigger BattleTrigger { get => _battleTrigger; set => _battleTrigger = value; }
 
     private void Awake()
     {

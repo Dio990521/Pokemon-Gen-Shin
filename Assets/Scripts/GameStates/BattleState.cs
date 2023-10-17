@@ -58,7 +58,7 @@ public class BattleState : State<GameManager>
         {
             yield return EnterBattleTransition(TransitionType.TrainerBattle);
             PokemonParty trainerParty = Trainer.GetComponent<PokemonParty>();
-            _battleSystem.StartTrainerBattle(playerParty, trainerParty);
+            _battleSystem.StartTrainerBattle(playerParty, trainerParty, Trainer.BattleTrigger);
         }
     }
 
