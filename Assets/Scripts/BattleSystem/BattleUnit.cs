@@ -51,7 +51,8 @@ public class BattleUnit : MonoBehaviour
         {
             unitSprite.rectTransform.sizeDelta = new Vector2(400f, 450f);
         }
-        unitSprite.sprite = isPlayerUnit? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
+        unitSprite.sprite = isPlayerUnit ? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
+        unitSprite.SetNativeSize();
         unitSprite.color = originalColor;
         ResetAnimation();
         hud.SetData(selectedPokemon);

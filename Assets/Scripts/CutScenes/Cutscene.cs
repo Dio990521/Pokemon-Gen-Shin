@@ -11,6 +11,8 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     [SerializeField] private FacingDirection direction = FacingDirection.None;
     [SerializeField] private CutsceneName cutsceneName;
+    [SerializeField] private bool _isAutoPlay;
+    private bool _isPlaying;
 
     public bool TriggerRepeatedly => false;
 
@@ -44,13 +46,34 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
+        if (!_isAutoPlay)
+        {
+            ReadyToPlay(player);
+        }
+    }
+
+    private void ReadyToPlay(PlayerController player)
+    {
         if (!GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()))
         {
             if (direction == FacingDirection.None || player.Character.GetCharacterDirection() == direction)
             {
                 player.Character.Animator.IsMoving = false;
+                _isPlaying = true;
                 StartCoroutine(Play());
             }
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && !_isPlaying)
+        {
+            if (_isAutoPlay)
+            {
+                ReadyToPlay(collision.GetComponent<PlayerController>());
+            }
+        }
+        
     }
 }

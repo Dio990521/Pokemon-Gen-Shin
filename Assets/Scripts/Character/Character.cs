@@ -151,7 +151,8 @@ public class Character : MonoBehaviour
     {
         var diff = targetPos - transform.position;
         var direction = diff.normalized;
-        var collisionLayer = GameLayers.instance.ObjectMask | GameLayers.instance.InteractableLayer | GameLayers.instance.PlayerLayer;
+        var collisionLayer = GameLayers.instance.ObjectMask | GameLayers.instance.InteractableLayer | 
+            GameLayers.instance.PlayerLayer;
         if (!animator.IsSurfing)
         {
             collisionLayer |= GameLayers.instance.WaterLayer;
@@ -201,4 +202,5 @@ public class Character : MonoBehaviour
         }
 
     }
+
 }

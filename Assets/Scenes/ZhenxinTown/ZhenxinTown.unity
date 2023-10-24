@@ -19508,6 +19508,7 @@ MonoBehaviour:
   dialogue:
     lines:
     - "\u50BB\u903C\uFF0C\u6EDA\u56DE\u53BB"
+    beforeCutscene: 0
 --- !u!61 &690922550
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -19755,15 +19756,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8311fbdc44ce04280236af629caf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    lines:
-    - "\u50BB\u903C\uFF0C\u6EDA\u3002"
+  dialogues: []
   questToStart: {fileID: 11400000, guid: 77f6ebb67add54a4f9e3d91f69c90bcd, type: 2}
   questToComplete: {fileID: 0}
   movementPattern:
   - {x: -4, y: 0}
   - {x: 4, y: 0}
   timeBetweenPattern: 1
+  cutsceneName: 0
 --- !u!50 &981488789
 Rigidbody2D:
   serializedVersion: 4
@@ -19903,8 +19903,44 @@ PrefabInstance:
       value: NPC4
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: movementPattern.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[1].beforeCutscene
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[1].lines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.data[0]
+      value: "\u8349\u6CE5\u9A6C"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.data[1]
+      value: "\u8349\u6CE5\u9A6C\uFF01\uFF01\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[1].lines.Array.data[0]
+      value: "\u4E22\u96F7\u8001\u6BCD"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[1].lines.Array.data[1]
+      value: "\u4E22\u96F7\u8001\u6BCD\uFF01\uFF01\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: m_RootOrder
@@ -19916,7 +19952,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 16.5
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -20103,6 +20139,11 @@ Transform:
 --- !u!4 &1115066439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 517347319446352058, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
+  m_PrefabInstance: {fileID: 1115066437}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1115066440 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7354378641627271809, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
   m_PrefabInstance: {fileID: 1115066437}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1155508522
@@ -20366,6 +20407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: []
   direction: 2
+  cutsceneName: 0
+  _isAutoPlay: 0
   references:
     version: 2
     RefIds: []
@@ -22831,6 +22874,99 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &1472433534
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1115066440}
+    m_Modifications:
+    - target: {fileID: 2440885359551516972, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Name
+      value: cutscene1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 18.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Size.x
+      value: 2.01055
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.5052751
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: cutsceneName
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: actions.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957075178651649].movePatterns.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957075178651648].dialogue.lines.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957075178651648].dialogue.lines.Array.data[2]
+      value: "\u4E22\u96F7\u8001\u6BCD"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957075178651648].dialogue.lines.Array.data[3]
+      value: "\u4E22\u96F7\u8001\u6BCD"
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
 --- !u!4 &1489650885 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2371439864185061320, guid: 52c7004956f109a48b79b27c05b6fb60, type: 3}
@@ -23343,6 +23479,7 @@ MonoBehaviour:
   dialogue:
     lines:
     - "\u62FF\u8D70\u50BB\u903C\u3002"
+    beforeCutscene: 0
 --- !u!114 &3192666760288389318
 MonoBehaviour:
   m_ObjectHideFlags: 0

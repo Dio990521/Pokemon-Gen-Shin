@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCController : MonoBehaviour, InteractableObject, ISavable
 {
 
-    [SerializeField] Dialogue dialogue;
+    [SerializeField] List<Dialogue> dialogues;
 
     [Header("Quests")]
     [SerializeField] private QuestBase questToStart;
@@ -95,7 +95,7 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             }
             else if (healer != null)
             {
-                yield return healer.Heal(initiator, dialogue);
+                yield return healer.Heal(initiator, dialogues?[0]);
             }
             else if (merchant != null)
             {
@@ -103,7 +103,15 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             }
             else
             {
-                yield return DialogueManager.Instance.ShowDialogue(dialogue);
+                foreach (var dialogue in dialogues)
+                {
+                    if (GameKeyManager.Instance.GetBoolValue(dialogue.InCutscene.ToString()))
+                    {
+                        continue;
+                    }
+                    yield return DialogueManager.Instance.ShowDialogue(dialogue);
+                    break;
+                }
             }
 
             idleTimer = 0f;

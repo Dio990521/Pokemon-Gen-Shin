@@ -7,6 +7,8 @@ public enum CutsceneName
     None,
     起床与小遥对话,
     下楼与妈妈对话,
-    拯救派蒙
+    即将与派蒙遭遇,
+    拯救派蒙1,
+    拯救派蒙2
 }
 
