@@ -6,12 +6,20 @@ using UnityEngine;
 
 public class Cutscene : MonoBehaviour, IPlayerTriggerable
 {
+    [Header("Enable After")]
+    [SerializeField] private CutsceneName _enableAfterCutscene;
+
     [SerializeReference]
     [SerializeField] private List<CutsceneAction> actions;
 
     [SerializeField] private FacingDirection direction = FacingDirection.None;
-    [SerializeField] private CutsceneName cutsceneName;
+    [SerializeField] private CutsceneName _activateCutsceneName;
     [SerializeField] private bool _isAutoPlay;
+
+    [Header("If Always")]
+    [SerializeField] private bool _isAlwaysExist;
+    [SerializeField] private CutsceneName disableAfterCutscene;
+
     private bool _isPlaying;
 
     public bool TriggerRepeatedly => false;
@@ -31,7 +39,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
             }
             
         }
-        GameKeyManager.Instance.SetBoolValue(cutsceneName.ToString(), true);
+        if (!_isAlwaysExist)
+        {
+            GameKeyManager.Instance.SetBoolValue(_activateCutsceneName.ToString(), true);
+        }
         GameManager.Instance.StateMachine.Pop();
     }
 
@@ -48,13 +59,17 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     {
         if (!_isAutoPlay)
         {
-            ReadyToPlay(player);
+            if (!GameKeyManager.Instance.GetBoolValue(disableAfterCutscene.ToString()))
+            {
+                ReadyToPlay(player);
+            }
         }
     }
 
     private void ReadyToPlay(PlayerController player)
     {
-        if (!GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()))
+        if (_enableAfterCutscene != CutsceneName.None && !GameKeyManager.Instance.GetBoolValue(_enableAfterCutscene.ToString())) return;
+        if (!GameKeyManager.Instance.GetBoolValue(_activateCutsceneName.ToString()))
         {
             if (direction == FacingDirection.None || player.Character.GetCharacterDirection() == direction)
             {
@@ -67,7 +82,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !_isPlaying)
+        if (collision.CompareTag("Player") && !_isPlaying && GameManager.Instance.StateMachine.CurrentState != PauseState.I)
         {
             if (_isAutoPlay)
             {

@@ -28,9 +28,5 @@ public class FreeRoamState : State<GameManager>
         {
             _gameManager.StateMachine.Push(GameMenuState.I);
         }
-        //    {
-        //        menuController.OpenMenu();
-        //        State = GameState.Menu;
-        //    }
     }
 }

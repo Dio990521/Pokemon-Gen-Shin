@@ -71,7 +71,6 @@ public class Character : MonoBehaviour
 
     public IEnumerator Move(Vector2 moveVec, Action OnMoveOver = null, bool checkCollisions=true, bool isRunning=false)
     {
-       
         animator.MoveX = Mathf.Clamp(moveVec.x, -1f, 1f);
         animator.MoveY = Mathf.Clamp(moveVec.y, -1f, 1f);
         Vector3 targetPos = transform.position;

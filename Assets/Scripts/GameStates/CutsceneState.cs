@@ -16,4 +16,5 @@ public class CutsceneState : State<GameManager>
     {
         PlayerController.I.Character.HandleUpdate();
     }
+
 }

@@ -14,6 +14,9 @@ public class BattleState : State<GameManager>
 
     private GameManager _gameManager;
 
+    public Pokemon BossPokemon;
+    public CutsceneName ActivateCutsceneAfterBattle;
+
     private void Awake()
     {
         I = this;
@@ -35,6 +38,11 @@ public class BattleState : State<GameManager>
         _gameManager.WorldTransitionManager.ClearTransition();
         _gameManager.WorldCamera.gameObject.SetActive(true);
         _battleSystem.OnBattleOver -= EndBattle;
+        if (ActivateCutsceneAfterBattle != CutsceneName.None)
+        {
+            GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
+        }
+        ActivateCutsceneAfterBattle = CutsceneName.None;
     }
 
     public override void Execute()
@@ -46,8 +54,12 @@ public class BattleState : State<GameManager>
     {
 
         PokemonParty playerParty = _gameManager.PlayerController.GetComponent<PokemonParty>();
-
-        if (Trainer == null)
+        if (BossPokemon != null)
+        {
+            yield return EnterBattleTransition(TransitionType.WildBattle);
+            _battleSystem.StartBattle(playerParty, BossPokemon, Trigger);
+        }
+        else if (Trainer == null)
         {
             yield return EnterBattleTransition(TransitionType.WildBattle);
             Pokemon wildPokemon = _gameManager.CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon(Trigger);

@@ -30,7 +30,7 @@ public class PokemonSelectionUI : SelectionUI<PokeballUI>
     {
         EndPos = Display.transform.position;
         gameObject.SetActive(true);
-        Message.text = "小田卷博士遇到麻烦了！\n请选择一个宝可梦帮助他吧！";
+        Message.text = "派蒙遇到麻烦了！\n快选择一个宝可梦保护应急食物！";
     }
 
     public PokeballUI GetSelectedPokeballUI()

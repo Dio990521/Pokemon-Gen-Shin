@@ -19,7 +19,10 @@ public class HpBar : MonoBehaviour
     // Set up the Hp information
     public void SetHp(float hpNormalized, int maxHp, int curHp)
     {
-        transform.localScale = new Vector3(hpNormalized, 1f);
+        if (hpNormalized >=0)
+        {
+            transform.localScale = new Vector3(hpNormalized, 1f);
+        }
         _hpScale = hpNormalized;
         _maxHp = maxHp;
         _curHp = curHp;
@@ -81,7 +84,10 @@ public class HpBar : MonoBehaviour
 
     private void UpdateHpBar()
     {
-        transform.localScale = new Vector3(_hpScale, 1f);
+        if (_hpScale >= 0)
+        {
+            transform.localScale = new Vector3(_hpScale, 1f);
+        }
         if (_hpScale >= 0.5f)
         {
             _image.color = new Color32(104, 237, 167, 255);

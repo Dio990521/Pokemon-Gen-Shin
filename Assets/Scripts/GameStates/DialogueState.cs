@@ -11,4 +11,5 @@ public class DialogueState : State<GameManager>
     {
         I = this;
     }
+
 }

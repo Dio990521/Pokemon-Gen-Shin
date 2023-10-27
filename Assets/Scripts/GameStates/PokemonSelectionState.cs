@@ -12,6 +12,8 @@ public class PokemonSelectionState : State<GameManager>
 
     private GameManager _gameManager;
 
+    public Pokemon BossPokemon;
+
     private void Awake()
     {
         I = this;
@@ -37,11 +39,14 @@ public class PokemonSelectionState : State<GameManager>
         _pokemonSelectionUI.OnBack -= OnBack;
         _pokemonSelectionUI.Display.SetActive(false);
         _pokemonSelectionUI.gameObject.SetActive(false);
+        GameManager.Instance.StartBattle(BattleTrigger.LongGrass, BossPokemon, CutsceneName.解救派蒙);
     }
-    
+
     private void OnPokemonSelected(int selection)
     {
-        _pokemonSelectionUI.Display.transform.GetChild(0).GetComponent<Image>().sprite = _pokemonSelectionUI.SelectedPokemon.PokemonBase.FrontSprite;
+        var portrait = _pokemonSelectionUI.Display.transform.GetChild(0).GetComponent<Image>();
+        portrait.sprite = _pokemonSelectionUI.SelectedPokemon.PokemonBase.FrontSprite;
+        portrait.preserveAspect = true;
         _pokemonSelectionUI.Display.SetActive(true);
         StartDisplayAnim();
         _pokemonSelectionUI.Message.text = $"确定选择{_pokemonSelectionUI.SelectedPokemon.PokemonBase.PokemonName}吗？";
@@ -85,7 +90,7 @@ public class PokemonSelectionState : State<GameManager>
         else
         {
             _pokemonSelectionUI.Display.SetActive(false);
-            _pokemonSelectionUI.Message.text = "小田卷博士遇到麻烦了！\n请选择一个宝可梦帮助他吧！";
+            _pokemonSelectionUI.Message.text = "派蒙遇到麻烦了！\n快选择一个宝可梦保护应急食物！";
         }
     }
 }

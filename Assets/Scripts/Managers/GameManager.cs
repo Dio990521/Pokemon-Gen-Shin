@@ -2,9 +2,10 @@ using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using UnityEngine;
+using Game.Tool.Singleton;
 
 
-public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
+public class GameManager : Singleton<GameManager>, ISavable
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private BattleSystem battleSystem;
@@ -103,6 +104,19 @@ public class GameManager : Game.Tool.Singleton.Singleton<GameManager>, ISavable
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
+        StateMachine.Push(BattleState.I);
+    }
+
+    public void StartBattle(BattleTrigger trigger, Pokemon selectedPokemon, CutsceneName activateCutsceneAfterBattle=CutsceneName.None)
+    {
+        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        BattleState.I.Trigger = trigger;
+        BattleState.I.BossPokemon = selectedPokemon;
+        BattleState.I.BossPokemon.Init();
+        if (activateCutsceneAfterBattle != CutsceneName.None)
+        {
+            BattleState.I.ActivateCutsceneAfterBattle = activateCutsceneAfterBattle;
+        }
         StateMachine.Push(BattleState.I);
     }
 
