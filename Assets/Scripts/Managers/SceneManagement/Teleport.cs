@@ -64,13 +64,13 @@ public class Teleport : MonoBehaviour, InteractableObject
 
     }
 
-    private IEnumerator StartTeleport(Vector2 telePos, PlayerController player)
+    public static IEnumerator StartTeleport(Vector2 telePos, PlayerController player, FacingDirection facingDir=FacingDirection.Down)
     {
         GameManager.Instance.PauseGame(true);
         AudioManager.Instance.PlaySE(SFX.TELEPORT);
         yield return Fader.FadeIn(1f);
         player.Character.SetPositionAndSnapToTile(telePos);
-        player.Character.Animator.SetFacingDirection(FacingDirection.Down);
+        player.Character.Animator.SetFacingDirection(facingDir);
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
         GameManager.Instance.PauseGame(false);

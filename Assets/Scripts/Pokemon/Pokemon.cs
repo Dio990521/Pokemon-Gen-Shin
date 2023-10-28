@@ -54,6 +54,7 @@ public class Pokemon
         Level = saveData.Level;
         Exp = saveData.Exp;
         _statusBias = saveData.StatusBias;
+        _pokeballSprite = saveData.PokeBallSprite;
 
         if (saveData.StatusId != null)
         {
@@ -124,7 +125,8 @@ public class Pokemon
             Exp = Exp,
             StatusId = Status?.Id,
             Moves = Moves.Select(m => m.GetSaveData()).ToList(),
-            StatusBias = _statusBias
+            StatusBias = _statusBias,
+            PokeBallSprite = _pokeballSprite
         };
 
         if (pokemonBase.PassiveMove != null)

@@ -476,7 +476,7 @@ public class RunTurnState : State<BattleSystem>
     private IEnumerator TryToEspace()
     {
 
-        if (_isTrainerBattle)
+        if (_isTrainerBattle || BattleState.I.BossPokemon != null)
         {
             yield return _dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
             yield break;

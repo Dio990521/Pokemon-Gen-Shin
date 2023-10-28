@@ -58,6 +58,14 @@ public class CutsceneEditor : Editor
             }
         }
 
+        using (var scope = new GUILayout.HorizontalScope())
+        {
+            if (GUILayout.Button("Teleport Player"))
+            {
+                cutscene.AddAction(new TeleportPlayerAction());
+            }
+        }
+
         base.OnInspectorGUI();
     }
 }

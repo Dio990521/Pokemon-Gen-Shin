@@ -19052,7 +19052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2655940636021721994, guid: 52c7004956f109a48b79b27c05b6fb60, type: 3}
       propertyPath: dialogue.lines.Array.data[0]
-      value: "\u5C0F\u7530\u5377\u535A\u58EB\u7814\u7A76\u6240\u3002"
+      value: "\u672A\u767D\u95472-2\\n\u5C0F\u7530\u5377\u7814\u7A76\u6240"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -19238,7 +19238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2655940636021721994, guid: 52c7004956f109a48b79b27c05b6fb60, type: 3}
       propertyPath: dialogue.lines.Array.data[0]
-      value: "\u5C0F\u60A0\u5BB6\u3002"
+      value: "\u672A\u767D\u95471-2\\n\u5C0F\u60A0\u5BB6"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23791,7 +23791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2655940636021721994, guid: 52c7004956f109a48b79b27c05b6fb60, type: 3}
       propertyPath: dialogue.lines.Array.data[0]
-      value: "\u5C0F\u9065\u5BB6\u3002"
+      value: "\u672A\u767D\u95471-1\\n\u5C0F\u9065\u5BB6"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

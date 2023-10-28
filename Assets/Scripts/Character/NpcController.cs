@@ -26,7 +26,9 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
     private Healer healer;
     private Merchant merchant;
 
+    [SerializeField] private CutsceneName _enableCutscene = CutsceneName.None;
     [SerializeField] private CutsceneName _disableCutscene = CutsceneName.None;
+    
 
 
     private void Awake()
@@ -40,7 +42,11 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
     private void Start()
     {
-        if (GameKeyManager.Instance.GetBoolValue(_disableCutscene.ToString()))
+        if (_enableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_enableCutscene.ToString()))
+        {
+            gameObject.SetActive(true);
+        }
+        if (_disableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableCutscene.ToString()))
         {
             gameObject.SetActive(false);
         }

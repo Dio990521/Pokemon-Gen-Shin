@@ -8,8 +8,10 @@ using UnityEngine.UI;
 public class DialogueManager : Singleton<DialogueManager>
 {
     [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private GameObject nameBox;
     [SerializeField] private ChoiceBox choiceBox;
     [SerializeField] private Text dialogueText;
+    [SerializeField] private Text nameText;
     [SerializeField] private int lettersPerSecond;
 
     public event Action OnShowDialogue;
@@ -17,11 +19,16 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public bool IsShowing { get; private set; }
 
-    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true)
+    public IEnumerator ShowDialogueText(string text, bool waitForInput=true, bool autoClose=true, string name="")
     {
         OnShowDialogue?.Invoke();
         IsShowing = true;
         dialogueBox.SetActive(true);
+        if (name.Length > 0)
+        {
+            nameText.text = name;
+            nameBox.SetActive(true);
+        }
 
         yield return TypeDialogue(text);
         if (waitForInput)
@@ -42,16 +49,22 @@ public class DialogueManager : Singleton<DialogueManager>
     public void CloseDialog()
     {
         dialogueBox.SetActive(false);
+        nameBox.SetActive(false);
         IsShowing = false;
     }
 
-    public IEnumerator ShowDialogue(Dialogue dialogue, List<string> choices=null, Action<int> onChoiceSelected=null)
+    public IEnumerator ShowDialogue(Dialogue dialogue)
     {
         yield return new WaitForEndOfFrame();
         OnShowDialogue?.Invoke();
         IsShowing = true;
 
         dialogueBox.SetActive(true);
+        if (dialogue.SpeakerName.Length > 0)
+        {
+            nameText.text = dialogue.SpeakerName;
+            nameBox.SetActive(true);
+        }
 
         foreach (var line in dialogue.Lines)
         {
@@ -65,6 +78,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         dialogueBox.SetActive(false);
+        nameBox.SetActive(false);
         IsShowing = false;
         OnDialogueFinished?.Invoke();
 

@@ -104,6 +104,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
+        BattleState.I.BossPokemon = null;
         StateMachine.Push(BattleState.I);
     }
 
@@ -112,6 +113,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
         BattleState.I.BossPokemon = selectedPokemon;
+        selectedPokemon.PokeballSprite = BattleState.I.CommonPokeball;
         BattleState.I.BossPokemon.Init();
         if (activateCutsceneAfterBattle != CutsceneName.None)
         {

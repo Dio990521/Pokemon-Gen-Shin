@@ -13,4 +13,5 @@ public class PokemonSaveData
     public List<MoveSaveData> Moves;
     public string PassiveMoveName;
     public int[] StatusBias;
+    public Sprite PokeBallSprite;
 }
