@@ -27,7 +27,6 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private bool _isEvoState;
 
     [Header("Sprites")]
-    public Sprite pokeball;
     [SerializeField] private Sprite frontSprite;
     [SerializeField] private Sprite backSprite;
     [SerializeField] private bool isLargePortrait;

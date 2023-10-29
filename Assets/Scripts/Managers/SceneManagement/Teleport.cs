@@ -64,8 +64,12 @@ public class Teleport : MonoBehaviour, InteractableObject
 
     }
 
-    public static IEnumerator StartTeleport(Vector2 telePos, PlayerController player, FacingDirection facingDir=FacingDirection.Down)
+    public static IEnumerator StartTeleport(Vector2 telePos, PlayerController player, FacingDirection facingDir=FacingDirection.Down, GameObject context=null)
     {
+        if (context != null)
+        {
+            DontDestroyOnLoad(context);
+        }
         GameManager.Instance.PauseGame(true);
         AudioManager.Instance.PlaySE(SFX.TELEPORT);
         yield return Fader.FadeIn(1f);
@@ -74,6 +78,10 @@ public class Teleport : MonoBehaviour, InteractableObject
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
         GameManager.Instance.PauseGame(false);
+        if (context != null)
+        {
+            Destroy(context, 1f);
+        }
     }
 
 }

@@ -4587,7 +4587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1270262112
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7714,6 +7714,42 @@ PrefabInstance:
       propertyPath: _battleTransitionManager
       value: 
       objectReference: {fileID: 610436584}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 346132051, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 1543410810, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: -200272479, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 1074228615, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[5]
+      value: 
+      objectReference: {fileID: -1114150182, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[6]
+      value: 
+      objectReference: {fileID: -433574098, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[7]
+      value: 
+      objectReference: {fileID: -1683560377, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     m_RemovedComponents:
     - {fileID: 6130185041891423814, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
     m_RemovedGameObjects: []
@@ -7896,10 +7932,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _battleSystem: {fileID: 161202457}
   GenshinPokeball: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
-  CommonPokeball: {fileID: 346132051, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
   BossPokemon:
     pokemonBase: {fileID: 0}
     level: 0
+    PokeballSpriteType: 0
   ActivateCutsceneAfterBattle: 0
 --- !u!114 &2173388929618975091
 MonoBehaviour:
@@ -8114,6 +8150,7 @@ MonoBehaviour:
   BossPokemon:
     pokemonBase: {fileID: 11400000, guid: 59f0fcfb9c730a644a6b2a101750fc87, type: 2}
     level: 5
+    PokeballSpriteType: 0
 --- !u!114 &2173388929618975140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11277,7 +11314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520594914851072, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671520595013629985, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Name
@@ -11690,7 +11727,7 @@ PrefabInstance:
     - target: {fileID: 5343113099873934516, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -603670574, guid: bf0d0465dcf061f45a093b8da7d29ab7, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5345002011986044419, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

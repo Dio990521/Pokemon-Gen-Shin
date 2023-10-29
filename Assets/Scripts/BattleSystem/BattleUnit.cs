@@ -136,7 +136,7 @@ public class BattleUnit : MonoBehaviour
         unitSprite.transform.localPosition = new Vector3(-228f, -215f, 0f);
         var pokeballObj = Instantiate(battleSystem.PokeballSprite, playerPokeballPos, Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
-        pokeball.sprite = pokemon.PokeballSprite;
+        pokeball.sprite = GameManager.Instance.GetPokeSprite(pokemon.PokeballSpriteType);
         var sequence = DOTween.Sequence();
         sequence.Append(pokeball.transform.DOJump(unitSprite.transform.position, 4f, 1, 1.5f));
         sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));
@@ -155,7 +155,7 @@ public class BattleUnit : MonoBehaviour
         playerPokeballPos = unitSprite.transform.position;
         var pokeballObj = Instantiate(battleSystem.PokeballSprite, unitSprite.transform.position, Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
-        pokeball.sprite = playerFirstPokemon.PokeballSprite;
+        pokeball.sprite = GameManager.Instance.GetPokeSprite(playerFirstPokemon.PokeballSpriteType);
         var sequence = DOTween.Sequence();
         sequence.Append(pokeball.transform.DOJump(defaultPos, 4f, 1, 1.5f));
         sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));

@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Game.Tool.Singleton;
-
+using System.Collections.Generic;
 
 public class GameManager : Singleton<GameManager>, ISavable
 {
@@ -23,6 +23,8 @@ public class GameManager : Singleton<GameManager>, ISavable
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
     [SerializeField] private Storage _storage;
+
+    public List<Sprite> PokeballSprites;
 
     private TrainerController trainer;
 
@@ -113,7 +115,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
         BattleState.I.BossPokemon = selectedPokemon;
-        selectedPokemon.PokeballSprite = BattleState.I.CommonPokeball;
+        selectedPokemon.PokeballSpriteType = PokeballType.Guaishou;
         BattleState.I.BossPokemon.Init();
         if (activateCutsceneAfterBattle != CutsceneName.None)
         {
@@ -229,5 +231,10 @@ public class GameManager : Singleton<GameManager>, ISavable
         {
             GUILayout.Label(state.GetType().ToString(), style);
         }
+    }
+
+    public Sprite GetPokeSprite(PokeballType type)
+    {
+        return PokeballSprites[(int)type];
     }
 }

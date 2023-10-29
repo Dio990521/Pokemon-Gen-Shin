@@ -276,7 +276,7 @@ public class BattleSystem : MonoBehaviour
             AudioManager.Instance.PlayMusic(BGM.CATCH_POKEMON);
             yield return _dialogueBox.TypeDialogue($"抓到了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
-            _enemyUnit.pokemon.PokeballSprite = pokeballItem.InBattleIcon;
+            _enemyUnit.pokemon.PokeballSpriteType = pokeballItem.BallType;
             _enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
             PlayerParty.AddPokemon(_enemyUnit.pokemon);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");

@@ -24,11 +24,14 @@ public class PokeballItem : ItemBase
 
 public enum PokeballType
 {
-    None,
+    Guaishou,
+    Gaoji,
+    Chaoji,
     Random,
     Iron,
     FiveFive,
     Beast,
     Master,
-    Genshin
+    Genshin,
+    None,
 }

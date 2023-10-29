@@ -9,7 +9,6 @@ public class Pokemon
 {
     [SerializeField] private PokemonBase pokemonBase;
     [SerializeField] private int level;
-    private Sprite _pokeballSprite;
     private string _catchPlace;
     private int[] _statusBias;
 
@@ -41,7 +40,7 @@ public class Pokemon
     public Condition ElementStatus { get; private set; }
     public int ElementStatusTime { get; set; }
     public Queue<string> StatusChanges { get; private set; }
-    public Sprite PokeballSprite { get => _pokeballSprite; set => _pokeballSprite = value; }
+    public PokeballType PokeballSpriteType;
     public string CatchPlace { get => _catchPlace; set => _catchPlace = value; }
 
     public event System.Action OnStatusChanged;
@@ -54,7 +53,7 @@ public class Pokemon
         Level = saveData.Level;
         Exp = saveData.Exp;
         _statusBias = saveData.StatusBias;
-        _pokeballSprite = saveData.PokeBallSprite;
+        PokeballSpriteType = saveData.PokeBall;
 
         if (saveData.StatusId != null)
         {
@@ -87,7 +86,6 @@ public class Pokemon
             _statusBias[i] = Random.Range(0, 8) + Random.Range(0, 4);
         }
         _statusBias[5] = Random.Range(10, 16) + Random.Range(0, 6);
-        _pokeballSprite = pokemonBase.pokeball;
         Moves = new List<Move>();
         foreach (var move in pokemonBase.LearnableMoves)
         {
@@ -126,7 +124,7 @@ public class Pokemon
             StatusId = Status?.Id,
             Moves = Moves.Select(m => m.GetSaveData()).ToList(),
             StatusBias = _statusBias,
-            PokeBallSprite = _pokeballSprite
+            PokeBall = PokeballSpriteType
         };
 
         if (pokemonBase.PassiveMove != null)

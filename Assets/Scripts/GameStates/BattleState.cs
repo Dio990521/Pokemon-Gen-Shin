@@ -15,7 +15,6 @@ public class BattleState : State<GameManager>
     private GameManager _gameManager;
 
     public Sprite GenshinPokeball;
-    public Sprite CommonPokeball;
 
     public Pokemon BossPokemon;
     public CutsceneName ActivateCutsceneAfterBattle;
