@@ -63,6 +63,12 @@ public enum BGM
     SAND_TOWER,
     CAVE,
     CATCH_POKEMON,
+    INTRODUCTION,
+    OPENNING_MOVIE,
+    OPENNING,
+    TITLE,
+    XIAOYAO,
+    HELP_ME,
     NONE
 }
 
@@ -92,13 +98,13 @@ public class AudioManager : Singleton<AudioManager>
         StartCoroutine(PlayerMusicAsync(id, loop, fade));
     }
 
-    public void PlayMusic(BGM id, float volume)
+    public void PlayMusic(BGM id, float fadeTime, bool loop = true, bool fade = true)
     {
-        musicPlayer.Stop();
-        AudioClip clip = musicClips[(int)id];
-        musicPlayer.clip = clip;
-        musicPlayer.volume = volume;
-        musicPlayer.Play();
+        if (musicPlayer.clip == musicClips[(int)id])
+        {
+            return;
+        }
+        StartCoroutine(PlayerMusicAsync(id, loop, fade, fadeTime));
     }
 
     public IEnumerator StopMusic(bool fade=false)
@@ -161,6 +167,23 @@ public class AudioManager : Singleton<AudioManager>
         if (fade)
         {
             yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
+        }
+    }
+
+    private IEnumerator PlayerMusicAsync(BGM id, bool loop, bool fade, float fadeTime)
+    {
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(0, fadeTime).WaitForCompletion();
+        }
+
+        musicPlayer.clip = musicClips[(int)id]; ;
+        musicPlayer.loop = loop;
+        musicPlayer.Play();
+
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(originalMusicVol, fadeTime).WaitForCompletion();
         }
     }
 

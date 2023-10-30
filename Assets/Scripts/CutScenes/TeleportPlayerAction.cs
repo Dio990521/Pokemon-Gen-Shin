@@ -10,6 +10,6 @@ public class TeleportPlayerAction : CutsceneAction
 
     public override IEnumerator Play()
     {
-        yield return Teleport.StartTeleport(position, GameManager.Instance.PlayerController, facingDir, _contextCutscene);
+        yield return Teleport.StartTeleport(position, GameManager.Instance.PlayerController, facingDir, _contextCutscene, false);
     }
 }

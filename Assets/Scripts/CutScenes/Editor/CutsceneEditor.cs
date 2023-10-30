@@ -64,6 +64,10 @@ public class CutsceneEditor : Editor
             {
                 cutscene.AddAction(new TeleportPlayerAction());
             }
+            else if (GUILayout.Button("Switch BGM"))
+            {
+                cutscene.AddAction(new SwitchBGMAction());
+            }
         }
 
         base.OnInspectorGUI();

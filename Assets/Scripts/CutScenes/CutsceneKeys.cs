@@ -12,6 +12,7 @@ public enum CutsceneName
     解救派蒙,
     去见博士,
     与博士交谈,
+    启程,
     第一次来提瓦特
 }
 

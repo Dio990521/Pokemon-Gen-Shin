@@ -5079,6 +5079,42 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.size
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[22]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f586feb75d6e994fb295264d0afe9cd, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[23]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3af955ee5996c71418aca8a510cb87de, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[24]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a495dd9e64d87e4c9a49cb6e8c03de6, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[25]
+      value: 
+      objectReference: {fileID: 8300000, guid: e427a48a45650e5469ff2c1e2280409a, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[26]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d6d5d15bbbf1bf438f08f3269d18af6, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[27]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4e189d2647fcd294592a556b68285d9c, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[28]
+      value: 
+      objectReference: {fileID: 8300000, guid: eb427b07252a8b145b80325ea702a4bb, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: musicClips.Array.data[29]
+      value: 
+      objectReference: {fileID: 8300000, guid: eb427b07252a8b145b80325ea702a4bb, type: 3}
     - target: {fileID: 6592376188683337259, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: m_RootOrder
       value: 1
