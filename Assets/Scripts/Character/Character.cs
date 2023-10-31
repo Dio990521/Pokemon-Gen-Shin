@@ -7,7 +7,7 @@ using UnityEngine.Windows;
 
 public class Character : MonoBehaviour
 {
-    public float moveSpeed;
+    public float MoveSpeed;
     private CharacterAnimator animator;
 
     public bool IsMoving {  get; set; }
@@ -100,7 +100,7 @@ public class Character : MonoBehaviour
         animator.IsRunning = isRunning;
         while ((targetPos - transform.position).sqrMagnitude > Mathf.Epsilon)
         {
-            var curSpeed = isRunning ? moveSpeed * 1.5f : moveSpeed;
+            var curSpeed = isRunning ? MoveSpeed * 1.5f : MoveSpeed;
             transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * curSpeed);
             yield return null;
         }

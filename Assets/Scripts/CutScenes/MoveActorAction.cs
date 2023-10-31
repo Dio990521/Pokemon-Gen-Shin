@@ -7,10 +7,15 @@ public class MoveActorAction : CutsceneAction
 {
     [SerializeField] private CutsceneActor actor;
     [SerializeField] private List<Vector2> movePatterns;
+    [SerializeField] private float _moveSpeed;
 
     public override IEnumerator Play()
     {
         var character = actor.GetCharacter();
+        if (_moveSpeed != 0)
+        {
+            character.MoveSpeed = _moveSpeed;
+        }
         foreach (var movePattern in movePatterns)
         {
             yield return character.Move(movePattern, checkCollisions: false);

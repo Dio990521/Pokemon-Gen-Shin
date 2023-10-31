@@ -22,7 +22,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     private bool _isPlaying;
 
-    public bool TriggerRepeatedly => false;
+    public bool TriggerRepeatedly => _isAlwaysExist;
 
     public IEnumerator Play()
     {

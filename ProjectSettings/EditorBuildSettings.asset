@@ -9,19 +9,19 @@ EditorBuildSettings:
     path: Assets/Scenes/GamePlay.unity
     guid: 5e7dc8713e1c08d4eb507a8a16b41b69
   - enabled: 1
-    path: Assets/Scenes/ZhenxinTown/ZhenxinTown.unity
+    path: Assets/Scenes/WeibaiTown/ZhenxinTown.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/ZhenxinTown/ZhenxinTownRoom1.unity
+    path: Assets/Scenes/WeibaiTown/ZhenxinTownRoom1.unity
     guid: 6ff9e8d5e0b867c4fa31ee00469ac3bf
   - enabled: 1
-    path: Assets/Scenes/ZhenxinTown/ZhenxinTownRoom2.unity
+    path: Assets/Scenes/WeibaiTown/ZhenxinTownRoom2.unity
     guid: 1eeb01a20b79e6b46b8683dc83e8cdca
   - enabled: 1
-    path: Assets/Scenes/ZhenxinTown/ZhenxinTownRoom3.unity
+    path: Assets/Scenes/WeibaiTown/ZhenxinTownRoom3.unity
     guid: a25543ceed53caf439e9b192f16cca4a
   - enabled: 1
-    path: Assets/Scenes/ZhenxinTown/DCZ.unity
+    path: Assets/Scenes/WeibaiTown/DCZ.unity
     guid: ad847fa48a3b0b647bca73e722084959
   - enabled: 1
     path: Assets/Scenes/XumengForest/XumengForestE.unity

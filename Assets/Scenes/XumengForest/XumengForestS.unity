@@ -7378,6 +7378,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5421581
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.04578495
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -7682,6 +7690,14 @@ PrefabInstance:
     - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_Size.x
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5029144
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_IsTrigger
@@ -8223,7 +8239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957446524502020]._fadeDuration
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400064].actor.isPlayer

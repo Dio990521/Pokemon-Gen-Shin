@@ -314,6 +314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: npc
       objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679989, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
       propertyPath: questToComplete
       value: 
@@ -407,7 +411,9 @@ MonoBehaviour:
   pokemonToGive:
     pokemonBase: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
     level: 10
+    PokeballSpriteType: 0
   dialogue:
+    speakerName: 
     lines:
     - "\u7237\u8D4F\u4F60\u7684\uFF0C\u62FF\u7740\uFF01\u50BB\u903C\uFF01"
     beforeCutscene: 0
@@ -485,7 +491,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3345613118765190688, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -502,6 +508,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8001432287555632657, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 438643443}
+    - targetCorrespondingSourceObject: {fileID: 8001432287555632657, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1844939649}
     - targetCorrespondingSourceObject: {fileID: 7354378641627271809, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1940792311}
@@ -549,6 +558,10 @@ PrefabInstance:
     - target: {fileID: 3192666759394679989, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
       propertyPath: m_Name
       value: npc (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679989, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 1a920dd9728c4d04db6d33be2cf3fd9b, type: 3}
       propertyPath: questToComplete
@@ -1585,8 +1598,24 @@ PrefabInstance:
       value: MOM
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
+      propertyPath: dialogues.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
       propertyPath: dialogue.lines.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
+      propertyPath: dialogues.Array.data[0].speakerName
+      value: "\u5C0F\u9065\u7684\u5988\u5988"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.data[0]
+      value: "\u8981\u6CE8\u610F\u5B89\u5168\u5594\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}
       propertyPath: m_RootOrder
@@ -1675,6 +1704,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 2723e786a06650447a0bbe187fed372e, type: 2}
   count: 1
   dialogue:
+    speakerName: 
     lines: []
     beforeCutscene: 0
 --- !u!114 &898722665 stripped
@@ -14142,7 +14172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516972, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_RootOrder
@@ -14313,8 +14343,24 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497479].MoveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497481].MoveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497484].MoveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400070].direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957355309400071].MoveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957310392598533].actionName
@@ -14341,12 +14387,20 @@ PrefabInstance:
       value: MoveActorAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497479]._moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497479].actionName
       value: MoveActorAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497480].actionName
       value: DialogueAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497481]._moveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497481].actionName
@@ -14361,12 +14415,20 @@ PrefabInstance:
       value: DialogueAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497484]._moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497484].actionName
       value: MoveActorAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400070].actionName
       value: TurnActorAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957355309400071]._moveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400071].actionName
@@ -14503,6 +14565,14 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400071].waitForCompletion
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497480].dialogue.speakerName
+      value: "\u5C0F\u9065\u7684\u5988\u5988"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497483].dialogue.speakerName
+      value: "\u5C0F\u9065\u7684\u5988\u5988"
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957075178651649].movePatterns.Array.size
@@ -14722,6 +14792,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8260317732440157592, guid: 6d4d5c466cece1c47bcde115fb2d4df7, type: 3}
   m_PrefabInstance: {fileID: 8260317732237014329}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1844939648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 515726744}
+    m_Modifications:
+    - target: {fileID: 3253418974732960484, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_Name
+      value: Discription
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101097481843566449, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: dialogue.lines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101097481843566449, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: dialogue.lines.Array.data[0]
+      value: "\uFF08\u7ADF\u7136\u662FRTX4090...\uFF09"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -19.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+--- !u!4 &1844939649 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7750219609989986237, guid: cd3abd1976b4736428f4c7e52f0a6811, type: 3}
+  m_PrefabInstance: {fileID: 1844939648}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1940792311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
@@ -14861,7 +15005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516972, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_RootOrder
@@ -15016,6 +15160,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 374151791}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497475].MoveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497477].MoveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957310392598528].actionName
       value: EnableObjectAction
       objectReference: {fileID: 0}
@@ -15036,12 +15188,20 @@ PrefabInstance:
       value: EnableObjectAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497475]._moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497475].actionName
       value: MoveActorAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497476].actionName
       value: DialogueAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497477]._moveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497477].actionName
@@ -15114,6 +15274,10 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957333579497478].waitForCompletion
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957333579497476].dialogue.speakerName
+      value: "\uFF1F\uFF1F\uFF1F"
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957310392598530].movePatterns.Array.size

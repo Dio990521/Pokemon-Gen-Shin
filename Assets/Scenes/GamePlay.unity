@@ -7010,7 +7010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2655940636021721994, guid: 52c7004956f109a48b79b27c05b6fb60, type: 3}
       propertyPath: dialogue.lines.Array.data[0]
-      value: "\u672A\u767D\u95472-1\\n\u8463\u57CE\u4E3B\u5BB6"
+      value: "\u672A\u767D\u95472-1 \u3010\u8463\u57CE\u4E3B\u5BB6\u3011"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13139,6 +13139,10 @@ PrefabInstance:
     - target: {fileID: 7472347173736866037, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: MoveSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7699751219924840636, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
