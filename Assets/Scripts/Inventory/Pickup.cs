@@ -30,6 +30,7 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     {
         if (!Used)
         {
+            GameManager.Instance.PauseGame(true);
             Used = true;
             yield return PlayChestAnimation();
             if (isStep)
@@ -50,9 +51,10 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
                     GameEventManager.Instance.CallEvent("DCZ");
                 }
             }
-            
+            GameManager.Instance.PauseGame(false);
+
         }
-        
+
     }
 
     private IEnumerator PlayChestAnimation()

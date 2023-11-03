@@ -84,7 +84,7 @@ public class PokemonSelectionState : State<GameManager>
         if (selectedChoice == 0)
         {
             _pokemonSelectionUI.SelectedPokemon.Init();
-            PokemonParty.GetPlayerParty().AddPokemon(_pokemonSelectionUI.SelectedPokemon);
+            PokemonParty.GetPlayerParty().AddPokemonToParty(_pokemonSelectionUI.SelectedPokemon);
             _gameManager.StateMachine.Pop();
         }
         else

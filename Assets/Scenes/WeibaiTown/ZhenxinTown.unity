@@ -20324,7 +20324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: dialogues.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: movementPattern.Array.size
@@ -20339,12 +20339,20 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[2].beforeCutscene
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: dialogues.Array.data[1].lines.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[2].lines.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.data[0]
@@ -20360,6 +20368,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
       propertyPath: dialogues.Array.data[1].lines.Array.data[1]
+      value: "\u53D1\u751F\u751A\u9B54\u4E8B\u4E86\uFF1F"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[2].lines.Array.data[0]
+      value: "\u4F4F\u5728\u8FD9\u91CC\u9488\u4E0D\u6233\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}
+      propertyPath: dialogues.Array.data[2].lines.Array.data[1]
       value: "\u53D1\u751F\u751A\u9B54\u4E8B\u4E86\uFF1F"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 5af21ab2798e31c4a85754380d6612c0, type: 3}

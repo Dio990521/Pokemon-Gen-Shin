@@ -77,7 +77,7 @@ public class Storage : MonoBehaviour, ISavable
         int selectedCategory = (int)pokemon.PokemonBase.Type1;
         var currentSlots = GetSlotsByCategory(selectedCategory);
         currentSlots.Remove(pokemon);
-        _party.AddPokemon(pokemon);
+        _party.AddPokemonToParty(pokemon);
         OnPartyUpdate?.Invoke();
         OnStorageUpdate?.Invoke();
     }

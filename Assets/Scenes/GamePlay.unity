@@ -2628,31 +2628,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wildPokemons:
   - pokemon: {fileID: 11400000, guid: 69e13986b3815fb428563055afc89499, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 10, y: 15}
     chancePercentage: 8
   - pokemon: {fileID: 11400000, guid: 13c3bb1393b98584f89f8f49d0b3da0c, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 10, y: 15}
     chancePercentage: 8
   - pokemon: {fileID: 11400000, guid: 7c4ee8ea46b310440b3ce04d4cf557a3, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 10, y: 15}
     chancePercentage: 4
   - pokemon: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 10, y: 15}
     chancePercentage: 4
   - pokemon: {fileID: 11400000, guid: 59f0fcfb9c730a644a6b2a101750fc87, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 16
   - pokemon: {fileID: 11400000, guid: 30182ceb38f076c4f804249fff45cced, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 4d3e2fb3e9e54d2408c6b58dd51c2888, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 0d0ab13a7f7a343458cdd138f9d6cc61, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 5ffe5814f0434ff4292dd6d3a7bc9150, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
@@ -3176,31 +3176,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wildPokemons:
   - pokemon: {fileID: 11400000, guid: b2dab5b39dda56c40af3223d6fc2f117, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 8
+    levelRange: {x: 10, y: 15}
+    chancePercentage: 10
   - pokemon: {fileID: 11400000, guid: 47e37cdc937860547a5e1c687e93042c, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 8
-  - pokemon: {fileID: 11400000, guid: 146156e621cea8d43b57737677e7caff, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 4
+    levelRange: {x: 10, y: 15}
+    chancePercentage: 10
   - pokemon: {fileID: 11400000, guid: 383bfcd7cafd9484abde17001f2616d3, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 4
+    levelRange: {x: 10, y: 15}
+    chancePercentage: 5
   - pokemon: {fileID: 11400000, guid: 59f0fcfb9c730a644a6b2a101750fc87, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 16
+    levelRange: {x: 5, y: 10}
+    chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 30182ceb38f076c4f804249fff45cced, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 4d3e2fb3e9e54d2408c6b58dd51c2888, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 0d0ab13a7f7a343458cdd138f9d6cc61, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   - pokemon: {fileID: 11400000, guid: 5ffe5814f0434ff4292dd6d3a7bc9150, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 15
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
@@ -3689,25 +3686,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wildPokemons:
   - pokemon: {fileID: 11400000, guid: 449dfb01630d7544188edbe43f50a7cc, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 8
-  - pokemon: {fileID: 11400000, guid: 3f2f3c1d6e928fa48a00792eccbc8a85, type: 2}
-    levelRange: {x: 5, y: 15}
-    chancePercentage: 4
+    levelRange: {x: 10, y: 15}
+    chancePercentage: 12
   - pokemon: {fileID: 11400000, guid: 59f0fcfb9c730a644a6b2a101750fc87, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 18
   - pokemon: {fileID: 11400000, guid: 5ffe5814f0434ff4292dd6d3a7bc9150, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 18
   - pokemon: {fileID: 11400000, guid: 4d3e2fb3e9e54d2408c6b58dd51c2888, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 17
   - pokemon: {fileID: 11400000, guid: 0d0ab13a7f7a343458cdd138f9d6cc61, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 17
   - pokemon: {fileID: 11400000, guid: 30182ceb38f076c4f804249fff45cced, type: 2}
-    levelRange: {x: 5, y: 15}
+    levelRange: {x: 5, y: 10}
     chancePercentage: 18
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
@@ -5849,6 +5843,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1725982790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7272086737145709804, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+  m_PrefabInstance: {fileID: 4963794604952134813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1728105508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7975679417541713246, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -11198,7 +11203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
@@ -11228,6 +11233,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _trainerImage
+      value: 
+      objectReference: {fileID: 1725982790}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: moveSelectionUI
       value: 
@@ -11334,7 +11343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520594781890164, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -215
+      value: -185
       objectReference: {fileID: 0}
     - target: {fileID: 4671520594781890165, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Sprite
@@ -11494,15 +11503,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4791071080064991428, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _selectablePokemons.Array.data[0].level
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4791071080064991428, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _selectablePokemons.Array.data[1].level
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4791071080064991428, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _selectablePokemons.Array.data[2].level
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4791071080064991428, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _selectablePokemons.Array.data[0].pokemonBase

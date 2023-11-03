@@ -233,18 +233,21 @@ public class BattleSystem : MonoBehaviour
         if (IsTrainerBattle)
         {
             yield return _dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
 
         if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
 
         if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
 
@@ -278,7 +281,7 @@ public class BattleSystem : MonoBehaviour
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             _enemyUnit.pokemon.PokeballSpriteType = pokeballItem.BallType;
             _enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
-            PlayerParty.AddPokemon(_enemyUnit.pokemon);
+            PlayerParty.AddPokemonToParty(_enemyUnit.pokemon);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
             if (_partyScreen.Pokemons.Count >= 6)
             {

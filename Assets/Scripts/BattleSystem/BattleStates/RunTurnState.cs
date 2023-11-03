@@ -328,57 +328,69 @@ public class RunTurnState : State<BattleSystem>
             int enemyLevel = faintedUnit.pokemon.Level;
             float trainerBonus = (_isTrainerBattle) ? 1.5f : 1f;
 
-            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / 7);
-            _playerUnit.pokemon.Exp += expGain;
+            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / Random.Range(6.9f, 7.05f));
+            foreach (var pokemon in _playerParty.Pokemons)
+            {
+                pokemon.Exp += expGain;
+            }
+            //_playerUnit.pokemon.Exp += expGain;
 
-            yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}获得了\n{expGain}点经验值！");
+            yield return _dialogueBox.TypeDialogue($"队伍中的所有宝可梦\n各自获得了{expGain}点经验值！");
             yield return _playerUnit.Hud.SetExpSmooth();
 
             // Check level up
-            while (_playerUnit.pokemon.CheckForLevelUp())
+            foreach (var pokemon in _playerParty.Pokemons)
             {
-                _playerUnit.Hud.SetLevel();
-                AudioManager.Instance.PlaySE(SFX.LEVEL_UP, true);
-                yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}升级了！\n等级提升至{_playerUnit.pokemon.Level}！");
-
-                // Try to learn a new Move
-                var newMove = _playerUnit.pokemon.GetLearnableMoveAtCurrentLevel();
-                if (newMove != null)
+                while (pokemon.CheckForLevelUp())
                 {
-                    if (_playerUnit.pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
+                    if (pokemon == _playerUnit.pokemon)
                     {
-                        _playerUnit.pokemon.LearnMove(newMove.MoveBase);
-                        yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}习得了新技能\n{newMove.MoveBase.MoveName}！");
+                        _playerUnit.Hud.SetLevel();
+                        AudioManager.Instance.PlaySE(SFX.LEVEL_UP, true);
                     }
-                    else
+                    
+                    yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}升级了！\n等级提升至{pokemon.Level}！");
+
+                    // Try to learn a new Move
+                    var newMove = pokemon.GetLearnableMoveAtCurrentLevel();
+                    if (newMove != null)
                     {
-                        yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
-                        yield return _dialogueBox.TypeDialogue($"但是{_playerUnit.pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
-                        yield return _dialogueBox.TypeDialogue($"想要让{_playerUnit.pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
-
-                        MoveToForgetState.I.NewMove = newMove.MoveBase;
-                        MoveToForgetState.I.CurrentMoves = _playerUnit.pokemon.Moves.Select(m => m.MoveBase).ToList();
-                        yield return GameManager.Instance.StateMachine.PushAndWait(MoveToForgetState.I);
-
-                        int moveIndex = MoveToForgetState.I.Selection;
-                        if (moveIndex == PokemonBase.MaxNumOfMoves || moveIndex == -1)
+                        if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
                         {
-                            // Don't learn the new move
-                            yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}放弃学习{newMove.MoveBase.MoveName}！");
+                            pokemon.LearnMove(newMove.MoveBase);
+                            yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}习得了新技能\n{newMove.MoveBase.MoveName}！");
                         }
                         else
                         {
-                            // Forget the selected move and learn new move
-                            var selevtedMove = _playerUnit.pokemon.Moves[moveIndex].MoveBase;
-                            yield return _dialogueBox.TypeDialogue($"{_playerUnit.pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
-                            _playerUnit.pokemon.Moves[moveIndex] = new Move(newMove.MoveBase);
+                            yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}想要学习{newMove.MoveBase.MoveName}...");
+                            yield return _dialogueBox.TypeDialogue($"但是{pokemon.PokemonBase.PokemonName}掌握的技能太多了！");
+                            yield return _dialogueBox.TypeDialogue($"想要让{pokemon.PokemonBase.PokemonName}\n遗忘哪个技能？");
+
+                            MoveToForgetState.I.NewMove = newMove.MoveBase;
+                            MoveToForgetState.I.CurrentMoves = pokemon.Moves.Select(m => m.MoveBase).ToList();
+                            yield return GameManager.Instance.StateMachine.PushAndWait(MoveToForgetState.I);
+
+                            int moveIndex = MoveToForgetState.I.Selection;
+                            if (moveIndex == PokemonBase.MaxNumOfMoves || moveIndex == -1)
+                            {
+                                // Don't learn the new move
+                                yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}放弃学习{newMove.MoveBase.MoveName}！");
+                            }
+                            else
+                            {
+                                // Forget the selected move and learn new move
+                                var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
+                                yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
+                                pokemon.Moves[moveIndex] = new Move(newMove.MoveBase);
+                            }
                         }
                     }
+                    if (pokemon == _playerUnit.pokemon)
+                        yield return _playerUnit.Hud.SetExpSmooth(true);
                 }
 
-                yield return _playerUnit.Hud.SetExpSmooth(true);
             }
-
+            
             yield return new WaitForSeconds(1f);
         }
 
@@ -479,6 +491,7 @@ public class RunTurnState : State<BattleSystem>
         if (_isTrainerBattle || BattleState.I.BossPokemon != null)
         {
             yield return _dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
+            _battleSystem.StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
 

@@ -38,19 +38,18 @@ public class PokemonParty : MonoBehaviour
         return pokemons.Where(x => x.Hp > 0).FirstOrDefault();
     }
 
-    public void AddPokemon(Pokemon newPokemon)
+    public bool AddPokemonToParty(Pokemon newPokemon)
     {
         if (pokemons.Count < 6)
         {
             AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
             pokemons.Add(newPokemon);
             OnUpdated?.Invoke();
+            return true;
         }
-        else
-        {
-            AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
-            GameManager.Instance.Storage.PushPokemon(newPokemon);
-        }
+        AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
+        GameManager.Instance.Storage.PushPokemon(newPokemon);
+        return false;
     }
 
     public void PartyUpdated()
@@ -73,5 +72,10 @@ public class PokemonParty : MonoBehaviour
                 yield return EvolutionState.I.Evolve(pokemon, evolution);
             }
         }
+    }
+
+    public bool HasPokemon(Pokemon pokemon)
+    {
+        return pokemons.Any(p => p.PokemonBase.PokemonName == pokemon.PokemonBase.PokemonName);
     }
 }

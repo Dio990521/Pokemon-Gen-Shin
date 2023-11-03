@@ -14,9 +14,6 @@ namespace PokeGenshinUtils.SelectionUI
         protected int selectedItem = 0;
         protected int prevSelection = -1;
 
-        //private float selectionTimer = 0;
-        //const float selectionSpeed = 5;
-
         public event Action<int> OnSelected;
         public event Action OnBack;
 
@@ -76,7 +73,6 @@ namespace PokeGenshinUtils.SelectionUI
             }
             else if (allowCancel && Input.GetButtonDown("Back"))
             {
-                //print(gameObject.name + " OnBack");
                 AudioManager.Instance.PlaySE(SFX.CANCEL);
                 OnBack?.Invoke();
             }
@@ -84,13 +80,6 @@ namespace PokeGenshinUtils.SelectionUI
 
         public virtual void HandleListSelection()
         {
-            //float v = Input.GetAxis("Vertical");
-
-            //if (selectionTimer == 0 && Mathf.Abs(v) > 0.2f)
-            //{
-            //    selectedItem += -(int)Mathf.Sign(v);
-            //    selectionTimer = 1 / selectionSpeed;
-            //}
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 selectedItem += 1;
@@ -138,14 +127,6 @@ namespace PokeGenshinUtils.SelectionUI
                 _items[i].OnSelectionChanged(i == selectedItem);
             }
         }
-
-        //private void UpdateSelectionTimer()
-        //{
-        //    if (selectionTimer > 0)
-        //    {
-        //        selectionTimer = Mathf.Clamp(selectionTimer - Time.deltaTime, 0, selectionTimer);
-        //    }
-        //}
 
     }
 }

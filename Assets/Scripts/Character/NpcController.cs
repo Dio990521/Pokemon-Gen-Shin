@@ -42,13 +42,15 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
     private void Start()
     {
-        if (_enableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_enableCutscene.ToString()))
-        {
-            gameObject.SetActive(true);
-        }
         if (_disableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableCutscene.ToString()))
         {
-            gameObject.SetActive(false);
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        if (_enableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_enableCutscene.ToString()))
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
 

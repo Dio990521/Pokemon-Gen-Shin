@@ -45,6 +45,7 @@ public class BattleState : State<GameManager>
             GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
         }
         ActivateCutsceneAfterBattle = CutsceneName.None;
+        BossPokemon = null;
     }
 
     public override void Execute()

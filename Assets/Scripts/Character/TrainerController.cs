@@ -100,6 +100,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
 
         GameManager.Instance.StateMachine.Pop();
+        BattleState.I.BossPokemon = null;
         GameManager.Instance.StartTrainerBattle(this);
     }
 
