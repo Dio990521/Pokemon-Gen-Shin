@@ -10073,13 +10073,25 @@ PrefabInstance:
       value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 6946354032610315275, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
+      propertyPath: pokemons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946354032610315275, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 8
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6946354032610315275, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
+      propertyPath: pokemons.Array.data[1].level
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6946354032610315275, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: 383bfcd7cafd9484abde17001f2616d3, type: 2}
+    - target: {fileID: 6946354032610315275, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
+      propertyPath: pokemons.Array.data[1].pokemonBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 484585550a8375c438f5d73d6ec6c25e, type: 2}
     - target: {fileID: 7257538001939600222, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.83
@@ -10956,12 +10968,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 463200882922002848, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 6
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 463200882922002848, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: 29afc9f771baa8f4ca396d74ed9a0894, type: 2}
+    - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
+      propertyPath: meetBGM
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 592534543750390037, guid: 5613ec97643b43f4b875265f6091f08c, type: 3}
       propertyPath: winMoney
       value: 777
@@ -15624,6 +15640,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 617439778}
     m_Modifications:
     - target: {fileID: 2432578004904918811, guid: ca39965e596a74149a5f23a0903fef23, type: 3}
+      propertyPath: pokemons.Array.data[0].level
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2432578004904918811, guid: ca39965e596a74149a5f23a0903fef23, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: a1d3ec51aa7558a4caf80097ad2b5757, type: 2}
@@ -15702,6 +15722,10 @@ PrefabInstance:
     - target: {fileID: 6853510600284196206, guid: ca39965e596a74149a5f23a0903fef23, type: 3}
       propertyPath: m_Size.y
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7415450400053838348, guid: ca39965e596a74149a5f23a0903fef23, type: 3}
+      propertyPath: meetBGM
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 7415450400053838348, guid: ca39965e596a74149a5f23a0903fef23, type: 3}
       propertyPath: winMoney
@@ -16700,7 +16724,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: c742085e72a33fe499c77a9f92ca49c2, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.data[2]
-      value: "\u5408\u7406\u8FD0\u7528\u5143\u7D20\u53CD\u5E94\uFF01"
+      value: "\u901A\u8FC7\u5207\u6362\u5B9D\u53EF\u68A6\u5408\u7406\u8FD0\u7528\u5143\u7D20\u53CD\u5E94\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: c742085e72a33fe499c77a9f92ca49c2, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.data[3]
+      value: "\u6211\u8FD9\u91CC\u6709\u4E00\u672C\u6218\u6597\u624B\u518C"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: c742085e72a33fe499c77a9f92ca49c2, type: 3}
       propertyPath: m_RootOrder

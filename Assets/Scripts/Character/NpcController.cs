@@ -25,6 +25,7 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
     private Quest activeQuest;
     private Healer healer;
     private Merchant merchant;
+    private ItemChecker checker;
 
     [SerializeField] private CutsceneName _enableCutscene = CutsceneName.None;
     [SerializeField] private CutsceneName _disableCutscene = CutsceneName.None;
@@ -38,6 +39,7 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
         pokemonGiver = GetComponent<PokemonGiver>();
         healer = GetComponent<Healer>();
         merchant = GetComponent<Merchant>();
+        checker = GetComponent<ItemChecker>();
     }
 
     private void Start()
@@ -69,9 +71,17 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
             }
 
-            if (itemGiver != null && itemGiver.CanBeGiven())
+            if (gameObject.TryGetComponent(out TrainerController trainerController) && !trainerController.IsBattleLost)
+            {
+                yield return trainerController.Interact(initiator);
+            }
+            else if (itemGiver != null && itemGiver.CanBeGiven())
             {
                 yield return itemGiver.GiveItem(initiator.GetComponent<PlayerController>());
+            }
+            else if (checker != null)
+            {
+                yield return checker.CheckItem(initiator.GetComponent<PlayerController>());
             }
             else if (pokemonGiver != null && pokemonGiver.CanBeGiven())
             {

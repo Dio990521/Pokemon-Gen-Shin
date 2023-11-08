@@ -406,48 +406,48 @@ public class Pokemon
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPsn = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.brn)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsBrn = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.par)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPar = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.slp)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsSlp = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.confusion)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsCfs = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.frz)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsFrz = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhanfang)
         {
             CureElementStatus();
             damageDetails.IsZhanfang = true;
-            return effectiveness;
+            return 1.2f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhengfa)
         {

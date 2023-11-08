@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class FreeRoamState : State<GameManager>
 {
-    public static FreeRoamState i { get; private set; }
+    public static FreeRoamState I { get; private set; }
 
     private void Awake()
     {
-        i = this;
+        I = this;
     }
 
     private GameManager _gameManager;

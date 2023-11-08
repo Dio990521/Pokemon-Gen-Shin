@@ -7132,6 +7132,10 @@ PrefabInstance:
       value: NPCInteractAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957355309400069]._moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400069].actionName
       value: MoveActorAction
       objectReference: {fileID: 0}
@@ -7444,6 +7448,10 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400068].actionName
       value: NPCInteractAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1352957355309400069]._moveSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1352957355309400069].actionName
@@ -9641,6 +9649,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1900513705}
     m_Modifications:
     - target: {fileID: 1062887037893667496, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
+      propertyPath: meetBGM
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1062887037893667496, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: winMoney
       value: 666
       objectReference: {fileID: 0}
@@ -9690,11 +9702,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.5
+      value: 9.5
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 39.5
+      value: 42.5
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9734,11 +9746,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679999, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: defaultDirection
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8500305136667505464, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8500305136667505464, guid: 3b7e5dd6288419040a79abfe9a01c552, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
@@ -16640,7 +16652,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3345613118765190688, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

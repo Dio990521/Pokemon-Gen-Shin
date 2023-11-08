@@ -35,16 +35,8 @@ public class BattleState : State<GameManager>
 
     public override void Exit(bool sfx = true)
     {
-        _battleSystem.gameObject.SetActive(false);
-        _gameManager.BattleTransitionManager.ClearTransition();
-        _gameManager.WorldTransitionManager.ClearTransition();
-        _gameManager.WorldCamera.gameObject.SetActive(true);
+        StartCoroutine(DisableBattleCanvas());
         _battleSystem.OnBattleOver -= EndBattle;
-        if (ActivateCutsceneAfterBattle != CutsceneName.None)
-        {
-            GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
-        }
-        ActivateCutsceneAfterBattle = CutsceneName.None;
         BossPokemon = null;
     }
 
@@ -93,9 +85,37 @@ public class BattleState : State<GameManager>
             Trainer.BattleLost();
             Trainer = null;
         }
-        StartCoroutine(Fader.FadeOut(1f));
         _gameManager.StateMachine.Pop();
+    }
 
+    private IEnumerator DisableBattleCanvas()
+    {
+        GameManager.Instance.PauseGame(true);
+        yield return Fader.FadeIn(1f);
+        BattleSystem.PartyScreen.SetPartyData();
+        _battleSystem.gameObject.SetActive(false);
+        _gameManager.BattleTransitionManager.ClearTransition();
+        _gameManager.WorldTransitionManager.ClearTransition();
+        _gameManager.WorldCamera.gameObject.SetActive(true);
+        if (ActivateCutsceneAfterBattle != CutsceneName.None)
+        {
+            GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
+        }
+        ActivateCutsceneAfterBattle = CutsceneName.None;
+        yield return new WaitForSeconds(1f);
+        yield return Fader.FadeOut(1f);
+
+        var playerParty = _battleSystem.PlayerParty;
+        bool hasEvolutions = playerParty.CheckForEvolutions();
+        if (hasEvolutions)
+        {
+            yield return playerParty.RunEvolutions();
+        }
+        else
+        {
+            AudioManager.Instance.PlayMusic(GameManager.Instance.CurrentScene.SceneMusic, fade: true);
+        }
+        GameManager.Instance.PauseGame(false);
     }
 
 }

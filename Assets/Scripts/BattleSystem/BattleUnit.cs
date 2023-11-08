@@ -82,7 +82,16 @@ public class BattleUnit : MonoBehaviour
     {
         pokemon = selectedPokemon;
         level = pokemon.Level;
+        if (selectedPokemon.PokemonBase.IsLargePortrait)
+        {
+            unitSprite.rectTransform.sizeDelta = new Vector2(800f, 500f);
+        }
+        else
+        {
+            unitSprite.rectTransform.sizeDelta = new Vector2(400f, 450f);
+        }
         unitSprite.sprite = isPlayerUnit ? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
+        unitSprite.SetNativeSize();
         unitSprite.color = originalColor;
         hud.SetData(selectedPokemon);
         ResetAnimation();
@@ -94,7 +103,7 @@ public class BattleUnit : MonoBehaviour
         unitSprite.transform.localScale = new Vector3(1f, 1f, 1f);
         if (isPlayerUnit)
         {
-            unitSprite.transform.localPosition = new Vector3(-228f, -215f, 0f);
+            unitSprite.transform.localPosition = new Vector3(-233.41f, -185f, 0f);
         }
         else
         {
@@ -221,19 +230,21 @@ public class BattleUnit : MonoBehaviour
         sequence.Join(unitSprite.DOFade(0f, 0.5f));
     }
 
-    public IEnumerator PlayCaptureAnimation()
+    public IEnumerator PlayCaptureAnimation(Vector3 pokeballPos)
     {
         var sequence = DOTween.Sequence();
         sequence.Append(unitSprite.DOFade(0, 0.5f));
         sequence.Join(unitSprite.transform.DOScale(new Vector3(0.3f, 0.3f, 1f), 0.5f));
+        sequence.Join(unitSprite.transform.DOMoveY(pokeballPos.y, 0.5f));
         yield return sequence.WaitForCompletion();
     }
 
-    public IEnumerator PlayBreakOutAnimation()
+    public IEnumerator PlayBreakOutAnimation(Vector3 originPos)
     {
         var sequence = DOTween.Sequence();
         sequence.Append(unitSprite.DOFade(1, 0.5f));
         sequence.Join(unitSprite.transform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
+        sequence.Join(unitSprite.transform.DOMoveY(originPos.y, 0.5f));
         yield return sequence.WaitForCompletion();
     }
 }

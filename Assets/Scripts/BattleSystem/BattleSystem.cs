@@ -100,7 +100,6 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SetupBattle()
     {
-
         _playerUnit.SetDefaultPlayerSprite();
         _playerUnit.HideHud();
         _enemyUnit.HideHud();
@@ -128,6 +127,7 @@ public class BattleSystem : MonoBehaviour
             // Trianer Battle
             
             _trainerImage.sprite = trainer.Sprite;
+            _trainerImage.SetNativeSize();
             _playerUnit.ResetAnimation();
             _enemyUnit.ResetAnimation();
             _playerUnit.UnitEnterAnimation();
@@ -172,6 +172,7 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlayMusic(trainer.WinBGM);
                 yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
+                yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}！");
                 Wallet.I.AddMoney(trainer.WinMoney, false);
                 yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
             }
@@ -194,7 +195,7 @@ public class BattleSystem : MonoBehaviour
         PlayerParty.Pokemons.ForEach(p => p.OnBattleOver());
         _playerUnit.Hud.ClearData();
         _enemyUnit.Hud.ClearData();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         OnBattleOver(won);
     }
 
@@ -232,6 +233,7 @@ public class BattleSystem : MonoBehaviour
         _dialogueBox.EnableActionSelector(false);
         if (IsTrainerBattle)
         {
+            RunTurnState.I.ThrowSucess = false;
             yield return _dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
             StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
@@ -239,6 +241,7 @@ public class BattleSystem : MonoBehaviour
 
         if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
         {
+            RunTurnState.I.ThrowSucess = false;
             yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
             StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
@@ -246,12 +249,12 @@ public class BattleSystem : MonoBehaviour
 
         if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
         {
+            RunTurnState.I.ThrowSucess = false;
             yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
             StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
 
-        
         yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         AudioManager.Instance.PlaySE(SFX.THROW_BALL);
 
@@ -260,10 +263,12 @@ public class BattleSystem : MonoBehaviour
         pokeball.sprite = pokeballItem.InBattleIcon;
 
         // Animations
-        yield return pokeball.transform.DOJump(_enemyUnit.transform.position, 2f, 1, 1f).WaitForCompletion();
+        var ballDest = _enemyUnit.transform.position + new Vector3(0f, 5f, 0);
+        var originPos = _enemyUnit.transform.position;
+        yield return pokeball.transform.DOJump(ballDest, 2f, 1, 1f).WaitForCompletion();
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        yield return _enemyUnit.PlayCaptureAnimation();
-        pokeball.transform.DOMoveY(_enemyUnit.transform.position.y - 6f, 0.5f).WaitForCompletion();
+        yield return _enemyUnit.PlayCaptureAnimation(ballDest);
+        pokeball.transform.DOMoveY(5f, 0.5f).WaitForCompletion();
 
         int shakeCount = TryToCatchPokemon(_enemyUnit.pokemon, pokeballItem);
 
@@ -287,7 +292,7 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return _dialogueBox.TypeDialogue($"由于队伍已满，\n{_enemyUnit.pokemon.PokemonBase.PokemonName}被送进了仓库！");
             }
-
+            RunTurnState.I.ThrowSucess = true;
             Destroy(pokeballObj);
             yield return BattleOver(true, true);
         }
@@ -296,11 +301,11 @@ public class BattleSystem : MonoBehaviour
             // Pokemon broke out
             yield return new WaitForSeconds(1f);
             pokeball.DOFade(0, 0.2f);
-            yield return _enemyUnit.PlayBreakOutAnimation();
+            yield return _enemyUnit.PlayBreakOutAnimation(originPos);
 
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
-
+            RunTurnState.I.ThrowSucess = false;
             Destroy(pokeballObj);
         }
     }

@@ -18,6 +18,9 @@ public class RunTurnState : State<BattleSystem>
     private Pokemon _wildPokemon;
     private PokemonParty _trainerParty;
 
+    private bool _isRunSuccessful;
+    public bool ThrowSucess;
+
 
     private void Awake()
     {
@@ -35,7 +38,8 @@ public class RunTurnState : State<BattleSystem>
         _playerParty = owner.PlayerParty;
         _wildPokemon = owner.WildPokemon;
         _trainerParty = owner.TrainerParty;
-
+        _isRunSuccessful = false;
+        ThrowSucess = false;
         StartCoroutine(RunTurns(_battleSystem.SelectedAction));
 }
 
@@ -105,6 +109,10 @@ public class RunTurnState : State<BattleSystem>
                 if (_battleSystem.SelectedItem is PokeballItem)
                 {
                     yield return _battleSystem.ThrowPokeball(_battleSystem.SelectedItem as PokeballItem);
+                    if (ThrowSucess)
+                    {
+                        yield break;
+                    }
                 }
 
             }
@@ -112,6 +120,10 @@ public class RunTurnState : State<BattleSystem>
             {
                 _dialogueBox.EnableActionSelector(false);
                 yield return TryToEspace();
+                if (_isRunSuccessful)
+                {
+                    yield break;
+                }
             }
 
             // Enemy Turn
@@ -328,12 +340,11 @@ public class RunTurnState : State<BattleSystem>
             int enemyLevel = faintedUnit.pokemon.Level;
             float trainerBonus = (_isTrainerBattle) ? 1.5f : 1f;
 
-            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / Random.Range(6.9f, 7.05f));
+            int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / Random.Range(5.9f, 6.05f));
             foreach (var pokemon in _playerParty.Pokemons)
             {
                 pokemon.Exp += expGain;
             }
-            //_playerUnit.pokemon.Exp += expGain;
 
             yield return _dialogueBox.TypeDialogue($"队伍中的所有宝可梦\n各自获得了{expGain}点经验值！");
             yield return _playerUnit.Hud.SetExpSmooth();
@@ -490,6 +501,7 @@ public class RunTurnState : State<BattleSystem>
 
         if (_isTrainerBattle || BattleState.I.BossPokemon != null)
         {
+            _isRunSuccessful = false;
             yield return _dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
             _battleSystem.StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
@@ -503,6 +515,7 @@ public class RunTurnState : State<BattleSystem>
         if (enemySpeed < playerSpeed)
         {
             AudioManager.Instance.PlaySE(SFX.ESCAPE);
+            _isRunSuccessful = true;
             yield return _dialogueBox.TypeDialogue($"成功逃跑了！");
             yield return _battleSystem.BattleOver(false);
         }
@@ -514,11 +527,13 @@ public class RunTurnState : State<BattleSystem>
             if (UnityEngine.Random.Range(0, 256) < f)
             {
                 AudioManager.Instance.PlaySE(SFX.ESCAPE);
+                _isRunSuccessful = true;
                 yield return _dialogueBox.TypeDialogue($"成功逃跑了！");
                 yield return _battleSystem.BattleOver(false);
             }
             else
             {
+                _isRunSuccessful = false;
                 yield return _dialogueBox.TypeDialogue($"逃跑失败了！");
             }
         }

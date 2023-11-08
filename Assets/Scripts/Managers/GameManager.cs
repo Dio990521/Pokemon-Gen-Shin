@@ -64,13 +64,11 @@ public class GameManager : Singleton<GameManager>, ISavable
     private void Start()
     {
         StateMachine = new StateMachine<GameManager>(this);
-        StateMachine.ChangeState(FreeRoamState.i);
+        StateMachine.ChangeState(FreeRoamState.I);
 
         _gameTimeSpend = 0f;
         _worldTransitionManager.ClearTransition(true);
         _battleTransitionManager.ClearTransition(true);
-
-        battleSystem.OnBattleOver += EndBattle;
 
         partyScreen.Init();
         _storagePartyListUI.Init();
@@ -126,43 +124,15 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void StartTrainerBattle(TrainerController trainer)
     {
-        AudioManager.Instance.PlayMusic(BGM.BATTLE_TRAINER);
+        AudioManager.Instance.PlayMusic(trainer.StartBGM);
         BattleState.I.Trainer = trainer;
+        BattleState.I.BossPokemon = null;
         StateMachine.Push(BattleState.I);
     }
 
     public void OnEnterTrainersView(TrainerController trainer)
     {
         StartCoroutine(trainer.TriggerTrainerBattle(playerController));
-    }
-
-    private void EndBattle(bool won)
-    {
-        if (trainer != null && won)
-        {
-            trainer.BattleLost();
-            trainer = null;
-        }
-
-        partyScreen.SetPartyData();
-
-        battleSystem.gameObject.SetActive(false);
-        _battleTransitionManager.ClearTransition();
-        _worldTransitionManager.ClearTransition();
-        worldCamera.gameObject.SetActive(true);
-
-        var playerParty = playerController.GetComponent<PokemonParty>();
-
-        bool hasEvolutions = playerParty.CheckForEvolutions();
-        if (hasEvolutions)
-        {
-            StartCoroutine(playerParty.RunEvolutions());
-        }
-        else
-        {
-            AudioManager.Instance.PlayMusic(CurrentScene.SceneMusic, fade: true);
-        }
-        
     }
 
     private void Update()
@@ -222,16 +192,16 @@ public class GameManager : Singleton<GameManager>, ISavable
         _gameTimeSpend = (float)state;
     }
 
-    private void OnGUI()
-    {
-        var style = new GUIStyle();
-        style.fontSize = 25;
-        GUILayout.Label("STATE STACK", style);
-        foreach (var state in StateMachine.StateStack)
-        {
-            GUILayout.Label(state.GetType().ToString(), style);
-        }
-    }
+    //private void OnGUI()
+    //{
+    //    var style = new GUIStyle();
+    //    style.fontSize = 25;
+    //    GUILayout.Label("STATE STACK", style);
+    //    foreach (var state in StateMachine.StateStack)
+    //    {
+    //        GUILayout.Label(state.GetType().ToString(), style);
+    //    }
+    //}
 
     public Sprite GetPokeSprite(PokeballType type)
     {

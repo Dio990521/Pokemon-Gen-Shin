@@ -82,7 +82,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") && !_isPlaying && GameManager.Instance.StateMachine.CurrentState != PauseState.I)
+        if (collision.CompareTag("Player") && !_isPlaying && GameManager.Instance.StateMachine.CurrentState == FreeRoamState.I)
         {
             if (_isAutoPlay)
             {

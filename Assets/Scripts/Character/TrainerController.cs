@@ -17,8 +17,10 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private Sprite sprite;
     [SerializeField] private string tainerName;
 
+    [SerializeField] private CutsceneName _activateCutsceneNameWin;
+
     private Character character;
-    private bool battleLost = false;
+    private bool _isBattleLost = false;
 
     public string TrainerName
     {
@@ -38,6 +40,9 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     public BGM WinBGM { get => winBGM; }
     public BGM StartBGM { get => startBGM; set => startBGM = value; }
     public BattleTrigger BattleTrigger { get => _battleTrigger; set => _battleTrigger = value; }
+    public Dialogue DialogueAfterBattle { get => dialogueAfterBattle; set => dialogueAfterBattle = value; }
+    public BGM MeetBGM { get => meetBGM; set => meetBGM = value; }
+    public bool IsBattleLost { get => _isBattleLost; set => _isBattleLost = value; }
 
     private void Awake()
     {
@@ -58,32 +63,29 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     {
         character.LookTowards(initiator.position);
 
-        if (!battleLost)
+        if (!IsBattleLost)
         {
+            AudioManager.Instance.PlayMusic(MeetBGM);
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
             GameManager.Instance.StartTrainerBattle(this);
-
         }
-        else
-        {
-            yield return DialogueManager.Instance.ShowDialogue(dialogueAfterBattle);
-        }
-        
 
     }
 
     public void BattleLost()
     {
-        battleLost = true;
+        IsBattleLost = true;
         fov.SetActive(false);
+        if (_activateCutsceneNameWin != CutsceneName.None && !GameKeyManager.Instance.GetBoolValue(_activateCutsceneNameWin.ToString()))
+        {
+            GameKeyManager.Instance.SetBoolValue(_activateCutsceneNameWin.ToString(), true);
+        }
     }
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
-
-
-        AudioManager.Instance.PlayMusic(meetBGM);
+        AudioManager.Instance.PlayMusic(MeetBGM);
         // Show exclamation
         exclamation.SetActive(true);
         yield return new WaitForSeconds(0.5f);
@@ -125,13 +127,13 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public object CaptureState()
     {
-        return battleLost;
+        return IsBattleLost;
     }
 
     public void RestoreState(object state)
     {
-        battleLost = (bool)state;
-        if (battleLost)
+        IsBattleLost = (bool)state;
+        if (IsBattleLost)
         {
             fov.SetActive(false);
         }
