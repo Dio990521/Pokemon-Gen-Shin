@@ -29,8 +29,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
     [SerializeField] private CutsceneName _enableCutscene = CutsceneName.None;
     [SerializeField] private CutsceneName _disableCutscene = CutsceneName.None;
-    
-
 
     private void Awake()
     {

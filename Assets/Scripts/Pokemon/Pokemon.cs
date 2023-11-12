@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,11 +82,19 @@ public class Pokemon
     public void Init()
     {
         _statusBias = new int[6];
+        System.Random ran = new System.Random();
         for (int i = 0; i < _statusBias.Length; ++i)
         {
-            _statusBias[i] = Random.Range(0, 8) + Random.Range(0, 4);
+            _statusBias[i] = ran.Next(0, 11);
+
         }
-        _statusBias[5] = Random.Range(10, 16) + Random.Range(0, 6);
+        _statusBias[5] = ran.Next(10, 21);
+        Debug.Log(pokemonBase.PokemonName + " :");
+        foreach (int i in _statusBias)
+        {
+            Debug.Log(i);
+        }
+        Debug.Log("==================");
         Moves = new List<Move>();
         foreach (var move in pokemonBase.LearnableMoves)
         {
@@ -341,7 +350,7 @@ public class Pokemon
             elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
         }
         damageDetails.StatusName = Status?.Name;
-        float modifiers = Random.Range(0.85f, 1f);
+        float modifiers = UnityEngine.Random.Range(0.85f, 1f);
         int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
         DecreaseHP(damage);
         damageDetails.Damage = damage;
@@ -540,7 +549,7 @@ public class Pokemon
     {
         var movesWithPP = Moves.Where(x => x.PP > 0).ToList();
 
-        int r = Random.Range(0, movesWithPP.Count);
+        int r = UnityEngine.Random.Range(0, movesWithPP.Count);
         return movesWithPP[r];
     }
 

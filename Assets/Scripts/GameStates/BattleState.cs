@@ -17,6 +17,7 @@ public class BattleState : State<GameManager>
     public Sprite GenshinPokeball;
 
     public Pokemon BossPokemon;
+    public bool IsSuperBoss;
     public CutsceneName ActivateCutsceneAfterBattle;
 
     private void Awake()
@@ -38,6 +39,7 @@ public class BattleState : State<GameManager>
         StartCoroutine(DisableBattleCanvas());
         _battleSystem.OnBattleOver -= EndBattle;
         BossPokemon = null;
+        IsSuperBoss = false;
     }
 
     public override void Execute()
@@ -51,7 +53,14 @@ public class BattleState : State<GameManager>
         PokemonParty playerParty = _gameManager.PlayerController.GetComponent<PokemonParty>();
         if (BossPokemon != null)
         {
-            yield return EnterBattleTransition(TransitionType.WildBattle);
+            if (IsSuperBoss)
+            {
+                yield return EnterBattleTransition(TransitionType.SuperBossBattle);
+            }
+            else
+            {
+                yield return EnterBattleTransition(TransitionType.WildBattle);
+            }
             _battleSystem.StartBattle(playerParty, BossPokemon, Trigger);
         }
         else if (Trainer == null)
@@ -63,7 +72,14 @@ public class BattleState : State<GameManager>
         }
         else
         {
-            yield return EnterBattleTransition(TransitionType.TrainerBattle);
+            if (Trainer.IsBoss)
+            {
+                yield return EnterBattleTransition(TransitionType.TrainerBattle);
+            }
+            else
+            {
+                yield return EnterBattleTransition(TransitionType.BossBattle);
+            }
             PokemonParty trainerParty = Trainer.GetComponent<PokemonParty>();
             _battleSystem.StartTrainerBattle(playerParty, trainerParty, Trainer.BattleTrigger);
         }
@@ -91,7 +107,13 @@ public class BattleState : State<GameManager>
     private IEnumerator DisableBattleCanvas()
     {
         GameManager.Instance.PauseGame(true);
+        var playerParty = _battleSystem.PlayerParty;
+        bool hasEvolutions = playerParty.CheckForEvolutions();
         yield return Fader.FadeIn(1f);
+        if (!hasEvolutions)
+        {
+            AudioManager.Instance.PlayMusic(GameManager.Instance.CurrentScene.SceneMusic, fade: true);
+        }
         BattleSystem.PartyScreen.SetPartyData();
         _battleSystem.gameObject.SetActive(false);
         _gameManager.BattleTransitionManager.ClearTransition();
@@ -105,16 +127,12 @@ public class BattleState : State<GameManager>
         yield return new WaitForSeconds(1f);
         yield return Fader.FadeOut(1f);
 
-        var playerParty = _battleSystem.PlayerParty;
-        bool hasEvolutions = playerParty.CheckForEvolutions();
+        
         if (hasEvolutions)
         {
             yield return playerParty.RunEvolutions();
         }
-        else
-        {
-            AudioManager.Instance.PlayMusic(GameManager.Instance.CurrentScene.SceneMusic, fade: true);
-        }
+
         GameManager.Instance.PauseGame(false);
     }
 

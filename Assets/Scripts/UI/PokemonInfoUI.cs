@@ -72,26 +72,7 @@ public class PokemonInfoUI : MonoBehaviour
         _satk.text = pokemon.SpAttack.ToString();
         _sdfs.text = pokemon.SpDefense.ToString();
         _spd.text = pokemon.Speed.ToString();
-        if (pokemon.IsBestStatus(Stat.¹¥»÷))
-        {
-            _atk.color = Color.red;
-        }
-        if (pokemon.IsBestStatus(Stat.·ÀÓù))
-        {
-            _dfs.color = Color.red;
-        }
-        if (pokemon.IsBestStatus(Stat.ÌØ¹¥))
-        {
-            _satk.color = Color.red;
-        }
-        if (pokemon.IsBestStatus(Stat.ÌØ·À))
-        {
-            _sdfs.color = Color.red;
-        }
-        if (pokemon.IsBestStatus(Stat.ËÙ¶È))
-        {
-            _spd.color = Color.red;
-        }
+        RefreshStatuUI(pokemon);
 
         _curExp.text = pokemon.Exp.ToString();
         _expLeft.text = pokemon.GetNextLevelExpLeft().ToString();
@@ -124,6 +105,50 @@ public class PokemonInfoUI : MonoBehaviour
         _selectedMove = 0;
         _state = InfoState.Info1;
 
+    }
+
+    private void RefreshStatuUI(Pokemon pokemon)
+    {
+        if (pokemon.IsBestStatus(Stat.¹¥»÷))
+        {
+            _atk.color = Color.red;
+        }
+        else
+        {
+            _atk.color = Color.black;
+        }
+        if (pokemon.IsBestStatus(Stat.·ÀÓù))
+        {
+            _dfs.color = Color.red;
+        }
+        else
+        {
+            _dfs.color = Color.black;
+        }
+        if (pokemon.IsBestStatus(Stat.ÌØ¹¥))
+        {
+            _satk.color = Color.red;
+        }
+        else
+        {
+            _satk.color = Color.black;
+        }
+        if (pokemon.IsBestStatus(Stat.ÌØ·À))
+        {
+            _sdfs.color = Color.red;
+        }
+        else
+        {
+            _sdfs.color = Color.black;
+        }
+        if (pokemon.IsBestStatus(Stat.ËÙ¶È))
+        {
+            _spd.color = Color.red;
+        }
+        else
+        {
+            _spd.color = Color.black;
+        }
     }
 
 

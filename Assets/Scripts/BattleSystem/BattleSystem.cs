@@ -25,7 +25,6 @@ public class BattleSystem : MonoBehaviour
     [SerializeField] private PartyScreen _partyScreen;
 
     [SerializeField] private Image _playerImage;
-    [SerializeField] private Image _trainerImage;
     [SerializeField] private GameObject _pokeballSprite;
     [SerializeField] private ForgetMoveSelectionUI _moveSelectionUI;
     [SerializeField] private InventoryUI _inventoryUI;
@@ -113,6 +112,7 @@ public class BattleSystem : MonoBehaviour
             // Wild Pokemon Battle
 
             // set up pokemons data
+            _enemyUnit.TrainerSprite.enabled = false;
             _playerUnit.ResetAnimation();
             _enemyUnit.ResetAnimation();
             _enemyUnit.SetUp(WildPokemon);
@@ -124,21 +124,29 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
+            _enemyUnit.TrainerSprite.enabled = true;
+            _enemyUnit.PokemonSprite.enabled = false;
             // Trianer Battle
-            
-            _trainerImage.sprite = trainer.Sprite;
-            _trainerImage.SetNativeSize();
+            _enemyUnit.TrainerSprite.sprite = trainer.Sprite;
             _playerUnit.ResetAnimation();
             _enemyUnit.ResetAnimation();
             _playerUnit.UnitEnterAnimation();
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
 
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
-            _enemyUnit.ChangeUnit(enemyPokemon);
+            _enemyUnit.Pokeball.DOFade(1f, 0.01f);
+            _enemyUnit.Pokeball.sprite = _enemyUnit.PokeballCloseSprite;
+            yield return _enemyUnit.MoveTrainerImage(380f, true);
+            yield return new WaitForSeconds(0.5f);
+            _enemyUnit.Pokeball.sprite = _enemyUnit.PokeballOpenSprite;
+            _enemyUnit.Pokeball.DOFade(0f, 0.5f);
+            yield return new WaitForSeconds(0.2f);
+            _enemyUnit.PokemonSprite.enabled = true;
+            _enemyUnit.ChangeUnit(enemyPokemon, true);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
             
             yield return new WaitForSeconds(1.5f);
@@ -172,6 +180,11 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlayMusic(trainer.WinBGM);
                 yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
+
+                //todo
+                //trainer切入
+                yield return _enemyUnit.MoveTrainerImage(300f, false, 1f);
+
                 yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}！");
                 Wallet.I.AddMoney(trainer.WinMoney, false);
                 yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");

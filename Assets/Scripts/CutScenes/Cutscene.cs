@@ -42,6 +42,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         if (!_isAlwaysExist)
         {
             GameKeyManager.Instance.SetBoolValue(_activateCutsceneName.ToString(), true);
+            GetComponent<BoxCollider2D>().enabled = false;
         }
         GameManager.Instance.StateMachine.Pop();
     }
