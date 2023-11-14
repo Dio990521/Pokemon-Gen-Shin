@@ -74,11 +74,11 @@ public class BattleState : State<GameManager>
         {
             if (Trainer.IsBoss)
             {
-                yield return EnterBattleTransition(TransitionType.TrainerBattle);
+                yield return EnterBattleTransition(TransitionType.BossBattle);
             }
             else
             {
-                yield return EnterBattleTransition(TransitionType.BossBattle);
+                yield return EnterBattleTransition(TransitionType.TrainerBattle);
             }
             PokemonParty trainerParty = Trainer.GetComponent<PokemonParty>();
             _battleSystem.StartTrainerBattle(playerParty, trainerParty, Trainer.BattleTrigger);

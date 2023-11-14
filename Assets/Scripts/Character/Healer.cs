@@ -30,7 +30,7 @@ public class Healer : MonoBehaviour
         else if (selectedChoice == 1)
         {
             // No
-            yield return DialogueManager.Instance.ShowDialogueText($"那你快滚啊。");
+            yield return DialogueManager.Instance.ShowDialogueText($"那你快滚。");
         }
 
 

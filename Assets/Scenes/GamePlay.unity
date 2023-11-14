@@ -5067,6 +5067,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.size
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.data[31]
+      value: 
+      objectReference: {fileID: 8300000, guid: 91ce7081bbe388f49a27155d7c503bc2, type: 3}
     - target: {fileID: 6592376188683337259, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -7925,6 +7933,7 @@ MonoBehaviour:
     pokemonBase: {fileID: 0}
     level: 0
     PokeballSpriteType: 0
+  IsSuperBoss: 0
   ActivateCutsceneAfterBattle: 0
 --- !u!114 &2173388929618975091
 MonoBehaviour:
@@ -11191,7 +11200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
@@ -11207,7 +11216,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[3].level
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[4].level
@@ -11228,7 +11237,7 @@ PrefabInstance:
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[3].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 1c5fcfe26a01b6d448ba19c1d1fa746b, type: 2}
+      objectReference: {fileID: 11400000, guid: 146156e621cea8d43b57737677e7caff, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[4].pokemonBase
       value: 
@@ -13787,7 +13796,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 38.5
+      value: 100.65
       objectReference: {fileID: 0}
     - target: {fileID: 8742359741750456979, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

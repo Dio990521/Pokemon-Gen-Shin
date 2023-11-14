@@ -2796,6 +2796,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_Offset.x
       value: 0
       objectReference: {fileID: 0}
@@ -3453,6 +3457,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
   m_PrefabInstance: {fileID: 158329526}
   m_PrefabAsset: {fileID: 0}
+--- !u!61 &158329528 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 2440885359551516974, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+  m_PrefabInstance: {fileID: 158329526}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &779496092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3607,6 +3616,10 @@ PrefabInstance:
       propertyPath: _isAlwaysExist
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: _activateCollider
+      value: 
+      objectReference: {fileID: 158329528}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: actions.Array.size
       value: 14

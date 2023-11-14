@@ -36,7 +36,8 @@ public enum SFX
     CANCEL,
     PC_ON,
     PC_OFF,
-    PC_OPERATE
+    PC_OPERATE,
+    LOCK
 }
 
 public enum BGM

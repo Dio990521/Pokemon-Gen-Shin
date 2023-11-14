@@ -89,12 +89,6 @@ public class Pokemon
 
         }
         _statusBias[5] = ran.Next(10, 21);
-        Debug.Log(pokemonBase.PokemonName + " :");
-        foreach (int i in _statusBias)
-        {
-            Debug.Log(i);
-        }
-        Debug.Log("==================");
         Moves = new List<Move>();
         foreach (var move in pokemonBase.LearnableMoves)
         {

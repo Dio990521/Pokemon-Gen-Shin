@@ -14,6 +14,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     [SerializeField] private FacingDirection direction = FacingDirection.None;
     [SerializeField] private CutsceneName _activateCutsceneName;
+    [SerializeField] private BoxCollider2D _activateCollider;
     [SerializeField] private bool _isAutoPlay;
 
     [Header("If Always")]
@@ -43,6 +44,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         {
             GameKeyManager.Instance.SetBoolValue(_activateCutsceneName.ToString(), true);
             GetComponent<BoxCollider2D>().enabled = false;
+            if (_activateCollider != null)
+            {
+                _activateCollider.enabled = true;
+            }
         }
         GameManager.Instance.StateMachine.Pop();
     }

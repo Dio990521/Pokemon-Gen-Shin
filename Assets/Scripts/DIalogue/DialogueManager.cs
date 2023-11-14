@@ -70,11 +70,7 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             yield return TypeDialogue(line);
             yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
-            if (line != dialogue.Lines[dialogue.Lines.Count - 1])
-            {
-                AudioManager.Instance.PlaySE(SFX.CONFIRM);
-            }
-            
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
         }
 
         dialogueBox.SetActive(false);
