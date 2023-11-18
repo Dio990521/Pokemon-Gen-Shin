@@ -236,6 +236,13 @@ public class Pokemon
         CureStatus();
     }
 
+    public void GameOverHeal()
+    {
+        Hp = 1;
+        OnHpChanged?.Invoke();
+        CureStatus();
+    }
+
     public LearnableMove GetLearnableMoveAtCurrentLevel()
     {
         return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();

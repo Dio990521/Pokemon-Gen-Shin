@@ -41,11 +41,20 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable
         yield return AudioManager.Instance.StopMusic(true);
         GameManager.Instance.PauseGame(true);
         var player = GameManager.Instance.PlayerController;
-        player.Character.SetPositionAndSnapToTile(new Vector2(-64.5f, 135.65f));
-        player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         var playerParty = player.GetComponent<PokemonParty>();
+        if (GameKeyManager.Instance.GetBoolValue(CutsceneName.第一次来提瓦特.ToString()))
+        {
+            player.Character.SetPositionAndSnapToTile(new Vector2(-64.5f, 135.65f));
+        }
+        else
+        {
+            player.Character.SetPositionAndSnapToTile(new Vector2(-8.5f, -22.5f));
+        }
         playerParty.Pokemons.ForEach(p => p.Heal());
         playerParty.PartyUpdated();
+        player.Character.Animator.SetFacingDirection(FacingDirection.Down);
+        
+
         yield return new WaitForSeconds(1f);
         GameManager.Instance.PauseGame(false);
     }

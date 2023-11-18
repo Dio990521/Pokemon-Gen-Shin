@@ -173,60 +173,64 @@ public class RunTurnState : State<BattleSystem>
             {
                 yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
             }
-            else if (move.MoveBase.Category == MoveCategory.Healing)
+            else
             {
-                if (sourceUnit.IsPlayerUnit)
+                if (move.MoveBase.Category == MoveCategory.Healing)
                 {
-                    foreach (var pokemon in _playerParty.Pokemons)
+                    if (sourceUnit.IsPlayerUnit)
                     {
-                        pokemon.IncreaseHP(move.MoveBase.Power);
-                    }
-                    yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了{move.MoveBase.Power}HP！");
-                }
-                else
-                {
-                    if (_isTrainerBattle)
-                    {
-                        foreach (var pokemon in _trainerParty.Pokemons)
+                        foreach (var pokemon in _playerParty.Pokemons)
                         {
                             pokemon.IncreaseHP(move.MoveBase.Power);
                         }
-                        yield return _dialogueBox.TypeDialogue($"对方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                        yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了{move.MoveBase.Power}HP！");
                     }
                     else
                     {
-                        _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power);
-                        yield return _dialogueBox.TypeDialogue($"对方恢复了{move.MoveBase.Power}HP！");
+                        if (_isTrainerBattle)
+                        {
+                            foreach (var pokemon in _trainerParty.Pokemons)
+                            {
+                                pokemon.IncreaseHP(move.MoveBase.Power);
+                            }
+                            yield return _dialogueBox.TypeDialogue($"对方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                        }
+                        else
+                        {
+                            _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power);
+                            yield return _dialogueBox.TypeDialogue($"对方恢复了{move.MoveBase.Power}HP！");
+                        }
+
                     }
-                    
-                }
-                
-                yield return new WaitForSeconds(1f);
-            }
-            else
-            {
-                DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
-                isElementReaction = damageDetails.IsElementReaction;
-                if (damageDetails.Effectiveness > 1f)
-                {
-                    AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
-                }
-                else if (damageDetails.Damage == 0 || damageDetails.Effectiveness < 1f)
-                {
-                    AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
+
+                    yield return new WaitForSeconds(1f);
                 }
                 else
                 {
-                    AudioManager.Instance.PlaySE(SFX.ATTACK);
+                    DamageDetails damageDetails = targetUnit.pokemon.TakeDamage(move, sourceUnit.pokemon);
+                    isElementReaction = damageDetails.IsElementReaction;
+                    if (damageDetails.Effectiveness > 1f)
+                    {
+                        AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                    }
+                    else if (damageDetails.Damage == 0 || damageDetails.Effectiveness < 1f)
+                    {
+                        AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
+                    }
+                    else
+                    {
+                        AudioManager.Instance.PlaySE(SFX.ATTACK);
+                    }
+                    yield return targetUnit.Hud.WaitForHPUpdate();
+                    yield return ShowDamageDetials(sourceUnit.pokemon, targetUnit.pokemon, damageDetails);
                 }
-                yield return targetUnit.Hud.WaitForHPUpdate();
-                yield return ShowDamageDetials(sourceUnit.pokemon, targetUnit.pokemon, damageDetails);
+
+                if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
+                {
+                    yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
+                }
             }
 
-            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
-            {
-                yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
-            }
 
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
                 && targetUnit.pokemon.Hp > 0)
@@ -268,7 +272,14 @@ public class RunTurnState : State<BattleSystem>
 
         if (effects.Status != ConditionID.none)
         {
-            target.SetStatus(effects.Status);
+            if (moveTarget == MoveTarget.Self)
+            {
+                source.SetStatus(effects.Status);
+            }
+            else
+            {
+                target.SetStatus(effects.Status);
+            }
         }
 
         if (!isElementReaction && effects.ElementStatus != ConditionID.none)
@@ -509,7 +520,7 @@ public class RunTurnState : State<BattleSystem>
 
         if (_isTrainerBattle || BattleState.I.BossPokemon != null)
         {
-            _isRunSuccessful = false;
+            _isRunSuccessful = true;
             yield return _dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
             _battleSystem.StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
