@@ -41,6 +41,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private Achievement _achievement;
     public bool HasPassiveMove = true;
     [SerializeField] private PassiveMoveBase passiveMove;
+    [SerializeField] private bool isSlime;
 
     public static int MaxNumOfMoves { get; set; } = 4;
 
@@ -83,6 +84,7 @@ public class PokemonBase : ScriptableObject
     public bool IsEvoState { get => _isEvoState; set => _isEvoState = value; }
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
     public bool IsLargePortrait { get => isLargePortrait; set => isLargePortrait = value; }
+    public bool IsSlime { get => isSlime; set => isSlime = value; }
 }
 
 

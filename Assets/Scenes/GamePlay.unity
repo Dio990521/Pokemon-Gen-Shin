@@ -4673,9 +4673,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wildPokemons:
-  - pokemon: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
+  - pokemon: {fileID: 11400000, guid: 4d3e2fb3e9e54d2408c6b58dd51c2888, type: 2}
     levelRange: {x: 34, y: 34}
-    chancePercentage: 100
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 0d0ab13a7f7a343458cdd138f9d6cc61, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: fd7cb91f12a9eec4793e5577ee8ab64b, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 5ffe5814f0434ff4292dd6d3a7bc9150, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 8fd22f014b0523d4198453a7c1441e94, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 7e4733b3332a53b4b8f3bddec1c62f91, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 6a2250b8d14b4f046a6b3246ee905905, type: 2}
+    levelRange: {x: 34, y: 34}
+    chancePercentage: 10
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
   wildPokemonsInCave: []
@@ -11200,23 +11218,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 25
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].level
-      value: 25
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].level
-      value: 30
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[3].level
-      value: 30
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[4].level
@@ -11225,19 +11243,19 @@ PrefabInstance:
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 3f2f3c1d6e928fa48a00792eccbc8a85, type: 2}
+      objectReference: {fileID: 11400000, guid: 1c5fcfe26a01b6d448ba19c1d1fa746b, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 6d9b7c0729422f442b50d6f363087c3e, type: 2}
+      objectReference: {fileID: 11400000, guid: 58733aedf71312147aa5415b63e89c9d, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 7c4ee8ea46b310440b3ce04d4cf557a3, type: 2}
+      objectReference: {fileID: 11400000, guid: dbd3dc78ee12edf40a0c3f1a970609a0, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[3].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 146156e621cea8d43b57737677e7caff, type: 2}
+      objectReference: {fileID: 11400000, guid: 9fff6a1e7e4aae847af55f0bae5d5566, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[4].pokemonBase
       value: 

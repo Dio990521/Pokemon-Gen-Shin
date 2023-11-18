@@ -1276,9 +1276,17 @@ PrefabInstance:
       propertyPath: footStepMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 1882de302893c7e45a0dce2445a2b2c5, type: 2}
+    - target: {fileID: 3192666759394679999, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
+      propertyPath: defaultDirection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4954264030492881491, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
       propertyPath: m_Size.y
-      value: 4
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4954264030492881491, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5466239676824743230, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
       propertyPath: pokemons.Array.size
@@ -1308,6 +1316,10 @@ PrefabInstance:
       propertyPath: pokemons.Array.data[2].pokemonBase
       value: 
       objectReference: {fileID: 11400000, guid: 9554bcebb263f0e4b86a5cd0ec24e75d, type: 2}
+    - target: {fileID: 6102055337917365067, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6618800400224633837, guid: 864eef48028e6a54280c9410e28a8d13, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.79

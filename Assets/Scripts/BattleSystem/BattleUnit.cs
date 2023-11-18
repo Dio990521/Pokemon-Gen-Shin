@@ -68,6 +68,26 @@ public class BattleUnit : MonoBehaviour
         hud.SetData(selectedPokemon);
     }
 
+    public void SetNewTrainerPokemon(Pokemon selectedPokemon)
+    {
+        pokemon = selectedPokemon;
+        level = pokemon.Level;
+        if (selectedPokemon.PokemonBase.IsLargePortrait)
+        {
+            _pokemonSprite.rectTransform.sizeDelta = new Vector2(800f, 500f);
+        }
+        else
+        {
+            _pokemonSprite.rectTransform.sizeDelta = new Vector2(400f, 450f);
+        }
+        _pokemonSprite.sprite = isPlayerUnit ? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
+        _pokemonSprite.SetNativeSize();
+        _pokemonSprite.color = originalColor;
+        _pokemonSprite.rectTransform.localPosition = new Vector3(0f, 10f, 0f);
+        var sequence = DOTween.Sequence();
+        sequence.Append(_pokemonSprite.DOFade(1f, 0.01f));
+    }
+
     public void SetDefaultPlayerSprite()
     {
         _pokemonSprite.sprite = defaultPlayerSprite;

@@ -171,7 +171,7 @@ public class RunTurnState : State<BattleSystem>
             bool isElementReaction = false;
             if (move.MoveBase.Category == MoveCategory.Status)
             {
-                yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
+                yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
             }
             else if (move.MoveBase.Category == MoveCategory.Healing)
             {
@@ -211,7 +211,7 @@ public class RunTurnState : State<BattleSystem>
                 {
                     AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
                 }
-                else if (damageDetails.Effectiveness < 1f)
+                else if (damageDetails.Damage == 0 || damageDetails.Effectiveness < 1f)
                 {
                     AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
                 }
@@ -225,7 +225,7 @@ public class RunTurnState : State<BattleSystem>
 
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
             {
-                yield return RunMoveEffects(move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
+                yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
             }
 
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
@@ -236,7 +236,7 @@ public class RunTurnState : State<BattleSystem>
                     var rnd = UnityEngine.Random.Range(1, 101);
                     if (rnd <= secondary.Chance)
                     {
-                        yield return RunMoveEffects(secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
+                        yield return RunMoveEffects(move.MoveBase, secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
                     }
                 }
             }
@@ -252,7 +252,7 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator RunMoveEffects(MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget, bool isElementReaction=false)
+    private IEnumerator RunMoveEffects(MoveBase moveBase, MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget, bool isElementReaction=false)
     {
         if (effects.Boosts != null)
         {
@@ -273,7 +273,10 @@ public class RunTurnState : State<BattleSystem>
 
         if (!isElementReaction && effects.ElementStatus != ConditionID.none)
         {
-            target.SetElementStatus(effects.ElementStatus);
+            if (!(target.PokemonBase.IsSlime && moveBase.Type == target.PokemonBase.Type1))
+            {
+                target.SetElementStatus(effects.ElementStatus);
+            }
         }
 
         yield return ShowStatusChanges(source);
@@ -455,6 +458,11 @@ public class RunTurnState : State<BattleSystem>
 
     private IEnumerator ShowDamageDetials(Pokemon sourceUnit, Pokemon targetUnit, DamageDetails damageDetails)
     {
+        if (damageDetails.Damage == 0)
+        {
+            yield return _dialogueBox.TypeDialogue($"{targetUnit.PokemonBase.PokemonName}免疫了此元素攻击！");
+            yield break;
+        }
         if (damageDetails.IsKuosan)
         {
             yield return _dialogueBox.TypeDialogue("扩散的元素反应发生了！");

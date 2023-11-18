@@ -67,7 +67,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
         if (!IsBattleLost)
         {
-            AudioManager.Instance.PlayMusic(MeetBGM);
+            if (meetBGM != BGM.NONE)
+                AudioManager.Instance.PlayMusic(MeetBGM);
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
             GameManager.Instance.StartTrainerBattle(this);
         }
@@ -87,7 +88,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
-        AudioManager.Instance.PlayMusic(MeetBGM);
+        if (meetBGM != BGM.NONE)
+            AudioManager.Instance.PlayMusic(MeetBGM);
         // Show exclamation
         exclamation.SetActive(true);
         yield return new WaitForSeconds(0.5f);

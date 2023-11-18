@@ -134,7 +134,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
@@ -149,7 +149,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.ChangeUnit(enemyPokemon, true);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
             
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
 
             // Send out first pokemon of the player
             _playerImage.gameObject.SetActive(false);
@@ -185,7 +185,7 @@ public class BattleSystem : MonoBehaviour
                 //trainer切入
                 yield return _enemyUnit.MoveTrainerImage(300f, false, 1f);
 
-                yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}！");
+                yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}");
                 Wallet.I.AddMoney(trainer.WinMoney, false);
                 yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
             }
@@ -237,7 +237,17 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator SendNextTrainerPokemon()
     {
         var nextPokemon = TrainerParty.GetHealthyPokemon();
-        _enemyUnit.SetUp(nextPokemon);
+        _enemyUnit.PokemonSprite.enabled = false;
+        _enemyUnit.SetNewTrainerPokemon(nextPokemon);
+        _enemyUnit.Pokeball.DOFade(1f, 0.01f);
+        _enemyUnit.Pokeball.sprite = _enemyUnit.PokeballCloseSprite;
+        yield return new WaitForSeconds(0.5f);
+        _enemyUnit.Pokeball.sprite = _enemyUnit.PokeballOpenSprite;
+        _enemyUnit.Pokeball.DOFade(0f, 0.5f);
+        yield return new WaitForSeconds(0.2f);
+        _enemyUnit.PokemonSprite.enabled = true;
+        _enemyUnit.UnitChangeAnimation();
+        _enemyUnit.Hud.SetData(nextPokemon);
         yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
     }
 

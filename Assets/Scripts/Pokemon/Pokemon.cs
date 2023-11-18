@@ -322,30 +322,38 @@ public class Pokemon
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
 
         float elementReactionRate = 1f;
-        if (move.MoveBase.Effects.ElementStatus == ConditionID.none)
+        if (!(pokemonBase.IsSlime && move.MoveBase.Type == pokemonBase.Type1))
         {
-            if (attacker.ElementStatus != null)
+            if (move.MoveBase.Effects.ElementStatus == ConditionID.none)
             {
-                damageDetails.IsNoneElement = true;
-                if (ElementStatus == null)
+                if (attacker.ElementStatus != null)
                 {
-                    SetElementStatus(attacker.ElementStatus.Id);
-                }
-                else
-                {
-                    move.MoveBase.Effects.ElementStatus = attacker.ElementStatus.Id;
-                    elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
-                    move.MoveBase.Effects.ElementStatus = ConditionID.none;
+                    damageDetails.IsNoneElement = true;
+                    if (ElementStatus == null)
+                    {
+                        SetElementStatus(attacker.ElementStatus.Id);
+                    }
+                    else
+                    {
+                        move.MoveBase.Effects.ElementStatus = attacker.ElementStatus.Id;
+                        elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+                        move.MoveBase.Effects.ElementStatus = ConditionID.none;
+                    }
                 }
             }
+            else
+            {
+                elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+            }
         }
-        else
-        {
-            elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
-        }
+
         damageDetails.StatusName = Status?.Name;
         float modifiers = UnityEngine.Random.Range(0.85f, 1f);
         int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
+        if (pokemonBase.IsSlime && move.MoveBase.Type == pokemonBase.Type1)
+        {
+            damage = 0;
+        }
         DecreaseHP(damage);
         damageDetails.Damage = damage;
         return damageDetails;
