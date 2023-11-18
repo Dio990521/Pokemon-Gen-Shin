@@ -37,7 +37,9 @@ public enum SFX
     PC_ON,
     PC_OFF,
     PC_OPERATE,
-    LOCK
+    LOCK,
+    BALL_BOUNCE,
+    BALL_SHAKE,
 }
 
 public enum BGM

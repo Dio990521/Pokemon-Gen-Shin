@@ -19,7 +19,7 @@ public class RunTurnState : State<BattleSystem>
     private PokemonParty _trainerParty;
 
     private bool _isRunSuccessful;
-    public bool ThrowSucess;
+    public bool EnemyContinue;
 
 
     private void Awake()
@@ -39,7 +39,7 @@ public class RunTurnState : State<BattleSystem>
         _wildPokemon = owner.WildPokemon;
         _trainerParty = owner.TrainerParty;
         _isRunSuccessful = false;
-        ThrowSucess = false;
+        EnemyContinue = false;
         StartCoroutine(RunTurns(_battleSystem.SelectedAction));
 }
 
@@ -109,7 +109,7 @@ public class RunTurnState : State<BattleSystem>
                 if (_battleSystem.SelectedItem is PokeballItem)
                 {
                     yield return _battleSystem.ThrowPokeball(_battleSystem.SelectedItem as PokeballItem);
-                    if (ThrowSucess)
+                    if (!EnemyContinue)
                     {
                         yield break;
                     }

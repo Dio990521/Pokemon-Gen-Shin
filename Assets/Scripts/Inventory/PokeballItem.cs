@@ -8,6 +8,7 @@ public class PokeballItem : ItemBase
 {
     [SerializeField] private float catchRateModifier = 1;
     [SerializeField] private Sprite inBattleIcon;
+    [SerializeField] private Sprite openIcon;
     [SerializeField] private PokeballType ballType;
 
     public override bool CanUseOutsideBattle => false;
@@ -20,6 +21,8 @@ public class PokeballItem : ItemBase
 
     public float CatchRateModifier => catchRateModifier;
     public Sprite InBattleIcon => inBattleIcon;
+
+    public Sprite OpenIcon { get => openIcon; set => openIcon = value; }
 }
 
 public enum PokeballType
@@ -27,7 +30,6 @@ public enum PokeballType
     Guaishou,
     Gaoji,
     Chaoji,
-    Random,
     Iron,
     FiveFive,
     Beast,

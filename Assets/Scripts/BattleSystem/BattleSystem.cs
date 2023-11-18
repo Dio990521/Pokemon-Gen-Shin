@@ -3,6 +3,7 @@ using PokeGenshinUtils.StateMachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -256,7 +257,7 @@ public class BattleSystem : MonoBehaviour
         _dialogueBox.EnableActionSelector(false);
         if (IsTrainerBattle)
         {
-            RunTurnState.I.ThrowSucess = false;
+            RunTurnState.I.EnemyContinue = false;
             yield return _dialogueBox.TypeDialogue($"你不能偷对方的宝可梦！");
             StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
@@ -264,19 +265,23 @@ public class BattleSystem : MonoBehaviour
 
         if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
         {
-            RunTurnState.I.ThrowSucess = false;
-            yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
-            StateMachine.ChangeState(ActionSelectionState.I);
-            yield break;
+            if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
+            {
+                RunTurnState.I.EnemyContinue = false;
+                yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
+                StateMachine.ChangeState(ActionSelectionState.I);
+                yield break;
+            }
+
+            if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
+            {
+                RunTurnState.I.EnemyContinue = false;
+                yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
+                StateMachine.ChangeState(ActionSelectionState.I);
+                yield break;
+            }
         }
 
-        if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
-        {
-            RunTurnState.I.ThrowSucess = false;
-            yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
-            StateMachine.ChangeState(ActionSelectionState.I);
-            yield break;
-        }
 
         yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         AudioManager.Instance.PlaySE(SFX.THROW_BALL);
@@ -289,16 +294,49 @@ public class BattleSystem : MonoBehaviour
         var ballDest = _enemyUnit.transform.position + new Vector3(0f, 5f, 0);
         var originPos = _enemyUnit.transform.position;
         yield return pokeball.transform.DOJump(ballDest, 2f, 1, 1f).WaitForCompletion();
-        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
-        yield return _enemyUnit.PlayCaptureAnimation(ballDest);
-        pokeball.transform.DOMoveY(5f, 0.5f).WaitForCompletion();
 
+        if (pokeballItem.BallType == PokeballType.Iron) 
+        {
+            yield return pokeball.transform.DOJump(ballDest + new Vector3(10f, 3f, 0), 3f, 1, 1.5f);
+            AudioManager.Instance.PlaySE(SFX.ATTACK);
+            if (UnityEngine.Random.Range(0, 100) < 2)
+            {
+                AudioManager.Instance.PlaySE(SFX.EFFICIENT_ATTACK);
+                _enemyUnit.pokemon.DecreaseHP(99999);
+                yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}被砸得眼冒金星！");
+                RunTurnState.I.EnemyContinue = false;
+                yield return BattleOver(true, false);
+            }
+            else
+            {
+                AudioManager.Instance.PlaySE(SFX.LOW_ATTACK);
+                _enemyUnit.pokemon.DecreaseHP(1);
+                yield return _dialogueBox.TypeDialogue($"对{_enemyUnit.pokemon.PokemonBase.PokemonName}造成了1点伤害！");
+                RunTurnState.I.EnemyContinue = true;
+            }
+            yield break;
+        }
+
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
+        pokeball.sprite = pokeballItem.OpenIcon;
+        yield return _enemyUnit.PlayCaptureAnimation(ballDest);
+        pokeball.sprite = pokeballItem.InBattleIcon;
+        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        yield return pokeball.transform.DOMoveY(5f, 1f)
+            .SetEase(Ease.OutBounce)
+            .SetLoops(1, LoopType.Yoyo);
+        yield return new WaitForSeconds(0.7f);
+        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        yield return new WaitForSeconds(0.3f);
+        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        yield return new WaitForSeconds(0.15f);
         int shakeCount = TryToCatchPokemon(_enemyUnit.pokemon, pokeballItem);
 
         for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
         {
             yield return new WaitForSeconds(0.5f);
-            yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 10f), 0.8f).WaitForCompletion();
+            AudioManager.Instance.PlaySE(SFX.BALL_SHAKE);
+            yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 20f), 1f).WaitForCompletion();
         }
 
         if (shakeCount == 4)
@@ -315,7 +353,7 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return _dialogueBox.TypeDialogue($"由于队伍已满，\n{_enemyUnit.pokemon.PokemonBase.PokemonName}被送进了仓库！");
             }
-            RunTurnState.I.ThrowSucess = true;
+            RunTurnState.I.EnemyContinue = false;
             Destroy(pokeballObj);
             yield return BattleOver(true, true);
         }
@@ -324,11 +362,10 @@ public class BattleSystem : MonoBehaviour
             // Pokemon broke out
             yield return new WaitForSeconds(1f);
             pokeball.DOFade(0, 0.2f);
-            yield return _enemyUnit.PlayBreakOutAnimation(originPos);
-
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
+            yield return _enemyUnit.PlayBreakOutAnimation(originPos);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}破球而出了！");
-            RunTurnState.I.ThrowSucess = false;
+            RunTurnState.I.EnemyContinue = true;
             Destroy(pokeballObj);
         }
     }
@@ -346,12 +383,6 @@ public class BattleSystem : MonoBehaviour
             case PokeballType.FiveFive:
                 int prob = UnityEngine.Random.Range(0, 100);
                 return prob >= 50 ? 4 : 1;
-            case PokeballType.Random:
-                // TODO
-                return 2;
-            case PokeballType.Iron:
-                // TODO
-                return 2;
 
         }
 

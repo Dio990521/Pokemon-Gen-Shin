@@ -5085,14 +5085,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.size
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[31]
-      value: 
-      objectReference: {fileID: 8300000, guid: 91ce7081bbe388f49a27155d7c503bc2, type: 3}
     - target: {fileID: 6592376188683337259, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5140,6 +5132,10 @@ PrefabInstance:
     - target: {fileID: 6592376188683337261, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6833738948142272999, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: m_Volume
+      value: 0.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10802,7 +10798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.size
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: tmSlots.Array.data[1].item
@@ -10817,16 +10813,64 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 07dc802c99f25ef49b71782f895145cd, type: 2}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: fd6e6dfb23a333040b14fab2fc17599f, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 9d3952dd24c0fb646b2ada445521b399, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[5].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 7e3d366e8ff1c1b48883bb75e9239a32, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[6].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 563c415084e40174c9fe2ff8e6331c97, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[7].item
+      value: 
+      objectReference: {fileID: 11400000, guid: aee01af5b9531c942ab3220c849afbf7, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[8].item
+      value: 
+      objectReference: {fileID: 11400000, guid: aee01af5b9531c942ab3220c849afbf7, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[0].count
-      value: 15
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[1].count
-      value: 11
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[2].count
-      value: 50
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[3].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[4].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[5].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[6].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[7].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[8].count
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3957298469484442498, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -13230,7 +13274,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7370949369532372686, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7374275840444811206, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -13331,6 +13375,10 @@ PrefabInstance:
     - target: {fileID: 7649853443611003772, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: MoveSpeed
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7670984964727255585, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Text
+      value: "\u6355\u83B7\u5730\u70B9"
       objectReference: {fileID: 0}
     - target: {fileID: 7699751219924840636, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14133,7 +14181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23a90a4b5622484dafb0a743ca8dd16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThrowSucess: 0
+  EnemyContinue: 0
 --- !u!114 &4963794604952134823
 MonoBehaviour:
   m_ObjectHideFlags: 0
