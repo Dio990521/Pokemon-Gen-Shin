@@ -181,11 +181,7 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlayMusic(trainer.WinBGM);
                 yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
-
-                //todo
-                //trainer切入
                 yield return _enemyUnit.MoveTrainerImage(300f, false, 1f);
-
                 yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}");
                 Wallet.I.AddMoney(trainer.WinMoney, false);
                 yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
@@ -255,6 +251,7 @@ public class BattleSystem : MonoBehaviour
     public IEnumerator ThrowPokeball(PokeballItem pokeballItem)
     {
         _dialogueBox.EnableActionSelector(false);
+
         if (IsTrainerBattle)
         {
             RunTurnState.I.EnemyContinue = false;
@@ -262,24 +259,30 @@ public class BattleSystem : MonoBehaviour
             StateMachine.ChangeState(ActionSelectionState.I);
             yield break;
         }
-
-        if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
+        else if (BattleState.I.IsSuperBoss)
         {
-            if (pokeballItem.BallType == PokeballType.Genshin && !_enemyUnit.pokemon.PokemonBase.IsHuman)
-            {
-                RunTurnState.I.EnemyContinue = false;
-                yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
-                StateMachine.ChangeState(ActionSelectionState.I);
-                yield break;
-            }
+            RunTurnState.I.EnemyContinue = false;
+            yield return _dialogueBox.TypeDialogue($"你不能捕捉这个宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
+            yield break;
+        }
 
-            if (pokeballItem.BallType != PokeballType.Genshin && _enemyUnit.pokemon.PokemonBase.IsHuman)
-            {
-                RunTurnState.I.EnemyContinue = false;
-                yield return _dialogueBox.TypeDialogue($"精灵球只能用于捕捉\n非人型宝可梦！");
-                StateMachine.ChangeState(ActionSelectionState.I);
-                yield break;
-            }
+        if ((pokeballItem.BallType == PokeballType.EX_Genshin || pokeballItem.BallType == PokeballType.Genshin) 
+            && !_enemyUnit.pokemon.PokemonBase.IsHuman)
+        {
+            RunTurnState.I.EnemyContinue = false;
+            yield return _dialogueBox.TypeDialogue($"纠缠之缘只能用于捕捉\n人型宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
+            yield break;
+        }
+
+        if (pokeballItem.BallType != PokeballType.EX_Genshin && pokeballItem.BallType != PokeballType.Genshin
+            && _enemyUnit.pokemon.PokemonBase.IsHuman)
+        {
+            RunTurnState.I.EnemyContinue = false;
+            yield return _dialogueBox.TypeDialogue($"这种球只能用于捕捉\n非人型宝可梦！");
+            StateMachine.ChangeState(ActionSelectionState.I);
+            yield break;
         }
 
 
@@ -321,11 +324,11 @@ public class BattleSystem : MonoBehaviour
         pokeball.sprite = pokeballItem.OpenIcon;
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
-        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         yield return pokeball.transform.DOMoveY(5f, 1f)
             .SetEase(Ease.OutBounce)
             .SetLoops(1, LoopType.Yoyo);
-        yield return new WaitForSeconds(0.7f);
+        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        yield return new WaitForSeconds(0.65f);
         AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         yield return new WaitForSeconds(0.3f);
         AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
@@ -347,6 +350,10 @@ public class BattleSystem : MonoBehaviour
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             _enemyUnit.pokemon.PokeballSpriteType = pokeballItem.BallType;
             _enemyUnit.pokemon.CatchPlace = GameManager.Instance.CurrentScene.MapName;
+            if (pokeballItem.BallType == PokeballType.EX_Genshin || pokeballItem.BallType == PokeballType.EX_Guaishou)
+            {
+                _enemyUnit.pokemon.SetBestBias();
+            }
             PlayerParty.AddPokemonToParty(_enemyUnit.pokemon);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
             if (_partyScreen.Pokemons.Count >= 6)

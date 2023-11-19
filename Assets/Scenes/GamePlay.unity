@@ -7723,7 +7723,7 @@ PrefabInstance:
       objectReference: {fileID: 610436584}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[0]
@@ -7736,29 +7736,33 @@ PrefabInstance:
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[2]
       value: 
-      objectReference: {fileID: -200272479, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+      objectReference: {fileID: -433574098, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
+      objectReference: {fileID: -1735976255, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[4]
       value: 
-      objectReference: {fileID: 1074228615, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+      objectReference: {fileID: -1798845923, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[5]
       value: 
-      objectReference: {fileID: -1114150182, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+      objectReference: {fileID: -1735976255, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[6]
       value: 
-      objectReference: {fileID: -433574098, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+      objectReference: {fileID: -200272479, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[7]
       value: 
-      objectReference: {fileID: -1683560377, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+      objectReference: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
     - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
       propertyPath: PokeballSprites.Array.data[8]
+      value: 
+      objectReference: {fileID: -1683560377, guid: ec5197bbb8ffcdc49b8e8cec7ea05c3b, type: 3}
+    - target: {fileID: 8343113941151216221, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: PokeballSprites.Array.data[9]
       value: 
       objectReference: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
     m_RemovedComponents:
@@ -10794,11 +10798,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.size
-      value: 2
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.size
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: tmSlots.Array.data[1].item
@@ -10807,6 +10811,102 @@ PrefabInstance:
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: tmSlots.Array.data[1].count
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[2].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 112727a3fdd29654280456034e3dfd48, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[3].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 2042bae1f0b21b649b8507586a100ff1, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[4].item
+      value: 
+      objectReference: {fileID: 11400000, guid: e7b5df312df572345a753fc80647b195, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[5].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 2023daac4140338498fec381ff0ee698, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[6].item
+      value: 
+      objectReference: {fileID: 11400000, guid: eee3f11f9372d7042ab0bb4c5773f54e, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[7].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 36a8913ca16a09248abc5b2b704dbb8f, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[8].item
+      value: 
+      objectReference: {fileID: 11400000, guid: bbe747dd4c37ef845b1ce4e2b53c04f0, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[9].item
+      value: 
+      objectReference: {fileID: 11400000, guid: ba8bbc11839908b41986ffddeb1dadcf, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[10].item
+      value: 
+      objectReference: {fileID: 11400000, guid: d2e957436035ce74995c2ce991efcde9, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[11].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 104e902b983c37b4cbfb6efa3b7114b9, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[12].item
+      value: 
+      objectReference: {fileID: 11400000, guid: 9f123eb3d8643ea41ab38d9bba1f16c1, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[13].item
+      value: 
+      objectReference: {fileID: 11400000, guid: f9cb3ed8b87ed36469f0e3bdd0722373, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[2].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[3].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[4].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[5].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[6].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[7].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[8].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[9].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[10].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[11].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[12].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: itemSlots.Array.data[13].count
+      value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[2].item
@@ -10835,11 +10935,19 @@ PrefabInstance:
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[8].item
       value: 
-      objectReference: {fileID: 11400000, guid: aee01af5b9531c942ab3220c849afbf7, type: 2}
+      objectReference: {fileID: 11400000, guid: 32f9dbee2e57f7741a5adc99135c5236, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[9].item
+      value: 
+      objectReference: {fileID: 11400000, guid: b061ddc6fea808a4e96d9509435867cd, type: 2}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[0].count
       value: 99
       objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[10].item
+      value: 
+      objectReference: {fileID: 11400000, guid: b061ddc6fea808a4e96d9509435867cd, type: 2}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[1].count
       value: 99
@@ -10870,6 +10978,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[8].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[9].count
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: pokeballSlots.Array.data[10].count
       value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 3957298469484442498, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -10927,6 +11043,10 @@ PrefabInstance:
     - target: {fileID: 4073898176326922165, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4113808842984631265, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Text
+      value: "\u901F\u5EA6"
       objectReference: {fileID: 0}
     - target: {fileID: 4196703457352691429, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -13274,7 +13394,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7370949369532372686, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7374275840444811206, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

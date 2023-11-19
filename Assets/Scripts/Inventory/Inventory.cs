@@ -107,7 +107,7 @@ public class Inventory : MonoBehaviour, ISavable
 
     private ItemCategory GetCategoryFromItem(ItemBase item)
     {
-        if (item is RecoveryItem || item is EvolutionItem)
+        if (item is RecoveryItem || item is EvolutionItem || item is BoostItem)
         {
             return ItemCategory.Items;
         }

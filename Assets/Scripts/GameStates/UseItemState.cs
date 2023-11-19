@@ -50,7 +50,30 @@ public class UseItemState : State<GameManager>
                 }
                 else
                 {
-                    yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
+                    yield return DialogueManager.Instance.ShowDialogueText("什么也没有发生！");
+                    _gameManager.StateMachine.Pop();
+                    yield break;
+                }
+            }
+            else if (item is BoostItem)
+            {
+                var boostItem = item as BoostItem;
+                if (boostItem.IsExBoost)
+                {
+                    pokemon.AddExStatusBias(boostItem.BoostValue);
+                    yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}突破了自我！");
+                }
+                else
+                {
+                    if (pokemon.TryAddBias(boostItem.BoostValue))
+                    {
+                        yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}好像变强了！");
+                        _inventory.UseItem(item, _partyScreen.SelectedMember);
+                    }
+                    else
+                    {
+                        yield return DialogueManager.Instance.ShowDialogueText("什么也没有发生！");
+                    }
                     _gameManager.StateMachine.Pop();
                     yield break;
                 }

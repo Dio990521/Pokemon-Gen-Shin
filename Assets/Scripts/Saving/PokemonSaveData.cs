@@ -13,6 +13,7 @@ public class PokemonSaveData
     public List<MoveSaveData> Moves;
     public string PassiveMoveName;
     public int[] StatusBias;
+    public int[] EXStatusBias;
     public PokeballType PokeBall;
 }
 

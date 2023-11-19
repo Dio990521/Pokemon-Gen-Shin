@@ -11,6 +11,7 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private PokemonType type1;
     [SerializeField] private PokemonType type2;
     [SerializeField] private bool isHuman;
+    [SerializeField] private bool canBeCatch;
     [SerializeField] private int maxHp;
     [SerializeField] private int attack;
     [SerializeField] private int defense;
@@ -85,6 +86,7 @@ public class PokemonBase : ScriptableObject
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
     public bool IsLargePortrait { get => isLargePortrait; set => isLargePortrait = value; }
     public bool IsSlime { get => isSlime; set => isSlime = value; }
+    public bool CanBeCatch { get => canBeCatch; set => canBeCatch = value; }
 }
 
 
@@ -95,6 +97,7 @@ public enum Stat
     特攻,
     特防,
     速度,
+    生命,
     命中率,
     闪避率,
 }

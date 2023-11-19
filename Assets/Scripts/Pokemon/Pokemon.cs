@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class Pokemon
     [SerializeField] private int level;
     private string _catchPlace;
     private int[] _statusBias;
+    private int[] _exStatusBias;
 
     public Pokemon(PokemonBase pBase, int pLevel)
     {
@@ -54,6 +56,7 @@ public class Pokemon
         Level = saveData.Level;
         Exp = saveData.Exp;
         _statusBias = saveData.StatusBias;
+        _exStatusBias = saveData.EXStatusBias;
         PokeballSpriteType = saveData.PokeBall;
 
         if (saveData.StatusId != null)
@@ -82,6 +85,7 @@ public class Pokemon
     public void Init()
     {
         _statusBias = new int[6];
+        _exStatusBias = new int[6];
         System.Random ran = new System.Random();
         for (int i = 0; i < _statusBias.Length; ++i)
         {
@@ -127,6 +131,7 @@ public class Pokemon
             StatusId = Status?.Id,
             Moves = Moves.Select(m => m.GetSaveData()).ToList(),
             StatusBias = _statusBias,
+            EXStatusBias = _exStatusBias,
             PokeBall = PokeballSpriteType
         };
 
@@ -142,16 +147,16 @@ public class Pokemon
     {
         Stats = new Dictionary<Stat, int>
             {
-                { Stat.¹¥»÷, Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + _statusBias[0] },
-                { Stat.·ÀÓù, Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + _statusBias[1] },
-                { Stat.ÌØ¹¥, Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + _statusBias[2] },
-                { Stat.ÌØ·À, Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + _statusBias[3] },
-                { Stat.ËÙ¶È, Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + _statusBias[4] }
+                { Stat.¹¥»÷, Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + _statusBias[0] + _exStatusBias[0] },
+                { Stat.·ÀÓù, Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + _statusBias[1] + _exStatusBias[1]},
+                { Stat.ÌØ¹¥, Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + _statusBias[2] + _exStatusBias[2]},
+                { Stat.ÌØ·À, Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + _statusBias[3] + _exStatusBias[3]},
+                { Stat.ËÙ¶È, Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + _statusBias[4] + _exStatusBias[4]}
             };
 
 
         int oldMaxHp = MaxHp;
-        MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + _statusBias[5];
+        MaxHp = Mathf.FloorToInt(pokemonBase.MaxHp * Level / 100f) + Level + _statusBias[5] + _exStatusBias[5];
 
         if (oldMaxHp != 0)
         {
@@ -162,22 +167,70 @@ public class Pokemon
 
     public bool IsBestStatus(Stat status)
     {
-        switch (status)
+        if (status == Stat.ÉúÃü)
         {
-            case Stat.¹¥»÷:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Attack * Level / 100f) + 10;
-            case Stat.·ÀÓù:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Defense * Level / 100f) + 10;
-            case Stat.ÌØ¹¥:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpAttack * Level / 100f) + 10;
-            case Stat.ÌØ·À:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.SpDefense * Level / 100f) + 10;
-            case Stat.ËÙ¶È:
-                return Stats[status] == Mathf.FloorToInt(pokemonBase.Speed * Level / 100f) + 10;
-            default:
-                break;
+            return _statusBias[(int)status] == 20;
         }
-        return false;
+        return _statusBias[(int)status] == 10;
+    }
+
+    public bool TryAddBias(List<int> boostValue)
+    {
+        bool isBoost = false;
+        for (int i = 0; i < boostValue.Count - 1; ++i)
+        {
+            if (_statusBias[i] == 10 || boostValue[i] == 0)
+            {
+                continue;
+            }
+            if (_statusBias[i] + boostValue[i] >= 10)
+            {
+                _statusBias[i] = 10;
+                isBoost = true;
+            }
+            else
+            {
+                _statusBias[i] += boostValue[i];
+                isBoost = true;
+            }
+
+        }
+        if (!(_statusBias[5] == 20 || boostValue[5] == 0))
+        {
+            if (_statusBias[5] + boostValue[5] >= 20)
+            {
+                _statusBias[5] = 20;
+                isBoost = true;
+            }
+            else
+            {
+                _statusBias[5] += boostValue[5];
+                isBoost = true;
+            }
+        }
+
+        CalculateStats();
+        return isBoost;
+    }
+
+    public void SetBestBias()
+    {
+        for (int i = 0; i < _statusBias.Length; ++i)
+        {
+            _statusBias[i] = 10;
+
+        }
+        _statusBias[5] = 20;
+        CalculateStats();
+    }
+
+    public void AddExStatusBias(List<int> boostValue)
+    {
+        for (int i = 0; i < boostValue.Count; ++i)
+        {
+            _exStatusBias[i] += boostValue[i];
+        }
+        CalculateStats();
     }
 
     public int GetNextLevelExpLeft()

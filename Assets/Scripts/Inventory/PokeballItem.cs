@@ -35,5 +35,7 @@ public enum PokeballType
     Beast,
     Master,
     Genshin,
+    EX_Guaishou,
+    EX_Genshin,
     None,
 }

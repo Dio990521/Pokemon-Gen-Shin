@@ -111,7 +111,7 @@ public class PokemonInfoUI : MonoBehaviour
     {
         if (pokemon.IsBestStatus(Stat.攻击))
         {
-            _atk.color = Color.red;
+            _atk.color = Color.blue;
         }
         else
         {
@@ -119,7 +119,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         if (pokemon.IsBestStatus(Stat.防御))
         {
-            _dfs.color = Color.red;
+            _dfs.color = Color.blue;
         }
         else
         {
@@ -127,7 +127,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         if (pokemon.IsBestStatus(Stat.特攻))
         {
-            _satk.color = Color.red;
+            _satk.color = Color.blue;
         }
         else
         {
@@ -135,7 +135,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         if (pokemon.IsBestStatus(Stat.特防))
         {
-            _sdfs.color = Color.red;
+            _sdfs.color = Color.blue;
         }
         else
         {
@@ -143,7 +143,11 @@ public class PokemonInfoUI : MonoBehaviour
         }
         if (pokemon.IsBestStatus(Stat.速度))
         {
-            _spd.color = Color.red;
+            _spd.color = Color.blue;
+        }
+        if (pokemon.IsBestStatus(Stat.生命))
+        {
+            _hp.color = Color.blue;
         }
         else
         {
