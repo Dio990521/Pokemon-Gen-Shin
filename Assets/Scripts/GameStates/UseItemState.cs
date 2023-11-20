@@ -79,7 +79,6 @@ public class UseItemState : State<GameManager>
                 }
             }
 
-
             var usedItem = _inventory.UseItem(item, _partyScreen.SelectedMember);
             if (usedItem != null)
             {

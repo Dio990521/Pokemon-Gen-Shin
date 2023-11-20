@@ -10798,7 +10798,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.size
-      value: 14
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: keyItemSlots.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.size
@@ -10815,11 +10819,11 @@ PrefabInstance:
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[2].item
       value: 
-      objectReference: {fileID: 11400000, guid: 112727a3fdd29654280456034e3dfd48, type: 2}
+      objectReference: {fileID: 11400000, guid: 02280d1c0974d8a418e5bfcf0b10f509, type: 2}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[3].item
       value: 
-      objectReference: {fileID: 11400000, guid: 2042bae1f0b21b649b8507586a100ff1, type: 2}
+      objectReference: {fileID: 11400000, guid: b3e09d6ffc67e9d4099b644f1ded0f24, type: 2}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[4].item
       value: 
@@ -10866,7 +10870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[3].count
-      value: 99
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[4].count
@@ -10907,6 +10911,14 @@ PrefabInstance:
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.data[13].count
       value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: keyItemSlots.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: b3e09d6ffc67e9d4099b644f1ded0f24, type: 2}
+    - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: keyItemSlots.Array.data[0].count
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokeballSlots.Array.data[2].item

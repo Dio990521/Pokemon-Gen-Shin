@@ -48,7 +48,7 @@ public class SurfableWater : MonoBehaviour, InteractableObject, IPlayerTriggerab
 
     public void OnPlayerTriggered(PlayerController player)
     {
-        if (UnityEngine.Random.Range(1, 101) <= 5)
+        if (!player.AvoidWildPokemon && UnityEngine.Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;
             GameManager.Instance.StartBattle(BattleTrigger.Water);

@@ -12,7 +12,7 @@ public class Desert : MonoBehaviour, IPlayerTriggerable
     public void OnPlayerTriggered(PlayerController player)
     {
         player.Character.IsDesert = true;
-        if (NeedBattle && Random.Range(1, 101) <= 5)
+        if (!player.AvoidWildPokemon && NeedBattle && Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;
             GameManager.Instance.StartBattle(BattleTrigger.Desert);

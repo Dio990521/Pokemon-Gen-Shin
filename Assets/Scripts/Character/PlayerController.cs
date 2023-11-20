@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour, ISavable
     private Vector3 _interactPos;
     private Vector3 _faceDir;
     private bool _isRunning;
+    private bool _avoidWildPokemon;
 
+    private int _stepCount = 0;
 
     public static PlayerController I { get; private set; }
 
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour, ISavable
         get => character;
     }
     public TrailRenderer TrailRenderer { get => _trailRenderer; set => _trailRenderer = value; }
+    public bool AvoidWildPokemon { get => _avoidWildPokemon; set => _avoidWildPokemon = value; }
 
     private void Awake()
     {
@@ -126,6 +129,28 @@ public class PlayerController : MonoBehaviour, ISavable
         {
             _trailRenderer.gameObject.SetActive(false);
         }
+
+        if (_avoidWildPokemon)
+        {
+            if (_stepCount < 100)
+            {
+                _stepCount += 1;
+            }
+            else
+            {
+                _avoidWildPokemon = false;
+                _stepCount = 0;
+                StopMovingAnimation();
+                StartCoroutine(DialogueManager.Instance.ShowDialogueText("恶臭消散了！野生宝可梦们蠢蠢欲动！"));
+            }
+        }
+    }
+
+    public void StopMovingAnimation()
+    {
+        character.IsMoving = false;
+        character.Animator.IsRunning = false;
+        character.Animator.IsMoving = false;
     }
 
     public object CaptureState()

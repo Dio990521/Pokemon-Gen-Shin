@@ -2,6 +2,7 @@ using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryState : State<GameManager>
 {
@@ -97,6 +98,45 @@ public class InventoryState : State<GameManager>
             {
                 _inventory.UseItem(SelectedItem, null);
                 _gameManager.StateMachine.Pop();
+                yield break;
+            }
+            else if (SelectedItem is AvoidPokemonItem)
+            {
+                var playerController = GameManager.Instance.PlayerController;
+                if (playerController.AvoidWildPokemon)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("你已经很臭了！呕！");
+                }
+                else
+                {
+                    GameManager.Instance.PlayerController.AvoidWildPokemon = true;
+                    _inventory.UseItem(SelectedItem, null);
+                    yield return DialogueManager.Instance.ShowDialogueText("臭气熏天！宝可梦被熏到不敢靠近！");
+                }
+                yield break;
+            }
+            else if (SelectedItem is PoketTransport)
+            {
+                var playerController = GameManager.Instance.PlayerController;
+                List<string> teleports = TeleportManager.Instance.GetActiveList();
+                List<int> indices = TeleportManager.Instance.GetActiveTeleportIndex();
+                if (teleports.Count < 1)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText("没有可以传送的地点！");
+                    yield break;
+                }
+                yield return DialogueManager.Instance.ShowDialogueText($"要传送到哪里呢？", autoClose: false);
+                ChoiceState.I.Choices = TeleportManager.Instance.GetActiveList();
+                yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+                int selectedChoice = ChoiceState.I.Selection;
+
+                if (selectedChoice != -1)
+                {
+                    _gameManager.StateMachine.Pop();
+                    _gameManager.StateMachine.Pop();
+                    yield return Teleport.StartTeleport(TeleportManager.Instance.Teleports[indices[selectedChoice]].SpawnPoint, playerController);
+                }
                 yield break;
             }
 

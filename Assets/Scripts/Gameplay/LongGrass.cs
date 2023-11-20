@@ -14,7 +14,7 @@ public class LongGrass : MonoBehaviour, IPlayerTriggerable
         if (collider != null)
         {
             collider.GetComponent<GrassEffect>().InitEffect();
-            if (UnityEngine.Random.Range(1, 101) <= 5)
+            if (!player.AvoidWildPokemon && UnityEngine.Random.Range(1, 101) <= 5)
             {
                 player.Character.Animator.IsMoving = false;
                 GameManager.Instance.StartBattle(BattleTrigger.LongGrass);
