@@ -48,6 +48,7 @@ public class Pokemon
 
     public event System.Action OnStatusChanged;
     public event System.Action OnHpChanged;
+    public event System.Action<Stat, int> OnBuffChanged;
 
     public Pokemon(PokemonSaveData saveData)
     {
@@ -362,6 +363,7 @@ public class Pokemon
             {
                 StatusChanges.Enqueue($"{pokemonBase.PokemonName}µÄ{stat}ÏÂ½µÁË£¡");
             }
+            OnBuffChanged?.Invoke(stat, StatBoosts[stat]);
         }
     }
 

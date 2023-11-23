@@ -101,6 +101,7 @@ public class BattleUnit : MonoBehaviour
     public void ShowHud()
     {
         hud.gameObject.SetActive(true);
+        hud.ClearBuffs();
     }
 
     public void SetGroundImage(Sprite ground)

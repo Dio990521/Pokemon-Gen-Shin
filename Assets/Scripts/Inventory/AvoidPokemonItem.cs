@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Create new AvoidPokemon item")]
 public class AvoidPokemonItem : ItemBase
 {
+    public override bool CanUseInBattle => false;
     public override bool Use(Pokemon pokemon)
     {
         return true;

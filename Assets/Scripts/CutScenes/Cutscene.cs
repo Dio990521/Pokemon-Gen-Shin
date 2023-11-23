@@ -79,7 +79,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         {
             if (direction == FacingDirection.None || player.Character.GetCharacterDirection() == direction)
             {
-                player.Character.Animator.IsMoving = false;
+                player.StopMovingAnimation();
                 _isPlaying = true;
                 StartCoroutine(Play());
             }
