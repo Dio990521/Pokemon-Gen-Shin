@@ -8,6 +8,7 @@ public class MapArea : MonoBehaviour
     [SerializeField] private List<PokemonEncounterRecord> wildPokemons;
     [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInWater;
     [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInDesert;
+    [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInShip;
     [SerializeField] private List<PokemonEncounterRecord> wildPokemonsInCave;
 
 
@@ -22,6 +23,9 @@ public class MapArea : MonoBehaviour
 
     [HideInInspector]
     [SerializeField] private int totalChanceInCave = 0;
+
+    [HideInInspector]
+    [SerializeField] private int totalChanceInShip = 0;
 
     private void OnValidate()
     {
@@ -39,6 +43,7 @@ public class MapArea : MonoBehaviour
         totalChanceInWater = -1;
         totalChanceInDesert = -1;
         totalChanceInCave = -1;
+        totalChanceInShip = -1;
 
         if (wildPokemons.Count > 0)
         {
@@ -87,6 +92,19 @@ public class MapArea : MonoBehaviour
                 totalChanceInCave += record.chancePercentage;
             }
         }
+
+
+        if (wildPokemonsInShip.Count > 0)
+        {
+            totalChanceInShip = 0;
+            foreach (var record in wildPokemonsInShip)
+            {
+                record.chanceLower = totalChanceInShip;
+                record.chanceUpper = totalChanceInShip + record.chancePercentage;
+
+                totalChanceInShip += record.chancePercentage;
+            }
+        }
     }
 
     public Pokemon GetRandomWildPokemon(BattleTrigger trigger)
@@ -99,6 +117,14 @@ public class MapArea : MonoBehaviour
         else if (trigger == BattleTrigger.Desert)
         {
             pokemonList = wildPokemonsInDesert;
+        }
+        else if (trigger == BattleTrigger.Cave)
+        {
+            pokemonList = wildPokemonsInCave;
+        }
+        else if (trigger == BattleTrigger.Ship)
+        {
+            pokemonList = wildPokemonsInShip;
         }
 
         int randVal = Random.Range(1, 101);

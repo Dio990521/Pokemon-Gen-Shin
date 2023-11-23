@@ -15,7 +15,7 @@ public enum BattleAction
     Run 
 }
 
-public enum BattleTrigger { LongGrass, Water, Desert, Cave, Land, Arena1, Arena2, Arena3 }
+public enum BattleTrigger { LongGrass, Water, Desert, Cave, Land, Arena1, Arena2, Arena3, Ship }
 
 public class BattleSystem : MonoBehaviour
 {
@@ -72,7 +72,6 @@ public class BattleSystem : MonoBehaviour
     {
         _dialogueBox.SetDialogue("");
         this.IsTrainerBattle = false;
-        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         this.PlayerParty = playerParty;
         this.WildPokemon = wildPokemon;
         player = playerParty.GetComponent<PlayerController>();
@@ -120,7 +119,14 @@ public class BattleSystem : MonoBehaviour
             _playerUnit.UnitEnterAnimation();
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
-            yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
+            if (!BattleState.I.IsSuperBoss)
+            {
+                yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
+            }
+            else
+            {
+                yield return _dialogueBox.TypeDialogue($"异世界幻影\n{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
+            }
             yield return new WaitForSeconds(1.5f);
         }
         else

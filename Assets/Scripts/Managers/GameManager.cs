@@ -104,13 +104,22 @@ public class GameManager : Singleton<GameManager>, ISavable
     {
         AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
+        BattleState.I.IsSuperBoss = false;
         BattleState.I.BossPokemon = null;
         StateMachine.Push(BattleState.I);
     }
 
-    public void StartBattle(BattleTrigger trigger, Pokemon selectedPokemon, CutsceneName activateCutsceneAfterBattle=CutsceneName.None)
+    public void StartBattle(BattleTrigger trigger, Pokemon selectedPokemon, CutsceneName activateCutsceneAfterBattle=CutsceneName.None, bool isSuperBoss=false)
     {
-        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        if (!isSuperBoss)
+        {
+            AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        }
+        else
+        {
+            AudioManager.Instance.PlayMusic(BGM.BATTLE_SUPER_ANCIENT_POKEMON);
+        }
+        BattleState.I.IsSuperBoss = isSuperBoss;
         BattleState.I.Trigger = trigger;
         BattleState.I.BossPokemon = selectedPokemon;
         selectedPokemon.PokeballSpriteType = PokeballType.Guaishou;

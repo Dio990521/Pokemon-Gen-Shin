@@ -520,6 +520,7 @@ public class RunTurnState : State<BattleSystem>
 
         if (_isTrainerBattle || BattleState.I.BossPokemon != null)
         {
+            Debug.Log(BattleState.I.BossPokemon.PokemonBase.PokemonName);
             _isRunSuccessful = true;
             yield return _dialogueBox.TypeDialogue($"你不能从这场战斗中逃跑！");
             _battleSystem.StateMachine.ChangeState(ActionSelectionState.I);

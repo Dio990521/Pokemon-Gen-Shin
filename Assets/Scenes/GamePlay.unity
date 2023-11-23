@@ -1948,11 +1948,13 @@ MonoBehaviour:
   - pokemon: {fileID: 11400000, guid: c2026d9be0b80bc4a875a1538995284b, type: 2}
     levelRange: {x: 65, y: 75}
     chancePercentage: 17
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: -1
   totalChanceInWater: -1
   totalChanceInDesert: 100
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!114 &610436584 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 610436584, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -2706,11 +2708,13 @@ MonoBehaviour:
     chancePercentage: 15
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!114 &924262660 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -3251,11 +3255,13 @@ MonoBehaviour:
     chancePercentage: 15
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!114 &986257365 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1058730586703959807, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -3758,11 +3764,13 @@ MonoBehaviour:
     chancePercentage: 17
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!114 &1045928895 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -3843,11 +3851,13 @@ MonoBehaviour:
     levelRange: {x: 10, y: 20}
     chancePercentage: 33
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: 100
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!1 &1074293869
 GameObject:
   m_ObjectHideFlags: 0
@@ -4746,11 +4756,13 @@ MonoBehaviour:
     chancePercentage: 10
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!224 &1309224994 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2373757018538316669, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -5418,6 +5430,7 @@ MonoBehaviour:
   wildPokemons: []
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave:
   - pokemon: {fileID: 11400000, guid: 368e1af933e2dd14597ef7aff725f198, type: 2}
     levelRange: {x: 55, y: 65}
@@ -5462,6 +5475,7 @@ MonoBehaviour:
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: 100
+  totalChanceInShip: -1
 --- !u!224 &1546421339 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1875761855780087277, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -5511,11 +5525,13 @@ MonoBehaviour:
     chancePercentage: 22
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!224 &1595532622 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1498475188047462041, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
@@ -5579,11 +5595,13 @@ MonoBehaviour:
     chancePercentage: 36
   wildPokemonsInWater: []
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: 100
   totalChanceInWater: -1
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!1001 &1721688523
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6315,11 +6333,13 @@ MonoBehaviour:
     levelRange: {x: 15, y: 25}
     chancePercentage: 25
   wildPokemonsInDesert: []
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: -1
   totalChanceInWater: 100
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!114 &1877074096 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -6509,11 +6529,13 @@ MonoBehaviour:
   - pokemon: {fileID: 11400000, guid: fd7cb91f12a9eec4793e5577ee8ab64b, type: 2}
     levelRange: {x: 25, y: 35}
     chancePercentage: 36
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: -1
   totalChanceInWater: -1
   totalChanceInDesert: 100
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!1001 &1964184247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6835,11 +6857,13 @@ MonoBehaviour:
   - pokemon: {fileID: 11400000, guid: f81cd14e17e88f347ba758431a2d2242, type: 2}
     levelRange: {x: 25, y: 35}
     chancePercentage: 23
+  wildPokemonsInShip: []
   wildPokemonsInCave: []
   totalChance: -1
   totalChanceInWater: -1
   totalChanceInDesert: 100
   totalChanceInCave: -1
+  totalChanceInShip: -1
 --- !u!1001 &2009059485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7400,7 +7424,7 @@ MonoBehaviour:
     levelRange: {x: 45, y: 55}
     chancePercentage: 3
   - pokemon: {fileID: 11400000, guid: e7e5fddc98ecdec4db3d12230e7b7f6c, type: 2}
-    levelRange: {x: 0, y: 0}
+    levelRange: {x: 45, y: 55}
     chancePercentage: 3
   - pokemon: {fileID: 11400000, guid: cd2be7ae263a6474c848ddfded3c9069, type: 2}
     levelRange: {x: 45, y: 55}
@@ -7418,11 +7442,52 @@ MonoBehaviour:
     levelRange: {x: 45, y: 55}
     chancePercentage: 15
   wildPokemonsInDesert: []
+  wildPokemonsInShip:
+  - pokemon: {fileID: 11400000, guid: 6a8b7b24bbc5e6844b29b4e818bca0e6, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 6
+  - pokemon: {fileID: 11400000, guid: ee20e97aed356a841887cfd4610a6a5e, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 6
+  - pokemon: {fileID: 11400000, guid: 1466c000e0d49b74a9a87fae18e28192, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 6
+  - pokemon: {fileID: 11400000, guid: 26af7ea986ad8b849889748a0a2fab88, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 6
+  - pokemon: {fileID: 11400000, guid: 6ff24b008349e6d4f842384ed5dce861, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 6
+  - pokemon: {fileID: 11400000, guid: 9554bcebb263f0e4b86a5cd0ec24e75d, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 3
+  - pokemon: {fileID: 11400000, guid: 9fff6a1e7e4aae847af55f0bae5d5566, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 3
+  - pokemon: {fileID: 11400000, guid: cd2be7ae263a6474c848ddfded3c9069, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 3
+  - pokemon: {fileID: 11400000, guid: e7e5fddc98ecdec4db3d12230e7b7f6c, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 3
+  - pokemon: {fileID: 11400000, guid: 8378077b661c11d49a51e20af4a52937, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 14
+  - pokemon: {fileID: 11400000, guid: d6fd5fc511d27164ca51871cbc0cc5d3, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 14
+  - pokemon: {fileID: 11400000, guid: 8fd22f014b0523d4198453a7c1441e94, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 15
+  - pokemon: {fileID: 11400000, guid: 7e4733b3332a53b4b8f3bddec1c62f91, type: 2}
+    levelRange: {x: 45, y: 55}
+    chancePercentage: 15
   wildPokemonsInCave: []
   totalChance: -1
   totalChanceInWater: 100
   totalChanceInDesert: -1
   totalChanceInCave: -1
+  totalChanceInShip: 100
 --- !u!114 &2100588373 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 830788832347591950, guid: cdf1ff39828016447ba5883a7695efa7, type: 3}
@@ -7815,6 +7880,14 @@ PrefabInstance:
       propertyPath: PokeballSprites.Array.data[9]
       value: 
       objectReference: {fileID: 21300000, guid: bd743a436effa704aad7a492530eb528, type: 3}
+    - target: {fileID: 8343113941151216222, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: caveLayer.m_Bits
+      value: 262144
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343113941151216222, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
+      propertyPath: shipLayer.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6130185041891423814, guid: 3c072b3014b70b445a35d8b74c0841e4, type: 3}
     m_RemovedGameObjects: []
@@ -8732,7 +8805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 260228006710322664, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 155
       objectReference: {fileID: 0}
     - target: {fileID: 260228006710322664, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9132,7 +9205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 824710138633007730, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 824710138633007730, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10540,7 +10613,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3053352189235358914, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 3053352189235358914, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10732,7 +10805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3596603188453288638, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -143
       objectReference: {fileID: 0}
     - target: {fileID: 3598096186026835604, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11548,7 +11621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
@@ -11556,7 +11629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].level
-      value: 55
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].level
@@ -11577,7 +11650,7 @@ PrefabInstance:
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 58733aedf71312147aa5415b63e89c9d, type: 2}
+      objectReference: {fileID: 11400000, guid: b04d46245e39e554aa72e0d4e7ee0cd0, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[2].pokemonBase
       value: 
@@ -11592,7 +11665,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: b04d46245e39e554aa72e0d4e7ee0cd0, type: 2}
     - target: {fileID: 4671520593820589622, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _trainerImage
@@ -11604,11 +11677,11 @@ PrefabInstance:
       objectReference: {fileID: 1315856530}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _backgroundImages.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _enemyGroundSprites.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _backgroundImages.Array.data[2]
@@ -11635,8 +11708,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 89507843, guid: 7b1ac6ab5c7ec1b4b9e57deef9f63ea2, type: 3}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _backgroundImages.Array.data[8]
+      value: 
+      objectReference: {fileID: 1453476388, guid: c9c9a4867c8e9944c9eda41760c44ed0, type: 3}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _playerGroundSprites.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _enemyGroundSprites.Array.data[2]
@@ -11663,6 +11740,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1567051834, guid: 0324ec24247934948bcb434599980ac4, type: 3}
     - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _enemyGroundSprites.Array.data[8]
+      value: 
+      objectReference: {fileID: -763981546, guid: c9c9a4867c8e9944c9eda41760c44ed0, type: 3}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: _playerGroundSprites.Array.data[2]
       value: 
       objectReference: {fileID: 1192531610, guid: 28093babfa30a2147b58ea11f7c23dd5, type: 3}
@@ -11686,6 +11767,10 @@ PrefabInstance:
       propertyPath: _playerGroundSprites.Array.data[7]
       value: 
       objectReference: {fileID: -747004387, guid: 0324ec24247934948bcb434599980ac4, type: 3}
+    - target: {fileID: 4671520593820589624, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: _playerGroundSprites.Array.data[8]
+      value: 
+      objectReference: {fileID: 665506153, guid: c9c9a4867c8e9944c9eda41760c44ed0, type: 3}
     - target: {fileID: 4671520594111025398, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_SizeDelta.x
       value: 800
@@ -12796,7 +12881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5785603798250409738, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -111.00001
       objectReference: {fileID: 0}
     - target: {fileID: 5822468607012714010, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
@@ -14332,7 +14417,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8542530491770217845, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -79
       objectReference: {fileID: 0}
     - target: {fileID: 8547614379578149281, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_Text
@@ -14416,11 +14501,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 111.5
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 100.65
+      value: -88.5
       objectReference: {fileID: 0}
     - target: {fileID: 8741886214034261897, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

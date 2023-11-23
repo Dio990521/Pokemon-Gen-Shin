@@ -20987,6 +20987,7 @@ MonoBehaviour:
   actions: []
   direction: 2
   _activateCutsceneName: 0
+  _activateCollider: {fileID: 0}
   _isAutoPlay: 0
   _isAlwaysExist: 0
   disableAfterCutscene: 0

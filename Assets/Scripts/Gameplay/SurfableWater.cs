@@ -17,7 +17,7 @@ public class SurfableWater : MonoBehaviour, InteractableObject, IPlayerTriggerab
         {
             yield break;
         }
-
+        yield return DialogueManager.Instance.ShowDialogueText("水面如同死去一般静止着。");
         yield return DialogueManager.Instance.ShowDialogueText("冰系宝可梦应该可以帮忙渡水。");
 
         var pokemonWithSurf = initiator.GetComponent<PokemonParty>().Pokemons.FirstOrDefault(p => p.PokemonBase.Type1 == PokemonType.冰);
