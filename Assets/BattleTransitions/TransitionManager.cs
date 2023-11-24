@@ -69,6 +69,7 @@ public class TransitionManager : MonoBehaviour
                     .OnUpdate(UpdateProperties);
                 break;
             case TransitionType.BossBattle:
+                yield return Glitter(0.1f);
                 _cutoff = 0;
                 _fade = 1;
                 SetDistort(0f);
@@ -78,6 +79,7 @@ public class TransitionManager : MonoBehaviour
                     .OnUpdate(UpdateProperties);
                 break;
             case TransitionType.SuperBossBattle:
+                yield return Glitter(0.1f);
                 _cutoff = 0;
                 _fade = 1;
                 SetDistort(0f);

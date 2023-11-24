@@ -1,6 +1,7 @@
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -70,19 +71,7 @@ public class PartyState : State<GameManager>
             }
             else if (prevState == BattleState.I)
             {
-                var battleState = prevState as BattleState;
-                if (SelectedPokemon.Hp <= 0)
-                {
-                    _partyScreen.SetMessageText("它摸了，换一个吧！");
-                    return;
-                }
-                if (SelectedPokemon == battleState.BattleSystem.PlayerUnit.pokemon)
-                {
-                    _partyScreen.SetMessageText("它已经上场了，换一个吧！");
-                    return;
-                }
-
-                _gameManager.StateMachine.Pop();
+                StartCoroutine(GoToPartyMenuState(selection, true));
             }
             else if (prevState == PCMenuState.I)
             {
@@ -97,10 +86,11 @@ public class PartyState : State<GameManager>
         
     }
     
-    private IEnumerator GoToPartyMenuState(int selection)
+    private IEnumerator GoToPartyMenuState(int selection, bool inBattle=false)
     {
         PartyMenuState.I.SelectedPokemon = SelectedPokemon;
         PartyMenuState.I.Selection = selection;
+        PartyMenuState.I.InBattle = inBattle;
         yield return _gameManager.StateMachine.PushAndWait(PartyMenuState.I);
 
         int choice = PartyMenuState.I.Selection;
@@ -112,10 +102,28 @@ public class PartyState : State<GameManager>
         }
         else if (choice == 1)
         {
-            // Swap Pokemon
-            _swapIndex = selection;
-            GameManager.Instance.PartyScreen.SetMessageText("选择要交换的宝可梦。");
-            _swaping = true;
+            if (!inBattle)
+            {
+                // Swap Pokemon
+                _swapIndex = selection;
+                GameManager.Instance.PartyScreen.SetMessageText("选择要交换的另一个宝可梦。");
+                _swaping = true;
+            }
+            else
+            {
+                if (SelectedPokemon.Hp <= 0)
+                {
+                    _partyScreen.SetMessageText("它摸了，换一个吧！");
+                    yield break;
+                }
+                if (SelectedPokemon == BattleState.I.BattleSystem.PlayerUnit.pokemon)
+                {
+                    _partyScreen.SetMessageText("它已经上场了，换一个吧！");
+                    yield break;
+                }
+                _gameManager.StateMachine.Pop();
+
+            }
         }
     }
 

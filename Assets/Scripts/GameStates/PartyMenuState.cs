@@ -13,6 +13,7 @@ public class PartyMenuState : State<GameManager>
     public static PartyMenuState I { get; private set; }
 
     private GameManager _gameManager;
+    public bool InBattle;
 
     private void Awake()
     {

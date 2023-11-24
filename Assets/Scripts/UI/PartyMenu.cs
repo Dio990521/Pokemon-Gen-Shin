@@ -15,5 +15,4 @@ public class PartyMenu : SelectionUI<TextSlot>
         SetItems(_slots);
     }
 
-
 }

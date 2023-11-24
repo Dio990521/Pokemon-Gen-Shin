@@ -8,6 +8,7 @@ public class BossBattle : MonoBehaviour, IPlayerTriggerable
     [SerializeField] private Pokemon boss;
     [SerializeField] private BattleTrigger battleTrigger;
     [SerializeField] private CutsceneName activateCutsceneName;
+    [SerializeField] private BoxCollider2D cutsceneCollider;
     public bool TriggerRepeatedly => true;
 
     private void Start()
@@ -17,6 +18,19 @@ public class BossBattle : MonoBehaviour, IPlayerTriggerable
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             gameObject.GetComponent<AnimatedSprite>().enabled = false;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            BattleSystem.OnBattleOver -= ActivateCutscene;
+        }
+    }
+
+    private void ActivateCutscene(bool won)
+    {
+        if (cutsceneCollider != null && won)
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<AnimatedSprite>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            cutsceneCollider.enabled = true;
+            BattleSystem.OnBattleOver -= ActivateCutscene;
         }
     }
 
@@ -40,6 +54,7 @@ public class BossBattle : MonoBehaviour, IPlayerTriggerable
 
         if (selectedChoice == 0)
         {
+            BattleSystem.OnBattleOver += ActivateCutscene;
             GameManager.Instance.StartBattle(battleTrigger, boss, activateCutsceneName, true);
         }
         else

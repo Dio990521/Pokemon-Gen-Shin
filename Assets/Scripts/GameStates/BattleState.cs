@@ -30,14 +30,14 @@ public class BattleState : State<GameManager>
         _gameManager = owner;
         _battleSystem.CreateBattleStateMachine();
         StartCoroutine(EnterBattle());
-        _battleSystem.OnBattleOver += EndBattle;
+        BattleSystem.OnBattleOver += EndBattle;
 
     }
 
     public override void Exit(bool sfx = true)
     {
         StartCoroutine(DisableBattleCanvas());
-        _battleSystem.OnBattleOver -= EndBattle;
+        BattleSystem.OnBattleOver -= EndBattle;
         BossPokemon = null;
         IsSuperBoss = false;
     }

@@ -50,7 +50,7 @@ public class BattleSystem : MonoBehaviour
 
     public bool IsBattleOver { get; private set; }
 
-    public event Action<bool> OnBattleOver;
+    public static event Action<bool> OnBattleOver;
 
     public PokemonParty PlayerParty { get; private set; }
     public Pokemon WildPokemon { get; private set; }
