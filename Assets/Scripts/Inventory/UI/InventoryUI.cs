@@ -1,3 +1,4 @@
+using DG.Tweening;
 using PokeGenshinUtils.SelectionUI;
 using System;
 using System.Collections;
@@ -35,6 +36,8 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     private RectTransform itemListRect;
     private MoveBase moveToLearn;
 
+    private Vector3 _bagOriginPos;
+
     public ItemBase SelectedItem => inventory.GetItem(selectedItem, selectedCategory);
 
     [SerializeField] private List<Image> categoryPoints;
@@ -46,6 +49,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     {
         inventory = Inventory.GetInventory();
         itemListRect = itemList.GetComponent<RectTransform>();
+        _bagOriginPos = bagIcon.transform.localPosition;
     }
 
     private void Start()
@@ -195,5 +199,15 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         }
         bagIcon.sprite = bagIcons[selectedCategory];
         categoryPoints[selectedCategory].gameObject.SetActive(true);
+        if (gameObject.activeSelf)
+        {
+            StartCoroutine(BagAnim());
+        }
+    }
+
+    private IEnumerator BagAnim()
+    {
+        yield return bagIcon.transform.DOPunchPosition(Vector3.up * 3, 0.25f, 1, 3).SetEase(Ease.OutQuad).WaitForCompletion();
+        bagIcon.transform.localPosition = _bagOriginPos;
     }
 }

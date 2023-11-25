@@ -18253,6 +18253,10 @@ PrefabInstance:
       value: "\u5C0F\u9065"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: _battleTrigger
       value: 4
       objectReference: {fileID: 0}

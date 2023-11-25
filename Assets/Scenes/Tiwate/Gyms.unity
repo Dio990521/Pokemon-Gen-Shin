@@ -269,6 +269,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[1].beforeCutscene
       value: 17
       objectReference: {fileID: 0}
@@ -594,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: tainerName
       value: "\u8349\u7CFB\u9053\u9986\u4E3B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: _battleTrigger
@@ -7538,6 +7546,10 @@ PrefabInstance:
       value: "\u51B0\u7CFB\u9053\u9986\u4E3B"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 6b71099b0cc71bd49850024088aeeebe, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: 6b71099b0cc71bd49850024088aeeebe, type: 3}
       propertyPath: _battleTrigger
       value: 7
       objectReference: {fileID: 0}
@@ -8411,6 +8423,10 @@ PrefabInstance:
       value: "\u5CA9\u7CFB\u9053\u9986\u4E3B"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: a2a5774051e53eb43a4198e9a6a0bca2, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: a2a5774051e53eb43a4198e9a6a0bca2, type: 3}
       propertyPath: _battleTrigger
       value: 5
       objectReference: {fileID: 0}
@@ -8990,6 +9006,10 @@ PrefabInstance:
     - target: {fileID: 8376773257158139045, guid: 77905a66d5938a245bc7ea8153619b3e, type: 3}
       propertyPath: tainerName
       value: "\u96F7\u7CFB\u9053\u9986\u4E3B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: 77905a66d5938a245bc7ea8153619b3e, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 77905a66d5938a245bc7ea8153619b3e, type: 3}
       propertyPath: _battleTrigger
@@ -15780,6 +15800,10 @@ PrefabInstance:
       value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
+      propertyPath: _isBoss
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
       propertyPath: meetBGM
       value: 46
       objectReference: {fileID: 0}
@@ -15794,6 +15818,10 @@ PrefabInstance:
     - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
       propertyPath: tainerName
       value: "\u6C34\u7CFB\u9053\u9986\u4E3B"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
       propertyPath: _battleTrigger
@@ -22249,6 +22277,10 @@ PrefabInstance:
       value: "\u98CE\u7CFB\u9053\u9986\u4E3B"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: f6415315856ad4043a639467861b81aa, type: 3}
+      propertyPath: _isGymLeader
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: f6415315856ad4043a639467861b81aa, type: 3}
       propertyPath: _battleTrigger
       value: 4
       objectReference: {fileID: 0}
@@ -22549,6 +22581,10 @@ PrefabInstance:
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[1].beforeCutscene
@@ -22887,6 +22923,10 @@ PrefabInstance:
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[1].beforeCutscene
@@ -25395,6 +25435,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[1].beforeCutscene
       value: 16
       objectReference: {fileID: 0}
@@ -25495,6 +25539,10 @@ PrefabInstance:
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].beforeCutscene
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[1].beforeCutscene

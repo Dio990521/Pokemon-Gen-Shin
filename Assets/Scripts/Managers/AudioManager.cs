@@ -40,7 +40,12 @@ public enum SFX
     LOCK,
     BALL_BOUNCE,
     BALL_SHAKE,
-    DIVE
+    DIVE,
+    BEAST_YE,
+    BEAST_HE,
+    BEAST_A,
+    BEAST_YARIMASU,
+    BEAST_YIGE,
 }
 
 public enum BGM

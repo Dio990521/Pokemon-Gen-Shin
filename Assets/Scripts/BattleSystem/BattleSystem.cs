@@ -194,6 +194,11 @@ public class BattleSystem : MonoBehaviour
                     Wallet.I.AddMoney(trainer.WinMoney, false);
                     yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
                 }
+                if (trainer.IsGymLeader)
+                {
+                    Wallet.I.IncreaseVisaLimit(100000);
+                    yield return _dialogueBox.TypeDialogue($"作为奖励，\n你的信用卡额度提升了100000摩拉！");
+                }
             }
             else
             {
@@ -296,7 +301,14 @@ public class BattleSystem : MonoBehaviour
 
 
         yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
-        AudioManager.Instance.PlaySE(SFX.THROW_BALL);
+        if (pokeballItem.BallType == PokeballType.Beast)
+        {
+            AudioManager.Instance.PlaySE(SFX.BEAST_YIGE);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(SFX.THROW_BALL);
+        }
 
         var pokeballObj = Instantiate(PokeballSprite, _playerUnit.transform.position - new Vector3(5, 0), Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
@@ -328,32 +340,62 @@ public class BattleSystem : MonoBehaviour
             }
             yield break;
         }
-
-        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
         pokeball.sprite = pokeballItem.OpenIcon;
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
         yield return pokeball.transform.DOMoveY(5f, 1f)
             .SetEase(Ease.OutBounce)
             .SetLoops(1, LoopType.Yoyo);
-        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        if (pokeballItem.BallType == PokeballType.Beast)
+        {
+            AudioManager.Instance.PlaySE(SFX.BEAST_HE);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        }
         yield return new WaitForSeconds(0.65f);
-        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        if (pokeballItem.BallType == PokeballType.Beast)
+        {
+            AudioManager.Instance.PlaySE(SFX.BEAST_HE);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        }
         yield return new WaitForSeconds(0.3f);
-        AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        if (pokeballItem.BallType == PokeballType.Beast)
+        {
+            AudioManager.Instance.PlaySE(SFX.BEAST_HE);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
+        }
         yield return new WaitForSeconds(0.15f);
         int shakeCount = TryToCatchPokemon(_enemyUnit.pokemon, pokeballItem);
 
         for (int i = 0; i < Mathf.Min(shakeCount, 3); ++i)
         {
             yield return new WaitForSeconds(0.5f);
-            AudioManager.Instance.PlaySE(SFX.BALL_SHAKE);
+            if (pokeballItem.BallType == PokeballType.Beast)
+            {
+                AudioManager.Instance.PlaySE(SFX.BEAST_A);
+            }
+            else
+            {
+                AudioManager.Instance.PlaySE(SFX.BALL_SHAKE);
+            }
             yield return pokeball.transform.DOPunchRotation(new Vector3(0, 0, 20f), 1f).WaitForCompletion();
         }
 
         if (shakeCount == 4)
         {
             // Pokemon is caught
+            if (pokeballItem.BallType == PokeballType.Beast)
+            {
+                AudioManager.Instance.PlaySE(SFX.BEAST_YARIMASU);
+            }
             AudioManager.Instance.PlayMusic(BGM.CATCH_POKEMON);
             yield return _dialogueBox.TypeDialogue($"抓到了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
@@ -393,15 +435,10 @@ public class BattleSystem : MonoBehaviour
         {
             case PokeballType.Master: 
                 return 4;
-            case PokeballType.Beast:
-                AudioManager.Instance.PlaySE(SFX.ATTACK);
-                break;
             case PokeballType.FiveFive:
                 int prob = UnityEngine.Random.Range(0, 100);
                 return prob >= 50 ? 4 : 1;
-
         }
-
 
         float a = (3 * pokemon.MaxHp - 2 * pokemon.Hp) * pokeballItem.CatchRateModifier * pokemon.PokemonBase.CatchRate * ConditionsDB.GetStatusBonus(pokemon.Status) / (3 * pokemon.MaxHp);
         

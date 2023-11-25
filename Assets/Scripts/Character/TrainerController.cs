@@ -17,6 +17,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     [SerializeField] private Sprite sprite;
     [SerializeField] private string tainerName;
     [SerializeField] private bool _isBoss;
+    [SerializeField] private bool _isGymLeader;
 
     [SerializeField] private CutsceneName _activateCutsceneNameWin;
 
@@ -45,6 +46,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     public BGM MeetBGM { get => meetBGM; set => meetBGM = value; }
     public bool IsBattleLost { get => _isBattleLost; set => _isBattleLost = value; }
     public bool IsBoss { get => _isBoss; set => _isBoss = value; }
+    public bool IsGymLeader { get => _isGymLeader; set => _isGymLeader = value; }
 
     private void Awake()
     {
