@@ -40,6 +40,7 @@ public enum SFX
     LOCK,
     BALL_BOUNCE,
     BALL_SHAKE,
+    DIVE
 }
 
 public enum BGM

@@ -9,7 +9,6 @@ public class Cave : MonoBehaviour, IPlayerTriggerable
     // Start battle with 10% probability when player is on the grass
     public void OnPlayerTriggered(PlayerController player)
     {
-        player.Character.IsDesert = true;
         if (!player.AvoidWildPokemon && Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;

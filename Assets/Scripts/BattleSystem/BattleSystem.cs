@@ -189,8 +189,11 @@ public class BattleSystem : MonoBehaviour
                 yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
                 yield return _enemyUnit.MoveTrainerImage(300f, false, 1f);
                 yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}");
-                Wallet.I.AddMoney(trainer.WinMoney, false);
-                yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
+                if (trainer.WinMoney > 0)
+                {
+                    Wallet.I.AddMoney(trainer.WinMoney, false);
+                    yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
+                }
             }
             else
             {
@@ -421,6 +424,19 @@ public class BattleSystem : MonoBehaviour
         }
 
         return shakeCount;
+    }
+
+    private void OnGUI()
+    {
+        var style = new GUIStyle();
+        style.fontSize = 25;
+        GUILayout.BeginArea(new Rect(Screen.width - 400, 0, 400, 200));
+        GUILayout.Label("BATTLE STATE STACK", style);
+        foreach (var state in StateMachine.StateStack)
+        {
+            GUILayout.Label(state.GetType().ToString(), style);
+        }
+        GUILayout.EndArea();
     }
 
 
