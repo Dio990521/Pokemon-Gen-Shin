@@ -49,7 +49,21 @@ public class ChoiceState : State<GameManager>
 
     private void OnChoiceSelected(int selection)
     {
-        Selection = selection;
+        if (_choiceBox.IsFirstPage == false && selection + ChoiceBox.MaxChoice == Choices.Count || 
+            selection == ChoiceBox.MaxChoice)
+        {
+            _choiceBox.ResetSelection();
+            _choiceBox.ChangeChoices(!_choiceBox.IsFirstPage);
+            return;
+        }
+        if (_choiceBox.IsFirstPage)
+        {
+            Selection = selection;
+        }
+        else
+        {
+            Selection = selection + ChoiceBox.MaxChoice;
+        }
         _gameManager.StateMachine.Pop();
     }
 

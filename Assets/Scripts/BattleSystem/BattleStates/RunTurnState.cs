@@ -142,6 +142,11 @@ public class RunTurnState : State<BattleSystem>
 
     private IEnumerator RunMove(BattleUnit sourceUnit, BattleUnit targetUnit, Move move)
     {
+        if (sourceUnit.IsPlayerUnit && move.PP <= 0)
+        {
+            yield return _dialogueBox.TypeDialogue($"{sourceUnit.pokemon.PokemonBase.PokemonName}没有PP使用\n{move.MoveBase.MoveName}！");
+            yield break;
+        }
         bool canRunMove = sourceUnit.pokemon.CanPerformMove();
         if (!canRunMove)
         {
