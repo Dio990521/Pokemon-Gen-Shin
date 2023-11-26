@@ -585,7 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 51
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: startBGM
@@ -15352,7 +15352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679989, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 858efd2fb6fc87c47a4c85eef3dad610, type: 3}
       propertyPath: dialogues.Array.size

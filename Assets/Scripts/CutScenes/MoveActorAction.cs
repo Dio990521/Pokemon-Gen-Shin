@@ -16,9 +16,17 @@ public class MoveActorAction : CutsceneAction
         {
             character.MoveSpeed = _moveSpeed;
         }
+        if (actor.IsPlayer)
+        {
+            GameManager.Instance.PlayerController.StartMovingAnimation();
+        }
         foreach (var movePattern in movePatterns)
         {
             yield return character.Move(movePattern, checkCollisions: false);
+        }
+        if (actor.IsPlayer)
+        {
+            GameManager.Instance.PlayerController.StopMovingAnimation();
         }
     }
 }
@@ -30,4 +38,5 @@ public class CutsceneActor
     [SerializeField] private Character character;
 
     public Character GetCharacter() => (isPlayer) ? PlayerController.I.Character : character;
+    public bool IsPlayer => isPlayer;
 }

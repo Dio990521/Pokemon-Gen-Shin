@@ -153,6 +153,13 @@ public class PlayerController : MonoBehaviour, ISavable
         character.Animator.IsMoving = false;
     }
 
+    public void StartMovingAnimation()
+    {
+        character.IsMoving = true;
+        character.Animator.IsRunning = false;
+        character.Animator.IsMoving = true;
+    }
+
     public object CaptureState()
     {
         var saveData = new PlayerSaveData()

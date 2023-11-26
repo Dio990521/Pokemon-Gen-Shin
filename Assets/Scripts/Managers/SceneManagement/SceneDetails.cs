@@ -29,7 +29,15 @@ public class SceneDetails : MonoBehaviour
             GameManager.Instance.SetCurrentScene(this);
             if (sceneMusic != BGM.NONE)
             {
-                AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
+                if (sceneMusic == BGM.TIWATE)
+                {
+                    AudioManager.Instance.PlayTiwateMusic();
+                }
+                else
+                {
+                    AudioManager.Instance.IsPlayingTiwate = false;
+                    AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
+                }
             }
             if (_mapName.Length > 0)
             {

@@ -96,6 +96,11 @@ public enum BGM
     TRAINER_EYE_MEET_SWIMMER_G,
     BATTLE_REGIROCK_REGICE_REGISTEEL,
     TRAINER_EYE_MEET_COOLTRAINER,
+    ELITE_FOUR_APPEAR,
+    BATTLE_ELITE,
+    CHAMPION,
+    BATTTLE_CHAMPION,
+    VICTORY_CHAMPION,
     NONE
 }
 
@@ -107,13 +112,26 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] sfxClips;
+    [SerializeField] private AudioClip[] tiwateClips;
 
     [SerializeField] private float fadeDuration = 0.75f;
     private float originalMusicVol;
+    public bool IsPlayingTiwate;
 
     private void Start()
     {
         originalMusicVol = musicPlayer.volume;
+    }
+
+    public void PlayTiwateMusic()
+    {
+        int index = Random.Range(0, tiwateClips.Length);
+        if (IsPlayingTiwate)
+        {
+            return;
+        }
+        IsPlayingTiwate = true;
+        StartCoroutine(PlayerTiwateMusicAsync(index, true, true));
     }
 
     public void PlayMusic(BGM id, bool loop=true, bool fade=false)
@@ -188,6 +206,23 @@ public class AudioManager : Singleton<AudioManager>
         }
 
         musicPlayer.clip = musicClips[(int)id]; ;
+        musicPlayer.loop = loop;
+        musicPlayer.Play();
+
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
+        }
+    }
+
+    private IEnumerator PlayerTiwateMusicAsync(int id, bool loop, bool fade)
+    {
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(0, fadeDuration).WaitForCompletion();
+        }
+
+        musicPlayer.clip = tiwateClips[id];
         musicPlayer.loop = loop;
         musicPlayer.Play();
 

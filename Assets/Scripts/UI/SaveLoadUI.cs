@@ -16,6 +16,8 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
 
     private string _dataFilePath;
 
+    
+
     private void Awake()
     {
         SetItems(_dataSlotUIs);
@@ -117,6 +119,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         int selectedChoice = ChoiceState.I.Selection;
         if (selectedChoice == 0)
         {
+            GameManager.Instance.PauseGame(true);
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("saveFile").Append(selectedItem);
             yield return Fader.FadeIn(1f);

@@ -929,7 +929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: startBGM
-      value: 37
+      value: 47
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: winMoney
@@ -1680,8 +1680,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d6fd5fc511d27164ca51871cbc0cc5d3, type: 2}
     - target: {fileID: 8376773257158139045, guid: c4e524318dae8a9408c34b9628b1004b, type: 3}
+      propertyPath: winBGM
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: c4e524318dae8a9408c34b9628b1004b, type: 3}
       propertyPath: _isBoss
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: c4e524318dae8a9408c34b9628b1004b, type: 3}
+      propertyPath: meetBGM
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376773257158139045, guid: c4e524318dae8a9408c34b9628b1004b, type: 3}
+      propertyPath: startBGM
+      value: 49
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: c4e524318dae8a9408c34b9628b1004b, type: 3}
       propertyPath: tainerName
