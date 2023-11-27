@@ -12,7 +12,7 @@ public class PassiveMoveBase : ScriptableObject
     [SerializeField] private string description;
 
     [SerializeField] private PassiveMoveType passiveMoveType;
-    public List<PassiveMoveEffect> Effects;
+    public List<PassiveMoveEffect> PassiveMoveEffects;
 
     public string MoveName { get => moveName; set => moveName = value; }
     public string Description { get => description; set => description = value; }

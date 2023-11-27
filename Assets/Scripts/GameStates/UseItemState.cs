@@ -83,14 +83,19 @@ public class UseItemState : State<GameManager>
             if (usedItem != null)
             {
                 ItemUsed = true;
-                if (usedItem is RecoveryItem)
-                {
-                    yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
-                }
+                yield return DialogueManager.Instance.ShowDialogueText($"你使用了{usedItem.ItemName}！");
+
             }
             else
             {
-                yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
+                if (item is PaimengItem)
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}咬了一口派蒙！\n真香！");
+                }
+                else
+                {
+                    yield return DialogueManager.Instance.ShowDialogueText($"什么也没有发生！");
+                }
             }
         }
 

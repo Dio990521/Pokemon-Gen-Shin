@@ -11,7 +11,6 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private PokemonType type1;
     [SerializeField] private PokemonType type2;
     [SerializeField] private bool isHuman;
-    [SerializeField] private bool canBeCatch;
     [SerializeField] private int maxHp;
     [SerializeField] private int attack;
     [SerializeField] private int defense;
@@ -40,11 +39,23 @@ public class PokemonBase : ScriptableObject
     [SerializeField] private int expYield;
     [SerializeField] private int catchRate = 255;
     [SerializeField] private Achievement _achievement;
-    public bool HasPassiveMove = true;
     [SerializeField] private PassiveMoveBase passiveMove;
     [SerializeField] private bool isSlime;
+    public Dictionary<PassiveMoveType, float> EffectivenessData;
 
     public static int MaxNumOfMoves { get; set; } = 4;
+
+    public void InitPassiveMove()
+    {
+        EffectivenessData = new Dictionary<PassiveMoveType, float>();
+        if (passiveMove?.PassiveMoveEffects.Count > 0)
+        {
+            foreach (var effect in passiveMove.PassiveMoveEffects)
+            {
+                EffectivenessData[effect.PassiveMoveType] = effect.Effectiveness;
+            }
+        }
+    }
 
     public int GetExpForLevel(int level)
     {
@@ -86,7 +97,6 @@ public class PokemonBase : ScriptableObject
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
     public bool IsLargePortrait { get => isLargePortrait; set => isLargePortrait = value; }
     public bool IsSlime { get => isSlime; set => isSlime = value; }
-    public bool CanBeCatch { get => canBeCatch; set => canBeCatch = value; }
 }
 
 

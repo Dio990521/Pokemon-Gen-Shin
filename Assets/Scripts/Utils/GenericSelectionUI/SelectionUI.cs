@@ -20,6 +20,8 @@ namespace PokeGenshinUtils.SelectionUI
         private SelectionType _selectionType;
         private int _gridWidth = 2;
 
+        public bool AllowUpdate = true;
+
         public void SetSelectionSettings(SelectionType selectionType, int gridWidth)
         {
             _selectionType = selectionType;
@@ -28,6 +30,7 @@ namespace PokeGenshinUtils.SelectionUI
 
         public void SetItems(List<T> items)
         {
+            AllowUpdate = true;
             _items = items;
             items.ForEach(i => i.Init());
             UpdateSelectionUI();
@@ -47,34 +50,36 @@ namespace PokeGenshinUtils.SelectionUI
 
         public virtual void HandleUpdate(bool allowCancel=true)
         {
-            //UpdateSelectionTimer();
-            if (_selectionType  == SelectionType.List)
+            if (AllowUpdate)
             {
-                HandleListSelection();
-            }
-            else if (_selectionType == SelectionType.Grid)
-            {
-                HandleGridSelection();
-            }
+                if (_selectionType == SelectionType.List)
+                {
+                    HandleListSelection();
+                }
+                else if (_selectionType == SelectionType.Grid)
+                {
+                    HandleGridSelection();
+                }
 
-            ClampSelection();
+                ClampSelection();
 
-            if (_items.Count > 0 && selectedItem != prevSelection)
-            {
-                UpdateSelectionUI();
-            }
+                if (_items.Count > 0 && selectedItem != prevSelection)
+                {
+                    UpdateSelectionUI();
+                }
 
-            prevSelection = selectedItem;
+                prevSelection = selectedItem;
 
-            if (Input.GetButtonDown("Action"))
-            {
-                AudioManager.Instance.PlaySE(SFX.CONFIRM);
-                OnSelected?.Invoke(selectedItem);
-            }
-            else if (allowCancel && Input.GetButtonDown("Back"))
-            {
-                AudioManager.Instance.PlaySE(SFX.CANCEL);
-                OnBack?.Invoke();
+                if (Input.GetButtonDown("Action"))
+                {
+                    AudioManager.Instance.PlaySE(SFX.CONFIRM);
+                    OnSelected?.Invoke(selectedItem);
+                }
+                else if (allowCancel && Input.GetButtonDown("Back"))
+                {
+                    AudioManager.Instance.PlaySE(SFX.CANCEL);
+                    OnBack?.Invoke();
+                }
             }
         }
 

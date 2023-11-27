@@ -8,6 +8,7 @@ public class ActionSelectionState : State<BattleSystem>
     [SerializeField] private ActionSelectionUI _selectionUI;
 
     public static ActionSelectionState I { get; private set; }
+    public ActionSelectionUI SelectionUI { get => _selectionUI; set => _selectionUI = value; }
 
     private BattleSystem _battleSystem;
 
@@ -19,22 +20,22 @@ public class ActionSelectionState : State<BattleSystem>
     public override void Enter(BattleSystem owner)
     {
         _battleSystem = owner;
-        _selectionUI.gameObject.SetActive(true);
-        _selectionUI.ResetSelection();
-        _selectionUI.OnSelected += OnActionSelected;
-
+        SelectionUI.gameObject.SetActive(true);
+        SelectionUI.ResetSelection();
+        SelectionUI.OnSelected += OnActionSelected;
+        RunTurnState.I.SkipEnemyTurn = false;
         StartCoroutine(_battleSystem.DialogueBox.TypeDialogue($"想要\n{_battleSystem.PlayerUnit.pokemon.PokemonBase.PokemonName}做什么？"));
     }
 
     public override void Execute()
     {
-        _selectionUI.HandleUpdate();
+        SelectionUI.HandleUpdate();
     }
 
     public override void Exit(bool sfx = true)
     {
-        _selectionUI.gameObject.SetActive(false);
-        _selectionUI.OnSelected -= OnActionSelected;
+        SelectionUI.gameObject.SetActive(false);
+        SelectionUI.OnSelected -= OnActionSelected;
     }
 
     private void OnActionSelected(int selection)

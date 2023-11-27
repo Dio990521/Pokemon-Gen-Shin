@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items/Create new recovery item")]
 public class RecoveryItem : ItemBase
 {
-    [SerializeField] private bool isPaimeng = false;
-
     [Header("HP")]
     [SerializeField] private int hpAmount;
     [SerializeField] private bool restoreMaxHp;
@@ -25,10 +23,6 @@ public class RecoveryItem : ItemBase
 
     public override bool Use(Pokemon pokemon)
     {
-        if (isPaimeng)
-        {
-            return false;
-        }
         // Revive
         if (revive || maxRevive)
         {
@@ -58,23 +52,16 @@ public class RecoveryItem : ItemBase
         }
 
         // Restore HP
-        if (restoreMaxHp || hpAmount > 0)
+        if (restoreMaxHp)
         {
             if (pokemon.Hp == pokemon.MaxHp)
             {
                 return false;
             }
-
-            if (restoreMaxHp)
-            {
-                pokemon.IncreaseHP(pokemon.MaxHp);
-            }
-            else
-            {
-                pokemon.IncreaseHP(hpAmount);
-            }
-            
+            pokemon.IncreaseHP(pokemon.MaxHp);
         }
+
+        pokemon.IncreaseHP(hpAmount);
 
         // Recover Status
         if (recoverAllStatus || status != ConditionID.none)

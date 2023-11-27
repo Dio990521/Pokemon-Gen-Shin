@@ -307,6 +307,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cutscene1
       objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516972, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516973, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -913,7 +917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4309582365826658061, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: pokemons.Array.data[0].level
-      value: 15
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4309582365826658061, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase

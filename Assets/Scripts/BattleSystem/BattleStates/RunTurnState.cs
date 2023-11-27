@@ -21,6 +21,9 @@ public class RunTurnState : State<BattleSystem>
     private bool _isRunSuccessful;
     public bool EnemyContinue;
 
+    public bool SkipEnemyTurn = false;
+    public bool SkipPlayerTurn = false;
+
 
     private void Awake()
     {
@@ -127,10 +130,13 @@ public class RunTurnState : State<BattleSystem>
             }
 
             // Enemy Turn
-            var enemyMove = _enemyUnit.pokemon.GetRandomMove();
-            yield return RunMove(_enemyUnit, _playerUnit, enemyMove);
-            yield return RunAfterTurn(_enemyUnit);
-            if (_battleSystem.IsBattleOver) yield break;
+            if (!SkipEnemyTurn)
+            {
+                var enemyMove = _enemyUnit.pokemon.GetRandomMove();
+                yield return RunMove(_enemyUnit, _playerUnit, enemyMove);
+                yield return RunAfterTurn(_enemyUnit);
+                if (_battleSystem.IsBattleOver) yield break;
+            }
         }
 
         // Back to selecting actions

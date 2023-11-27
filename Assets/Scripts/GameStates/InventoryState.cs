@@ -140,8 +140,60 @@ public class InventoryState : State<GameManager>
                 yield break;
             }
 
+            if (SelectedItem is PaimengItem)
+            {
+                if (prevState == BattleState.I)
+                {
+                    var battleSystem = BattleState.I.BattleSystem;
+                    var enemy = BattleState.I.BattleSystem.EnemyUnit.pokemon.PokemonBase;
+                    var effectivenessData = enemy.EffectivenessData;
+                    string weakPoints = "";
+                    string strongPoints = "";
+                    foreach (var effectiveness in effectivenessData)
+                    {
+                        _inventoryUI.AllowUpdate = false;
+                        _inventoryUI.gameObject.SetActive(false);
+                        ActionSelectionState.I.SelectionUI.gameObject.SetActive(false);
+                        yield return battleSystem.DialogueBox.TypeDialogue("派蒙瞪大了双眼！");
+                        var elementReactionName = ElementReactionUtil.GetPassiveString(effectiveness.Key);
+                        if (effectiveness.Value > 1f)
+                        {
+                            weakPoints += elementReactionName + "、";
+                        }
+                        else if (effectiveness.Value < 1f)
+                        {
+                            strongPoints += elementReactionName + "、";
+                        }
+                    }
 
-            yield return _gameManager.StateMachine.PushAndWait(PartyState.I);
+                    if (weakPoints.Length == 0 && strongPoints.Length == 0)
+                    {
+                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}深不可测！");
+                    }
+
+                    if (weakPoints.Length > 0)
+                    {
+                        weakPoints = weakPoints.Substring(0, weakPoints.Length - 1);
+                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{weakPoints}的抗性较差！");
+                    }
+                    if (strongPoints.Length > 0)
+                    {
+                        strongPoints = strongPoints.Substring(0, strongPoints.Length - 1);
+                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{strongPoints}的抗性较高！");
+                    }
+                    RunTurnState.I.SkipEnemyTurn = true;
+                    _gameManager.StateMachine.Pop();
+                    yield break;
+                }
+                else
+                {
+                    yield return _gameManager.StateMachine.PushAndWait(PartyState.I);
+                }
+            }
+            else
+            {
+                yield return _gameManager.StateMachine.PushAndWait(PartyState.I);
+            }
 
             if (prevState == BattleState.I)
             {

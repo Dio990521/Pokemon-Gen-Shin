@@ -1,3 +1,4 @@
+using Game.Tool;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -71,11 +72,6 @@ public class Pokemon
 
         Moves = saveData.Moves.Select(s => new Move(s)).ToList();
 
-        if (pokemonBase.HasPassiveMove)
-        {
-            pokemonBase.PassiveMove = PassiveMoveDB.GetObjectByName(saveData.PassiveMoveName);
-        }
-
         CalculateStats();
         StatusChanges = new Queue<string>();
         ResetStatBoost();
@@ -106,10 +102,6 @@ public class Pokemon
                 break;
             }
         }
-        if (pokemonBase.HasPassiveMove)
-        {
-            pokemonBase.PassiveMove = PassiveMoveDB.GetObjectByName(PassiveMoveDB.GetRandomKey());
-        }
 
         CalculateStats();
 
@@ -119,6 +111,7 @@ public class Pokemon
         ResetStatBoost();
         Status = null;
         ElementStatus = null;
+        pokemonBase.InitPassiveMove();
     }
 
     public PokemonSaveData GetSaveData()
@@ -384,6 +377,7 @@ public class Pokemon
         float d = a * move.MoveBase.Power * ((float)attack / defense) + 2;
 
         float elementReactionRate = 1f;
+        float effectiveness = 1f;
         if (!(pokemonBase.IsSlime && move.MoveBase.Type == pokemonBase.Type1))
         {
             if (move.MoveBase.Effects.ElementStatus == ConditionID.none)
@@ -398,17 +392,17 @@ public class Pokemon
                     else
                     {
                         move.MoveBase.Effects.ElementStatus = attacker.ElementStatus.Id;
-                        elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+                        elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails, out effectiveness);
                         move.MoveBase.Effects.ElementStatus = ConditionID.none;
                     }
                 }
             }
             else
             {
-                elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails);
+                elementReactionRate = CheckElementReaction(ElementStatus, move, attacker, damageDetails, out effectiveness);
             }
         }
-
+        damageDetails.Effectiveness = effectiveness;
         damageDetails.StatusName = Status?.Name;
         float modifiers = UnityEngine.Random.Range(0.85f, 1f);
         int damage = Mathf.FloorToInt(d * modifiers * elementReactionRate);
@@ -421,8 +415,9 @@ public class Pokemon
         return damageDetails;
     }
 
-    private float CheckElementReaction(Condition elementStatus, Move attackerMove, Pokemon attacker, DamageDetails damageDetails)
+    private float CheckElementReaction(Condition elementStatus, Move attackerMove, Pokemon attacker, DamageDetails damageDetails, out float effectiveness)
     {
+        effectiveness = 1f;
         if (Status != null && Status.Id == ConditionID.jiejing)
         {
             return 1f;
@@ -436,7 +431,7 @@ public class Pokemon
                 if (ElementStatus != null)
                 {
                     
-                    float elementReactionRate = PerformElementReaction(ElementStatus.Id, attacker.ElementStatus.Id, damageDetails);
+                    float elementReactionRate = PerformElementReaction(ElementStatus.Id, attacker.ElementStatus.Id, damageDetails, out effectiveness);
                     attacker.CureElementStatus();
                     return elementReactionRate;
                 }
@@ -458,20 +453,24 @@ public class Pokemon
         }
         else if (elementStatus != null)
         {
-            return PerformElementReaction(elementStatus.Id, attackerMove.MoveBase.Effects.ElementStatus, damageDetails);
+            return PerformElementReaction(elementStatus.Id, attackerMove.MoveBase.Effects.ElementStatus, damageDetails, out effectiveness);
         }
 
         return 1f;
     }
 
-    private float PerformElementReaction(ConditionID element, ConditionID attackerElement, DamageDetails damageDetails)
+    private float PerformElementReaction(ConditionID element, ConditionID attackerElement, DamageDetails damageDetails, out float effectiveness)
     {
         ConditionID elementReactionRes = ConditionsDB.GetElementReaction(element, attackerElement);
         damageDetails.IsElementReaction = true;
-        float effectiveness = 1f;
+        effectiveness = 1f;
         if (pokemonBase.PassiveMove != null)
         {
-            effectiveness = EffectivenessChart.GetEffectiveness(elementReactionRes, pokemonBase.PassiveMove.PassiveMoveType);
+            var passiveType = ElementReactionUtil.ConditionIDToPassiveType(elementReactionRes);
+            if (pokemonBase.EffectivenessData.TryGetValue(passiveType, out float res))
+            {
+                effectiveness *= res;
+            }
         }
         damageDetails.Effectiveness = effectiveness;
         if (elementReactionRes == ConditionID.psn)
