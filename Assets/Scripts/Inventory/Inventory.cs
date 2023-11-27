@@ -80,6 +80,10 @@ public class Inventory : MonoBehaviour, ISavable
             {
                 AudioManager.Instance.PlaySE(SFX.OBTAIN_TM, true);
             }
+            else if (item.IsBadge)
+            {
+                AudioManager.Instance.PlaySE(SFX.OBTAIN_BADGE, true);
+            }
             else
             {
                 AudioManager.Instance.PlaySE(SFX.OBTAIN_ITEM, true);

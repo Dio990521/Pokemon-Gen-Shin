@@ -22,6 +22,8 @@ public class ItemBase : ScriptableObject
     public bool IsSellable => isSellable;
     public int YuanshiPrice => yuanshiPrice;
 
+    public bool IsBadge;
+
     public virtual bool Use(Pokemon pokemon)
     {
         return false;

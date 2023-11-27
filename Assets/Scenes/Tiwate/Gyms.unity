@@ -666,7 +666,7 @@ MonoBehaviour:
   dialogue:
     speakerName: 
     lines: []
-    beforeCutscene: 0
+    afterCutsceneActivate: 0
 --- !u!114 &96809020 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3192666759394679992, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
@@ -776,13 +776,17 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3050262574931276563, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679989, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
       propertyPath: m_Name
       value: NPC49 - T (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
       propertyPath: dialogues.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
       propertyPath: dialogues.Array.data[0].beforeCutscene
@@ -902,6 +906,11 @@ PrefabInstance:
 --- !u!4 &156796100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3192666759394679995, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
+  m_PrefabInstance: {fileID: 156796099}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &156796101 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3192666759394679989, guid: b818cb38d2963554f9e85fa8fad7c3fa, type: 3}
   m_PrefabInstance: {fileID: 156796099}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &217296748
@@ -6328,6 +6337,14 @@ PrefabInstance:
       propertyPath: managedReferences[1340289625167757314].dialogue.lines.Array.data[2]
       value: "\u5F97\u8865\u70B9\u8D27\u5566\uFF01"
       objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757314].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7623,7 +7640,7 @@ MonoBehaviour:
   dialogue:
     speakerName: 
     lines: []
-    beforeCutscene: 0
+    afterCutsceneActivate: 0
 --- !u!1001 &549808414
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7820,7 +7837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: e8e28597d594659479d6fab3eb8bb87f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 30.5
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: e8e28597d594659479d6fab3eb8bb87f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8496,7 +8513,7 @@ MonoBehaviour:
   dialogue:
     speakerName: 
     lines: []
-    beforeCutscene: 0
+    afterCutsceneActivate: 0
 --- !u!1001 &745563246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9105,7 +9122,7 @@ MonoBehaviour:
   dialogue:
     speakerName: 
     lines: []
-    beforeCutscene: 0
+    afterCutsceneActivate: 0
 --- !u!1001 &1037526156
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9428,6 +9445,14 @@ PrefabInstance:
       propertyPath: managedReferences[1340289625167757314].dialogue.lines.Array.data[0]
       value: "\u795D\u4F60\u65E9\u65E5\u6210\u4E3A\u5B9D\u53EF\u68A6\u5927\u5E08\uFF01"
       objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757314].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9516,7 +9541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: actions.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: _enableAfterCutscene
@@ -9528,7 +9553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: _activateCutsceneName
-      value: 0
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: actions.Array.data[0]
@@ -9536,11 +9561,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: actions.Array.data[1]
-      value: 1340289625167757314
+      value: 1340289905883348992
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: actions.Array.data[2]
-      value: 1340289625167757314
+      value: 1340289905883349007
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757312]
@@ -9555,9 +9580,49 @@ PrefabInstance:
       value: Assembly-CSharp DialogueAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348992]
+      value: Assembly-CSharp DisableObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348994]
+      value: Assembly-CSharp EnableObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995]
+      value: Assembly-CSharp TeleportObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996]
+      value: Assembly-CSharp TeleportPlayerAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349006]
+      value: Assembly-CSharp ReloadSceneAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349007]
+      value: Assembly-CSharp ReloadConnectedSceneAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348992].go
+      value: 
+      objectReference: {fileID: 156796101}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348994].go
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995].go
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757313].npc
       value: 
       objectReference: {fileID: 96809020}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996].facingDir
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757312].actionName
       value: DialogueAction
@@ -9571,6 +9636,50 @@ PrefabInstance:
       value: DialogueAction
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348992].actionName
+      value: DisableObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348994].actionName
+      value: EnableObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995].actionName
+      value: TeleportObjectAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995].position.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995].position.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996].actionName
+      value: TeleportPlayerAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996].position.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996].position.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349006].actionName
+      value: ReloadSceneAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349007].actionName
+      value: ReloadConnectedSceneAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996]._contextCutscene
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757312].waitForCompletion
       value: 1
       objectReference: {fileID: 0}
@@ -9580,6 +9689,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757314].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348992].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348994].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348995].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883348996].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349006].waitForCompletion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289905883349007].waitForCompletion
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
@@ -9645,6 +9778,10 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757314].dialogue.lines.Array.data[2]
       value: "\u5F97\u8865\u70B9\u8D27\u5566\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9821,6 +9958,14 @@ PrefabInstance:
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[2].lines.Array.data[2]
       value: "\u4F1A\u4E0D\u4F1A\u662F\u521A\u521A\u90A3\u4E2A\u5C0F\u9B3C\uFF0C\u4ED6\u521A\u8DD1\u51FA\u53BB\uFF0C\u4F60\u5FEB\u70B9\u53BB\u8FFD\u4E0A\u4ED6\u5427\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[1].afterCutsceneActivate
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[2].afterCutsceneActivate
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: m_RootOrder
@@ -10204,6 +10349,14 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289657141198849].dialogue.lines.Array.data[0]
       value: "\u62DC\u4E86\u4E2A\u62DC\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289657141198849].dialogue.afterCutsceneActivate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15210,6 +15363,14 @@ PrefabInstance:
       propertyPath: managedReferences[1340289625167757314].dialogue.lines.Array.data[2]
       value: "\u5F97\u8865\u70B9\u8D27\u5566\uFF01"
       objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757314].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15893,7 +16054,7 @@ MonoBehaviour:
   dialogue:
     speakerName: 
     lines: []
-    beforeCutscene: 0
+    afterCutsceneActivate: 0
 --- !u!1001 &1362449334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16254,6 +16415,14 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289657141198849].dialogue.lines.Array.data[2]
       value: "\u6700\u540E\u795D\u4F60\u65E9\u65E5\u6210\u4E3A\u5B9D\u53EF\u68A6\u5927\u5E08\uFF01"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289625167757312].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289657141198849].dialogue.afterCutsceneActivate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

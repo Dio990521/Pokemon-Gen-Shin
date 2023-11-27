@@ -5148,106 +5148,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.size
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.size
-      value: 51
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[34]
-      value: 
-      objectReference: {fileID: 8300000, guid: d7de971a2b86c694a9c9b7fa7610bb2c, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[35]
-      value: 
-      objectReference: {fileID: 8300000, guid: a3c2ba89995fd3d42948e443c2ee6941, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[36]
-      value: 
-      objectReference: {fileID: 8300000, guid: 15495ccb92eb6ce418e6bc6c346b2615, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[37]
-      value: 
-      objectReference: {fileID: 8300000, guid: ad5cd3e510c5b7c4390a6bdc3f021d38, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[38]
-      value: 
-      objectReference: {fileID: 8300000, guid: ed9f950d016e63641acfa22e940e23d9, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[39]
-      value: 
-      objectReference: {fileID: 8300000, guid: 507552adefb458640b715230be4383a9, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: sfxClips.Array.data[40]
-      value: 
-      objectReference: {fileID: 8300000, guid: 30a3318da22d0e44a973f60a960b9473, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[46]
-      value: 
-      objectReference: {fileID: 8300000, guid: da24d5dddfa29384aac387bbc21040f6, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[47]
-      value: 
-      objectReference: {fileID: 8300000, guid: d5b94aea2187b604e9012fe4f831c369, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[48]
-      value: 
-      objectReference: {fileID: 8300000, guid: 3b66b493095ed914c9eb9b71c2104d99, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[49]
-      value: 
-      objectReference: {fileID: 8300000, guid: 5d45389a2994a9f4e91f3500549d0b20, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[50]
-      value: 
-      objectReference: {fileID: 8300000, guid: 80db1076492848c4398f0a22a383ac9b, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: musicClips.Array.data[51]
-      value: 
-      objectReference: {fileID: 8300000, guid: 5d45389a2994a9f4e91f3500549d0b20, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 63aa15afc58e05648890b1241704faeb, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[1]
-      value: 
-      objectReference: {fileID: 8300000, guid: 87a48427d7570994b8d79c86eb67a492, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[2]
-      value: 
-      objectReference: {fileID: 8300000, guid: a97481e3283c6b24591161e6b6516066, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[3]
-      value: 
-      objectReference: {fileID: 8300000, guid: 021283740516675469f2c68085b6040f, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[4]
-      value: 
-      objectReference: {fileID: 8300000, guid: 3edc407b1c780484b867f18c0bc815db, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[5]
-      value: 
-      objectReference: {fileID: 8300000, guid: bc531ea12bf57184ead8d216b087981b, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[6]
-      value: 
-      objectReference: {fileID: 8300000, guid: 6416a05dc05a54a429b20e461892ce1c, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[7]
-      value: 
-      objectReference: {fileID: 8300000, guid: 5aa32f9e4bb305a47895c96857a6230b, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
-      propertyPath: tiwateClips.Array.data[8]
-      value: 
-      objectReference: {fileID: 8300000, guid: 640b79cd79114d64ca55774be4fba146, type: 3}
-    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: tiwateClips.Array.data[9]
       value: 
       objectReference: {fileID: 8300000, guid: c02620f954463d544bcae4d50ef281f6, type: 3}
@@ -8444,8 +8344,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pokemonSelectionUI: {fileID: 255683699}
   BossPokemon:
-    pokemonBase: {fileID: 11400000, guid: 46bcfaa7edfb50845974621da42ca857, type: 2}
-    level: 30
+    pokemonBase: {fileID: 11400000, guid: 59f0fcfb9c730a644a6b2a101750fc87, type: 2}
+    level: 5
     PokeballSpriteType: 0
 --- !u!114 &2173388929618975140
 MonoBehaviour:
@@ -10067,6 +9967,22 @@ PrefabInstance:
     - target: {fileID: 2036901472666495437, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065031646630971871, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Text
+      value: "\u523B\u6674233333333333333"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065031646630971871, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065031646630971871, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 2065031646630971871, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2072619010742774291, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_ChildAlignment
@@ -14930,11 +14846,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.5
+      value: -71.54
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 195.5
+      value: 209.19
       objectReference: {fileID: 0}
     - target: {fileID: 8741886214034261897, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

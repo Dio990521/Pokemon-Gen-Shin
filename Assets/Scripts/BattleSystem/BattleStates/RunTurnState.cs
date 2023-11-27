@@ -368,7 +368,8 @@ public class RunTurnState : State<BattleSystem>
             int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / Random.Range(5.9f, 6.05f));
             foreach (var pokemon in _playerParty.Pokemons)
             {
-                pokemon.Exp += expGain;
+                if (pokemon.Level < 100)
+                    pokemon.Exp += expGain;
             }
 
             yield return _dialogueBox.TypeDialogue($"队伍中的所有宝可梦\n各自获得了{expGain}点经验值！");
@@ -382,9 +383,8 @@ public class RunTurnState : State<BattleSystem>
                     if (pokemon == _playerUnit.pokemon)
                     {
                         _playerUnit.Hud.SetLevel();
-                        AudioManager.Instance.PlaySE(SFX.LEVEL_UP, true);
                     }
-                    
+                    AudioManager.Instance.PlaySE(SFX.LEVEL_UP, true);
                     yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}升级了！\n等级提升至{pokemon.Level}！");
 
                     // Try to learn a new Move

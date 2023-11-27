@@ -191,6 +191,15 @@ public class GameManager : Singleton<GameManager>, ISavable
         yield return new WaitForSeconds(1f);
     }
 
+    public IEnumerator RefreshScene()
+    {
+        PauseGame(true);
+        CurrentScene.UnloadConnectedScenes();
+        yield return new WaitForSeconds(1f);
+        CurrentScene.LoadConnectedScenes();
+        yield return new WaitForSeconds(1f);
+    }
+
     public object CaptureState()
     {
         return _gameTimeSpend;

@@ -68,6 +68,10 @@ public class CutsceneEditor : Editor
             {
                 cutscene.AddAction(new SwitchBGMAction());
             }
+            else if (GUILayout.Button("Reload Connected Scene"))
+            {
+                cutscene.AddAction(new ReloadConnectedSceneAction());
+            }
         }
 
         base.OnInspectorGUI();

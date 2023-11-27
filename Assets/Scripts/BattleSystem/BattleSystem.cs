@@ -197,7 +197,7 @@ public class BattleSystem : MonoBehaviour
                 if (trainer.IsGymLeader)
                 {
                     Wallet.I.IncreaseVisaLimit(100000);
-                    yield return _dialogueBox.TypeDialogue($"作为奖励，\n你的信用卡额度提升了100000摩拉！");
+                    yield return _dialogueBox.TypeDialogue($"作为奖励，你的信用卡额度\n提升了100000摩拉！");
                 }
             }
             else

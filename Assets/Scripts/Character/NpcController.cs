@@ -42,15 +42,15 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
     private void Start()
     {
-        if (_disableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableCutscene.ToString()))
-        {
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        }
         if (_enableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_enableCutscene.ToString()))
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
+        if (_disableCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableCutscene.ToString()))
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -119,14 +119,25 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             }
             else
             {
+                Dialogue curDialogue = null;
                 foreach (var dialogue in dialogues)
                 {
-                    if (GameKeyManager.Instance.GetBoolValue(dialogue.InCutscene.ToString()))
+                    if (dialogue.AfterCutsceneActivate == CutsceneName.None)
                     {
-                        continue;
+                        curDialogue = dialogue;
                     }
-                    yield return DialogueManager.Instance.ShowDialogue(dialogue);
-                    break;
+                    else if (GameKeyManager.Instance.GetBoolValue(dialogue.AfterCutsceneActivate.ToString()))
+                    {
+                        curDialogue = dialogue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (curDialogue != null)
+                {
+                    yield return DialogueManager.Instance.ShowDialogue(curDialogue);
                 }
                 character.Animator.SetFacingDirection(character.Animator.DefaultDirection);
             }

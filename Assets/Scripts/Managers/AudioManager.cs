@@ -46,6 +46,7 @@ public enum SFX
     BEAST_A,
     BEAST_YARIMASU,
     BEAST_YIGE,
+    OBTAIN_BADGE
 }
 
 public enum BGM
@@ -101,7 +102,9 @@ public enum BGM
     CHAMPION,
     BATTTLE_CHAMPION,
     VICTORY_CHAMPION,
-    NONE
+    EVOLUTION,
+    EVOLUTION_CONGRAT,
+    NONE,
 }
 
 public class AudioManager : Singleton<AudioManager>
