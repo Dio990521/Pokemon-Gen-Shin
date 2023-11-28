@@ -194,7 +194,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     public IEnumerator RefreshScene()
     {
         PauseGame(true);
-        CurrentScene.UnloadConnectedScenes();
+        CurrentScene.ForceUnloadConnectedScenes();
         yield return new WaitForSeconds(1f);
         CurrentScene.LoadConnectedScenes();
         yield return new WaitForSeconds(1f);

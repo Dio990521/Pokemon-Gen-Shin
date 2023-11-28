@@ -73,13 +73,13 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             {
                 yield return trainerController.Interact(initiator);
             }
+            else if (checker != null && !checker.Used)
+            {
+                yield return checker.CheckItem(initiator.GetComponent<PlayerController>());
+            }
             else if (itemGiver != null && itemGiver.CanBeGiven())
             {
                 yield return itemGiver.GiveItem(initiator.GetComponent<PlayerController>());
-            }
-            else if (checker != null)
-            {
-                yield return checker.CheckItem(initiator.GetComponent<PlayerController>());
             }
             else if (pokemonGiver != null && pokemonGiver.CanBeGiven())
             {

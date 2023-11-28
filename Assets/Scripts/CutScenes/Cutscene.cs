@@ -21,6 +21,9 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     [SerializeField] private bool _isAlwaysExist;
     [SerializeField] private CutsceneName disableAfterCutscene;
 
+    [HideInInspector]
+    public static bool IsReloadConnectedScene;
+
     private bool _isPlaying;
 
     public bool TriggerRepeatedly => _isAlwaysExist;
@@ -52,6 +55,16 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
                 }
             }
         }
+
+        if (IsReloadConnectedScene)
+        {
+            yield return Fader.FadeIn(1f);
+            yield return GameManager.Instance.RefreshScene();
+            yield return Fader.FadeOut(1f);
+            IsReloadConnectedScene = false;
+            GameManager.Instance.StateMachine.Pop();
+        }
+
         GameManager.Instance.StateMachine.Pop();
     }
 

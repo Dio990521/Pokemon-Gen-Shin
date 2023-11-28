@@ -140,7 +140,7 @@ public class BattleSystem : MonoBehaviour
             _playerUnit.UnitEnterAnimation();
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
-            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}想要进行宝可梦对战！");
+            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}\n想要进行宝可梦对战！");
             yield return new WaitForSeconds(1f);
 
             // Send out first pokemon of the trainer
@@ -154,7 +154,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             _enemyUnit.PokemonSprite.enabled = true;
             _enemyUnit.ChangeUnit(enemyPokemon, true);
-            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{enemyPokemon.PokemonBase.PokemonName}！");
+            yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了\n{enemyPokemon.PokemonBase.PokemonName}！");
             
             yield return new WaitForSeconds(0.5f);
 

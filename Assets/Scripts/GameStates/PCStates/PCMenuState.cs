@@ -13,6 +13,8 @@ public class PCMenuState : State<GameManager>
     [SerializeField] private CountSelectorUI countSelectorUI;
     [SerializeField] private GameObject pokemonRoom;
 
+    [SerializeField] private ItemBase _creditCard;
+
     private Inventory _inventory;
 
     public static PCMenuState I { get; private set; }
@@ -63,6 +65,12 @@ public class PCMenuState : State<GameManager>
 
         if (selectedChoice == 0)
         {
+            if (!Inventory.GetInventory().HasItem(_creditCard))
+            {
+                yield return DialogueManager.Instance.ShowDialogueText("充值服务需要信用卡！");
+                yield return StartMenuState();
+                yield break;
+            }
             AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
             walletUI.Show();
             yield return BuyYuanshi();

@@ -8,10 +8,14 @@ public class ItemGiver : MonoBehaviour, ISavable
     [SerializeField] private int count = 1;
     [SerializeField] private Dialogue dialogue;
 
+    [SerializeField] private CutsceneName _afterCutscene;
+
     private bool used = false;
 
     public IEnumerator GiveItem(PlayerController player)
     {
+        if (_afterCutscene != CutsceneName.None &&
+            !GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString())) yield break;
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
         player.GetComponent<Inventory>().AddItem(item, count);
 

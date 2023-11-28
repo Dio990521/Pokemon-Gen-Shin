@@ -466,6 +466,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 350424750}
     m_Modifications:
     - target: {fileID: 3702265343228797080, guid: bcff6b782f7ee56459c8aeacc0d20865, type: 3}
+      propertyPath: _total
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3702265343228797080, guid: bcff6b782f7ee56459c8aeacc0d20865, type: 3}
       propertyPath: _keyItem
       value: 
       objectReference: {fileID: 11400000, guid: 2be1272c78d18824693628a0d3f7ed9a, type: 2}
@@ -5148,6 +5152,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.size
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.data[41]
+      value: 
+      objectReference: {fileID: 8300000, guid: 10d2294aa09cb6d4fad7fed6f1145fca, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: tiwateClips.Array.data[9]
       value: 
       objectReference: {fileID: 8300000, guid: c02620f954463d544bcae4d50ef281f6, type: 3}
@@ -8330,6 +8342,7 @@ MonoBehaviour:
   yuanshiShopUI: {fileID: 2082832281}
   countSelectorUI: {fileID: 1602842722}
   pokemonRoom: {fileID: 0}
+  _creditCard: {fileID: 11400000, guid: 50fac0efb9584c747a685d8809c804ab, type: 2}
 --- !u!114 &2173388929618975133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11204,6 +11217,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3749029872618096843, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_Text
+      value: "\u7EFD\u653E=\u6C34+\u8349\uFF1B\u7761\u7720=\u96F7+\u8349\uFF1B\u71C3\u70E7=\u706B+\u8349\uFF1B\u84B8\u53D1=\u6C34+\u706B\uFF1B\u51BB\u7ED3=\u6C34+\u51B0\uFF1B\u9EBB\u75F9=\u6C34+\u96F7\uFF1B\u878D\u5316=\u706B+\u51B0\uFF1B\u8D85\u8F7D=\u706B+\u96F7\uFF1B\u6DF7\u4E71=\u51B0+\u96F7\uFF1B\u6269\u6563=\u4EFB\u610F+\u98CE\uFF1B\u7ED3\u6676=\u4EFB\u610F+\u5CA9\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749029872618096843, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_BestFit
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749029872618096843, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3749029872618096843, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: m_FontData.m_MinSize
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 3779225434484750374, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11910,7 +11939,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
@@ -11935,7 +11964,7 @@ PrefabInstance:
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].pokemonBase
       value: 
-      objectReference: {fileID: 11400000, guid: 383bfcd7cafd9484abde17001f2616d3, type: 2}
+      objectReference: {fileID: 11400000, guid: b04d46245e39e554aa72e0d4e7ee0cd0, type: 2}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[1].pokemonBase
       value: 
@@ -14846,11 +14875,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -71.54
+      value: -39.43
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 209.19
+      value: -6.96
       objectReference: {fileID: 0}
     - target: {fileID: 8741886214034261897, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y

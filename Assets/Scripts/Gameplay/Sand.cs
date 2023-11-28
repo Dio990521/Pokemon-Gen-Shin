@@ -17,7 +17,9 @@ public class Sand : MonoBehaviour, IPlayerTriggerable
         player.Character.Animator.IsMoving = false;
         if (dir > 0)
         {
-            var pokemonWithRock = player.gameObject.GetComponent<PokemonParty>().Pokemons.FirstOrDefault(p => p.PokemonBase.Type1 == PokemonType.бв);
+            var pokemonWithRock = player.gameObject.GetComponent<PokemonParty>()
+                .Pokemons.FirstOrDefault(p => p.PokemonBase.Type1 == PokemonType.бв
+                && p.Hp > 0);
             if (pokemonWithRock == null)
             {
                 StartCoroutine(FallAnimate(player.transform));

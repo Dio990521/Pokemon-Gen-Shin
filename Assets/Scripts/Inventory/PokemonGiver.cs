@@ -13,6 +13,7 @@ public class PokemonGiver : MonoBehaviour, ISavable
     {
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
         used = true;
+        AudioManager.Instance.PlaySE(SFX.RECEIVE_POKEMON);
         foreach (var pokemon in pokemonsToGive)
         {
             if (!PokemonParty.GetPlayerParty().HasPokemon(pokemon))

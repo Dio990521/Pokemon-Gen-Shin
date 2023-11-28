@@ -80,6 +80,20 @@ public class SceneDetails : MonoBehaviour
         }
     }
 
+    public void ForceUnloadConnectedScenes()
+    {
+        // Unload the scenes that are no longer connected
+        var curScene = GameManager.Instance.CurrentScene;
+        if (curScene != null)
+        {
+            var scenes = curScene.connectedScenes;
+            foreach (var scene in scenes)
+            {
+                scene.UnloadScene();
+            }
+        }
+    }
+
     public IEnumerator LoadScene()
     {
         if (!IsLoaded)

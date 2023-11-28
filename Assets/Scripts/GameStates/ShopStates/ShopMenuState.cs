@@ -7,7 +7,6 @@ public class ShopMenuState : State<GameManager>
 {
     public List<ItemBase> AvailableItems { get; set; }
 
-
     public static ShopMenuState I { get; private set; }
 
     private GameManager _gameManager;

@@ -405,7 +405,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbe7f098df2cb5b498ee70addb69af81, type: 2}
   - {fileID: 11400000, guid: 7b01237bf8331d940aa6a6920597feb4, type: 2}
   - {fileID: 11400000, guid: a0866c8746131d647a032210d1380311, type: 2}
-  - {fileID: 11400000, guid: 19a1cc8e53614514daf2f4ee1248c513, type: 2}
+  extraItems:
+  - {fileID: 11400000, guid: aee01af5b9531c942ab3220c849afbf7, type: 2}
 --- !u!4 &1246231169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3192666759394679995, guid: 1b49635e91b0594489a071918a8de2e0, type: 3}

@@ -144,8 +144,14 @@ public class CharacterAnimator : MonoBehaviour
         {
             MoveY = -1;
         }
+        else if (dir == FacingDirection.ToPlayer)
+        {
+            var player = GameManager.Instance.PlayerController;
+            MoveX = -player.Character.Animator.MoveX;
+            MoveY = -player.Character.Animator.MoveY;
+        }
     }
 
 }
 
-public enum FacingDirection { Left, Right, Up, Down, None }
+public enum FacingDirection { Left, Right, Up, Down, None, ToPlayer }

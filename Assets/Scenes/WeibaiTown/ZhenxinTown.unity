@@ -18880,15 +18880,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.data[0]
-      value: "\u542C\u8BF4\u4F4F\u5728\u9694\u58C1\u7684\u5C0F\u60A0\u8FD8\u6CA1\u6709\u642C\u6765\u554A..."
+      value: "\u4EE5\u524D\u6211\u662F\u7814\u7A76\u5C5E\u6027\u514B\u5236\u7684\uFF0C\u4F46\u662F\u73B0\u5728\u90FD\u53D8\u6210\u5143\u7D20\u53CD\u5E94\u4E86\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.data[1]
-      value: 
+      value: "\u5FD8\u4E86\u5565\u65F6\u5019\u6362\u65B9\u5411\u4E86\uFF0C\u7B97\u4E86\u5C31\u8FD9\u6837\u5427\u3002"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192666759394679992, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      propertyPath: dialogues.Array.data[0].lines.Array.data[2]
+      value: "\u4E0D\u540C\u7684\u5143\u7D20\u53CD\u5E94\u7684\u9644\u52A0\u6548\u679C\u90FD\u4E0D\u540C\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       propertyPath: m_RootOrder
@@ -18937,13 +18941,45 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3192666759394679989, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 393843976}
   m_SourcePrefab: {fileID: 100100000, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
 --- !u!4 &393843974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3192666759394679995, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
   m_PrefabInstance: {fileID: 393843973}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &393843975 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3192666759394679989, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+  m_PrefabInstance: {fileID: 393843973}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &393843976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393843975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd351d34c5c9f5e4eabfae62b2bc70c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 7a7331da451a5ad41aa2b6b7fdecef21, type: 2}
+  count: 1
+  dialogue:
+    speakerName: 
+    lines:
+    - "\u5143\u7D20\u53CD\u5E94\u592A\u597D\u73A9\u4E86\uFF01"
+    - "\u4E24\u79CD\u5143\u7D20\u78B0\u649E\u540E\u9664\u4E86\u4F1A\u9020\u6210\u66F4\u9AD8\u7684\u4F24\u5BB3\uFF0C\u8FD8\u6709\u9644\u52A0\u7684\u6548\u679C\u5462\uFF01"
+    - "\u4E0D\u540C\u7684\u5143\u7D20\u53CD\u5E94\u7684\u9644\u52A0\u6548\u679C\u90FD\u4E0D\u540C\uFF01"
+    - "\u6B63\u597D\uFF0C\u6211\u8FD9\u91CC\u6709\u4E00\u4EFD\u5143\u7D20\u53CD\u5E94\u6548\u679C\u5C0F\u6284\uFF0C\u5C31\u9001\u7ED9\u4F60\u5427\uFF01"
+    - "\u4E0D\u8FC7\u53EA\u6709\u4E00\u534A\uFF0C\u53E6\u4E00\u534A\u53EF\u80FD\u5728\u522B\u4EBA\u624B\u4E0A\uFF01"
+    afterCutsceneActivate: 0
+  _afterCutscene: 0
 --- !u!1001 &410649969
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,9 +8,10 @@ public class ItemChecker : MonoBehaviour, ISavable
     [SerializeField] private Dialogue failDialogue;
     [SerializeField] private Dialogue successDialogue;
     [SerializeField] private CutsceneName cutsceneName;
+    [SerializeField] private bool _needRemoveItem;
 
-
-    private bool used = false;
+    [HideInInspector]
+    public bool Used = false;
 
     public IEnumerator CheckItem(PlayerController player)
     {
@@ -23,13 +24,20 @@ public class ItemChecker : MonoBehaviour, ISavable
             }
         }
 
-        if (!used && count == items.Count)
+        if (!Used && count == items.Count)
         {
-            used = true;
+            Used = true;
+            if (_needRemoveItem)
+            {
+                foreach (var item in items)
+                {
+                    Inventory.GetInventory().RemoveItem(item);
+                }
+            }
             GameKeyManager.Instance.SetBoolValue(cutsceneName.ToString(), true);
             yield return DialogueManager.Instance.ShowDialogue(successDialogue);
         }
-        else if (!used && count != items.Count)
+        else if (!Used && count != items.Count)
         {
             yield return DialogueManager.Instance.ShowDialogue(failDialogue);
         }
@@ -37,11 +45,11 @@ public class ItemChecker : MonoBehaviour, ISavable
 
     public object CaptureState()
     {
-        return used;
+        return Used;
     }
 
     public void RestoreState(object state)
     {
-        used = (bool)state;
+        Used = (bool)state;
     }
 }

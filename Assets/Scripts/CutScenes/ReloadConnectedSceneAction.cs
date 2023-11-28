@@ -6,8 +6,7 @@ public class ReloadConnectedSceneAction : CutsceneAction
 {
     public override IEnumerator Play()
     {
-        yield return Fader.FadeIn(1f);
-        yield return GameManager.Instance.RefreshScene();
-        yield return Fader.FadeOut(1f);
+        Cutscene.IsReloadConnectedScene = true;
+        yield return null;
     }
 }
