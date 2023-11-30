@@ -139,9 +139,8 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
                 {
                     yield return DialogueManager.Instance.ShowDialogue(curDialogue);
                 }
-                character.Animator.SetFacingDirection(character.Animator.DefaultDirection);
             }
-
+            character.Animator.SetFacingDirection(character.Animator.DefaultDirection);
             idleTimer = 0f;
             npcState = NPCState.Idle;
 

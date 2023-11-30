@@ -102,7 +102,8 @@ public class ShopBuyingState : State<GameManager>
 
             if (selectedChoice == 0)
             {
-                inventory.AddItem(item, countToBuy);
+                AudioManager.Instance.PlaySE(SFX.BUY);
+                inventory.AddItem(item, countToBuy, false);
                 Wallet.I.TakeMoney(totalPrice);
                 yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");
             }
@@ -136,7 +137,8 @@ public class ShopBuyingState : State<GameManager>
 
             if (selectedChoice == 0)
             {
-                inventory.AddItem(item, countToBuy);
+                AudioManager.Instance.PlaySE(SFX.BUY);
+                inventory.AddItem(item, countToBuy, false);
                 Inventory.GetInventory().RemoveItem(Wallet.I.Yuanshi, totalPrice);
                 Wallet.I.TakeMoney(0);
                 yield return DialogueManager.Instance.ShowDialogueText($"多谢惠顾，下次再来！");

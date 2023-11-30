@@ -405,6 +405,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dbe7f098df2cb5b498ee70addb69af81, type: 2}
   - {fileID: 11400000, guid: 7b01237bf8331d940aa6a6920597feb4, type: 2}
   - {fileID: 11400000, guid: a0866c8746131d647a032210d1380311, type: 2}
+  - {fileID: 11400000, guid: 2d2ae3c6c031f73438b71aedecfb77ce, type: 2}
   extraItems:
   - {fileID: 11400000, guid: aee01af5b9531c942ab3220c849afbf7, type: 2}
 --- !u!4 &1246231169 stripped
