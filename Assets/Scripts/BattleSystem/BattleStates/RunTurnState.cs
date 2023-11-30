@@ -72,7 +72,7 @@ public class RunTurnState : State<BattleSystem>
             {
                 playerGoesFirst = false;
             }
-            else if (playerMovePriority < enemyMovePriority)
+            else if (playerMovePriority != 10 && playerMovePriority == enemyMovePriority)
             {
                 playerGoesFirst = _playerUnit.pokemon.Speed >= _enemyUnit.pokemon.Speed;
             }
@@ -326,18 +326,22 @@ public class RunTurnState : State<BattleSystem>
         }
 
         float moveAccuracy = move.MoveBase.Accuracy;
-        int accuracy = source.StatBoosts[Stat.命中率];
-        int evasion = target.StatBoosts[Stat.闪避率];
+        int speedDelta = Mathf.Clamp(source.Speed - target.Speed, 0, 100);
 
-        var boostValues = new float[] { 1f, 4f / 3f, 5f / 3f, 2f, 7f / 3f, 8f / 3f, 3f };
+        return Random.Range(1, 101) <= moveAccuracy + speedDelta * Random.Range(0f, 1f);
 
-        moveAccuracy = accuracy > 0 ? moveAccuracy * boostValues[accuracy]
-            : moveAccuracy / boostValues[-accuracy];
+        //int accuracy = source.StatBoosts[Stat.命中率];
+        //int evasion = target.StatBoosts[Stat.闪避率];
 
-        moveAccuracy = evasion > 0 ? moveAccuracy / boostValues[evasion]
-            : moveAccuracy * boostValues[-evasion];
+        //var boostValues = new float[] { 1f, 4f / 3f, 5f / 3f, 2f, 7f / 3f, 8f / 3f, 3f };
 
-        return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
+        //moveAccuracy = accuracy > 0 ? moveAccuracy * boostValues[accuracy]
+        //    : moveAccuracy / boostValues[-accuracy];
+
+        //moveAccuracy = evasion > 0 ? moveAccuracy / boostValues[evasion]
+        //    : moveAccuracy * boostValues[-evasion];
+
+        //return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
     }
 
     // Display conditons message to the dialogue box

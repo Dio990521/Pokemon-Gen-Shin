@@ -331,7 +331,7 @@ public class Pokemon
     {
         int statVal = Stats[stat];
         int boost = StatBoosts[stat];
-        var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f };
+        var boostValues = new float[] { 1f, 1.25f, 1.5f, 1.75f, 2f, 2.25f, 2.5f }; // 小幅 1 中幅2 大幅3 最大幅 6
         statVal = (boost >= 0) ? Mathf.FloorToInt(statVal * boostValues[boost]) 
             : Mathf.FloorToInt(statVal / boostValues[-boost]);
 
