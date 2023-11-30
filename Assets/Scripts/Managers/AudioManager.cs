@@ -48,7 +48,9 @@ public enum SFX
     BEAST_YIGE,
     OBTAIN_BADGE,
     RECEIVE_POKEMON,
-    BUY
+    BUY,
+    BOOST,
+    BOOST_DOWN
 }
 
 public enum BGM

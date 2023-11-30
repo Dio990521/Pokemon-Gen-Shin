@@ -25,7 +25,6 @@ public class Healer : MonoBehaviour
             yield return Fader.FadeOut(0.5f);
             yield return DialogueManager.Instance.ShowDialogueText($"你的宝可梦们都恢复健康了！");
             GameManager.Instance.PauseGame(false);
-
         }
         else if (selectedChoice == 1)
         {

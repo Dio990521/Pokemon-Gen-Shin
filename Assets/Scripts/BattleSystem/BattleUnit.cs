@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,10 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] private BattleHud hud;
     [SerializeField] private Sprite defaultPlayerSprite;
     [SerializeField] private Image moveEffectSprite;
+    public Image BoostEffect;
+    public Action<int> OnBoostEffect;
+    [SerializeField] private Sprite _boostSprite;
+    [SerializeField] private Sprite _boostDownSprite;
 
     public Pokemon pokemon { get; set; }
 
@@ -47,6 +52,7 @@ public class BattleUnit : MonoBehaviour
         unitOriginPos = transform.localPosition;
         groundOriginPos = groundSprite.transform.localPosition;
         originalColor = _pokemonSprite.color;
+        OnBoostEffect += PlayBoostAnim;
     }
 
     public void SetUp(Pokemon selectedPokemon)
@@ -66,6 +72,44 @@ public class BattleUnit : MonoBehaviour
         _pokemonSprite.color = originalColor;
         ResetAnimation();
         hud.SetData(selectedPokemon);
+    }
+
+    public void PlayBoostAnim(int boost)
+    {
+        BoostEffect.gameObject.SetActive(true);
+        BoostEffect.rectTransform.localPosition = new Vector2(0f, 0f);
+        var sequence = DOTween.Sequence();
+        if (boost > 0)
+        {
+            BoostEffect.sprite = _boostSprite;
+            sequence.Append(BoostEffect.DOFade(0f, 0.001f));
+            sequence.Append(BoostEffect.transform.DOLocalMoveY(500f, 2f));
+            var sequence2 = DOTween.Sequence();
+            sequence2.Append(BoostEffect.DOFade(0.7f, 0.8f));
+            sequence2.Append(BoostEffect.DOFade(0f, 0.8f));
+            sequence.Join(sequence2);
+
+            sequence.OnComplete(() => 
+            {
+                BoostEffect.gameObject.SetActive(false);
+            });
+
+        }
+        else if (boost < 0)
+        {
+            BoostEffect.sprite = _boostDownSprite;
+            sequence.Append(BoostEffect.DOFade(0f, 0.001f));
+            sequence.Append(BoostEffect.transform.DOLocalMoveY(-500f, 2f));
+            var sequence2 = DOTween.Sequence();
+            sequence2.Append(BoostEffect.DOFade(0.7f, 0.8f));
+            sequence2.Append(BoostEffect.DOFade(0f, 0.8f));
+            sequence.Join(sequence2);
+
+            sequence.OnComplete(() =>
+            {
+                BoostEffect.gameObject.SetActive(false);
+            });
+        }
     }
 
     public void SetNewTrainerPokemon(Pokemon selectedPokemon)

@@ -182,7 +182,7 @@ public class RunTurnState : State<BattleSystem>
             bool isElementReaction = false;
             if (move.MoveBase.Category == MoveCategory.Status)
             {
-                yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target);
+                yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit, targetUnit, move.MoveBase.Target);
             }
             else
             {
@@ -238,7 +238,7 @@ public class RunTurnState : State<BattleSystem>
 
                 if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
                 {
-                    yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit.pokemon, targetUnit.pokemon, move.MoveBase.Target, isElementReaction);
+                    yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit, targetUnit, move.MoveBase.Target, isElementReaction);
                 }
             }
 
@@ -251,7 +251,7 @@ public class RunTurnState : State<BattleSystem>
                     var rnd = UnityEngine.Random.Range(1, 101);
                     if (rnd <= secondary.Chance)
                     {
-                        yield return RunMoveEffects(move.MoveBase, secondary, sourceUnit.pokemon, targetUnit.pokemon, secondary.Target);
+                        yield return RunMoveEffects(move.MoveBase, secondary, sourceUnit, targetUnit, secondary.Target);
                     }
                 }
             }
@@ -267,17 +267,17 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator RunMoveEffects(MoveBase moveBase, MoveEffects effects, Pokemon source, Pokemon target, MoveTarget moveTarget, bool isElementReaction=false)
+    private IEnumerator RunMoveEffects(MoveBase moveBase, MoveEffects effects, BattleUnit source, BattleUnit target, MoveTarget moveTarget, bool isElementReaction=false)
     {
         if (effects.Boosts != null)
         {
             if (moveTarget == MoveTarget.Self)
             {
-                source.ApplyBoosts(effects.Boosts);
+                source.pokemon.ApplyBoosts(effects.Boosts, source.OnBoostEffect);
             }
             else
             {
-                target.ApplyBoosts(effects.Boosts);
+                target.pokemon.ApplyBoosts(effects.Boosts, target.OnBoostEffect);
             }
         }
 
@@ -285,24 +285,24 @@ public class RunTurnState : State<BattleSystem>
         {
             if (moveTarget == MoveTarget.Self)
             {
-                source.SetStatus(effects.Status);
+                source.pokemon.SetStatus(effects.Status);
             }
             else
             {
-                target.SetStatus(effects.Status);
+                target.pokemon.SetStatus(effects.Status);
             }
         }
 
         if (!isElementReaction && effects.ElementStatus != ConditionID.none)
         {
-            if (!(target.PokemonBase.IsSlime && moveBase.Type == target.PokemonBase.Type1))
+            if (!(target.pokemon.PokemonBase.IsSlime && moveBase.Type == target.pokemon.PokemonBase.Type1))
             {
-                target.SetElementStatus(effects.ElementStatus);
+                target.pokemon.SetElementStatus(effects.ElementStatus);
             }
         }
 
-        yield return ShowStatusChanges(source);
-        yield return ShowStatusChanges(target);
+        yield return ShowStatusChanges(source.pokemon);
+        yield return ShowStatusChanges(target.pokemon);
     }
 
     private IEnumerator RunAfterTurn(BattleUnit sourceUnit)

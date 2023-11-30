@@ -13406,19 +13406,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: movementPattern.Array.data[0].x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: movementPattern.Array.data[1].y
-      value: -3
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: movementPattern.Array.data[2].x
-      value: -3
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: movementPattern.Array.data[3].y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679992, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: dialogues.Array.data[0].lines.Array.size
@@ -13434,11 +13434,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.5
+      value: 24.5
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.5
+      value: 30.5
       objectReference: {fileID: 0}
     - target: {fileID: 3192666759394679995, guid: e0cb3d91cc47b5f449a379e5c0357173, type: 3}
       propertyPath: m_LocalPosition.z

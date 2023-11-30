@@ -25913,7 +25913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657602].dialogue.lines.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657603].dialogue.lines.Array.size
@@ -25949,11 +25949,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657602].dialogue.lines.Array.data[1]
-      value: "\u4F46\u662F\u4E00\u76F4\u6CA1\u627E\u5230\u4EBA\uFF01"
+      value: "\u4F46\u662F\u4E00\u76F4\u6CA1\u627E\u5230\u4EBA\uFF01\u4F60\u4EEC\u6709\u89C1\u5230\u4ED6\u5417\uFF1F "
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657602].dialogue.lines.Array.data[2]
-      value: "\u4F60\u4EEC\u6709\u89C1\u5230\u4ED6\u5417\uFF1F "
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657603].dialogue.lines.Array.data[0]
@@ -25998,6 +25998,30 @@ PrefabInstance:
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289670453657607].dialogue.lines.Array.data[1]
       value: "\u6211\u4EEC\u4EE3\u66FF\u4E86\u5C0F\u60A0\u7684\u5B58\u5728\uFF1F"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657600].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657601].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657602].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657603].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657604].dialogue.afterCutsceneActivate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
+      propertyPath: managedReferences[1340289670453657607].dialogue.afterCutsceneActivate
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26799,11 +26823,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: dialogue.lines.Array.data[1]
-      value: "\u6211\u5728\u8FD9\u91CC\u6B23\u8D4F\u672A\u767D\u9547\u7684\u98CE\u666F\u5462\uFF01\u9690\u7EA6\u80FD\u770B\u5230\u6211\u5BB6\uFF01"
+      value: "\u6211\u5728\u8FD9\u91CC\u6B23\u8D4F\u672A\u767D\u9547\u7684\u98CE\u666F\u5462\uFF01\u8FD9\u91CC\u9690\u7EA6\u80FD\u770B\u5230\u6211\u5BB6\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: dialogue.lines.Array.data[2]
-      value: "\u6B63\u597D\uFF0C\u98CE\u666F\u4E5F\u770B\u7684\u5DEE\u4E0D\u591A\u4E86\uFF0C\u5DEE\u4E0D\u591A\u8BE5\u505A\u4E9B\u6709\u8DA3\u7684\u4E8B\u60C5\u4E86\uFF01"
+      value: "\u6B63\u597D\uFF0C\u98CE\u666F\u4E5F\u770B\u7684\u5DEE\u4E0D\u591A\u4E86\uFF0C\u5DEE\u4E0D\u591A\u8BE5\u548C\u4F60\u505A\u4E9B\u6709\u8DA3\u7684\u4E8B\u60C5\u4E86\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 287294a2f85758f4bb8dfca8e5ae819f, type: 3}
       propertyPath: dialogue.lines.Array.data[3]
