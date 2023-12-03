@@ -102,7 +102,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void StartBattle(BattleTrigger trigger)
     {
-        AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+        AudioManager.Instance.PlayMusicVolume(BGM.BATTLE_WILD_POKEMON);
         BattleState.I.Trigger = trigger;
         BattleState.I.IsSuperBoss = false;
         BattleState.I.BossPokemon = null;
@@ -113,11 +113,11 @@ public class GameManager : Singleton<GameManager>, ISavable
     {
         if (!isSuperBoss)
         {
-            AudioManager.Instance.PlayMusic(BGM.BATTLE_WILD_POKEMON);
+            AudioManager.Instance.PlayMusicVolume(BGM.BATTLE_WILD_POKEMON);
         }
         else
         {
-            AudioManager.Instance.PlayMusic(BGM.BATTLE_SUPER_ANCIENT_POKEMON);
+            AudioManager.Instance.PlayMusicVolume(BGM.BATTLE_SUPER_ANCIENT_POKEMON);
         }
         BattleState.I.IsSuperBoss = isSuperBoss;
         BattleState.I.Trigger = trigger;
@@ -133,7 +133,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void StartTrainerBattle(TrainerController trainer)
     {
-        AudioManager.Instance.PlayMusic(trainer.StartBGM);
+        AudioManager.Instance.PlayMusicVolume(trainer.StartBGM);
         BattleState.I.Trainer = trainer;
         BattleState.I.BossPokemon = null;
         StateMachine.Push(BattleState.I);

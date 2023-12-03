@@ -162,6 +162,11 @@ public class RunTurnState : State<BattleSystem>
         }
         yield return ShowStatusChanges(sourceUnit.pokemon);
 
+        if (move.MoveBase.MoveBGM != BGM.NONE)
+        {
+            AudioManager.Instance.PlayMusicVolume(move.MoveBase.MoveBGM, volume: 0.7f, fade: true);
+        }
+
         if (move.MoveBase.Category != MoveCategory.Status)
         {
             sourceUnit.PlayAttackAnimation();

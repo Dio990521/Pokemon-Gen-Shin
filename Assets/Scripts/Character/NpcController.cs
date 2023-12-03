@@ -59,7 +59,8 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
         if (npcState == NPCState.Idle)
         {
             npcState = NPCState.Dialog;
-            character.LookTowards(initiator.position);
+            if (character != null)
+                character.LookTowards(initiator.position);
 
             if (questToComplete != null)
             {
@@ -150,7 +151,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
     private void Update()
     {
-
         if (npcState == NPCState.Idle)
         {
             idleTimer += Time.deltaTime;
@@ -161,7 +161,7 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
                 {
                     StartCoroutine(Walk());
                 }
-                
+
             }
         }
         if (character != null)

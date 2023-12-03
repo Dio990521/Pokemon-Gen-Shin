@@ -25,6 +25,8 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] private List<Sprite> moveEffectSprites;
 
+    public BGM MoveBGM = BGM.NONE;
+
     public string MoveName
     {
         get { return moveName; }

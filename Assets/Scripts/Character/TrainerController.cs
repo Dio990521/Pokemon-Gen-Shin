@@ -70,7 +70,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         if (!IsBattleLost)
         {
             if (meetBGM != BGM.NONE)
-                AudioManager.Instance.PlayMusic(MeetBGM);
+                AudioManager.Instance.PlayMusicVolume(MeetBGM);
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
             GameManager.Instance.StartTrainerBattle(this);
         }
@@ -91,7 +91,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     {
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
         if (meetBGM != BGM.NONE)
-            AudioManager.Instance.PlayMusic(MeetBGM);
+            AudioManager.Instance.PlayMusicVolume(MeetBGM);
         // Show exclamation
         exclamation.SetActive(true);
         yield return new WaitForSeconds(0.5f);

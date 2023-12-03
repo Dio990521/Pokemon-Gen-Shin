@@ -49,7 +49,6 @@ public class MoveSelectionState : State<BattleSystem>
 
     private void OnMoveSelection(int selection)
     {
-        //AudioManager.Instance.PlaySE(SFX.CONFIRM);
         _battleSystem.SelectedMove = selection;
         _battleSystem.StateMachine.ChangeState(RunTurnState.I);
     }

@@ -346,20 +346,37 @@ public class Pokemon
             var stat = statBoost.stat;
             var boost = statBoost.boost;
 
-            StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
-
-            if (boost > 0)
+            if (StatBoosts[stat] + boost > 6 || StatBoosts[stat] + boost < -6)
             {
-                AudioManager.Instance.PlaySE(SFX.BOOST);
-                StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}上升了！");
+                if (boost > 0)
+                {
+                    StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}无法再上升了！");
+                }
+                else
+                {
+                    StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}无法再下降了！");
+                }
             }
             else
             {
-                AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
-                StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}下降了！");
+                StatBoosts[stat] = Mathf.Clamp(StatBoosts[stat] + boost, -6, 6);
+
+                if (boost > 0)
+                {
+                    AudioManager.Instance.PlaySE(SFX.BOOST);
+                    StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}上升了！");
+                }
+                else
+                {
+                    AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
+                    StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}下降了！");
+                }
+
+                OnBoostEffect?.Invoke(boost);
+                OnBuffChanged?.Invoke(stat, StatBoosts[stat]);
             }
-            OnBoostEffect?.Invoke(boost);
-            OnBuffChanged?.Invoke(stat, StatBoosts[stat]);
+
+
         }
     }
 
@@ -390,7 +407,7 @@ public class Pokemon
                     damageDetails.IsNoneElement = true;
                     if (ElementStatus == null)
                     {
-                        SetElementStatus(attacker.ElementStatus.Id);
+                        SetElementStatus(attacker.ElementStatus.Id, true);
                     }
                     else
                     {
@@ -595,12 +612,20 @@ public class Pokemon
         OnStatusChanged?.Invoke();
     }
 
-    public void SetElementStatus(ConditionID conditionId)
+    public void SetElementStatus(ConditionID conditionId, bool putongMove=false)
     {
+        var prevElementStatus = ElementStatus;
         if (ElementStatus != null || conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];
         ElementStatus?.OnStart?.Invoke(this);
-        StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");
+        if (prevElementStatus == null || prevElementStatus != null && prevElementStatus.Id != ElementStatus.Id)
+        {
+            if (!putongMove)
+            {
+                StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");
+            }
+        }
+
         OnStatusChanged?.Invoke();
     }
 

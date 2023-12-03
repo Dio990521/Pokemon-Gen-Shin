@@ -100,5 +100,6 @@ public enum PokemonType
     雷,
     岩,
     风,
-    None
+    None,
+    状态
 }

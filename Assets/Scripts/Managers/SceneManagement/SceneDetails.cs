@@ -36,7 +36,7 @@ public class SceneDetails : MonoBehaviour
                 else
                 {
                     AudioManager.Instance.IsPlayingTiwate = false;
-                    AudioManager.Instance.PlayMusic(sceneMusic, fade: true);
+                    AudioManager.Instance.PlayMusicVolume(sceneMusic, fade: true);
                 }
             }
             if (_mapName.Length > 0)

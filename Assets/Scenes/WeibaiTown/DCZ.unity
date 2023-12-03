@@ -1128,6 +1128,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &526913420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 526913421}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &526913421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526913420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1258708666}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1179531479 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3192666759394679992, guid: 31ac4e50fe31fd6458d570ff62cf8808, type: 3}
@@ -1225,7 +1256,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3192666759394679995, guid: 31ac4e50fe31fd6458d570ff62cf8808, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 526913421}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3192666759394679989, guid: 31ac4e50fe31fd6458d570ff62cf8808, type: 3}
       insertIndex: -1
@@ -1275,7 +1309,7 @@ MonoBehaviour:
   meetBGM: 36
   startBGM: 44
   winBGM: 34
-  fov: {fileID: 0}
+  fov: {fileID: 526913420}
   sprite: {fileID: 0}
   tainerName: "\u8463\u57CE\u4E3B"
   _isBoss: 1

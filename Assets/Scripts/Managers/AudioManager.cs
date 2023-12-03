@@ -108,6 +108,7 @@ public enum BGM
     VICTORY_CHAMPION,
     EVOLUTION,
     EVOLUTION_CONGRAT,
+    JIANJINUTAO,
     NONE,
 }
 
@@ -141,13 +142,13 @@ public class AudioManager : Singleton<AudioManager>
         StartCoroutine(PlayerTiwateMusicAsync(index, true, true));
     }
 
-    public void PlayMusic(BGM id, bool loop=true, bool fade=false)
+    public void PlayMusicVolume(BGM id, bool loop=true, bool fade=false, float volume = 0.85f)
     {
         if (musicPlayer.clip == musicClips[(int)id])
         {
             return;
         }
-        StartCoroutine(PlayerMusicAsync(id, loop, fade));
+        StartCoroutine(PlayerMusicAsync(id, volume, loop, fade));
     }
 
     public void PlayMusic(BGM id, float fadeTime, bool loop = true, bool fade = true)
@@ -205,14 +206,15 @@ public class AudioManager : Singleton<AudioManager>
         musicPlayer.DOFade(originalMusicVol, fadeDuration);  
     }
 
-    private IEnumerator PlayerMusicAsync(BGM id, bool loop, bool fade)
+    private IEnumerator PlayerMusicAsync(BGM id, float volume, bool loop, bool fade)
     {
         if (fade)
         {
             yield return musicPlayer.DOFade(0, fadeDuration).WaitForCompletion();
         }
 
-        musicPlayer.clip = musicClips[(int)id]; ;
+        musicPlayer.clip = musicClips[(int)id];
+        musicPlayer.volume = volume;
         musicPlayer.loop = loop;
         musicPlayer.Play();
 

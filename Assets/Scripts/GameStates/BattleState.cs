@@ -112,7 +112,7 @@ public class BattleState : State<GameManager>
         yield return Fader.FadeIn(1f);
         if (!hasEvolutions)
         {
-            AudioManager.Instance.PlayMusic(GameManager.Instance.CurrentScene.SceneMusic, fade: true);
+            AudioManager.Instance.PlayMusicVolume(GameManager.Instance.CurrentScene.SceneMusic, fade: true);
         }
         BattleSystem.PartyScreen.SetPartyData();
         _battleSystem.gameObject.SetActive(false);
@@ -125,6 +125,7 @@ public class BattleState : State<GameManager>
         }
         ActivateCutsceneAfterBattle = CutsceneName.None;
         yield return new WaitForSeconds(1f);
+        GameManager.Instance.PauseGame(false);
         yield return Fader.FadeOut(1f);
 
         
@@ -133,7 +134,6 @@ public class BattleState : State<GameManager>
             yield return playerParty.RunEvolutions();
         }
 
-        GameManager.Instance.PauseGame(false);
     }
 
 }

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,8 @@ public class BattleHud : MonoBehaviour
     [SerializeField] private Image statusBG;
     [SerializeField] private GameObject expBar;
     public GameObject Buffs;
+
     public List<Sprite> BuffIcons;
-    public List<Sprite> BuffPlusIcons;
     public List<Sprite> DebuffIcons;
 
     private Pokemon battlePokemon;
@@ -74,17 +75,13 @@ public class BattleHud : MonoBehaviour
             buff.gameObject.SetActive(false);
             return;
         }
-        if (boost >= 4)
+        if (boost > 0)
         {
-            buff.sprite = BuffPlusIcons[index];
+            buff.sprite = BuffIcons[(boost - 1) * 5 + index];
         }
-        else if (boost >= 1)
+        else
         {
-            buff.sprite = BuffIcons[index];
-        }
-        else if (boost <= -1)
-        {
-            buff.sprite = DebuffIcons[index];
+            buff.sprite = DebuffIcons[(-boost - 1) * 5 + index];
         }
         buff.gameObject.SetActive(true);
     }

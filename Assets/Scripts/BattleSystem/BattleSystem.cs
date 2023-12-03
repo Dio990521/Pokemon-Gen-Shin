@@ -87,7 +87,7 @@ public class BattleSystem : MonoBehaviour
         this.IsTrainerBattle = true;
         player = playerParty.GetComponent<PlayerController>();
         trainer = trainerParty.GetComponent<TrainerController>();
-        AudioManager.Instance.PlayMusic(trainer.StartBGM);
+        AudioManager.Instance.PlayMusicVolume(trainer.StartBGM);
         battleTrigger = trigger;
         StartCoroutine(SetupBattle());
     }
@@ -118,7 +118,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.SetUp(WildPokemon);
             _playerUnit.UnitEnterAnimation();
             _enemyUnit.UnitEnterAnimation();
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             if (!BattleState.I.IsSuperBoss)
             {
                 yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
@@ -127,7 +127,7 @@ public class BattleSystem : MonoBehaviour
             {
                 yield return _dialogueBox.TypeDialogue($"异世界幻影\n{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
         }
         else
         {
@@ -141,7 +141,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}\n想要进行宝可梦对战！");
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
 
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
@@ -155,9 +155,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.PokemonSprite.enabled = true;
             _enemyUnit.ChangeUnit(enemyPokemon, true);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了\n{enemyPokemon.PokemonBase.PokemonName}！");
-            
-            yield return new WaitForSeconds(0.5f);
-
+           
             // Send out first pokemon of the player
             _playerImage.gameObject.SetActive(false);
             _playerUnit.gameObject.SetActive(true);
@@ -185,7 +183,7 @@ public class BattleSystem : MonoBehaviour
         {
             if (IsTrainerBattle)
             {
-                AudioManager.Instance.PlayMusic(trainer.WinBGM);
+                AudioManager.Instance.PlayMusicVolume(trainer.WinBGM);
                 yield return _dialogueBox.TypeDialogue($"你打败了{trainer.TrainerName}！");
                 yield return _enemyUnit.MoveTrainerImage(300f, false, 1f);
                 yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}");
@@ -202,7 +200,7 @@ public class BattleSystem : MonoBehaviour
             }
             else
             {
-                AudioManager.Instance.PlayMusic(BGM.VICTORY_WILD_POKEMON);
+                AudioManager.Instance.PlayMusicVolume(BGM.VICTORY_WILD_POKEMON);
                 yield return _dialogueBox.TypeDialogue($"你打败了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
                 if (_enemyUnit.pokemon.PokemonBase.RewardProb != 0 && _enemyUnit.pokemon.PokemonBase.Reward != null)
                 {
@@ -396,7 +394,7 @@ public class BattleSystem : MonoBehaviour
             {
                 AudioManager.Instance.PlaySE(SFX.BEAST_YARIMASU);
             }
-            AudioManager.Instance.PlayMusic(BGM.CATCH_POKEMON);
+            AudioManager.Instance.PlayMusicVolume(BGM.CATCH_POKEMON);
             yield return _dialogueBox.TypeDialogue($"抓到了{_enemyUnit.pokemon.PokemonBase.PokemonName}！");
             yield return pokeball.DOFade(0, 1.5f).WaitForCompletion();
             _enemyUnit.pokemon.PokeballSpriteType = pokeballItem.BallType;

@@ -12,7 +12,9 @@ public class PokemonSelectionState : State<GameManager>
 
     private GameManager _gameManager;
 
-    public Pokemon BossPokemon;
+    //public Pokemon BossPokemon;
+
+    [SerializeField] private GameObject npc;
 
     private void Awake()
     {
@@ -39,7 +41,13 @@ public class PokemonSelectionState : State<GameManager>
         _pokemonSelectionUI.OnBack -= OnBack;
         _pokemonSelectionUI.Display.SetActive(false);
         _pokemonSelectionUI.gameObject.SetActive(false);
-        GameManager.Instance.StartBattle(BattleTrigger.LongGrass, BossPokemon, CutsceneName.Ω‚æ»≈…√…);
+        var trainer = npc.GetComponent<TrainerController>();
+        var party = npc.GetComponent<PokemonParty>().Pokemons;
+        foreach (var pokemon in party)
+        {
+            pokemon.Init();
+        }
+        GameManager.Instance.StartTrainerBattle(trainer);
     }
 
     private void OnPokemonSelected(int selection)

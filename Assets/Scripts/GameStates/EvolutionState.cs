@@ -29,10 +29,10 @@ public class EvolutionState : State<GameManager>
         pokemonImage.sprite = pokemon.PokemonBase.FrontSprite;
         pokemonImage.SetNativeSize();
         var oldPokemon = pokemon.PokemonBase;
-        AudioManager.Instance.PlayMusic(BGM.EVOLUTION);
+        AudioManager.Instance.PlayMusicVolume(BGM.EVOLUTION);
         yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}正在进化！");
         yield return new WaitForSeconds(5f);
-        AudioManager.Instance.PlayMusic(BGM.EVOLUTION_CONGRAT, false);
+        AudioManager.Instance.PlayMusicVolume(BGM.EVOLUTION_CONGRAT, false);
         pokemon.Evolve(evolution);
         pokemonImage.sprite = pokemon.PokemonBase.FrontSprite;
         pokemonImage.SetNativeSize();
@@ -41,7 +41,7 @@ public class EvolutionState : State<GameManager>
         evolutionUI.SetActive(false);
 
         gameManager.PartyScreen.SetPartyData();
-        AudioManager.Instance.PlayMusic(gameManager.CurrentScene.SceneMusic, fade: true);
+        AudioManager.Instance.PlayMusicVolume(gameManager.CurrentScene.SceneMusic, fade: true);
 
         gameManager.StateMachine.Pop();
     }
