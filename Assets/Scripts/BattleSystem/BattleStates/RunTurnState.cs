@@ -247,7 +247,6 @@ public class RunTurnState : State<BattleSystem>
                 }
             }
 
-
             if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
                 && targetUnit.pokemon.Hp > 0)
             {

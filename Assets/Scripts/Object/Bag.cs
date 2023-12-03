@@ -11,7 +11,7 @@ public class Bag : MonoBehaviour, InteractableObject
         if (_disableAfterCutsceneName != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableAfterCutsceneName.ToString()))
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponentInChildren<SpriteRenderer>().enabled = false;
         }
     }
 

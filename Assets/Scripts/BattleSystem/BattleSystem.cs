@@ -39,7 +39,6 @@ public class BattleSystem : MonoBehaviour
     public BattleDialogueBox DialogueBox { get => _dialogueBox; set => _dialogueBox = value; }
     public BattleUnit PlayerUnit { get => _playerUnit; set => _playerUnit = value; }
     public BattleUnit EnemyUnit { get => _enemyUnit; set => _enemyUnit = value; }
-    public BattleDialogueBox DialogueBox1 { get => _dialogueBox; set => _dialogueBox = value; }
     public PartyScreen PartyScreen { get => _partyScreen; set => _partyScreen = value; }
     public Pokemon SelectedPokemon { get; set; }
     public ItemBase SelectedItem { get; set; }
@@ -159,7 +158,14 @@ public class BattleSystem : MonoBehaviour
             // Send out first pokemon of the player
             _playerImage.gameObject.SetActive(false);
             _playerUnit.gameObject.SetActive(true);
-            
+
+            if (BattleState.I.Guide)
+            {
+                yield return _dialogueBox.TypeDialogue($"{enemyPokemon.PokemonBase.PokemonName}被突如其来的战\n吓出了一身冷汗！！");
+                yield return _dialogueBox.TypeDialogue($"汗水使{enemyPokemon.PokemonBase.PokemonName}附加了水元素状态！");
+                BattleState.I.Guide = false;
+            }
+
         }
         _partyScreen.Init();
         var playerPokemon = PlayerParty.GetHealthyPokemon();
@@ -172,6 +178,7 @@ public class BattleSystem : MonoBehaviour
         _enemyUnit.ShowHud();
         IsBattleOver = false;
         EscapeAttempts = 0;
+
 
         StateMachine.ChangeState(ActionSelectionState.I);
     }

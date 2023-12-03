@@ -20,6 +20,9 @@ public class BattleState : State<GameManager>
     public bool IsSuperBoss;
     public CutsceneName ActivateCutsceneAfterBattle;
 
+    [HideInInspector]
+    public bool Guide = false;
+
     private void Awake()
     {
         I = this;

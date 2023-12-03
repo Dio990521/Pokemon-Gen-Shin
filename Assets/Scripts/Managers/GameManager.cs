@@ -40,6 +40,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     public TransitionManager BattleTransitionManager { get => _battleTransitionManager; set => _battleTransitionManager = value; }
     public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
     public Storage Storage { get => _storage; set => _storage = value; }
+    public BattleSystem BattleSystem { get => battleSystem; set => battleSystem = value; }
 
     private float _gameTimeSpend;
     public string GamePlayTime;

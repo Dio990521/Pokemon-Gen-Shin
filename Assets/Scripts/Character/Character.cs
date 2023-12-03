@@ -106,7 +106,6 @@ public class Character : MonoBehaviour
         }
         transform.position = targetPos;
         IsMoving = false;
-
         OnMoveOver?.Invoke();
     }
 

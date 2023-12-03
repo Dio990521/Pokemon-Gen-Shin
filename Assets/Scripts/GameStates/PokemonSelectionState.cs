@@ -46,7 +46,9 @@ public class PokemonSelectionState : State<GameManager>
         foreach (var pokemon in party)
         {
             pokemon.Init();
+            //pokemon.SetElementStatus(ConditionID.hydro);
         }
+        BattleState.I.Guide = true;
         GameManager.Instance.StartTrainerBattle(trainer);
     }
 

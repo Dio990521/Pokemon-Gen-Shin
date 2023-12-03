@@ -450,7 +450,6 @@ public class Pokemon
                 damageDetails.IsKuosan = true;
                 if (ElementStatus != null)
                 {
-                    
                     float elementReactionRate = PerformElementReaction(ElementStatus.Id, attacker.ElementStatus.Id, damageDetails, out effectiveness);
                     attacker.CureElementStatus();
                     return elementReactionRate;
@@ -481,9 +480,14 @@ public class Pokemon
 
     private float PerformElementReaction(ConditionID element, ConditionID attackerElement, DamageDetails damageDetails, out float effectiveness)
     {
+        effectiveness = 1f;
+        if (element == attackerElement)
+        {
+            ElementStatusTime += 2;
+            return effectiveness;
+        }
         ConditionID elementReactionRes = ConditionsDB.GetElementReaction(element, attackerElement);
         damageDetails.IsElementReaction = true;
-        effectiveness = 1f;
         if (pokemonBase.PassiveMove != null)
         {
             var passiveType = ElementReactionUtil.ConditionIDToPassiveType(elementReactionRes);
@@ -618,7 +622,7 @@ public class Pokemon
         if (ElementStatus != null || conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];
         ElementStatus?.OnStart?.Invoke(this);
-        if (prevElementStatus == null || prevElementStatus != null && prevElementStatus.Id != ElementStatus.Id)
+        if (prevElementStatus == null || prevElementStatus?.Id != ElementStatus.Id)
         {
             if (!putongMove)
             {
