@@ -11,12 +11,10 @@ public class PassiveMoveBase : ScriptableObject
     [TextArea]
     [SerializeField] private string description;
 
-    [SerializeField] private PassiveMoveType passiveMoveType;
     public List<PassiveMoveEffect> PassiveMoveEffects;
 
     public string MoveName { get => moveName; set => moveName = value; }
     public string Description { get => description; set => description = value; }
-    public PassiveMoveType PassiveMoveType { get => passiveMoveType; set => passiveMoveType = value; }
 
 }
 

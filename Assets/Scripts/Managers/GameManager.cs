@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using Game.Tool.Singleton;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class GameManager : Singleton<GameManager>, ISavable
 {
@@ -23,6 +24,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
     [SerializeField] private Storage _storage;
+    public GameObject TitleUI;
 
     public List<Sprite> PokeballSprites;
 
@@ -66,7 +68,6 @@ public class GameManager : Singleton<GameManager>, ISavable
     {
         StateMachine = new StateMachine<GameManager>(this);
         StateMachine.ChangeState(FreeRoamState.I);
-
         _gameTimeSpend = 0f;
         _worldTransitionManager.ClearTransition(true);
         _battleTransitionManager.ClearTransition(true);
@@ -84,6 +85,26 @@ public class GameManager : Singleton<GameManager>, ISavable
             StateMachine.Pop();
         };
 
+    }
+
+    public void NewGame()
+    {
+        playerController.transform.localPosition = new Vector3(-8.5f, -22.5f);
+        StateMachine.ChangeState(FreeRoamState.I);
+    }
+
+    public void OpenLoadScene()
+    {
+
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     public void PauseGame(bool pause)

@@ -13,13 +13,13 @@ public class NewGame : MonoBehaviour
 
     public IEnumerator StartGame2()
     {
-        AudioManager.instance.StopMusic();
-        AudioManager.instance.PlaySE("press_start");
+        AudioManager.Instance.StopMusic();
+        //AudioManager.Instance.PlaySE("press_start");
         yield return new WaitForSeconds(2f);
         GameObject gameManager = GameObject.FindGameObjectWithTag("GameManager");
         if (gameManager != null)
         {
-            GameManager.instance.NewGame();
+            //GameManager.Instance.NewGame();
         }
         else
         {
@@ -44,6 +44,6 @@ public class NewGame : MonoBehaviour
 
     public void ResetGame()
     {
-        GameManager.instance.NewGame();
+        //GameManager.Instance.NewGame();
     }
 }
