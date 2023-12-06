@@ -8,6 +8,8 @@ using UnityEngine;
 public class PCMenuState : State<GameManager>
 {
     [SerializeField] private List<ItemBase> availableItems;
+    [SerializeField] private List<ItemBase> extraItems;
+
     [SerializeField] private WalletUI walletUI;
     [SerializeField] private ShopUI yuanshiShopUI;
     [SerializeField] private CountSelectorUI countSelectorUI;
@@ -80,6 +82,10 @@ public class PCMenuState : State<GameManager>
         {
             AudioManager.Instance.PlaySE(SFX.PC_OPERATE);
             ShopBuyingState.I.AvailableItems = availableItems;
+            if (GameKeyManager.Instance.GetBoolValue(CutsceneName.获得冰系道馆徽章.ToString()))
+            {
+                ShopMenuState.I.AvailableItems.AddRange(extraItems);
+            }
             yield return GameManager.Instance.StateMachine.PushAndWait(ShopBuyingState.I);
             yield return StartMenuState();
         }
@@ -159,7 +165,14 @@ public class PCMenuState : State<GameManager>
 
     private IEnumerator BuyYuanshi()
     {
-        yield return DialogueManager.Instance.ShowDialogueText($"小氪怡情，大氪伤身，请您注意节制。\n您的信用卡可用额度还剩：{Wallet.I.VisaLimit}摩拉");
+        if (!Wallet.I.IsUnlimited)
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"小氪怡情，大氪伤身，请您注意节制。\n您的信用卡可用额度还剩：{Wallet.I.VisaLimit}摩拉。");
+        }
+        else
+        {
+            yield return DialogueManager.Instance.ShowDialogueText($"小氪怡情，大氪伤身，请您注意节制。");
+        }
         yield return DialogueManager.Instance.ShowDialogueText("您要充值多少原石呢？", autoClose: false);
         ChoiceState.I.Choices = new List<string>() { "60", "300", "980", "1980", "3280", "6480" };
         yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
@@ -196,7 +209,7 @@ public class PCMenuState : State<GameManager>
     {
         DialogueManager.Instance.CloseDialog();
         int totalPrice = yuanshiAmount * 10;
-        if (totalPrice > Wallet.I.VisaLimit)
+        if (!Wallet.I.IsUnlimited && totalPrice > Wallet.I.VisaLimit)
         {
             yield return DialogueManager.Instance.ShowDialogueText($"充值{yuanshiAmount}原石需要消费{totalPrice}摩拉。\n但是您的信用卡可用额度不足！", autoClose: false);
             walletUI.Close();

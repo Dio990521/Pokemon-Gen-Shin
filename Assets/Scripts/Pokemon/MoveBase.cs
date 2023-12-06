@@ -23,7 +23,7 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] private List<SecondaryEffects> secondaryEffects;
 
-    [SerializeField] private List<Sprite> moveEffectSprites;
+    [SerializeField] private MoveFX moveFX;
 
     public BGM MoveBGM = BGM.NONE;
 
@@ -88,7 +88,7 @@ public class MoveBase : ScriptableObject
         }
     }
 
-    public List<Sprite> MoveEffectSprites { get => moveEffectSprites; set => moveEffectSprites = value; }
+    public MoveFX MoveFX { get => moveFX; set => moveFX = value; }
 }
 
 public enum MoveCategory

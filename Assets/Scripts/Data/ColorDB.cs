@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ColorDB
 {
-    public static Dictionary<ConditionID, Color> statusColors = new Dictionary<ConditionID, Color>()
+    public static Dictionary<ConditionID, Color> StatusColors = new Dictionary<ConditionID, Color>()
         {
             { ConditionID.psn, new Color32(165, 91, 233, 255) },
             { ConditionID.brn, new Color32(176, 70, 24, 255) },
@@ -19,6 +18,19 @@ public class ColorDB
             { ConditionID.jiejing, new Color32(215, 168, 0, 255) },
             { ConditionID.confusion, new Color32(200, 155, 5, 255) },
             { ConditionID.shihua, Color.grey },
+        };
+
+    public static Dictionary<PokemonType, Color> ElementColors = new Dictionary<PokemonType, Color>()
+        {
+            { PokemonType.Ë®, new Color32(78, 156, 212, 255) },
+            { PokemonType.»ð, new Color32(172, 50, 50, 255) },
+            { PokemonType.±ù, new Color32(116, 200, 182, 255) },
+            { PokemonType.²Ý, new Color32(152, 208, 13, 255) },
+            { PokemonType.·ç, new Color32(111, 194, 157, 255) },
+            { PokemonType.ÑÒ, new Color32(215, 168, 0, 255) },
+            { PokemonType.À×, new Color32(168, 106, 213, 255) },
+            { PokemonType.ÆÕÍ¨, Color.white },
+            { PokemonType.×´Ì¬, new Color32(115, 166, 153, 255) },
         };
 
     public static Dictionary<string, Color> textColors = new Dictionary<string, Color>()

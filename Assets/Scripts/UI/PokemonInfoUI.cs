@@ -86,7 +86,7 @@ public class PokemonInfoUI : MonoBehaviour
             _moveInfoUIList[i].MoveName = pokemon.Moves[i].MoveBase.MoveName;
             _moveInfoUIList[i].MoveTypeName = pokemon.Moves[i].MoveBase.Type.ToString();
             _moveInfoUIList[i].PP = $"PP {pokemon.Moves[i].PP}/{pokemon.Moves[i].MoveBase.PP}";
-            _moveInfoUIList[i].MoveTypeBG.color = Color.gray;
+            _moveInfoUIList[i].MoveTypeBG.color = ColorDB.ElementColors[pokemon.Moves[i].MoveBase.Type];
             _moveInfoUIList[i].MoveType.SetActive(true);
         }
         if (pokemon.PokemonBase.PassiveMove != null)

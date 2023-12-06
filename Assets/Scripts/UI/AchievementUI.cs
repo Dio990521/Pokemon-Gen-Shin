@@ -21,15 +21,10 @@ public class AchievementUI : MonoBehaviour
         _playtime.text = GameManager.Instance.GamePlayTime;
         foreach (Achievement tag in Enum.GetValues(typeof(Achievement)))
         {
+            if (tag == Achievement.None) continue;
             int index = (int)tag;
-            if (index % 2 == 0)
-            {
-                _pokemonCollections[index].text = $"{AchievementManager.Instance.GetProgress(tag)}/{AchievementManager.Instance.PokemonCount[(int)tag]}";
-            }
-            else
-            {
-                _pokemonCollections[index].text = $"(ฝ๘ปฏ {AchievementManager.Instance.GetProgress(tag)}/{AchievementManager.Instance.PokemonCount[(int)tag]})";
-            }
+            _pokemonCollections[index].text = $"{AchievementManager.Instance.GetProgress(tag)} / {AchievementManager.Instance.PokemonCount[(int)tag]}";
+
         }
         var inventory = Inventory.GetInventory();
         for (int i = 0; i < _badgeImages.Count; i++)

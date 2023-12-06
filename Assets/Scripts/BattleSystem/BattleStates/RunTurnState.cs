@@ -178,7 +178,7 @@ public class RunTurnState : State<BattleSystem>
         if (CheckIfMoveHits(move, sourceUnit.pokemon, targetUnit.pokemon))
         {
 
-            targetUnit.PlayPerformMoveAnimation(move.MoveBase.MoveEffectSprites);
+            targetUnit.PlayPerformMoveAnimation(move.MoveBase.MoveFX.MoveEffectSprites);
             if (move.MoveBase.Target == MoveTarget.Foe)
             {
                 targetUnit.PlayHitAnimation();

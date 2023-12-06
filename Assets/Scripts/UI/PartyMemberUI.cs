@@ -35,6 +35,17 @@ public class PartyMemberUI : MonoBehaviour, ISelectableItem
     {
         nameText.text = battlePokemon.PokemonBase.PokemonName;
         levelText.text = "LV." + battlePokemon.Level;
+        if (battlePokemon.Status != null)
+        {
+            statusText.text = battlePokemon.Status.Name;
+            statusBg.color = ColorDB.StatusColors[battlePokemon.Status.Id];
+            statusBg.gameObject.SetActive(true);
+        }
+        else
+        {
+            statusBg.gameObject.SetActive(false);
+        }
+
         hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
     }
 

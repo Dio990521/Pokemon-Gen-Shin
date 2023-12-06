@@ -6,3 +6,8 @@ public class PassiveMoveDB : ScriptableObjectDB<PassiveMoveBase>
 {
 
 }
+
+public class MoveFXDB : ScriptableObjectDB<MoveFX>
+{
+
+}

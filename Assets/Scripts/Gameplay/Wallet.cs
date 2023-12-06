@@ -11,6 +11,8 @@ public class Wallet : MonoBehaviour, ISavable
     private int _visaLimit;
     public event Action OnMoneyChanged;
 
+    public bool IsUnlimited;
+
     public static Wallet I { get; private set; }
 
     private void Awake()
@@ -61,7 +63,8 @@ public class Wallet : MonoBehaviour, ISavable
         var saveData = new WalletSaveData
         {
             money = money,
-            visaLimit = _visaLimit
+            visaLimit = _visaLimit,
+            IsUnlimited = IsUnlimited
         };
         return saveData;
     }
@@ -71,6 +74,7 @@ public class Wallet : MonoBehaviour, ISavable
         var saveData = (WalletSaveData)state;
         money = saveData.money;
         _visaLimit = saveData.visaLimit;
+        IsUnlimited = saveData.IsUnlimited;
     }
 }
 
@@ -79,4 +83,5 @@ public class WalletSaveData
 {
     public int money;
     public int visaLimit;
+    public bool IsUnlimited;
 }

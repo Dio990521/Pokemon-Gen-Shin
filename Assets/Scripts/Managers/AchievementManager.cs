@@ -5,39 +5,46 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
-public enum Achievement { Forest1, Forest2, Beach1, Beach2, Desert1, Desert2, Moutain1, Moutain2, Ship1, Ship2, Secret1, Secret2, Tower1, Tower2, Special1, Special2 }
+public enum Achievement { Forest, Beach, Desert, Moutain, Ship, Secret, Tower, Special, None }
 
 public class AchievementManager : Singleton<AchievementManager>, ISavable
 {
     private Dictionary<Achievement, HashSet<string>> _data;
-    [SerializeField] private List<int> _pokemonCount;
     private float _totalPokemon;
 
-    public List<int> PokemonCount { get => _pokemonCount; set => _pokemonCount = value; }
+    public List<int> PokemonCount;
 
     override protected void Awake()
     {
         base.Awake();
+        PokemonCount = new List<int>(new int[8]);
         _data = new Dictionary<Achievement, HashSet<string>>()
         {
-            { Achievement.Forest1, new HashSet<string>() },
-            { Achievement.Forest2, new HashSet<string>() },
-            { Achievement.Beach1, new HashSet<string>() },
-            { Achievement.Beach2, new HashSet<string>() },
-            { Achievement.Desert1, new HashSet<string>() },
-            { Achievement.Desert2, new HashSet<string>() },
-            { Achievement.Moutain1, new HashSet<string>() },
-            { Achievement.Moutain2, new HashSet<string>() },
-            { Achievement.Ship1, new HashSet<string>() },
-            { Achievement.Ship2, new HashSet<string>() },
-            { Achievement.Secret1, new HashSet<string>() },
-            { Achievement.Secret2, new HashSet<string>() },
-            { Achievement.Tower1, new HashSet<string>() },
-            { Achievement.Tower2, new HashSet<string>() },
-            { Achievement.Special1, new HashSet<string>() },
-            { Achievement.Special2, new HashSet<string>() },
+            { Achievement.Forest, new HashSet<string>() },
+            { Achievement.Beach, new HashSet<string>() },
+            { Achievement.Desert, new HashSet<string>() },
+            { Achievement.Moutain, new HashSet<string>() },
+            { Achievement.Ship, new HashSet<string>() },
+            { Achievement.Secret, new HashSet<string>() },
+            { Achievement.Tower, new HashSet<string>() },
+            { Achievement.Special, new HashSet<string>() },
         };
-        foreach (int value in _pokemonCount)
+
+    }
+
+    private void Start()
+    {
+
+        foreach (var key in PokemonDB.GetAllKeys())
+        {
+            var pokemon = PokemonDB.GetObjectByName(key);
+            if (pokemon.Achievement != Achievement.None)
+            {
+                PokemonCount[(int)pokemon.Achievement] += 1;
+            }
+        }
+
+        foreach (int value in PokemonCount)
         {
             _totalPokemon += value;
         }

@@ -53,7 +53,7 @@ public class BattleHud : MonoBehaviour
         else
         {
             elementStatusText.text = battlePokemon.ElementStatus.Name;
-            elementStatusBG.color = ColorDB.statusColors[battlePokemon.ElementStatus.Id];
+            elementStatusBG.color = ColorDB.StatusColors[battlePokemon.ElementStatus.Id];
         }
     }
 
@@ -105,7 +105,7 @@ public class BattleHud : MonoBehaviour
         else
         {
             statusText.text = battlePokemon.Status.Name;
-            statusBG.color = ColorDB.statusColors[battlePokemon.Status.Id];
+            statusBG.color = ColorDB.StatusColors[battlePokemon.Status.Id];
         }
     }
 
