@@ -39,7 +39,7 @@ public class QuestObject : MonoBehaviour
                     var savable = child.GetComponent<SavableEntity>();
                     if (savable != null)
                     {
-                        SavingSystem.i.RestoreEntity(savable);
+                        SavingSystem.I.RestoreEntity(savable);
                     }
                 }
                 else if (onStart == ObjectActions.Disable)
@@ -59,7 +59,7 @@ public class QuestObject : MonoBehaviour
                     var savable = child.GetComponent<SavableEntity>();
                     if (savable != null)
                     {
-                        SavingSystem.i.RestoreEntity(savable);
+                        SavingSystem.I.RestoreEntity(savable);
                     }
                 }
                 else if (onComplete == ObjectActions.Disable)

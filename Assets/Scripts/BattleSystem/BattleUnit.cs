@@ -19,6 +19,11 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] private Sprite _boostSprite;
     [SerializeField] private Sprite _boostDownSprite;
 
+    public int CurAccumulatePower;
+    public bool IsAccumulating;
+
+    public bool OnSecondPhase = false;
+
     public Pokemon pokemon { get; set; }
 
     public BattleHud Hud { get { return hud; } }
@@ -58,6 +63,8 @@ public class BattleUnit : MonoBehaviour
     public void SetUp(Pokemon selectedPokemon)
     {
         pokemon = selectedPokemon;
+        OnSecondPhase = false;
+        CurAccumulatePower = 0;
         level = pokemon.Level;
         if (selectedPokemon.PokemonBase.IsLargePortrait)
         {

@@ -95,7 +95,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("saveFile").Append(selectedItem);
-            SavingSystem.i.Save(stringBuilder.ToString());
+            SavingSystem.I.Save(stringBuilder.ToString());
             _dataSlotUIs[selectedItem].GetComponent<Image>().color = Color.white;
             _dataSlotUIs[selectedItem].Scene.text = GameManager.Instance.CurrentScene.MapName;
             _dataSlotUIs[selectedItem].Date.text = System.DateTime.Now.ToString();
@@ -126,6 +126,10 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
             GameManager.Instance.StateMachine.Pop();
             GameManager.Instance.StateMachine.Pop();
             yield return GameManager.Instance.LoadGame(stringBuilder.ToString());
+            if (GameManager.Instance.TitleUI.activeSelf)
+            {
+                GameManager.Instance.TitleUI.SetActive(false);
+            }
             yield return Fader.FadeOut(1f);
             GameManager.Instance.PauseGame(false);
         }

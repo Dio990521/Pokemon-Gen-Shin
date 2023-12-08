@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BossType { Gongzi, Nvshi, Fengmo, Ruotuo, jiangui, leijun, cao, langwang, none }
+
+
 public class BattleState : State<GameManager> 
 {
     [SerializeField] private BattleSystem _battleSystem;
 
     public BattleTrigger Trigger { get; set; }
+
+    public BossType BossType { get; set; }
     public TrainerController Trainer { get; set; }
     public static BattleState I { get; private set; }
     public BattleSystem BattleSystem { get => _battleSystem; set => _battleSystem = value; }
@@ -42,6 +47,7 @@ public class BattleState : State<GameManager>
         StartCoroutine(DisableBattleCanvas());
         BattleSystem.OnBattleOver -= EndBattle;
         BossPokemon = null;
+        BossType = BossType.none;
         IsSuperBoss = false;
     }
 

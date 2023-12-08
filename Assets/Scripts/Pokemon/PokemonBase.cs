@@ -22,6 +22,10 @@ public class PokemonBase : ScriptableObject
     [Header("Moves")]
     [SerializeField] private List<LearnableMove> learnableMoves;
 
+    [Header("Boss Special Move")]
+    public LearnableMove BossSpecialMove;
+
+
     [Header("Evolution")]
     [SerializeField] private List<Evolution> evolutions;
     [SerializeField] private bool _isEvoState;

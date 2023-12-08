@@ -61,7 +61,34 @@ public class RunTurnState : State<BattleSystem>
         if (playerAction == BattleAction.Move)
         {
             _playerUnit.pokemon.CurrentMove = _playerUnit.pokemon.Moves[_battleSystem.SelectedMove];
-            _enemyUnit.pokemon.CurrentMove = _enemyUnit.pokemon.GetRandomMove();
+
+            if (_enemyUnit.IsAccumulating) // 之前使用了蓄力技能，还在蓄力中
+            {
+                if (_enemyUnit.CurAccumulatePower > 0)
+                {
+                    _enemyUnit.CurAccumulatePower -= 1;
+                    yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}正在积蓄力量！！");
+                }
+                else
+                {
+                    _enemyUnit.IsAccumulating = false;
+                }
+            }
+            else // 之前未使用蓄力技能
+            {
+                _enemyUnit.pokemon.CurrentMove = _enemyUnit.pokemon.GetRandomMove();
+                // 如果使用了蓄力技能
+                if (_enemyUnit.pokemon.CurrentMove.MoveBase.AccumulatePower > 0)
+                {
+                    _enemyUnit.CurAccumulatePower = _enemyUnit.pokemon.CurrentMove.MoveBase.AccumulatePower - 1;
+                    yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}开始蓄力！！");
+                    _enemyUnit.IsAccumulating = true;
+                }
+                else
+                {
+                    _enemyUnit.IsAccumulating = false;
+                }
+            }
 
             int playerMovePriority = _playerUnit.pokemon.CurrentMove.MoveBase.Priority;
             int enemyMovePriority = _enemyUnit.pokemon.CurrentMove.MoveBase.Priority;
@@ -83,18 +110,33 @@ public class RunTurnState : State<BattleSystem>
             var secondPokemon = secondUnit.pokemon;
 
             // First turn
-            yield return RunMove(firstUnit, secondUnit, firstUnit.pokemon.CurrentMove);
-            yield return RunAfterTurn(firstUnit);
-            if (_battleSystem.IsBattleOver) yield break;
+            if (firstUnit.IsPlayerUnit || !firstUnit.IsAccumulating) // 玩家，或者敌人没有蓄力，否则什么也不做
+            {
+                yield return RunMove(firstUnit, secondUnit, firstUnit.pokemon.CurrentMove);
+                yield return RunAfterTurn(firstUnit);
+                if (!firstUnit.IsPlayerUnit && BattleState.I.BossType == BossType.leijun) // 敌人是雷电将军boss
+                {
+                    var enemyMove2 = firstUnit.pokemon.GetRandomMove();
+                    yield return RunMove(firstUnit, secondUnit, enemyMove2);
+                }
+                if (_battleSystem.IsBattleOver) yield break;
+            }
 
             if (secondPokemon.Hp > 0)
             {
                 // Second turn
-                yield return RunMove(secondUnit, firstUnit, secondUnit.pokemon.CurrentMove);
-                yield return RunAfterTurn(secondUnit);
-                if (_battleSystem.IsBattleOver) yield break;
+                if (secondUnit.IsPlayerUnit || !secondUnit.IsAccumulating) //玩家，或者敌人没有蓄力，否则什么也不做
+                {
+                    yield return RunMove(secondUnit, firstUnit, secondUnit.pokemon.CurrentMove);
+                    yield return RunAfterTurn(secondUnit);
+                    if (!secondUnit.IsPlayerUnit && BattleState.I.BossType == BossType.leijun)
+                    {
+                        var enemyMove2 = secondUnit.pokemon.GetRandomMove();
+                        yield return RunMove(secondUnit, firstUnit, enemyMove2);
+                    }
+                    if (_battleSystem.IsBattleOver) yield break;
+                }
             }
-
         }
         else
         {
@@ -132,10 +174,20 @@ public class RunTurnState : State<BattleSystem>
             // Enemy Turn
             if (!SkipEnemyTurn)
             {
-                var enemyMove = _enemyUnit.pokemon.GetRandomMove();
-                yield return RunMove(_enemyUnit, _playerUnit, enemyMove);
-                yield return RunAfterTurn(_enemyUnit);
-                if (_battleSystem.IsBattleOver) yield break;
+                if (!_enemyUnit.IsAccumulating)
+                {
+                    var enemyMove = _enemyUnit.pokemon.GetRandomMove();
+                    yield return RunMove(_enemyUnit, _playerUnit, enemyMove);
+
+                    if (BattleState.I.BossType == BossType.leijun)
+                    {
+                        var enemyMove2 = _enemyUnit.pokemon.GetRandomMove();
+                        yield return RunMove(_enemyUnit, _playerUnit, enemyMove2);
+                    }
+
+                    yield return RunAfterTurn(_enemyUnit);
+                    if (_battleSystem.IsBattleOver) yield break;
+                }
             }
         }
 
@@ -316,6 +368,17 @@ public class RunTurnState : State<BattleSystem>
         sourceUnit.pokemon.AfterTurn();
         yield return ShowStatusChanges(sourceUnit.pokemon);
         yield return sourceUnit.Hud.WaitForHPUpdate();
+        if (!sourceUnit.IsPlayerUnit && BattleState.I.BossType == BossType.cao && !sourceUnit.OnSecondPhase)
+        {
+            sourceUnit.OnSecondPhase = true;
+            yield return new WaitForSeconds(0.5f);
+            yield return _dialogueBox.TypeDialogue($"{sourceUnit.pokemon.PokemonBase.PokemonName}进入了狂暴状态！！");
+            yield return new WaitForSeconds(0.25f);
+            sourceUnit.pokemon.IncreaseHP(sourceUnit.pokemon.MaxHp / 2);
+            yield return sourceUnit.Hud.WaitForHPUpdate();
+            var move = sourceUnit.pokemon.BossSpecialMove;
+            yield return RunMove(_enemyUnit, _playerUnit, move);
+        }
         if (sourceUnit.pokemon.Hp <= 0)
         {
             yield return HandlePokemonFainted(sourceUnit);
@@ -329,23 +392,15 @@ public class RunTurnState : State<BattleSystem>
             return true;
         }
 
+        if (BattleState.I.BossType == BossType.langwang)
+        {
+            return false;
+        }
+
         float moveAccuracy = move.MoveBase.Accuracy;
         int speedDelta = Mathf.Clamp(source.Speed - target.Speed, 0, 100);
 
         return Random.Range(1, 101) <= moveAccuracy + speedDelta * Random.Range(0f, 1f);
-
-        //int accuracy = source.StatBoosts[Stat.命中率];
-        //int evasion = target.StatBoosts[Stat.闪避率];
-
-        //var boostValues = new float[] { 1f, 4f / 3f, 5f / 3f, 2f, 7f / 3f, 8f / 3f, 3f };
-
-        //moveAccuracy = accuracy > 0 ? moveAccuracy * boostValues[accuracy]
-        //    : moveAccuracy / boostValues[-accuracy];
-
-        //moveAccuracy = evasion > 0 ? moveAccuracy / boostValues[evasion]
-        //    : moveAccuracy * boostValues[-evasion];
-
-        //return UnityEngine.Random.Range(1, 101) <= moveAccuracy;
     }
 
     // Display conditons message to the dialogue box

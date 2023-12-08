@@ -25,10 +25,11 @@ public class GameManager : Singleton<GameManager>, ISavable
     [SerializeField] private TransitionManager _battleTransitionManager;
     [SerializeField] private Storage _storage;
     public GameObject TitleUI;
+    public GameObject EndingUI;
+
+    public List<GameObject> Managers;
 
     public List<Sprite> PokeballSprites;
-
-    private TrainerController trainer;
 
     public StateMachine<GameManager> StateMachine { get; private set; }
 
@@ -46,8 +47,6 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     private float _gameTimeSpend;
     public string GamePlayTime;
-
-    private int switchPokemon;
 
     protected override void Awake()
     {
@@ -67,14 +66,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     private void Start()
     {
         StateMachine = new StateMachine<GameManager>(this);
-        StateMachine.ChangeState(FreeRoamState.I);
-        _gameTimeSpend = 0f;
-        _worldTransitionManager.ClearTransition(true);
-        _battleTransitionManager.ClearTransition(true);
-
-        partyScreen.Init();
-        _storagePartyListUI.Init();
-        _storageListUI.Init();
+        NewGameInit();
         DialogueManager.Instance.OnShowDialogue += () =>
         {
             StateMachine.Push(DialogueState.I);
@@ -87,15 +79,73 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     }
 
+    public void NewGameInit()
+    {
+        StateMachine.ChangeState(FreeRoamState.I);
+        _gameTimeSpend = 0f;
+        _worldTransitionManager.ClearTransition(true);
+        _battleTransitionManager.ClearTransition(true);
+        partyScreen.Init();
+        _storagePartyListUI.Init();
+        _storageListUI.Init();
+        SavingSystem.I.ClearSavingData();
+        GameKeyManager.Instance.Init();
+        foreach (var manager in Managers)
+        {
+            manager.GetComponent<IManager>().Init();
+            manager.GetComponent<IManager>().ResetData();
+        }
+    }
+
     public void NewGame()
     {
-        playerController.transform.localPosition = new Vector3(-8.5f, -22.5f);
+        StartCoroutine(NewGameTransition());
+    }
+
+    public IEnumerator NewGameTransition()
+    {
+        yield return Fader.FadeIn(0.5f);
+        NewGameInit();
         StateMachine.ChangeState(FreeRoamState.I);
+        PauseGame(false);
+        playerController.transform.localPosition = new Vector3(-8.5f, -22.5f);
+        TitleUI.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        yield return Fader.FadeOut(0.5f);
+    }
+
+    public void GoToEnding()
+    {
+        StartCoroutine(GoToEndingTransition());
+    }
+
+    public IEnumerator GoToEndingTransition()
+    {
+        yield return Fader.FadeIn(0.5f);
+        playerController.transform.localPosition = new Vector3(-207.5f, 97.3f);
+        EndingUI.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        yield return Fader.FadeOut(0.5f);
     }
 
     public void OpenLoadScene()
     {
+        StateMachine.Push(LoadState.I);
+    }
 
+    public void BackToTitle()
+    {
+        StartCoroutine(BackToTitleTransition());
+    }
+
+    public IEnumerator BackToTitleTransition()
+    {
+        PauseGame(true);
+        yield return Fader.FadeIn(0.5f);
+        playerController.transform.localPosition = new Vector3(-178.5f, 171.3f);
+        EndingUI.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        yield return Fader.FadeOut(0.5f);
     }
 
     public void ExitGame()
@@ -131,7 +181,8 @@ public class GameManager : Singleton<GameManager>, ISavable
         StateMachine.Push(BattleState.I);
     }
 
-    public void StartBattle(BattleTrigger trigger, Pokemon selectedPokemon, CutsceneName activateCutsceneAfterBattle=CutsceneName.None, bool isSuperBoss=false)
+    public void StartBossBattle(BattleTrigger trigger, Pokemon selectedPokemon, BossType bossType, 
+        CutsceneName activateCutsceneAfterBattle = CutsceneName.None, bool isSuperBoss = false)
     {
         if (!isSuperBoss)
         {
@@ -205,7 +256,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     public IEnumerator LoadGame(string fileName)
     {
         PauseGame(true);
-        SavingSystem.i.Load(fileName);
+        SavingSystem.I.Load(fileName);
         CurrentScene.UnloadScene();
         CurrentScene.UnloadConnectedScenes();
         yield return new WaitForSeconds(1.5f);

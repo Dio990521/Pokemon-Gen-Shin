@@ -1560,6 +1560,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
+      propertyPath: _bossType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: boss.level
       value: 80
       objectReference: {fileID: 0}
@@ -25999,6 +26003,10 @@ PrefabInstance:
     - target: {fileID: 998448926642140540, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
+      propertyPath: _bossType
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: boss.level

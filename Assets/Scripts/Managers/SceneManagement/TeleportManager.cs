@@ -4,11 +4,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportManager : Singleton<TeleportManager>, ISavable
+public interface IManager
+{
+    public void ResetData();
+
+    public void Init();
+}
+
+
+public class TeleportManager : Singleton<TeleportManager>, ISavable, IManager
 {
     [SerializeField] private List<TeleportData> _teleports;
 
     public List<TeleportData> Teleports { get {  return _teleports; } }
+
+    public void ResetData()
+    {
+        foreach (var tele in _teleports)
+        {
+            tele.IsActive = false;
+        }
+    }
+
+    public void Init()
+    {
+
+    }
 
     public List<string> GetActiveList()
     {

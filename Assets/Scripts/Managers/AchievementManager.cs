@@ -7,16 +7,32 @@ using UnityEngine;
 
 public enum Achievement { Forest, Beach, Desert, Moutain, Ship, Secret, Tower, Special, None }
 
-public class AchievementManager : Singleton<AchievementManager>, ISavable
+public class AchievementManager : Singleton<AchievementManager>, ISavable, IManager
 {
     private Dictionary<Achievement, HashSet<string>> _data;
     private float _totalPokemon;
 
-    public List<int> PokemonCount;
+    private List<int> _pokemonCount;
 
-    override protected void Awake()
+    public List<int> PokemonCount { get => _pokemonCount; set => _pokemonCount = value; }
+
+    public void ResetData()
     {
-        base.Awake();
+        _data = new Dictionary<Achievement, HashSet<string>>()
+        {
+            { Achievement.Forest, new HashSet<string>() },
+            { Achievement.Beach, new HashSet<string>() },
+            { Achievement.Desert, new HashSet<string>() },
+            { Achievement.Moutain, new HashSet<string>() },
+            { Achievement.Ship, new HashSet<string>() },
+            { Achievement.Secret, new HashSet<string>() },
+            { Achievement.Tower, new HashSet<string>() },
+            { Achievement.Special, new HashSet<string>() },
+        };
+    }
+
+    public void Init()
+    {
         PokemonCount = new List<int>(new int[8]);
         _data = new Dictionary<Achievement, HashSet<string>>()
         {
@@ -29,11 +45,6 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable
             { Achievement.Tower, new HashSet<string>() },
             { Achievement.Special, new HashSet<string>() },
         };
-
-    }
-
-    private void Start()
-    {
 
         foreach (var key in PokemonDB.GetAllKeys())
         {
@@ -79,4 +90,5 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable
     {
         _data = (Dictionary<Achievement, HashSet<string>>)state;
     }
+
 }

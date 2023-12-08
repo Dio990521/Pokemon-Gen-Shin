@@ -8,13 +8,18 @@ using UnityEngine.SceneManagement;
 
 public class SavingSystem : MonoBehaviour
 {
-    public static SavingSystem i { get; private set; }
+    public static SavingSystem I { get; private set; }
     private void Awake()
     {
-        i = this;
+        I = this;
     }
 
     Dictionary<string, object> gameState = new Dictionary<string, object>();
+
+    public void ClearSavingData()
+    {
+        gameState.Clear();
+    }
 
     public void CaptureEntityStates(List<SavableEntity> savableEntities)
     {

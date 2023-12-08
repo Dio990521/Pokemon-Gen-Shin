@@ -27,6 +27,8 @@ public class MoveBase : ScriptableObject
 
     public BGM MoveBGM = BGM.NONE;
 
+    public int AccumulatePower;
+
     public string MoveName
     {
         get { return moveName; }

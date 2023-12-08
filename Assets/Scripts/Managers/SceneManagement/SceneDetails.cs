@@ -27,6 +27,17 @@ public class SceneDetails : MonoBehaviour
 
             StartCoroutine(LoadScene());
             GameManager.Instance.SetCurrentScene(this);
+            if (sceneMusic == BGM.TITLE)
+            {
+                GameManager.Instance.TitleUI.SetActive(true);
+                GameManager.Instance.PauseGame(true);
+            }
+            else if (sceneMusic == BGM.ENDING_THEME)
+            {
+                GameManager.Instance.EndingUI.SetActive(true);
+                GameManager.Instance.PauseGame(true);
+            }
+
             if (sceneMusic != BGM.NONE)
             {
                 if (sceneMusic == BGM.TIWATE)
@@ -104,7 +115,7 @@ public class SceneDetails : MonoBehaviour
             operation.completed += (AsyncOperation op) =>
             {
                 savableEntities = GetSavableEntitiesInScene();
-                SavingSystem.i.RestoreEntityStates(savableEntities);
+                SavingSystem.I.RestoreEntityStates(savableEntities);
             };
 
         }
@@ -115,7 +126,7 @@ public class SceneDetails : MonoBehaviour
     {
         if (IsLoaded)
         {
-            SavingSystem.i.CaptureEntityStates(savableEntities);
+            SavingSystem.I.CaptureEntityStates(savableEntities);
             SceneManager.UnloadSceneAsync(gameObject.name);
             IsLoaded = false;
         }

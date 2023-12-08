@@ -36,6 +36,8 @@ public class Pokemon
     public int Hp { get; set; }
     public int Exp { get; set; }
     public List<Move> Moves { get; set; }
+
+    public Move BossSpecialMove;
     public Move CurrentMove { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatBoosts { get; private set; }
@@ -71,7 +73,6 @@ public class Pokemon
         }
 
         Moves = saveData.Moves.Select(s => new Move(s)).ToList();
-
         CalculateStats();
         StatusChanges = new Queue<string>();
         ResetStatBoost();
@@ -101,6 +102,10 @@ public class Pokemon
             {
                 break;
             }
+        }
+        if (pokemonBase.BossSpecialMove.MoveBase != null)
+        {
+            BossSpecialMove = new Move(pokemonBase.BossSpecialMove.MoveBase);
         }
 
         CalculateStats();

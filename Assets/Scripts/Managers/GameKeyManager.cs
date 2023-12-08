@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameKeyManager : Singleton<GameKeyManager>, ISavable
+public class GameKeyManager : Singleton<GameKeyManager>, ISavable, IManager
 {
     private Dictionary<string, int> _gameKeyIntDict;
     private Dictionary<string, bool> _gameKeyBoolDict;
@@ -12,6 +12,10 @@ public class GameKeyManager : Singleton<GameKeyManager>, ISavable
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    public void Init()
+    {
         _gameKeyIntDict = new Dictionary<string, int>();
         _gameKeyBoolDict = new Dictionary<string, bool>();
         foreach (var cutsceneName in System.Enum.GetValues(typeof(CutsceneName)))
@@ -94,6 +98,12 @@ public class GameKeyManager : Singleton<GameKeyManager>, ISavable
         var saveData = (GameKeySaveData)state;
         _gameKeyBoolDict = saveData.GameKeyBoolDict;
         _gameKeyIntDict = saveData.GameKeyIntDict;
+    }
+
+    public void ResetData()
+    {
+        _gameKeyBoolDict?.Clear();
+        _gameKeyIntDict?.Clear();
     }
 }
 

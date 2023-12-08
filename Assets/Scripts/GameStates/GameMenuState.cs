@@ -67,11 +67,12 @@ public class GameMenuState : State<GameManager>
         else if (selection == 5)
         {
             // Setting Screen
-            _gameManager.StateMachine.Push(PokemonSelectionState.I);
         }
         else if (selection == 6)
         {
             // Title Screen
+            _gameManager.StateMachine.Pop();
+            _gameManager.BackToTitle();
         }
     }
 

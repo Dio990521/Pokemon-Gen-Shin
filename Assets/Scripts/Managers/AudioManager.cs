@@ -109,6 +109,8 @@ public enum BGM
     EVOLUTION,
     EVOLUTION_CONGRAT,
     JIANJINUTAO,
+    ENDING_THEME,
+    THE_END,
     NONE,
 }
 
