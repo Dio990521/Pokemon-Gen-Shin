@@ -72,6 +72,10 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
 
             if (gameObject.TryGetComponent(out TrainerController trainerController) && !trainerController.IsBattleLost)
             {
+                if (GameManager.Instance.StateMachine.CurrentState == CutsceneState.I)
+                {
+                    GameManager.Instance.StateMachine.Pop();
+                }
                 yield return trainerController.Interact(initiator);
             }
             else if (checker != null && !checker.Used)

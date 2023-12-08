@@ -76,6 +76,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         {
             StateMachine.Pop();
         };
+        GameKeyManager.Instance.Init();
 
     }
 
@@ -89,7 +90,6 @@ public class GameManager : Singleton<GameManager>, ISavable
         _storagePartyListUI.Init();
         _storageListUI.Init();
         SavingSystem.I.ClearSavingData();
-        GameKeyManager.Instance.Init();
         foreach (var manager in Managers)
         {
             manager.GetComponent<IManager>().Init();
@@ -121,6 +121,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public IEnumerator GoToEndingTransition()
     {
+        PauseGame(true);
         yield return Fader.FadeIn(0.5f);
         playerController.transform.localPosition = new Vector3(-207.5f, 97.3f);
         EndingUI.SetActive(false);

@@ -109,6 +109,11 @@ public class BattleState : State<GameManager>
         {
             Trainer.BattleLost();
             Trainer = null;
+            if (ActivateCutsceneAfterBattle != CutsceneName.None)
+            {
+                GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
+                ActivateCutsceneAfterBattle = CutsceneName.None;
+            }
         }
         _gameManager.StateMachine.Pop();
     }
@@ -128,11 +133,6 @@ public class BattleState : State<GameManager>
         _gameManager.BattleTransitionManager.ClearTransition();
         _gameManager.WorldTransitionManager.ClearTransition();
         _gameManager.WorldCamera.gameObject.SetActive(true);
-        if (ActivateCutsceneAfterBattle != CutsceneName.None)
-        {
-            GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
-        }
-        ActivateCutsceneAfterBattle = CutsceneName.None;
         yield return new WaitForSeconds(1f);
         GameManager.Instance.PauseGame(false);
         yield return Fader.FadeOut(1f);

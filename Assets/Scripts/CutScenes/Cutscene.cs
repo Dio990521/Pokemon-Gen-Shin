@@ -65,7 +65,8 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
             GameManager.Instance.StateMachine.Pop();
         }
 
-        GameManager.Instance.StateMachine.Pop();
+        if (GameManager.Instance.StateMachine.CurrentState == CutsceneState.I)
+            GameManager.Instance.StateMachine.Pop();
     }
 
     public void AddAction(CutsceneAction action)

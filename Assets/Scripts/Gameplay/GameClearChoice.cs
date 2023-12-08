@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameClearChoice : MonoBehaviour, IPlayerTriggerable
+public class GameClearChoice : MonoBehaviour, InteractableObject
 {
     public bool TriggerRepeatedly => true;
 
-    public void OnPlayerTriggered(PlayerController player)
+    public IEnumerator Interact(Transform initiator)
     {
-        StartCoroutine(BossFight(player));
-    }
-
-    private IEnumerator BossFight(PlayerController player)
-    {
+        var player = initiator.GetComponent<PlayerController>();
         player.StopMovingAnimation();
         player.Character.Animator.SetFacingDirection(FacingDirection.Up);
         yield return DialogueManager.Instance.ShowDialogueText("（进入这扇门就要离开这个世界了...）");
@@ -25,12 +21,9 @@ public class GameClearChoice : MonoBehaviour, IPlayerTriggerable
 
         if (selectedChoice == 0)
         {
+            GameManager.Instance.GoToEnding();
+        }
 
-        }
-        else
-        {
-            var dir = new Vector3(player.Character.Animator.MoveX, player.Character.Animator.MoveY);
-            yield return player.Character.Move(-dir, checkCollisions: false);
-        }
     }
+
 }
