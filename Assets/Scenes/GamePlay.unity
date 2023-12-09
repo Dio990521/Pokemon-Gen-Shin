@@ -3611,7 +3611,6 @@ GameObject:
   - component: {fileID: 1020854454}
   - component: {fileID: 1020854457}
   - component: {fileID: 1020854456}
-  - component: {fileID: 1020854455}
   m_Layer: 0
   m_Name: BG
   m_TagString: Untagged
@@ -3634,18 +3633,6 @@ Transform:
   m_Father: {fileID: 350424750}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1020854455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020854453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5c1569b306e0b4eaf8ade978ecb64b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!483693784 &1020854456
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -5638,9 +5625,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.size
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: musicClips.Array.size
       value: 56
       objectReference: {fileID: 0}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.data[45]
+      value: 
+      objectReference: {fileID: 8300000, guid: d0666deaa8224cd4e92e1a02dcacac0c, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.data[46]
+      value: 
+      objectReference: {fileID: 8300000, guid: 691a20201a627c043adeb481e3e9b7aa, type: 3}
+    - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
+      propertyPath: sfxClips.Array.data[47]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2f66cc6297699d84d887cee2d521d82f, type: 3}
     - target: {fileID: 6592376188683337258, guid: 6baa0aa6831f61947ac452df8c01161f, type: 3}
       propertyPath: musicClips.Array.data[54]
       value: 
@@ -12008,7 +12011,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: tmSlots.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3946416561038428752, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: itemSlots.Array.size
@@ -12692,7 +12695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.size
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4671520593819924791, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: pokemons.Array.data[0].level
@@ -14522,6 +14525,10 @@ PrefabInstance:
       propertyPath: m_ChildForceExpandWidth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6198061411745221562, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: money
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6215402622753081719, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -16058,6 +16065,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8516674491326888755, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
+      propertyPath: playerName
+      value: "\u83B9"
+      objectReference: {fileID: 0}
     - target: {fileID: 8533231663061839283, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -16176,11 +16187,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.9
+      value: -180.7
       objectReference: {fileID: 0}
     - target: {fileID: 8683309018181428690, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 194.6
+      value: 169.5
       objectReference: {fileID: 0}
     - target: {fileID: 8735680878509036062, guid: 284f0bd0275b9814bb15a8c67e0ceda5, type: 3}
       propertyPath: m_AnchoredPosition.x

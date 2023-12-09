@@ -46,7 +46,7 @@ public class RecoveryItem : ItemBase
         }
 
         // No other items can be used on fainted pokemon
-        if (pokemon.Hp == 0)
+        if (pokemon.Hp == 0 || pokemon.Hp == pokemon.MaxHp)
         {
             return false;
         }

@@ -15721,6 +15721,10 @@ PrefabInstance:
       propertyPath: isDcz
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4655697548088479180, guid: 30c6e825bb6aeb14db50f9729e4d16f2, type: 3}
+      propertyPath: ActivateCutscene
+      value: 71
+      objectReference: {fileID: 0}
     - target: {fileID: 6050746558193571040, guid: 30c6e825bb6aeb14db50f9729e4d16f2, type: 3}
       propertyPath: uniqueId
       value: 9b5d9709-33ae-41ce-98e7-534f22586752

@@ -15,7 +15,7 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
     protected SpriteRenderer _spriteRenderer;
     protected BoxCollider2D _boxCollider;
 
-    [SerializeField] private bool isDcz = false;
+    [SerializeField] private CutsceneName ActivateCutscene;
     [SerializeField] private bool isStep = false;
 
     public bool Used { get; set; } = false;
@@ -46,9 +46,9 @@ public class Pickup : MonoBehaviour, InteractableObject, ISavable
             {
                 initiator.GetComponent<Inventory>().AddItem(item, itemAmt);
                 yield return DialogueManager.Instance.ShowDialogueText($"ÄãÕÒµ½ÁË{itemAmt}¸ö{item.ItemName}£¡");
-                if (isDcz)
+                if (ActivateCutscene != CutsceneName.None && !GameKeyManager.Instance.GetBoolValue(ActivateCutscene.ToString()))
                 {
-                    GameEventManager.Instance.CallEvent("DCZ");
+                    GameKeyManager.Instance.SetBoolValue(ActivateCutscene.ToString(), true);
                 }
             }
             GameManager.Instance.PauseGame(false);

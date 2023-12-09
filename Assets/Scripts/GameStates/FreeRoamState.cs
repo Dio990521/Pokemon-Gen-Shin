@@ -26,6 +26,7 @@ public class FreeRoamState : State<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            GameManager.Instance.PlayerController.StopMovingAnimation();
             _gameManager.StateMachine.Push(GameMenuState.I);
         }
     }

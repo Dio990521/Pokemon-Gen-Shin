@@ -161,7 +161,7 @@ public class BattleSystem : MonoBehaviour
 
             if (BattleState.I.Guide)
             {
-                yield return _dialogueBox.TypeDialogue($"{enemyPokemon.PokemonBase.PokemonName}被突如其来的战\n吓出了一身冷汗！！");
+                yield return _dialogueBox.TypeDialogue($"{enemyPokemon.PokemonBase.PokemonName}被突如其来的战斗\n吓出了一身冷汗！！");
                 yield return _dialogueBox.TypeDialogue($"汗水使{enemyPokemon.PokemonBase.PokemonName}附加了水元素状态！");
                 BattleState.I.Guide = false;
             }

@@ -8,6 +8,7 @@ public class ItemChecker : MonoBehaviour, ISavable
     [SerializeField] private Dialogue failDialogue;
     [SerializeField] private Dialogue successDialogue;
     [SerializeField] private CutsceneName cutsceneName;
+    [SerializeField] private CutsceneName _disableCutsceneName;
     [SerializeField] private bool _needRemoveItem;
 
     [HideInInspector]
@@ -15,6 +16,12 @@ public class ItemChecker : MonoBehaviour, ISavable
 
     public IEnumerator CheckItem(PlayerController player)
     {
+        if (_disableCutsceneName != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_disableCutsceneName.ToString()))
+        {
+            Used = true;
+            yield break;
+        }
+
         var count = 0;
         foreach (var item in items)
         {

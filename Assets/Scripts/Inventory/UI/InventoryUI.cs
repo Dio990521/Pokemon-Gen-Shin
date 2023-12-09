@@ -27,6 +27,9 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     [SerializeField] private PartyScreen partyScreen;
     [SerializeField] private ForgetMoveSelectionUI moveSelectionUI;
 
+    [SerializeField] private GameObject _leftArrow;
+    [SerializeField] private GameObject _rightArrow;
+
     private const int itemsInViewPort = 10;
 
     private Inventory inventory;
@@ -45,11 +48,16 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     public int PrevCategory { get => prevCategory; set => prevCategory = value; }
     public int SelectedCategory { get => selectedCategory; set => selectedCategory = value; }
 
+    private Vector3 _leftArrowPos;
+    private Vector3 _rightArrowPos;
+
     private void Awake()
     {
         inventory = Inventory.GetInventory();
         itemListRect = itemList.GetComponent<RectTransform>();
         _bagOriginPos = bagIcon.transform.localPosition;
+        _leftArrowPos = _leftArrow.transform.position;
+        _rightArrowPos = _rightArrow.transform.position;
     }
 
     private void Start()
@@ -120,10 +128,18 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             ++selectedCategory;
+            var sequence = DOTween.Sequence();
+            _rightArrow.transform.position = _rightArrowPos;
+            sequence.Append(_rightArrow.transform.DOMoveX(_rightArrowPos.x + 5f, 0.15f));
+            sequence.Append(_rightArrow.transform.DOMoveX(_rightArrowPos.x, 0.15f));
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             --selectedCategory;
+            var sequence = DOTween.Sequence();
+            _leftArrow.transform.position = _leftArrowPos;
+            sequence.Append(_leftArrow.transform.DOMoveX(_leftArrowPos.x - 5f, 0.15f));
+            sequence.Append(_leftArrow.transform.DOMoveX(_leftArrowPos.x, 0.15f));
         }
     }
 

@@ -76,8 +76,6 @@ public class GameManager : Singleton<GameManager>, ISavable
         {
             StateMachine.Pop();
         };
-        GameKeyManager.Instance.Init();
-
     }
 
     public void NewGameInit()
@@ -93,7 +91,6 @@ public class GameManager : Singleton<GameManager>, ISavable
         foreach (var manager in Managers)
         {
             manager.GetComponent<IManager>().Init();
-            manager.GetComponent<IManager>().ResetData();
         }
     }
 
@@ -108,7 +105,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         NewGameInit();
         StateMachine.ChangeState(FreeRoamState.I);
         PauseGame(false);
-        playerController.transform.localPosition = new Vector3(-8.5f, -22.5f);
+        playerController.transform.localPosition = new Vector3(-8.5f, -22.35f);
         TitleUI.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         yield return Fader.FadeOut(0.5f);

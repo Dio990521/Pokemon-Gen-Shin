@@ -26,8 +26,8 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
     private void Init()
     {
         // 定义文件路径，这里我们将文件保存在Persistent Data Path中
-        _dataFilePath = Path.Combine(Application.persistentDataPath, "pokemon-genshn-data.json");
-
+        _dataFilePath = Path.Combine(Application.persistentDataPath, "pokemon-genshin-data.json");
+        Debug.Log(_dataFilePath);
         // 调用保存和读取方法示例
         SaveLoadData saveData = ReadFromFile();
         if (saveData != null)
@@ -111,6 +111,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
     {
         if (!_dataSlotUIs[selectedItem].Active)
         {
+            yield return DialogueManager.Instance.ShowDialogueText("此处没有存档！");
             yield break;
         }
         yield return DialogueManager.Instance.ShowDialogueText("要读取这个存档吗？", autoClose: false);

@@ -17,16 +17,20 @@ public class ItemGiver : MonoBehaviour, ISavable
         if (_afterCutscene != CutsceneName.None &&
             !GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString())) yield break;
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
-        player.GetComponent<Inventory>().AddItem(item, count);
 
-        used = true;
-
-        string dialogueText = $"你获得了{item.ItemName}！";
-        if (count > 1)
+        if (!used )
         {
-            dialogueText = $"你获得了{item.ItemName}x{count}！";
+            player.GetComponent<Inventory>().AddItem(item, count);
+
+            used = true;
+            string dialogueText = $"你获得了{item.ItemName}！";
+            if (count > 1)
+            {
+                dialogueText = $"你获得了{item.ItemName}x{count}！";
+            }
+            yield return DialogueManager.Instance.ShowDialogueText(dialogueText);
         }
-        yield return DialogueManager.Instance.ShowDialogueText(dialogueText);
+
     }
 
     public bool CanBeGiven()

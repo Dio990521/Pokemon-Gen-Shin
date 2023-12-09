@@ -73,6 +73,8 @@ public enum CutsceneName
     完成扭曲秘境支线,
     打败dcz,
     获得钟莉,
-    准备返回提瓦特
+    准备返回提瓦特,
+    入室抢劫博士,
+    激活dcz
 }
 

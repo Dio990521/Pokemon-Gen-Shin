@@ -63,7 +63,7 @@ public class PokemonInfoUI : MonoBehaviour
             stringBuilder.Append(" + ").Append(pokemon.PokemonBase.Type2.ToString());
         }
         _pokemonType.text = stringBuilder.ToString();
-        _pokemonPlace.text = pokemon.CatchPlace;
+        _pokemonPlace.text = pokemon.CatchPlace == null ? "ÎÞ" : pokemon.CatchPlace;
         stringBuilder.Clear();
         stringBuilder.Append(pokemon.Hp.ToString()).Append("/").Append(pokemon.MaxHp.ToString());
         _hp.text = stringBuilder.ToString();
@@ -145,14 +145,19 @@ public class PokemonInfoUI : MonoBehaviour
         {
             _spd.color = Color.blue;
         }
+        else
+        {
+            _spd.color = Color.black;
+        }
         if (pokemon.IsBestStatus(Stat.ÉúÃü))
         {
             _hp.color = Color.blue;
         }
         else
         {
-            _spd.color = Color.black;
+            _hp.color = Color.black;
         }
+
     }
 
 

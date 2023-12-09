@@ -50,7 +50,10 @@ public enum SFX
     RECEIVE_POKEMON,
     BUY,
     BOOST,
-    BOOST_DOWN
+    BOOST_DOWN,
+    ERROR,
+    SHUT_DOWN,
+    MONEY
 }
 
 public enum BGM

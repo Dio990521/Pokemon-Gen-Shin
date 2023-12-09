@@ -74,6 +74,23 @@ public class CutsceneEditor : Editor
             }
         }
 
+        using (var scope = new GUILayout.HorizontalScope())
+        {
+            if (GUILayout.Button("Wait"))
+            {
+                cutscene.AddAction(new WaitAction());
+            }
+            if (GUILayout.Button("Play SE"))
+            {
+                cutscene.AddAction(new PlaySEAction());
+            }
+            if (GUILayout.Button("Exclamation Effect"))
+            {
+                cutscene.AddAction(new ExclamationEffectAction());
+            }
+
+        }
+
         base.OnInspectorGUI();
     }
 }

@@ -566,7 +566,7 @@ public class RunTurnState : State<BattleSystem>
         {
             yield return _dialogueBox.TypeDialogue("绽放的元素反应发生了！");
             yield return _dialogueBox.TypeDialogue($"从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
-            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.25f));
+            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.5f));
             yield return new WaitForSeconds(0.5f);
         }
         else if (damageDetails.IsZhengfa)

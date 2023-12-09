@@ -31,7 +31,7 @@ public class Wallet : MonoBehaviour, ISavable
     {
         if (playSE)
         {
-            AudioManager.Instance.PlaySE(SFX.OBTAIN_BERRY, true);
+            AudioManager.Instance.PlaySE(SFX.MONEY, true);
         }
         money += amount;
         OnMoneyChanged?.Invoke();

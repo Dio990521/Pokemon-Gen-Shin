@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     private Character character;
     private bool _isBattleLost = false;
+    private Vector3 _exclamationPos;
 
     public string TrainerName
     {
@@ -51,6 +53,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     private void Awake()
     {
         character = GetComponent<Character>();
+        _exclamationPos = exclamation.transform.position;
     }
 
     private void Start()
@@ -89,12 +92,18 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public IEnumerator TriggerTrainerBattle(PlayerController player)
     {
+
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
         if (meetBGM != BGM.NONE)
             AudioManager.Instance.PlayMusicVolume(MeetBGM);
-        // Show exclamation
+
         exclamation.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        var sequence = DOTween.Sequence();
+        exclamation.transform.position = _exclamationPos;
+        sequence.Append(exclamation.transform.DOMoveY(_exclamationPos.y + 1f, 0.15f).SetEase(Ease.Linear));
+        sequence.Append(exclamation.transform.DOMoveY(_exclamationPos.y + 0.25f, 0.15f).SetEase(Ease.Linear));
+        yield return new WaitForSeconds(0.65f);
+        exclamation.transform.position = _exclamationPos;
         exclamation.SetActive(false);
 
         // Walk towards the player
