@@ -18965,6 +18965,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3192666759394679989, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
       insertIndex: -1
       addedObject: {fileID: 393843976}
+    - targetCorrespondingSourceObject: {fileID: 3192666759394679989, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 393843977}
   m_SourcePrefab: {fileID: 100100000, guid: 3c9d5d085a4df594ab4e62be71c33805, type: 3}
 --- !u!4 &393843974 stripped
 Transform:
@@ -19000,6 +19003,20 @@ MonoBehaviour:
     - "\u4E0D\u8FC7\u53EA\u6709\u4E00\u534A\uFF0C\u53E6\u4E00\u534A\u53EF\u80FD\u5728\u522B\u4EBA\u624B\u4E0A\uFF01"
     afterCutsceneActivate: 0
   _afterCutscene: 0
+  _disableCutscene: 0
+--- !u!114 &393843977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393843975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4881f89f8b930e34489bbb86116ccd4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueId: 4ce7ebda-9828-4380-83c4-d8a333e48ef5
 --- !u!1001 &410649969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19962,6 +19979,7 @@ MonoBehaviour:
     lines: []
     afterCutsceneActivate: 0
   _afterCutscene: 0
+  _disableCutscene: 0
 --- !u!4 &745936146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3192666759394679995, guid: af66a005466500f4ea10cd93da65cc85, type: 3}

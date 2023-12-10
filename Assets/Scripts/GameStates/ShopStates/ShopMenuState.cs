@@ -7,6 +7,9 @@ public class ShopMenuState : State<GameManager>
 {
     public List<ItemBase> AvailableItems { get; set; }
 
+    [HideInInspector]
+    public Vector2 CameraOffset;
+
     public static ShopMenuState I { get; private set; }
 
     private GameManager _gameManager;

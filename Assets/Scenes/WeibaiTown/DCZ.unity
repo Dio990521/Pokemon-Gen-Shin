@@ -1293,7 +1293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc5bee1dc608414088b06c156775697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exclamation: {fileID: 0}
+  exclamation: {fileID: 526913420}
   dialogue:
     speakerName: "\uFF1F\uFF1F\uFF1F"
     lines:

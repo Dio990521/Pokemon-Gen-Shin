@@ -58,6 +58,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         ItemDB.Init();
         QuestDB.Init();
         PassiveMoveDB.Init();
+        NewGameInit();
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
         //menuController = GetComponent<MenuController>();
@@ -65,8 +66,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     private void Start()
     {
-        StateMachine = new StateMachine<GameManager>(this);
-        NewGameInit();
+        StateMachine.ChangeState(FreeRoamState.I);
         DialogueManager.Instance.OnShowDialogue += () =>
         {
             StateMachine.Push(DialogueState.I);
@@ -80,7 +80,8 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void NewGameInit()
     {
-        StateMachine.ChangeState(FreeRoamState.I);
+        StateMachine = new StateMachine<GameManager>(this);
+        _storage.Init();
         _gameTimeSpend = 0f;
         _worldTransitionManager.ClearTransition(true);
         _battleTransitionManager.ClearTransition(true);

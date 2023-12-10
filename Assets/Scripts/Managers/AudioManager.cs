@@ -54,7 +54,8 @@ public enum SFX
     ERROR,
     SHUT_DOWN,
     MONEY,
-    CURSOR
+    CURSOR,
+    CUT_TREE
 }
 
 public enum BGM

@@ -243,14 +243,16 @@ public class BattleSystem : MonoBehaviour
         if (_playerUnit.pokemon.Hp > 0)
         {
             yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！");
+
+            AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             _playerUnit.PlayFaintAnimation();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.7f);
         }
         _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
         yield return _playerUnit.ThrowBallAnimation(this);
         yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！", 0.7f);
         _playerUnit.ChangeUnit(newPokemon);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1f);
 
     }
 
@@ -415,9 +417,8 @@ public class BattleSystem : MonoBehaviour
             {
                 _enemyUnit.pokemon.SetBestBias();
             }
-            PlayerParty.AddPokemonToParty(_enemyUnit.pokemon);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}成为了你的伙伴！");
-            if (_partyScreen.Pokemons.Count >= 6)
+            if (!PlayerParty.AddPokemonToParty(_enemyUnit.pokemon))
             {
                 yield return _dialogueBox.TypeDialogue($"由于队伍已满，\n{_enemyUnit.pokemon.PokemonBase.PokemonName}被送进了仓库！");
             }

@@ -29,6 +29,7 @@ public class PartyMemberUI : MonoBehaviour, ISelectableItem
         battlePokemon = pokemon;
         UpdateData();
         battlePokemon.OnHpChanged += UpdateData;
+        battlePokemon.OnStatusChanged += UpdateData;
     }
 
     private void UpdateData()

@@ -18,7 +18,7 @@ public class ItemGiver : MonoBehaviour, ISavable
             !GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString())) yield break;
         yield return DialogueManager.Instance.ShowDialogue(dialogue);
 
-        if (!used )
+        if (!used)
         {
             player.GetComponent<Inventory>().AddItem(item, count);
 
@@ -35,7 +35,8 @@ public class ItemGiver : MonoBehaviour, ISavable
 
     public bool CanBeGiven()
     {
-        return item != null && !used && count > 0;
+        return item != null && _afterCutscene != CutsceneName.None &&
+            GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString()) && !used && count > 0;
     }
 
     public object CaptureState()

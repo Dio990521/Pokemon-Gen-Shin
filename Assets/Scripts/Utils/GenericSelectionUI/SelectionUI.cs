@@ -36,11 +36,12 @@ namespace PokeGenshinUtils.SelectionUI
             UpdateSelectionUI();
         }
 
-        public virtual void ResetSelection()
+        public virtual void ResetSelection(bool update=true)
         {
             selectedItem = 0;
             prevSelection = -1;
-            UpdateSelectionUI();
+            if (update)
+                UpdateSelectionUI();
         }
 
         public virtual void ClampSelection()

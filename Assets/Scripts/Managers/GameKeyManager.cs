@@ -76,6 +76,7 @@ public class GameKeyManager : Singleton<GameKeyManager>, ISavable, IManager
     public bool GetBoolValue(string key)
     {
         if (_gameKeyBoolDict == null) return false;
+        if (key == CutsceneName.None.ToString()) return false;
         if (_gameKeyBoolDict.ContainsKey(key))
         {
             return _gameKeyBoolDict[key];

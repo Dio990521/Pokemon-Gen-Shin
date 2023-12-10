@@ -27,7 +27,7 @@ public class Storage : MonoBehaviour, ISavable
         "ÆÕÍ¨", "Ë®", "»ð", "²Ý", "±ù", "À×", "ÑÒ", "·ç"
     };
 
-    private void Awake()
+    public void Init()
     {
         InitAllSlots();
     }

@@ -116,7 +116,7 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             }
             else if (healer != null)
             {
-                yield return healer.Heal(initiator, dialogues?[0]);
+                yield return healer.Heal(initiator);
             }
             else if (merchant != null)
             {

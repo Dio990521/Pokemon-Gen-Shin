@@ -68,13 +68,15 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public IEnumerator Interact(Transform initiator)
     {
+        GameManager.Instance.StateMachine.Push(CutsceneState.I);
         character.LookTowards(initiator.position);
-
         if (!IsBattleLost)
         {
             if (meetBGM != BGM.NONE)
                 AudioManager.Instance.PlayMusicVolume(MeetBGM);
+            yield return EnableExclamation();
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
+            GameManager.Instance.StateMachine.Pop();
             GameManager.Instance.StartTrainerBattle(this);
         }
 
@@ -90,13 +92,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         }
     }
 
-    public IEnumerator TriggerTrainerBattle(PlayerController player)
+    private IEnumerator EnableExclamation()
     {
-
-        GameManager.Instance.StateMachine.Push(CutsceneState.I);
-        if (meetBGM != BGM.NONE)
-            AudioManager.Instance.PlayMusicVolume(MeetBGM);
-
         exclamation.SetActive(true);
         var sequence = DOTween.Sequence();
         exclamation.transform.position = _exclamationPos;
@@ -105,6 +102,16 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         yield return new WaitForSeconds(0.65f);
         exclamation.transform.position = _exclamationPos;
         exclamation.SetActive(false);
+    }
+
+    public IEnumerator TriggerTrainerBattle(PlayerController player)
+    {
+
+        GameManager.Instance.StateMachine.Push(CutsceneState.I);
+        if (meetBGM != BGM.NONE)
+            AudioManager.Instance.PlayMusicVolume(MeetBGM);
+
+        yield return EnableExclamation();
 
         // Walk towards the player
         var diff = player.transform.position - transform.position;

@@ -77,6 +77,7 @@ public class Pokemon
         StatusChanges = new Queue<string>();
         ResetStatBoost();
         ElementStatus = null;
+        pokemonBase.InitPassiveMove();
     }
 
     // Initialize the pokemon
@@ -647,10 +648,8 @@ public class Pokemon
     // used when it's enemy pokemon's turn 
     public Move GetRandomMove()
     {
-        var movesWithPP = Moves.Where(x => x.PP > 0).ToList();
-
-        int r = UnityEngine.Random.Range(0, movesWithPP.Count);
-        return movesWithPP[r];
+        int r = UnityEngine.Random.Range(0, Moves.Count);
+        return Moves[r];
     }
 
     public void OnBattleOver()

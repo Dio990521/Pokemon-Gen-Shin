@@ -8,7 +8,6 @@ public class ShopBuyingState : State<GameManager>
     [SerializeField] private WalletUI walletUI;
     [SerializeField] private CountSelectorUI countSelectorUI;
     [SerializeField] private ShopUI shopUI;
-    [SerializeField] private Vector2 shopCameraOffset;
 
     public List<ItemBase> AvailableItems { get; set; }
     public static ShopBuyingState I { get; private set; }
@@ -73,7 +72,7 @@ public class ShopBuyingState : State<GameManager>
 
     private IEnumerator StartBuyingState()
     {
-        yield return GameManager.Instance.MoveCamera(shopCameraOffset);
+        yield return GameManager.Instance.MoveCamera(ShopMenuState.I.CameraOffset);
         walletUI.Show();
         shopUI.Show(AvailableItems);
         _browseItems = true;
@@ -153,7 +152,7 @@ public class ShopBuyingState : State<GameManager>
 
     private IEnumerator OnBackFromBuying()
     {
-        yield return GameManager.Instance.MoveCamera(-shopCameraOffset);
+        yield return GameManager.Instance.MoveCamera(-ShopMenuState.I.CameraOffset);
         shopUI.Close();
         walletUI.Close();
         _gameManager.StateMachine.Pop();

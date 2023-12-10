@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Healer : MonoBehaviour
 {
-    public IEnumerator Heal(Transform player, Dialogue dialogue)
+    public IEnumerator Heal(Transform player)
     {
         yield return DialogueManager.Instance.ShowDialogueText("要不要恢复啊小妹妹？", autoClose: false);
         ChoiceState.I.Choices = new List<string>() { "好的", "不用了" };

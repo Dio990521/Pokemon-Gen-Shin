@@ -35,6 +35,7 @@ public class CuttableTree : MonoBehaviour, InteractableObject, ISavable
             {
                 Cut = true;
                 yield return DialogueManager.Instance.ShowDialogueText($"{pokemonWithCut.PokemonBase.PokemonName}使出浑身力气的一击！");
+                AudioManager.Instance.PlaySE(SFX.CUT_TREE);
                 int curFrame = 0;
                 while (curFrame < sprites.Count)
                 {

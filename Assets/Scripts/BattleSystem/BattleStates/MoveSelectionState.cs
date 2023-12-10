@@ -22,8 +22,8 @@ public class MoveSelectionState : State<BattleSystem>
     public override void Enter(BattleSystem owner)
     {
         _battleSystem = owner;
+        _selectionUI.ResetSelection(false);
         _selectionUI.SetMoves(Moves);
-        _selectionUI.ResetSelection();
         _selectionUI.gameObject.SetActive(true);
         _selectionUI.OnSelected += OnMoveSelection;
         _selectionUI.OnBack += OnBack;
@@ -40,6 +40,7 @@ public class MoveSelectionState : State<BattleSystem>
     public override void Exit(bool sfx = true)
     {
         _selectionUI.gameObject.SetActive(false);
+        _selectionUI.ResetSelection(true);
         _selectionUI.OnSelected -= OnMoveSelection;
         _selectionUI.OnBack -= OnBack;
 

@@ -35,6 +35,7 @@ public class AboutToUseState : State<BattleSystem>
 
         if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
             aboutToUseChoice = !aboutToUseChoice;
         }
 

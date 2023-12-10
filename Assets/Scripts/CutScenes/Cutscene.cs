@@ -28,6 +28,18 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
 
     public bool TriggerRepeatedly => _isAlwaysExist;
 
+    private void Start()
+    {
+        if (_enableAfterCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_enableAfterCutscene.ToString()))
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        else if (_activateCutsceneName != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(_activateCutsceneName.ToString()))
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
+    }
+
     public IEnumerator Play()
     {
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
@@ -82,7 +94,7 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
     {
         if (!_isAutoPlay)
         {
-            if (!GameKeyManager.Instance.GetBoolValue(disableAfterCutscene.ToString()))
+            if (disableAfterCutscene == CutsceneName.None || !GameKeyManager.Instance.GetBoolValue(disableAfterCutscene.ToString()))
             {
                 ReadyToPlay(player);
             }
