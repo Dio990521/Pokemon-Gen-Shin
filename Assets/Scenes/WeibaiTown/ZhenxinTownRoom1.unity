@@ -1725,7 +1725,7 @@ MonoBehaviour:
     speakerName: 
     lines: []
     afterCutsceneActivate: 0
-  _afterCutscene: 0
+  _afterCutscene: 2
 --- !u!114 &898722665 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3192666759394679992, guid: 56f0d5f67c31abf4aa937936c7362405, type: 3}

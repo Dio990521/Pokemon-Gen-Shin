@@ -350,6 +350,7 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
         pokeball.sprite = pokeballItem.OpenIcon;
+        AudioManager.Instance.PlaySE(SFX.BALL_OUT);
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
         yield return pokeball.transform.DOMoveY(5f, 1f)
@@ -428,8 +429,9 @@ public class BattleSystem : MonoBehaviour
         {
             // Pokemon broke out
             yield return new WaitForSeconds(1f);
-            pokeball.DOFade(0, 0.2f);
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
+            pokeball.sprite = pokeballItem.OpenIcon;
+            pokeball.DOFade(0, 0.3f);
             yield return _enemyUnit.PlayBreakOutAnimation(originPos);
             yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}ÆÆÇò¶ø³öÁË£¡");
             RunTurnState.I.EnemyContinue = true;

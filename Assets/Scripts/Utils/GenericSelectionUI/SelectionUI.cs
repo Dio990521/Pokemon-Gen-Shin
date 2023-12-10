@@ -87,18 +87,22 @@ namespace PokeGenshinUtils.SelectionUI
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem += 1;
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem -= 1;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem += 1;
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem -= 1;
             }
 
@@ -109,18 +113,22 @@ namespace PokeGenshinUtils.SelectionUI
             
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem += _gridWidth;
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem -= _gridWidth;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem += 1;
             }
             else if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                AudioManager.Instance.PlaySE(SFX.CURSOR);
                 selectedItem -= 1;
             }
         }

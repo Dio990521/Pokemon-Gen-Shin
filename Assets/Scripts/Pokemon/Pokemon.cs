@@ -507,60 +507,60 @@ public class Pokemon
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPsn = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.brn)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsBrn = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.par)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPar = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.slp)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsSlp = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.confusion)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsCfs = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.frz)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsFrz = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhanfang)
         {
             CureElementStatus();
             damageDetails.IsZhanfang = true;
-            return 1.2f * effectiveness;
+            return 1.25f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhengfa)
         {
             CureElementStatus();
             damageDetails.IsZhengfa = true;
-            return 1.5f * effectiveness;
+            return 1.75f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.ronghua)
         {
             CureElementStatus();
             damageDetails.IsRonghua = true;
-            return 1.5f * effectiveness;
+            return 1.75f * effectiveness;
         }
         SetElementStatus(attackerElement);
         return effectiveness;
@@ -624,7 +624,7 @@ public class Pokemon
     public void SetElementStatus(ConditionID conditionId, bool putongMove=false)
     {
         var prevElementStatus = ElementStatus;
-        if (ElementStatus != null || conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
+        if (conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];
         ElementStatus?.OnStart?.Invoke(this);
         if (prevElementStatus == null || prevElementStatus?.Id != ElementStatus.Id)

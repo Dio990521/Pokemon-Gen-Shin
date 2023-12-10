@@ -91,18 +91,22 @@ public class StorageListUI : SelectionUI<ItemSlotUI>
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
             selectedItem += 1;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
             selectedItem -= 1;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             ++SelectedCategory;
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             --SelectedCategory;
         }
     }

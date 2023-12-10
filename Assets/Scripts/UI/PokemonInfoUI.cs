@@ -174,6 +174,7 @@ public class PokemonInfoUI : MonoBehaviour
                 _moveDetail.SetActive(false);
                 _tag.sprite = _tagImage2;
                 _state = InfoState.Info2;
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
@@ -189,6 +190,7 @@ public class PokemonInfoUI : MonoBehaviour
                 _buttonObject.SetActive(false);
                 _tag.sprite = _tagImage1;
                 _state = InfoState.Info1;
+                AudioManager.Instance.PlaySE(SFX.CONFIRM);
             }
             else if (Input.GetKeyDown(KeyCode.Z))
             {
@@ -220,6 +222,7 @@ public class PokemonInfoUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
             if (_pokemon.PokemonBase.PassiveMove != null && _selectedMove == _pokemon.Moves.Count - 1)
             {
                 _selectedMove = 4;
@@ -231,6 +234,7 @@ public class PokemonInfoUI : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
             if (_pokemon.PokemonBase.PassiveMove != null && _selectedMove == 4)
             {
                 _selectedMove = _pokemon.Moves.Count - 1;

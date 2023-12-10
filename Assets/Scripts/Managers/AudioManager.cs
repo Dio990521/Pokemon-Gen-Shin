@@ -53,7 +53,8 @@ public enum SFX
     BOOST_DOWN,
     ERROR,
     SHUT_DOWN,
-    MONEY
+    MONEY,
+    CURSOR
 }
 
 public enum BGM
@@ -131,6 +132,8 @@ public class AudioManager : Singleton<AudioManager>
     private float originalMusicVol;
     public bool IsPlayingTiwate;
 
+    private bool _isPausing;
+
     private void Start()
     {
         originalMusicVol = musicPlayer.volume;
@@ -205,10 +208,13 @@ public class AudioManager : Singleton<AudioManager>
 
     private IEnumerator UnPauseMusic(float delay)
     {
+        if (_isPausing) yield break;
+        _isPausing = true;
         yield return new WaitForSeconds(delay);
         musicPlayer.volume = 0;
         musicPlayer.UnPause();
-        musicPlayer.DOFade(originalMusicVol, fadeDuration);  
+        yield return musicPlayer.DOFade(originalMusicVol, fadeDuration);
+        _isPausing = false;
     }
 
     private IEnumerator PlayerMusicAsync(BGM id, float volume, bool loop, bool fade)

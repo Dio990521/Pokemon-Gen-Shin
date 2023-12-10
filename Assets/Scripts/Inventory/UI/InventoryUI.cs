@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -119,14 +120,17 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            BagShakeAnim();
             selectedItem += 1;
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            BagShakeAnim();
             selectedItem -= 1;
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             ++selectedCategory;
             var sequence = DOTween.Sequence();
             _rightArrow.transform.position = _rightArrowPos;
@@ -135,6 +139,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
             --selectedCategory;
             var sequence = DOTween.Sequence();
             _leftArrow.transform.position = _leftArrowPos;
@@ -174,6 +179,17 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         else if (selectedCategory < 0)
         {
             selectedCategory = Inventory.ItemCategories.Count - 1;
+        }
+    }
+
+    private void BagShakeAnim()
+    {
+        var slots = inventory.GetSlotsByCategory(selectedCategory);
+        if (slots.Count > 0)
+        {
+            AudioManager.Instance.PlaySE(SFX.CURSOR);
+            bagIcon.transform.localPosition = _bagOriginPos;
+            bagIcon.transform.DOShakePosition(0.5f, 3f);
         }
     }
 
@@ -224,7 +240,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
 
     private IEnumerator BagAnim()
     {
-        yield return bagIcon.transform.DOPunchPosition(Vector3.up * 3, 0.25f, 1, 3).SetEase(Ease.OutQuad).WaitForCompletion();
         bagIcon.transform.localPosition = _bagOriginPos;
+        yield return bagIcon.transform.DOPunchPosition(Vector3.up * 3, 0.25f, 1, 3).SetEase(Ease.OutQuad).WaitForCompletion();
     }
 }

@@ -82,6 +82,7 @@ public class BattleDialogueBox : MonoBehaviour
                 actionSelectorImage.transform.localPosition = new Vector2(366f, -22f);
                 break;
         }
+        AudioManager.Instance.PlaySE(SFX.CURSOR);
     }
 
     public void UpdateChoiceBox(bool yesSelected)

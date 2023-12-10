@@ -151,10 +151,6 @@ public class InventoryState : State<GameManager>
                     string strongPoints = "";
                     foreach (var effectiveness in effectivenessData)
                     {
-                        _inventoryUI.AllowUpdate = false;
-                        _inventoryUI.gameObject.SetActive(false);
-                        ActionSelectionState.I.SelectionUI.gameObject.SetActive(false);
-                        yield return battleSystem.DialogueBox.TypeDialogue("派蒙瞪大了双眼！");
                         var elementReactionName = ElementReactionUtil.GetPassiveString(effectiveness.Key);
                         if (effectiveness.Value > 1f)
                         {
@@ -165,10 +161,13 @@ public class InventoryState : State<GameManager>
                             strongPoints += elementReactionName + "、";
                         }
                     }
-
+                    _inventoryUI.AllowUpdate = false;
+                    _inventoryUI.gameObject.SetActive(false);
+                    ActionSelectionState.I.SelectionUI.gameObject.SetActive(false);
+                    yield return battleSystem.DialogueBox.TypeDialogue("派蒙瞪大了双眼！");
                     if (weakPoints.Length == 0 && strongPoints.Length == 0)
                     {
-                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}深不可测！");
+                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}好像没什么特别的！");
                     }
 
                     if (weakPoints.Length > 0)
