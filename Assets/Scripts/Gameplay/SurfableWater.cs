@@ -38,7 +38,9 @@ public class SurfableWater : MonoBehaviour, InteractableObject, IPlayerTriggerab
                 var targetPos = initiator.position + dir;
 
                 isJumpingToWater = true;
+                animator.IsJumping = true;
                 yield return initiator.DOJump(targetPos, 0.5f, 1, 0.5f).WaitForCompletion();
+                animator.IsJumping = false;
                 isJumpingToWater = false;
                 animator.IsSurfing = true;
             }

@@ -36,7 +36,7 @@ public class EvolutionState : State<GameManager>
         pokemon.Evolve(evolution);
         pokemonImage.sprite = pokemon.PokemonBase.FrontSprite;
         pokemonImage.SetNativeSize();
-        yield return DialogueManager.Instance.ShowDialogueText($"{oldPokemon.PokemonName}成功进化为\n{pokemon.PokemonBase.PokemonName}了！");
+        yield return DialogueManager.Instance.ShowDialogueText($"{oldPokemon.PokemonName}成功进化为\n{pokemon.PokemonBase.PokemonName}了！\n基础属性得到了提升！");
 
         evolutionUI.SetActive(false);
 

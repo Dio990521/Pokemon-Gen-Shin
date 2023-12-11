@@ -1,3 +1,4 @@
+using DG.Tweening;
 using PokeGenshinUtils.SelectionUI;
 using System;
 using System.Collections;
@@ -11,6 +12,8 @@ public class StorageListUI : SelectionUI<ItemSlotUI>
     [SerializeField] private ItemSlotUI _itemSlotUI;
     [SerializeField] private Image upArrow;
     [SerializeField] private Image downArrow;
+    [SerializeField] private GameObject _leftArrow;
+    [SerializeField] private GameObject _rightArrow;
     [SerializeField] private Text categoryText;
     [SerializeField] private List<Image> categoryPoints;
 
@@ -25,11 +28,17 @@ public class StorageListUI : SelectionUI<ItemSlotUI>
 
     private const int _itemsInViewPort = 6;
 
+    private Vector3 _leftArrowPos;
+    private Vector3 _rightArrowPos;
+
+
     public int SelectedCategory { get => selectedCategory; set => selectedCategory = value; }
 
     private void Awake()
     {
         itemListRect = itemList.GetComponent<RectTransform>();
+        _leftArrowPos = _leftArrow.transform.position;
+        _rightArrowPos = _rightArrow.transform.position;
     }
 
     public void Init()
@@ -103,11 +112,19 @@ public class StorageListUI : SelectionUI<ItemSlotUI>
         {
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
             ++SelectedCategory;
+            var sequence = DOTween.Sequence();
+            _rightArrow.transform.position = _rightArrowPos;
+            sequence.Append(_rightArrow.transform.DOMoveX(_rightArrowPos.x + 5f, 0.15f));
+            sequence.Append(_rightArrow.transform.DOMoveX(_rightArrowPos.x, 0.15f));
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             AudioManager.Instance.PlaySE(SFX.CONFIRM);
             --SelectedCategory;
+            var sequence = DOTween.Sequence();
+            _leftArrow.transform.position = _leftArrowPos;
+            sequence.Append(_leftArrow.transform.DOMoveX(_leftArrowPos.x - 5f, 0.15f));
+            sequence.Append(_leftArrow.transform.DOMoveX(_leftArrowPos.x, 0.15f));
         }
     }
 

@@ -164,6 +164,7 @@ public class InventoryState : State<GameManager>
                     _inventoryUI.AllowUpdate = false;
                     _inventoryUI.gameObject.SetActive(false);
                     ActionSelectionState.I.SelectionUI.gameObject.SetActive(false);
+                    AudioManager.Instance.PlaySE(SFX.USE_PAIMENG);
                     yield return battleSystem.DialogueBox.TypeDialogue("派蒙瞪大了双眼！");
                     if (weakPoints.Length == 0 && strongPoints.Length == 0)
                     {
@@ -172,11 +173,13 @@ public class InventoryState : State<GameManager>
 
                     if (weakPoints.Length > 0)
                     {
+                        AudioManager.Instance.PlaySE(SFX.FIND_WEAKPOINT);
                         weakPoints = weakPoints.Substring(0, weakPoints.Length - 1);
                         yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{weakPoints}的抗性较差！");
                     }
                     if (strongPoints.Length > 0)
                     {
+                        AudioManager.Instance.PlaySE(SFX.FIND_STRONGPOINT);
                         strongPoints = strongPoints.Substring(0, strongPoints.Length - 1);
                         yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{strongPoints}的抗性较高！");
                     }

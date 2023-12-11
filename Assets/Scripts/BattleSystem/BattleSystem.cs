@@ -249,7 +249,7 @@ public class BattleSystem : MonoBehaviour
             yield return new WaitForSeconds(0.7f);
         }
         _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
-        yield return _playerUnit.ThrowBallAnimation(this);
+        yield return _playerUnit.ThrowBallAnimation(this, newPokemon);
         yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！", 0.7f);
         _playerUnit.ChangeUnit(newPokemon);
         yield return new WaitForSeconds(1f);
@@ -269,7 +269,7 @@ public class BattleSystem : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         _enemyUnit.PokemonSprite.enabled = true;
         _enemyUnit.UnitChangeAnimation();
-        _enemyUnit.Hud.SetData(nextPokemon);
+        _enemyUnit.Hud.SetData(nextPokemon, false);
         yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}派出了{nextPokemon.PokemonBase.PokemonName}！");
     }
 
@@ -355,6 +355,8 @@ public class BattleSystem : MonoBehaviour
         AudioManager.Instance.PlaySE(SFX.BALL_OUT);
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
+        AudioManager.Instance.PlaySE(SFX.BALL_FALLING);
+        yield return new WaitForSeconds(0.25f);
         yield return pokeball.transform.DOMoveY(5f, 1f)
             .SetEase(Ease.OutBounce)
             .SetLoops(1, LoopType.Yoyo);

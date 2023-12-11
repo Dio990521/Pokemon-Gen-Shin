@@ -461,7 +461,7 @@ PrefabInstance:
     - target: {fileID: 8260317732440157595, guid: 6d4d5c466cece1c47bcde115fb2d4df7, type: 3}
       propertyPath: item
       value: 
-      objectReference: {fileID: 11400000, guid: 033c17cba0ec57745bd935f1d5cda80a, type: 2}
+      objectReference: {fileID: 11400000, guid: 3d10496f6196f7a4595f29f199d67baf, type: 2}
     - target: {fileID: 8260317732440157607, guid: 6d4d5c466cece1c47bcde115fb2d4df7, type: 3}
       propertyPath: m_Name
       value: PickUp (1)

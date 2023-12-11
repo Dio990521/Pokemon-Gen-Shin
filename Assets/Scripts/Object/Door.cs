@@ -33,7 +33,8 @@ public class Door : MonoBehaviour
     private IEnumerator CheckDoor(Collider2D collision)
     {
         var player = collision.GetComponent<PlayerController>();
-        if (!player.Character.IsMoving && Input.GetKey(KeyCode.UpArrow))
+        if (!player.Character.IsMoving && GameManager.Instance.StateMachine.CurrentState == FreeRoamState.I && 
+            Input.GetKey(KeyCode.UpArrow))
         {
             if (_key != null && !Inventory.GetInventory().HasItem(_key))
             {

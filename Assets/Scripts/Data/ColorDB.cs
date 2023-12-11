@@ -36,6 +36,7 @@ public class ColorDB
     public static Dictionary<string, Color> textColors = new Dictionary<string, Color>()
     {
         { "NotChoice", new Color32(50,50,50,255) },
-        { "OnChoice", new Color32(114,90,255,255) }
+        { "OnChoice", new Color32(114,90,255,255) },
+        { "HasCatched", new Color32(0,164,0,255) },
     };
 }

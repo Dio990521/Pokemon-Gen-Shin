@@ -285,6 +285,7 @@ public class Pokemon
     public void Heal()
     {
         Hp = MaxHp;
+        Moves.ForEach(m => m.IncreasePP(m.MoveBase.PP));
         OnHpChanged?.Invoke();
         CureStatus();
     }

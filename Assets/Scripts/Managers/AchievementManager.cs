@@ -66,6 +66,11 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable, IMana
         _data[key].Add(name);
     }
 
+    public bool HasComplete(Achievement key, string name)
+    {
+        return _data[key].Contains(name);
+    }
+
     public int GetProgress(Achievement key)
     {
         return _data[key].Count;

@@ -53,7 +53,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
-
     public IEnumerator Interact(Transform initiator)
     {
         if (npcState == NPCState.Idle)

@@ -90,6 +90,7 @@ public class UseItemState : State<GameManager>
             {
                 if (item is PaimengItem)
                 {
+                    AudioManager.Instance.PlaySE(SFX.EAT_PAIMENG);
                     yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}咬了一口派蒙！\n真香！");
                 }
                 else

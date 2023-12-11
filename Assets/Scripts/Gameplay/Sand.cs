@@ -39,6 +39,7 @@ public class Sand : MonoBehaviour, IPlayerTriggerable
     private IEnumerator FallAnimate(Transform player)
     {
         GameManager.Instance.PauseGame(true);
+        AudioManager.Instance.PlaySE(SFX.SLIDE_FAIL);
         yield return player.DOMoveY(player.position.y - 1, 1f).WaitForCompletion();
         GameManager.Instance.PauseGame(false);
         yield return DialogueManager.Instance.ShowDialogueText("携带岩系宝可梦或许可以帮助登上沙流。");
@@ -47,7 +48,16 @@ public class Sand : MonoBehaviour, IPlayerTriggerable
     private IEnumerator SlideAnimate(Transform player)
     {
         GameManager.Instance.PauseGame(true);
-        yield return player.DOMoveY(player.position.y + player.GetComponent<CharacterAnimator>().MoveY * _yOffset, 1.5f).WaitForCompletion();
+        var dir = player.GetComponent<CharacterAnimator>().MoveY;
+        if (dir > 0)
+        {
+            AudioManager.Instance.PlaySE(SFX.SLIDE_UP);
+        }
+        else
+        {
+            AudioManager.Instance.PlaySE(SFX.SLIDE_DOWN);
+        }
+        yield return player.DOMoveY(player.position.y + dir * _yOffset, 1.5f).WaitForCompletion();
         GameManager.Instance.PauseGame(false);
     }
 

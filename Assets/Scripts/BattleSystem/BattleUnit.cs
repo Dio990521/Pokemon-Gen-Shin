@@ -78,7 +78,7 @@ public class BattleUnit : MonoBehaviour
         _pokemonSprite.SetNativeSize();
         _pokemonSprite.color = originalColor;
         ResetAnimation();
-        hud.SetData(selectedPokemon);
+        hud.SetData(selectedPokemon, isPlayerUnit);
     }
 
     public void PlayBoostAnim(int boost)
@@ -175,7 +175,7 @@ public class BattleUnit : MonoBehaviour
         _pokemonSprite.sprite = isPlayerUnit ? pokemon.PokemonBase.BackSprite : pokemon.PokemonBase.FrontSprite;
         _pokemonSprite.SetNativeSize();
         _pokemonSprite.color = originalColor;
-        hud.SetData(selectedPokemon);
+        hud.SetData(selectedPokemon, isPlayerUnit);
         ResetAnimation(trainer);
         UnitChangeAnimation();
     }
@@ -240,12 +240,12 @@ public class BattleUnit : MonoBehaviour
         _pokemonSprite.transform.DOScale(new Vector3(1f, 1f, 1f), 1f);
     }
 
-    public IEnumerator ThrowBallAnimation(BattleSystem battleSystem)
+    public IEnumerator ThrowBallAnimation(BattleSystem battleSystem, Pokemon playerPokemon)
     {
         _pokemonSprite.transform.localPosition = new Vector3(-228f, -215f, 0f);
         var pokeballObj = Instantiate(battleSystem.PokeballSprite, playerPokeballPos, Quaternion.identity);
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
-        pokeball.sprite = GameManager.Instance.GetPokeSprite(pokemon.PokeballSpriteType);
+        pokeball.sprite = GameManager.Instance.GetPokeSprite(playerPokemon.PokeballSpriteType);
         var sequence = DOTween.Sequence();
         sequence.Append(pokeball.transform.DOJump(_pokemonSprite.transform.position, 4f, 1, 1.5f));
         sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));

@@ -564,6 +564,7 @@ public class RunTurnState : State<BattleSystem>
         }
         else if (damageDetails.IsZhanfang)
         {
+            AudioManager.Instance.PlaySE(SFX.ZHANFANG);
             yield return _dialogueBox.TypeDialogue("绽放的元素反应发生了！");
             yield return _dialogueBox.TypeDialogue($"从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
             _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.5f));

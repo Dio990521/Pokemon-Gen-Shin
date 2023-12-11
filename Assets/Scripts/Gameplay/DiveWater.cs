@@ -44,8 +44,10 @@ public class DiveWater : MonoBehaviour, InteractableObject, IPlayerTriggerable
                     var targetPos = initiator.position + dir * 2;
 
                     isJumpingToWater = true;
+                    animator.IsJumping = true;
                     yield return initiator.DOJump(targetPos, 1.5f, 1, 0.5f).WaitForCompletion();
                     AudioManager.Instance.PlaySE(SFX.DIVE);
+                    animator.IsJumping = false;
                     yield return Teleport.StartTeleport(_destination, player, FacingDirection.Down, needSFX: false);
                     isJumpingToWater = false;
                 }

@@ -35,8 +35,9 @@ public class ItemGiver : MonoBehaviour, ISavable
 
     public bool CanBeGiven()
     {
-        return item != null && _afterCutscene != CutsceneName.None &&
-            GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString()) && !used && count > 0;
+        var cutsceneActivate = _afterCutscene == CutsceneName.None || _afterCutscene != CutsceneName.None &&
+            !GameKeyManager.Instance.GetBoolValue(_afterCutscene.ToString());
+        return item != null && cutsceneActivate && !used && count > 0;
     }
 
     public object CaptureState()

@@ -23,11 +23,19 @@ public class BattleHud : MonoBehaviour
     private Pokemon battlePokemon;
 
     // show the essential status of the pokemon
-    public void SetData(Pokemon pokemon)
+    public void SetData(Pokemon pokemon, bool isPlayer)
     {
         ClearData();
         battlePokemon = pokemon;
         nameText.text = battlePokemon.PokemonBase.PokemonName;
+        if (!isPlayer && AchievementManager.Instance.HasComplete(battlePokemon.PokemonBase.Achievement, battlePokemon.PokemonBase.PokemonName))
+        {
+            nameText.color = ColorDB.textColors["HasCatched"];
+        }
+        else
+        {
+            nameText.color = Color.black;
+        }
         SetLevel();
         SetExp();
         UpdateStatus();

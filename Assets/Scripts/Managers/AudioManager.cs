@@ -55,7 +55,23 @@ public enum SFX
     SHUT_DOWN,
     MONEY,
     CURSOR,
-    CUT_TREE
+    CUT_TREE,
+    USE_PAIMENG,
+    EAT_PAIMENG,
+    PAR,
+    FIND_WEAKPOINT,
+    BALL_FALLING,
+    FIND_STRONGPOINT,
+    BRN,
+    SLP,
+    FRZ,
+    JIEJING,
+    ZHANFANG,
+    CFS,
+    PSN,
+    SLIDE_UP,
+    SLIDE_DOWN,
+    SLIDE_FAIL
 }
 
 public enum BGM
