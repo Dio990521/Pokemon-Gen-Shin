@@ -956,9 +956,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3551140811545777732, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 594368277}
-    - targetCorrespondingSourceObject: {fileID: 6947354802859834759, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 372440482}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
 --- !u!4 &174600165 stripped
@@ -975,85 +972,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 517347319446352058, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
   m_PrefabInstance: {fileID: 174600164}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &208037692 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6947354802859834759, guid: 3a4bf942c7aa82a47ab303e753538e56, type: 3}
-  m_PrefabInstance: {fileID: 174600164}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &372440481
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 208037692}
-    m_Modifications:
-    - target: {fileID: 76436302901962345, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: uniqueId
-      value: e5798e24-8d02-43dd-9a4a-11eaca91d1f0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877068, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_Name
-      value: WallSwitch (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -50.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 72.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3681748134745908419, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-      propertyPath: _eventKey
-      value: DESERT_PUZZLE
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
---- !u!4 &372440482 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2184806409221877071, guid: 349732c6ddbbc9a43abd3288dacdd155, type: 3}
-  m_PrefabInstance: {fileID: 372440481}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &532849043
 PrefabInstance:
@@ -31022,8 +30940,8 @@ Tilemap:
   - first: {x: 10, y: 16, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 160
-      m_TileSpriteIndex: 157
+      m_TileIndex: 42
+      m_TileSpriteIndex: 42
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -31515,7 +31433,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 04dc8f3f9ba64ff41bd05459a55a7190, type: 2}
   - m_RefCount: 61
     m_Data: {fileID: 11400000, guid: 4e3fc05688002df40b306e359e96df78, type: 2}
-  - m_RefCount: 16
+  - m_RefCount: 17
     m_Data: {fileID: 11400000, guid: a5e9d618bc9535b46870b0c907736298, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: a0c5c05d2104a7d429cf90f3579f1adf, type: 2}
@@ -31751,8 +31669,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 1e9b3d139afc5b940aaf5e6ac3d9a5e7, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: 11400000, guid: b58ee71cd2524744c8a61a2203118e91, type: 2}
   - m_RefCount: 6
@@ -31846,7 +31764,7 @@ Tilemap:
     m_Data: {fileID: 1125461830, guid: 00e876ba5c740e6468be8886f0441883, type: 3}
   - m_RefCount: 61
     m_Data: {fileID: -381322466, guid: 00e876ba5c740e6468be8886f0441883, type: 3}
-  - m_RefCount: 16
+  - m_RefCount: 17
     m_Data: {fileID: 1246079567, guid: 00e876ba5c740e6468be8886f0441883, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -32076,8 +31994,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: -2132637649, guid: 0d879185c5709324181b957638bc1f9d, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: 200501199, guid: 0d879185c5709324181b957638bc1f9d, type: 3}
   - m_RefCount: 6

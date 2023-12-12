@@ -529,8 +529,9 @@ public class RunTurnState : State<BattleSystem>
                 if (nextPokemon != null)
                 {
                     // Send out next pokemon
-                    AboutToUseState.I.NewPokemon = nextPokemon;
-                    yield return _battleSystem.StateMachine.PushAndWait(AboutToUseState.I);
+                    //AboutToUseState.I.NewPokemon = nextPokemon;
+                    //yield return _battleSystem.StateMachine.PushAndWait(AboutToUseState.I);
+                    yield return _battleSystem.SendNextTrainerPokemon();
                 }
                 else
                 {

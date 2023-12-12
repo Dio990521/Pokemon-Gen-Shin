@@ -105,7 +105,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         yield return Fader.FadeIn(0.5f);
         NewGameInit();
         StateMachine.ChangeState(FreeRoamState.I);
-        PauseGame(false);
+        //PauseGame(false);
         playerController.transform.localPosition = new Vector3(-8.5f, -22.35f);
         TitleUI.SetActive(false);
         yield return new WaitForSeconds(0.5f);
@@ -284,6 +284,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     private void OnGUI()
     {
+        if (StateMachine == null) return;
         var style = new GUIStyle();
         style.fontSize = 25;
         GUILayout.Label("STATE STACK", style);

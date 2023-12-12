@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HiddenChest : Pickup
 {
-    [SerializeField] private string _eventKey;
+    [SerializeField] private List<Switch> _switches;
     [SerializeField] private int _total;
     [SerializeField] private int _cur = 0;
 
@@ -13,7 +13,10 @@ public class HiddenChest : Pickup
         base.Awake();
         _spriteRenderer.enabled = false;
         _boxCollider.enabled = false;
-        GameEventManager.Instance.AddEventListener(_eventKey, CheckClear);
+        foreach (Switch sw in _switches)
+        {
+            sw.OnPuzzleChange += CheckClear;
+        }
 
     }
 

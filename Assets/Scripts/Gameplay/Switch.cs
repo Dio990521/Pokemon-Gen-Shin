@@ -1,17 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Switch : MonoBehaviour, InteractableObject, ISavable
 {
-    [SerializeField] private string _eventKey;
-    private BoxCollider2D _boxCollider;
     public bool Used { get; set; } = false;
 
-    private void Awake()
-    {
-        _boxCollider = GetComponent<BoxCollider2D>();
-    }
+    public Action OnPuzzleChange;
 
     public object CaptureState()
     {
@@ -24,7 +20,7 @@ public class Switch : MonoBehaviour, InteractableObject, ISavable
         {
             Used = true;
             yield return DialogueManager.Instance.ShowDialogueText("你按下了开关！");
-            GameEventManager.Instance.CallEvent(_eventKey);
+            OnPuzzleChange?.Invoke();
         }
     }
 

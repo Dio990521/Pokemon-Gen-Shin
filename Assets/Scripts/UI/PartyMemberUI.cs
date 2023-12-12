@@ -20,6 +20,8 @@ public class PartyMemberUI : MonoBehaviour, ISelectableItem
 
     [SerializeField] private Text statusText;
     [SerializeField] private Image statusBg;
+    [SerializeField] private Text _elementStatusText;
+    [SerializeField] private Image _elementStatusBg;
 
     private Pokemon battlePokemon;
 
@@ -46,6 +48,16 @@ public class PartyMemberUI : MonoBehaviour, ISelectableItem
         {
             statusBg.gameObject.SetActive(false);
         }
+        if (battlePokemon.ElementStatus != null)
+        {
+            _elementStatusText.text = battlePokemon.ElementStatus.Name;
+            _elementStatusBg.color = ColorDB.StatusColors[battlePokemon.ElementStatus.Id];
+            _elementStatusBg.gameObject.SetActive(true);
+        }
+        else
+        {
+            _elementStatusBg.gameObject.SetActive(false);
+        }
 
         hpBar.SetHp((float)battlePokemon.Hp / battlePokemon.MaxHp, battlePokemon.MaxHp, battlePokemon.Hp);
     }
@@ -62,11 +74,15 @@ public class PartyMemberUI : MonoBehaviour, ISelectableItem
     public void SetSLot()
     {
         GetComponent<Image>().sprite = notSelectedSlotImage;
-        for (int i = 0; i < transform.childCount - 1; ++i)
+        for (int i = 0; i < transform.childCount - 2; ++i)
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
         if (battlePokemon.Status != null)
+        {
+            transform.GetChild(transform.childCount - 2).gameObject.SetActive(true);
+        }
+        if (battlePokemon.ElementStatus != null)
         {
             transform.GetChild(transform.childCount - 1).gameObject.SetActive(true);
         }

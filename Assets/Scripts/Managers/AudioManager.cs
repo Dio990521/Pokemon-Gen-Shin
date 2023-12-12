@@ -71,7 +71,8 @@ public enum SFX
     PSN,
     SLIDE_UP,
     SLIDE_DOWN,
-    SLIDE_FAIL
+    SLIDE_FAIL,
+    USE_RECOVERY
 }
 
 public enum BGM

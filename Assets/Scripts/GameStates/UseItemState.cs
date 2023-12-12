@@ -83,6 +83,10 @@ public class UseItemState : State<GameManager>
             if (usedItem != null)
             {
                 ItemUsed = true;
+                if (usedItem is RecoveryItem)
+                {
+                    AudioManager.Instance.PlaySE(SFX.USE_RECOVERY);
+                }
                 yield return DialogueManager.Instance.ShowDialogueText($"ฤใสนำรมห{usedItem.ItemName}ฃก");
 
             }

@@ -44,7 +44,7 @@ public class ElementReactionUtil
             case PassiveMoveType.Kuosan:
                 return "扩散";
             case PassiveMoveType.Jiejing:
-                return "超载";
+                return "结晶";
             case PassiveMoveType.Zhanfang:
                 return "绽放";
             case PassiveMoveType.Zhengfa:
