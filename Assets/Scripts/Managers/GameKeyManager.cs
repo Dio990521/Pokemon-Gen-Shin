@@ -22,6 +22,10 @@ public class GameKeyManager : Singleton<GameKeyManager>, ISavable, IManager
         {
             AddKey(cutsceneName.ToString(), false);
         }
+        foreach (var cutsceneName in System.Enum.GetValues(typeof(PuzzleName)))
+        {
+            AddKey(cutsceneName.ToString(), 0);
+        }
     }
 
     public void AddKey(string key, int value=0)

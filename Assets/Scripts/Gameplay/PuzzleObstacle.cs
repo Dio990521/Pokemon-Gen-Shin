@@ -4,54 +4,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public class PuzzleObstacle : MonoBehaviour, ISavable
+public class PuzzleObstacle : MonoBehaviour
 {
-    [SerializeField] private List<Switch> _switches;
+    [SerializeField] private List<GameObject> _switches;
     [SerializeField] private int _total;
-    private bool _isRemoved;
-    private int _cur = 0;
+    [SerializeField] private PuzzleName _puzzleName;
     private BoxCollider2D _boxCollider;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
 
 
     private void Awake()
     {
+        _animator = GetComponentInChildren<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        foreach (Switch sw in _switches)
+        if (GameKeyManager.Instance.GetIntValue(_puzzleName.ToString()) != _total)
         {
-            sw.OnPuzzleChange += CheckClear;
+            foreach (var gameObject in _switches)
+            {
+                if (gameObject.TryGetComponent(out Switch sw))
+                {
+                    sw.OnPuzzleChange += CheckClear;
+                }
+                else if (gameObject.TryGetComponent(out SandTowerSwitch sandTowerSwitch))
+                {
+                    sandTowerSwitch.OnPuzzleChange += CheckSandTowerClear;
+                }
+            }
+        }
+        else
+        {
+            _boxCollider.enabled = false;
+            _spriteRenderer.enabled = false;
         }
     }
 
     private void CheckClear()
     {
-        ++_cur;
-        if (_cur == _total)
+        var cur = GameKeyManager.Instance.GetIntValue(_puzzleName.ToString());
+        if (cur == _total-1)
         {
             StartCoroutine(DialogueManager.Instance.ShowDialogueText($"开启了所有的开关！\n周围的地形貌似发生了变化！"));
             _boxCollider.enabled = false;
             _spriteRenderer.enabled = false;
-            _isRemoved = true;
         }
         else
         {
+            GameKeyManager.Instance.SetIntValue(_puzzleName.ToString(), cur + 1);
             StartCoroutine(DialogueManager.Instance.ShowDialogueText($"这个区域好像还有别的开关。\n再去找找看吧！"));
         }
     }
 
-    public object CaptureState()
+    private void CheckSandTowerClear()
     {
-        return _isRemoved;
+        var cur = GameKeyManager.Instance.GetIntValue(_puzzleName.ToString());
+        if (cur == _total - 1)
+        {
+            StartCoroutine(DialogueManager.Instance.ShowDialogueText($"放置了所有的宝珠！\n砂之塔解锁了！"));
+            UnlockAnim();
+
+        }
+        else
+        {
+            GameKeyManager.Instance.SetIntValue(_puzzleName.ToString(), cur + 1);
+        }
     }
 
-    public void RestoreState(object state)
+    private void UnlockAnim()
     {
-        _isRemoved = (bool) state;
-        if (_isRemoved)
+        if (_animator != null)
         {
-            _boxCollider.enabled = false;
-            _spriteRenderer.enabled = false;
+            _animator.SetBool("unlock", true);
+            Destroy(gameObject, 1f);
         }
     }
 

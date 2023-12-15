@@ -33,11 +33,11 @@ public class RecoveryItem : ItemBase
 
             if (revive)
             {
-                pokemon.IncreaseHP(pokemon.MaxHp / 2);
+                pokemon.IncreaseHP(pokemon.MaxHp / 2, true);
             }
             else if (maxRevive)
             {
-                pokemon.IncreaseHP(pokemon.MaxHp);
+                pokemon.IncreaseHP(pokemon.MaxHp, true);
             }
 
             pokemon.CureStatus();

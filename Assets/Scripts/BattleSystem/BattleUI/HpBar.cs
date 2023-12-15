@@ -45,7 +45,7 @@ public class HpBar : MonoBehaviour
     {
         if (newHp <= 0)
         {
-            duration = 1f;
+            duration = 0.8f;
         }
         IsUpdating = true;
         _hpScale = transform.localScale.x;

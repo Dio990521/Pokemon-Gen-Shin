@@ -108,6 +108,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         //PauseGame(false);
         playerController.transform.localPosition = new Vector3(-8.5f, -22.35f);
         TitleUI.SetActive(false);
+        PlayerController.Character.Animator.SetFacingDirection(FacingDirection.Down);
         yield return new WaitForSeconds(0.5f);
         yield return Fader.FadeOut(0.5f);
     }

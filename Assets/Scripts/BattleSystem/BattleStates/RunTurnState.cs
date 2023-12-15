@@ -224,7 +224,7 @@ public class RunTurnState : State<BattleSystem>
             sourceUnit.PlayAttackAnimation();
         }
 
-        move.PP -= 1;
+        move.PP = Mathf.Clamp(move.PP - 1, 0, move.MoveBase.PP);
         yield return _dialogueBox.TypeDialogue($"{sourceUnit.pokemon.PokemonBase.PokemonName}使用了\n{move.MoveBase.MoveName}！");
 
         if (CheckIfMoveHits(move, sourceUnit.pokemon, targetUnit.pokemon))
@@ -245,6 +245,7 @@ public class RunTurnState : State<BattleSystem>
             {
                 if (move.MoveBase.Category == MoveCategory.Healing)
                 {
+                    AudioManager.Instance.PlaySE(SFX.HEAL_MOVE);
                     if (sourceUnit.IsPlayerUnit)
                     {
                         foreach (var pokemon in _playerParty.Pokemons)
@@ -261,7 +262,7 @@ public class RunTurnState : State<BattleSystem>
                             {
                                 pokemon.IncreaseHP(move.MoveBase.Power);
                             }
-                            yield return _dialogueBox.TypeDialogue($"对方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                            yield return _dialogueBox.TypeDialogue($"对方的宝可梦恢复了{move.MoveBase.Power}HP！");
                         }
                         else
                         {
@@ -528,9 +529,6 @@ public class RunTurnState : State<BattleSystem>
                 var nextPokemon = _trainerParty.GetHealthyPokemon();
                 if (nextPokemon != null)
                 {
-                    // Send out next pokemon
-                    //AboutToUseState.I.NewPokemon = nextPokemon;
-                    //yield return _battleSystem.StateMachine.PushAndWait(AboutToUseState.I);
                     yield return _battleSystem.SendNextTrainerPokemon();
                 }
                 else
@@ -566,9 +564,8 @@ public class RunTurnState : State<BattleSystem>
         else if (damageDetails.IsZhanfang)
         {
             AudioManager.Instance.PlaySE(SFX.ZHANFANG);
-            yield return _dialogueBox.TypeDialogue("绽放的元素反应发生了！");
-            yield return _dialogueBox.TypeDialogue($"从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
-            _playerUnit.pokemon.IncreaseHP((int)(damageDetails.Damage * 0.5f));
+            sourceUnit.IncreaseHP((int)(damageDetails.Damage * 0.5f));
+            yield return _dialogueBox.TypeDialogue($"绽放的元素反应发生了！\n从{targetUnit.PokemonBase.PokemonName}吸取了HP！");
             yield return new WaitForSeconds(0.5f);
         }
         else if (damageDetails.IsZhengfa)

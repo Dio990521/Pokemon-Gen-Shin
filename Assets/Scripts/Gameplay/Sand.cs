@@ -8,7 +8,7 @@ public class Sand : MonoBehaviour, IPlayerTriggerable
 {
     [SerializeField] private int _yOffset;
 
-    public bool TriggerRepeatedly => false;
+    public bool TriggerRepeatedly => true;
 
     public void OnPlayerTriggered(PlayerController player)
     {

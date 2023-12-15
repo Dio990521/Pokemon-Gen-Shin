@@ -330,6 +330,7 @@ public class ConditionsDB
         }
     }
 
+
     public static float GetStatusBonus(Condition condition)
     {
         if (condition == null)

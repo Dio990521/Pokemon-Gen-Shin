@@ -68,6 +68,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     public IEnumerator Interact(Transform initiator)
     {
+        _exclamationPos = exclamation.transform.position;
         GameManager.Instance.StateMachine.Push(CutsceneState.I);
         character.LookTowards(initiator.position);
         if (!IsBattleLost)

@@ -7,6 +7,7 @@ public class ItemSlotUI : MonoBehaviour, ISelectableItem
 {
     [SerializeField] private Text nameText;
     [SerializeField] private Text countText;
+    [SerializeField] private Image _typeImage;
     public Image _cursor;
 
     public RectTransform rectTransform;
@@ -25,8 +26,9 @@ public class ItemSlotUI : MonoBehaviour, ISelectableItem
         countText.text = $"x{itemSlot.Count}";
     }
 
-    public void SetPokeData(Pokemon pokemon)
+    public void SetPokeData(Pokemon pokemon, Sprite typeImage)
     {
+        _typeImage.sprite = typeImage;
         rectTransform = GetComponent<RectTransform>();
         nameText.text = pokemon.PokemonBase.PokemonName;
         countText.text = $"Lv.{pokemon.Level}";

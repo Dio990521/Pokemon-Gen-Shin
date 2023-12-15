@@ -40,7 +40,10 @@ public class PokemonParty : MonoBehaviour
 
     public bool AddPokemonToParty(Pokemon newPokemon)
     {
-        newPokemon.Exp = UnityEngine.Random.Range(0, newPokemon.GetNextLevelExpLeft() / 2);
+        newPokemon.Exp = newPokemon.PokemonBase.GetExpForLevel(newPokemon.Level - 1) +
+            UnityEngine.Random.Range(0, newPokemon.GetNextLevelExpLeft() / 2);
+        newPokemon.CureElementStatus();
+        newPokemon.CureStatus();
         if (pokemons.Count < 6)
         {
             AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);

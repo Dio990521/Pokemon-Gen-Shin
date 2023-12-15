@@ -142,6 +142,7 @@ public class Pokemon
         return saveData;
     }
 
+
     // Calculate the pokemon's status by based status
     private void CalculateStats()
     {
@@ -348,6 +349,8 @@ public class Pokemon
     // Apply boosted satus and show the dialogues
     public void ApplyBoosts(List<StatBoost> statBoosts, Action<int> OnBoostEffect)
     {
+        bool hasPlayBuff = false;
+        bool hasPlayDebuff = false;
         foreach (var statBoost in statBoosts)
         {
             var stat = statBoost.stat;
@@ -370,16 +373,25 @@ public class Pokemon
 
                 if (boost > 0)
                 {
-                    AudioManager.Instance.PlaySE(SFX.BOOST);
+                    if (!hasPlayBuff)
+                    {
+                        AudioManager.Instance.PlaySE(SFX.BOOST);
+                        OnBoostEffect?.Invoke(boost);
+                        hasPlayBuff = true;
+                    }
                     StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}上升了！");
                 }
                 else
                 {
-                    AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
+                    if (!hasPlayDebuff)
+                    {
+                        AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
+                        OnBoostEffect?.Invoke(boost);
+                        hasPlayDebuff = true;
+                    }
                     StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}下降了！");
                 }
 
-                OnBoostEffect?.Invoke(boost);
                 OnBuffChanged?.Invoke(stat, StatBoosts[stat]);
             }
 
@@ -603,8 +615,9 @@ public class Pokemon
         OnHpChanged?.Invoke();
     }
 
-    public void IncreaseHP(int amount)
+    public void IncreaseHP(int amount, bool revive=false)
     {
+        if (Hp == 0 && !revive) return;
         Hp = Mathf.Clamp(Hp + amount, 0, MaxHp);
         OnHpChanged?.Invoke();
     }
@@ -625,6 +638,8 @@ public class Pokemon
 
     public void SetElementStatus(ConditionID conditionId, bool putongMove=false)
     {
+        if (pokemonBase.IsSlime && ElementReactionUtil.ConditionIDToPokemonType(conditionId) == pokemonBase.Type1) return;
+        if (Status?.Id == ConditionID.jiejing) return;
         var prevElementStatus = ElementStatus;
         if (conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];

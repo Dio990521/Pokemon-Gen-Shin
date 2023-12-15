@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class SandTowerSwitch : MonoBehaviour, InteractableObject, ISavable
 {
     [SerializeField] private ItemBase _keyItem;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    public Action OnPuzzleChange;
+
     private bool _isActive;
 
     private void Awake()
@@ -24,7 +27,7 @@ public class SandTowerSwitch : MonoBehaviour, InteractableObject, ISavable
                 yield return DialogueManager.Instance.ShowDialogueText($"将{_keyItem.ItemName}放在了壁槽内。");
                 _isActive = true;
                 _spriteRenderer.sprite = _keyItem.Icon;
-                GameEventManager.Instance.CallEvent("SandTower");
+                OnPuzzleChange?.Invoke();
             }
             else
             {
@@ -45,7 +48,7 @@ public class SandTowerSwitch : MonoBehaviour, InteractableObject, ISavable
     public void RestoreState(object state)
     {
         _isActive = (bool)state;
-        if (_isActive )
+        if (_isActive)
         {
             _spriteRenderer.sprite = _keyItem.Icon;
         }

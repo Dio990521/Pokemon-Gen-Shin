@@ -78,3 +78,10 @@ public enum CutsceneName
     ¼¤»îdcz
 }
 
+public enum PuzzleName
+{
+    É³Ä®Òş²Ø±¦Ïä,
+    º£Ì²Â·ÕÏ,
+    É°Ö®ËşËø
+}
+

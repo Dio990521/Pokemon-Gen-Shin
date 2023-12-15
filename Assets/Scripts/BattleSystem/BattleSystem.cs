@@ -242,17 +242,16 @@ public class BattleSystem : MonoBehaviour
         
         if (_playerUnit.pokemon.Hp > 0)
         {
-            yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！");
-
+            yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！", 0.4f);
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             _playerUnit.PlayFaintAnimation();
-            yield return new WaitForSeconds(0.7f);
+            yield return new WaitForSeconds(0.3f);
         }
         _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
         yield return _playerUnit.ThrowBallAnimation(this, newPokemon);
         yield return _dialogueBox.TypeDialogue($"轮到你登场了！\n去吧，{newPokemon.PokemonBase.PokemonName}！", 0.7f);
         _playerUnit.ChangeUnit(newPokemon);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
     }
 
@@ -356,7 +355,7 @@ public class BattleSystem : MonoBehaviour
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
         AudioManager.Instance.PlaySE(SFX.BALL_FALLING);
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.3f);
         yield return pokeball.transform.DOMoveY(5f, 1f)
             .SetEase(Ease.OutBounce)
             .SetLoops(1, LoopType.Yoyo);
@@ -368,7 +367,7 @@ public class BattleSystem : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         }
-        yield return new WaitForSeconds(0.65f);
+        yield return new WaitForSeconds(0.7f);
         if (pokeballItem.BallType == PokeballType.Beast)
         {
             AudioManager.Instance.PlaySE(SFX.BEAST_HE);
@@ -377,7 +376,7 @@ public class BattleSystem : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         }
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.35f);
         if (pokeballItem.BallType == PokeballType.Beast)
         {
             AudioManager.Instance.PlaySE(SFX.BEAST_HE);
