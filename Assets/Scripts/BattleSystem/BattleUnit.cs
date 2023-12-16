@@ -43,6 +43,7 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] private Sprite _pokeballOpenSprite;
     [SerializeField] private Sprite _pokeballCloseSprite;
 
+    public PokeCountUI PokeCountUI;
 
     public Image groundSprite;
 
@@ -319,6 +320,7 @@ public class BattleUnit : MonoBehaviour
 
     public void PlayHitAnimation()
     {
+        StartCoroutine(hud.HudShakeAnim());
         var sequence = DOTween.Sequence();
         sequence.Append(_pokemonSprite.DOColor(Color.gray, 0.1f));
         sequence.Append(_pokemonSprite.DOColor(originalColor, 0.1f));

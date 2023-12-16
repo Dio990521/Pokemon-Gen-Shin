@@ -3,27 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lock : MonoBehaviour, InteractableObject, ISavable
+public class Lock : MonoBehaviour, InteractableObject
 {
     [SerializeField] private ItemBase _keyItem;
     [SerializeField] private int _total;
-    private int _cur;
     private Animator _animator;
-    private bool _unlock;
+
+    public PuzzleName PuzzleName;
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
-        _unlock = false;
-        _cur = 0;
-        GameEventManager.Instance.AddEventListener("SandTower", CheckUnlock);
     }
 
-    private void OnDestroy()
+    private void Start()
     {
-        GameEventManager.Instance.RemoveEvent("SandTower", CheckUnlock);
+        if (GameKeyManager.Instance.GetIntValue(PuzzleName.ToString()) == 1)
+        {
+            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
-
 
     public IEnumerator Interact(Transform initiator)
     {
@@ -32,6 +32,7 @@ public class Lock : MonoBehaviour, InteractableObject, ISavable
         {
             if (inventory.HasItem(_keyItem))
             {
+                GameKeyManager.Instance.SetIntValue(PuzzleName.ToString(), 1);
                 yield return DialogueManager.Instance.ShowDialogueText($"使用了{_keyItem.ItemName}解开了锁。");
                 UnlockAnim();
             }
@@ -53,33 +54,5 @@ public class Lock : MonoBehaviour, InteractableObject, ISavable
         _animator.SetBool("unlock", true);
         Destroy(gameObject, 1f);
     }
-
-    private void CheckUnlock()
-    {
-        if (_cur == _total-1)
-        {
-            UnlockAnim();
-        }
-        else
-        {
-            ++_cur;
-        }
-    }
-
-    public object CaptureState()
-    {
-        return _unlock;
-    }
-
-
-    public void RestoreState(object state)
-    {
-        _unlock = (bool)state;
-        if (_unlock)
-        {
-            Destroy(gameObject);
-        }
-    }
-
 
 }

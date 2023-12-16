@@ -82,6 +82,8 @@ public enum PuzzleName
 {
     沙漠隐藏宝箱,
     海滩路障,
-    砂之塔锁
+    砂之塔锁,
+    DCZ开锁,
+    秘境开锁
 }
 

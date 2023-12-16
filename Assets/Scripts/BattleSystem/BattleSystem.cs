@@ -140,7 +140,21 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.UnitEnterAnimation();
             yield return new WaitForSeconds(1.5f);
             yield return _dialogueBox.TypeDialogue($"{trainer.TrainerName}\n想要进行宝可梦对战！");
-            yield return new WaitForSeconds(0.5f);
+            _enemyUnit.PokeCountUI.Init(TrainerParty.Pokemons);
+            _playerUnit.PokeCountUI.Init(PlayerParty.Pokemons);
+            _enemyUnit.PokeCountUI.EnterAnim();
+            _playerUnit.PokeCountUI.EnterAnim();
+            yield return new WaitForSeconds(0.35f);
+            AudioManager.Instance.PlaySE(SFX.POKE_COUNT1);
+            yield return new WaitForSeconds(0.3f);
+            for (int i = 0; i < Mathf.Max(PlayerParty.Pokemons.Count, TrainerParty.Pokemons.Count); i++)
+            {
+                AudioManager.Instance.PlaySE(SFX.POKE_COUNT2);
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            yield return new WaitForSeconds(1f);
+            _enemyUnit.PokeCountUI.ExitAnim();
 
             // Send out first pokemon of the trainer
             var enemyPokemon = TrainerParty.GetHealthyPokemon();
@@ -170,6 +184,8 @@ public class BattleSystem : MonoBehaviour
         _partyScreen.Init();
         var playerPokemon = PlayerParty.GetHealthyPokemon();
         yield return _playerUnit.PlayerThrowBallAnimation(this, playerPokemon);
+        if (IsTrainerBattle)
+            _playerUnit.PokeCountUI.ExitAnim();
         yield return _dialogueBox.TypeDialogue($"就决定是你了，\n{playerPokemon.PokemonBase.PokemonName}！", 0.9f);
         _playerUnit.ChangeUnit(playerPokemon);
         yield return new WaitForSeconds(1f);
@@ -245,7 +261,7 @@ public class BattleSystem : MonoBehaviour
             yield return _dialogueBox.TypeDialogue($"做得好，{_playerUnit.pokemon.PokemonBase.PokemonName}！", 0.4f);
             AudioManager.Instance.PlaySE(SFX.BALL_OUT);
             _playerUnit.PlayFaintAnimation();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
         }
         _partyScreen.SwitchPokemonSlot(0, PartyState.I.Selection);
         yield return _playerUnit.ThrowBallAnimation(this, newPokemon);
@@ -257,6 +273,8 @@ public class BattleSystem : MonoBehaviour
 
     public IEnumerator SendNextTrainerPokemon()
     {
+        _enemyUnit.PokeCountUI.Reshow(TrainerParty.Pokemons);
+        yield return new WaitForSeconds(1f);
         var nextPokemon = TrainerParty.GetHealthyPokemon();
         _enemyUnit.PokemonSprite.enabled = false;
         _enemyUnit.SetNewTrainerPokemon(nextPokemon);
@@ -355,8 +373,8 @@ public class BattleSystem : MonoBehaviour
         yield return _enemyUnit.PlayCaptureAnimation(ballDest);
         pokeball.sprite = pokeballItem.InBattleIcon;
         AudioManager.Instance.PlaySE(SFX.BALL_FALLING);
-        yield return new WaitForSeconds(0.3f);
-        yield return pokeball.transform.DOMoveY(5f, 1f)
+        yield return new WaitForSeconds(0.4f);
+        yield return pokeball.transform.DOMoveY(ballDest.y - 4f, 1f)
             .SetEase(Ease.OutBounce)
             .SetLoops(1, LoopType.Yoyo);
         if (pokeballItem.BallType == PokeballType.Beast)
@@ -367,7 +385,7 @@ public class BattleSystem : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         }
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
         if (pokeballItem.BallType == PokeballType.Beast)
         {
             AudioManager.Instance.PlaySE(SFX.BEAST_HE);
@@ -376,7 +394,7 @@ public class BattleSystem : MonoBehaviour
         {
             AudioManager.Instance.PlaySE(SFX.BALL_BOUNCE);
         }
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.25f);
         if (pokeballItem.BallType == PokeballType.Beast)
         {
             AudioManager.Instance.PlaySE(SFX.BEAST_HE);

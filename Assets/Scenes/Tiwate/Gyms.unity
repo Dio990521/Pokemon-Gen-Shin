@@ -593,7 +593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: meetBGM
-      value: 51
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 9ab4a67eb563d7d46a051cd368b1410c, type: 3}
       propertyPath: startBGM
@@ -7657,7 +7657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 6b71099b0cc71bd49850024088aeeebe, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 6b71099b0cc71bd49850024088aeeebe, type: 3}
       propertyPath: startBGM
@@ -8535,7 +8535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: a2a5774051e53eb43a4198e9a6a0bca2, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: a2a5774051e53eb43a4198e9a6a0bca2, type: 3}
       propertyPath: startBGM
@@ -9125,7 +9125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 77905a66d5938a245bc7ea8153619b3e, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: 77905a66d5938a245bc7ea8153619b3e, type: 3}
       propertyPath: startBGM
@@ -9897,7 +9897,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757312].dialogue.lines.Array.data[3]
-      value: "\u6211\u611F\u89C9\u4F60\u53EF\u80FD\u4F1A\u8DDF\u4ED6\u64E6\u80A9\u800C\u8FC7\uFF0C\u56E0\u4E3A\u4E0A\u4E00\u628A\u5C31\u662F\u6211\u8DDF\u4ED6\u6253\u7684\u3002"
+      value: "\u4F60\u53EF\u80FD\u4F1A\u8DDF\u4ED6\u64E6\u80A9\u800C\u8FC7\uFF0C\u56E0\u4E3A\u4E0A\u4E00\u628A\u5C31\u662F\u6211\u8DDF\u4ED6\u6253\u7684\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289625167757312].dialogue.lines.Array.data[4]
@@ -16562,7 +16562,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: daa7c3805fb74ac4281af17d9dacd32c, type: 3}
       propertyPath: startBGM
@@ -23550,7 +23550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: f6415315856ad4043a639467861b81aa, type: 3}
       propertyPath: meetBGM
-      value: 46
+      value: 56
       objectReference: {fileID: 0}
     - target: {fileID: 8376773257158139045, guid: f6415315856ad4043a639467861b81aa, type: 3}
       propertyPath: startBGM

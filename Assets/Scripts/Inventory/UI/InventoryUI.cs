@@ -41,6 +41,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
     private MoveBase moveToLearn;
 
     private Vector3 _bagOriginPos;
+    private Quaternion _bagOriginRotation;
 
     public ItemBase SelectedItem => inventory.GetItem(selectedItem, selectedCategory);
 
@@ -57,6 +58,7 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         inventory = Inventory.GetInventory();
         itemListRect = itemList.GetComponent<RectTransform>();
         _bagOriginPos = bagIcon.transform.localPosition;
+        _bagOriginRotation = bagIcon.transform.rotation;
         _leftArrowPos = _leftArrow.transform.position;
         _rightArrowPos = _rightArrow.transform.position;
     }
@@ -188,9 +190,16 @@ public class InventoryUI : SelectionUI<ItemSlotUI>
         if (slots.Count > 0)
         {
             AudioManager.Instance.PlaySE(SFX.CURSOR);
-            bagIcon.transform.localPosition = _bagOriginPos;
-            bagIcon.transform.DOShakePosition(0.5f, 3f);
+            StartCoroutine(StartBagShakeAnim());
         }
+    }
+
+    private IEnumerator StartBagShakeAnim()
+    {
+        bagIcon.transform.localPosition = _bagOriginPos;
+        bagIcon.transform.localRotation = _bagOriginRotation;
+        yield return bagIcon.transform.DOShakeRotation(0.5f, 5f, 10, 90f, randomnessMode: ShakeRandomnessMode.Harmonic).WaitForCompletion();
+        bagIcon.transform.localRotation = _bagOriginRotation;
     }
 
     private void UpdateUI()

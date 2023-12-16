@@ -73,7 +73,9 @@ public enum SFX
     SLIDE_DOWN,
     SLIDE_FAIL,
     USE_RECOVERY,
-    HEAL_MOVE
+    HEAL_MOVE,
+    POKE_COUNT1,
+    POKE_COUNT2,
 }
 
 public enum BGM

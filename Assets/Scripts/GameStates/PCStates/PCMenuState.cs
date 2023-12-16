@@ -84,7 +84,7 @@ public class PCMenuState : State<GameManager>
             ShopBuyingState.I.AvailableItems = availableItems;
             if (GameKeyManager.Instance.GetBoolValue(CutsceneName.获得冰系道馆徽章.ToString()))
             {
-                ShopMenuState.I.AvailableItems.AddRange(extraItems);
+                ShopBuyingState.I.AvailableItems.AddRange(extraItems);
             }
             yield return GameManager.Instance.StateMachine.PushAndWait(ShopBuyingState.I);
             yield return StartMenuState();

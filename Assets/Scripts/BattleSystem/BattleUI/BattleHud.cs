@@ -148,6 +148,11 @@ public class BattleHud : MonoBehaviour
         AudioManager.Instance.StopSE();
     }
 
+    public IEnumerator HudShakeAnim()
+    {
+        yield return transform.DOShakePosition(1f, 3f);
+    }
+
     public void UpdateHP()
     {
         StartCoroutine(UpdateHpAsync(1.5f));

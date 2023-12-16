@@ -68,6 +68,7 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable, IMana
 
     public bool HasComplete(Achievement key, string name)
     {
+        if (!_data.ContainsKey(key)) return false;
         return _data[key].Contains(name);
     }
 
@@ -90,6 +91,7 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable, IMana
     {
         return _data;
     }
+
 
     public void RestoreState(object state)
     {

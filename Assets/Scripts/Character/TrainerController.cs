@@ -75,7 +75,10 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         {
             if (meetBGM != BGM.NONE)
                 AudioManager.Instance.PlayMusicVolume(MeetBGM);
-            yield return EnableExclamation();
+            if (!IsGymLeader)
+            {
+                yield return EnableExclamation();
+            }
             yield return DialogueManager.Instance.ShowDialogue(dialogue);
             GameManager.Instance.StateMachine.Pop();
             GameManager.Instance.StartTrainerBattle(this);
