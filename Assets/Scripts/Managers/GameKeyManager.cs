@@ -111,6 +111,16 @@ public class GameKeyManager : Singleton<GameKeyManager>, ISavable, IManager
         _gameKeyBoolDict?.Clear();
         _gameKeyIntDict?.Clear();
     }
+
+    public bool HasCutsceneKey(string key)
+    {
+        return _gameKeyBoolDict.ContainsKey(key);
+    }
+
+    public bool HasPuzzleKey(string key)
+    {
+        return _gameKeyIntDict.ContainsKey(key);
+    }
 }
 
 [System.Serializable]

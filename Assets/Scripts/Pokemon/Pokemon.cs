@@ -347,7 +347,7 @@ public class Pokemon
     }
 
     // Apply boosted satus and show the dialogues
-    public void ApplyBoosts(List<StatBoost> statBoosts, Action<int> OnBoostEffect)
+    public void ApplyBoosts(List<StatBoost> statBoosts, Action<int, bool> OnBoostEffect)
     {
         bool hasPlayBuff = false;
         bool hasPlayDebuff = false;
@@ -376,7 +376,7 @@ public class Pokemon
                     if (!hasPlayBuff)
                     {
                         AudioManager.Instance.PlaySE(SFX.BOOST);
-                        OnBoostEffect?.Invoke(boost);
+                        OnBoostEffect?.Invoke(boost, false);
                         hasPlayBuff = true;
                     }
                     StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}上升了！");
@@ -386,7 +386,7 @@ public class Pokemon
                     if (!hasPlayDebuff)
                     {
                         AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
-                        OnBoostEffect?.Invoke(boost);
+                        OnBoostEffect?.Invoke(boost, hasPlayBuff);
                         hasPlayDebuff = true;
                     }
                     StatusChanges.Enqueue($"{pokemonBase.PokemonName}的{stat}下降了！");

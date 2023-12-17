@@ -24,6 +24,9 @@ public class GameManager : Singleton<GameManager>, ISavable
     [SerializeField] private TransitionManager _worldTransitionManager;
     [SerializeField] private TransitionManager _battleTransitionManager;
     [SerializeField] private Storage _storage;
+
+    [SerializeField] private GameMaster gameMaster;
+
     public GameObject TitleUI;
     public GameObject EndingUI;
 
@@ -44,6 +47,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     public PartyScreen PartyScreen { get => partyScreen; set => partyScreen = value; }
     public Storage Storage { get => _storage; set => _storage = value; }
     public BattleSystem BattleSystem { get => battleSystem; set => battleSystem = value; }
+    internal GameMaster GameMaster { get => gameMaster; set => gameMaster = value; }
 
     private float _gameTimeSpend;
     public string GamePlayTime;
@@ -298,5 +302,99 @@ public class GameManager : Singleton<GameManager>, ISavable
     public Sprite GetPokeSprite(PokeballType type)
     {
         return PokeballSprites[(int)type];
+    }
+
+    public void LevelAllOne()
+    {
+        foreach (var pokemon in PartyScreen.Pokemons)
+        {
+            if (pokemon.Level < 100)
+                pokemon.Level += 1;
+        }
+    }
+
+    public void LevelAllFive()
+    {
+        foreach (var pokemon in PartyScreen.Pokemons)
+        {
+            pokemon.Level = Mathf.Clamp(pokemon.Level + 5, 0, 100);
+        }
+    }
+
+    public void AddMoney()
+    {
+        Wallet.I.AddMoney(100000);
+    }
+
+    public void AddYuanshi()
+    {
+        Wallet.I.AddMoney(10000);
+    }
+
+    public void MoveDown()
+    {
+        var curPos = PlayerController.transform.position;
+        var destPos = curPos + Vector3.down;
+        PlayerController.transform.position = destPos;
+    }
+
+    public void MoveUp()
+    {
+        var curPos = PlayerController.transform.position;
+        var destPos = curPos + Vector3.up;
+        PlayerController.transform.position = destPos;
+    }
+
+    public void MoveLeft()
+    {
+        var curPos = PlayerController.transform.position;
+        var destPos = curPos + Vector3.left;
+        PlayerController.transform.position = destPos;
+    }
+
+    public void MoveRight()
+    {
+        var curPos = PlayerController.transform.position;
+        var destPos = curPos + Vector3.right;
+        PlayerController.transform.position = destPos;
+    }
+
+    public void ActivateKey()
+    {
+        string keyName = gameMaster.GetInput();
+        if (GameKeyManager.Instance.HasCutsceneKey(keyName))
+        {
+            GameKeyManager.Instance.SetBoolValue(keyName, true);
+        }
+        if (GameKeyManager.Instance.HasPuzzleKey(keyName))
+        {
+            GameKeyManager.Instance.SetIntValue(keyName, GameKeyManager.Instance.GetIntValue(keyName) + 1);
+        }
+    }
+
+    public void DeactivateKey()
+    {
+        string keyName = gameMaster.GetInput();
+        if (GameKeyManager.Instance.HasCutsceneKey(keyName))
+        {
+            GameKeyManager.Instance.SetBoolValue(keyName, false);
+        }
+        if (GameKeyManager.Instance.HasPuzzleKey(keyName))
+        {
+            GameKeyManager.Instance.SetIntValue(keyName, GameKeyManager.Instance.GetIntValue(keyName) - 1);
+        }
+    }
+
+    public void CheckKey()
+    {
+        foreach (var cutsceneName in System.Enum.GetValues(typeof(CutsceneName)))
+        {
+            GameMaster.KeyContent.text += (cutsceneName.ToString() + ": " + GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()) + "\n");
+        }
+
+        foreach (var cutsceneName in System.Enum.GetValues(typeof(PuzzleName)))
+        {
+            GameMaster.KeyContent.text += (cutsceneName.ToString() + ": " + GameKeyManager.Instance.GetIntValue(cutsceneName.ToString()) + "\n");
+        }
     }
 }

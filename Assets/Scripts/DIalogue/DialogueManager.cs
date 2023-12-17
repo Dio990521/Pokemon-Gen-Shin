@@ -81,6 +81,38 @@ public class DialogueManager : Singleton<DialogueManager>
 
     }
 
+    public IEnumerator ShowDialogue(Dialogue dialogue, SFX se, int playAt)
+    {
+        yield return new WaitForEndOfFrame();
+        OnShowDialogue?.Invoke();
+        IsShowing = true;
+
+        dialogueBox.SetActive(true);
+        if (dialogue.SpeakerName.Length > 0)
+        {
+            nameText.text = dialogue.SpeakerName;
+            nameBox.SetActive(true);
+        }
+
+        for (int i = 0; i < dialogue.Lines.Count; i++)
+        {
+            if (i == playAt)
+            {
+                AudioManager.Instance.PlaySE(se, true);
+            }
+            yield return TypeDialogue(dialogue.Lines[i]);
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Z));
+            AudioManager.Instance.PlaySE(SFX.CONFIRM);
+        }
+
+        dialogueBox.SetActive(false);
+        nameBox.SetActive(false);
+        IsShowing = false;
+        OnDialogueFinished?.Invoke();
+
+
+    }
+
     // Show dialogue texts by one character after one character
     public IEnumerator TypeDialogue(string line)
     {

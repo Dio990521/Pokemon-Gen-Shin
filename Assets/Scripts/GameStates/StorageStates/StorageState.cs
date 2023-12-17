@@ -26,6 +26,7 @@ public class StorageState : State<GameManager>
         StorageUI.gameObject.SetActive(true);
         _storagePartyListUI.Init();
         _storagePartyListUI.HideSelection();
+        _storageListUI.Init();
         _storageListUI.HideSelection();
         PushPokeState.I.RightArrow.color = Color.grey;
         PopPokeState.I.LeftArrow.color = Color.grey;

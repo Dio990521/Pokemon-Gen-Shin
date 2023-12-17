@@ -12,20 +12,18 @@ public class ConditionsDB
                 {
                     Name = "水",
                     StartMessage = "附着了水元素！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.ElementStatusTime = 2;
                     },
-                    OnBeforeMove = (Pokemon pokemon) =>
+                    OnAfterTurn = (Pokemon pokemon) =>
                     {
                         if (pokemon.ElementStatusTime <= 0)
                         {
                             pokemon.CureElementStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}附着的水元素消失了！");
-                            return true;
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n附着的水元素消失了！");
                         }
                         pokemon.ElementStatusTime--;
-                        return true;
                     },
                 }
 
@@ -35,20 +33,18 @@ public class ConditionsDB
                 {
                     Name = "火",
                     StartMessage = "附着了火元素！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.ElementStatusTime = 2;
                     },
-                    OnBeforeMove = (Pokemon pokemon) =>
+                    OnAfterTurn = (Pokemon pokemon) =>
                     {
                         if (pokemon.ElementStatusTime <= 0)
                         {
                             pokemon.CureElementStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}附着的火元素消失了！");
-                            return true;
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n附着的火元素消失了！");
                         }
                         pokemon.ElementStatusTime--;
-                        return true;
                     },
                 }
 
@@ -58,20 +54,18 @@ public class ConditionsDB
                 {
                     Name = "冰",
                     StartMessage = "附着了冰元素！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.ElementStatusTime = 2;
                     },
-                    OnBeforeMove = (Pokemon pokemon) =>
+                    OnAfterTurn = (Pokemon pokemon) =>
                     {
                         if (pokemon.ElementStatusTime <= 0)
                         {
                             pokemon.CureElementStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}附着的冰元素消失了！");
-                            return true;
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n附着的冰元素消失了！");
                         }
                         pokemon.ElementStatusTime--;
-                        return true;
                     },
                 }
 
@@ -81,20 +75,18 @@ public class ConditionsDB
                 {
                     Name = "草",
                     StartMessage = "附着了草元素！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.ElementStatusTime = 2;
                     },
-                    OnBeforeMove = (Pokemon pokemon) =>
+                    OnAfterTurn = (Pokemon pokemon) =>
                     {
                         if (pokemon.ElementStatusTime <= 0)
                         {
                             pokemon.CureElementStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}附着的草元素消失了！");
-                            return true;
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n附着的草元素消失了！");
                         }
                         pokemon.ElementStatusTime--;
-                        return true;
                     },
                 }
 
@@ -104,20 +96,18 @@ public class ConditionsDB
                 {
                     Name = "雷",
                     StartMessage = "附着了雷元素！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.ElementStatusTime = 2;
                     },
-                    OnBeforeMove = (Pokemon pokemon) =>
+                    OnAfterTurn = (Pokemon pokemon) =>
                     {
                         if (pokemon.ElementStatusTime <= 0)
                         {
                             pokemon.CureElementStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}附着的雷元素消失了！");
-                            return true;
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n附着的雷元素消失了！");
                         }
                         pokemon.ElementStatusTime--;
-                        return true;
                     },
                 }
 
@@ -127,7 +117,7 @@ public class ConditionsDB
                 {
                     Name = "结晶",
                     StartMessage = "结晶化！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 2;
                     },
@@ -136,7 +126,7 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}结晶化解除了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n结晶化解除了！");
                             return true;
                         }
                         pokemon.StatusTime--;
@@ -145,7 +135,7 @@ public class ConditionsDB
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
                         AudioManager.Instance.PlaySE(SFX.JIEJING);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正在免疫一切元素附着！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n正在免疫一切元素附着！");
                     }
                 }
 
@@ -155,7 +145,7 @@ public class ConditionsDB
                 {
                     Name = "超载",
                     StartMessage = "超载了！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 4;
                     },
@@ -164,7 +154,7 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}的超载效果消失了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n的超载效果消失了！");
                             return true;
                         }
                         pokemon.StatusTime--;
@@ -174,7 +164,7 @@ public class ConditionsDB
                     {
                         pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.05f));
                         AudioManager.Instance.PlaySE(SFX.PSN);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正遭受超载的折磨！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n正遭受超载的折磨！");
                     }
                 }
 
@@ -184,7 +174,7 @@ public class ConditionsDB
                 {
                     Name = "燃烧",
                     StartMessage = "烧起来了！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 2;
                     },
@@ -193,7 +183,7 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不烧了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n不烧了！");
                             return true;
                         }
                         pokemon.StatusTime--;
@@ -203,7 +193,7 @@ public class ConditionsDB
                     {
                         pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.07f));
                         AudioManager.Instance.PlaySE(SFX.BRN);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}正在燃烧！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n正在燃烧！");
                     }
                 }
             },
@@ -212,7 +202,7 @@ public class ConditionsDB
                 {
                     Name = "麻痹",
                     StartMessage = "麻了个痹了！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 2;
                     },
@@ -221,7 +211,7 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不麻了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n不麻了！");
                             return true;
                         }
 
@@ -229,7 +219,7 @@ public class ConditionsDB
                         if (Random.Range(0f, 5f) <= 2.5f)
                         {
                             AudioManager.Instance.PlaySE(SFX.PAR);
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}麻到动不了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n麻到动不了！");
                             return false;
                         }
                         return true;
@@ -241,7 +231,7 @@ public class ConditionsDB
                 {
                     Name = "冻结",
                     StartMessage = "冻住了！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 1;
                     },
@@ -250,12 +240,12 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}解冻了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n解冻了！");
                             return true;
                         }
                         pokemon.StatusTime--;
                         AudioManager.Instance.PlaySE(SFX.FRZ);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}一冻不动！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n一冻不动！");
                         return false;
                     }
                 }
@@ -265,7 +255,7 @@ public class ConditionsDB
                 {
                     Name = "睡眠",
                     StartMessage = "昏昏欲睡！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = 2;
                     },
@@ -274,13 +264,13 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}醒了！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n醒了！");
                             return true;
                         }
                         pokemon.StatusTime--;
                         AudioManager.Instance.PlaySE(SFX.SLP);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}睡的很香！");
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}的HP恢复了一点！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n睡的很香！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n的HP恢复了一点！");
                         pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.1f));
                         return false;
                     }
@@ -291,7 +281,7 @@ public class ConditionsDB
                 {
                     Name = "混乱",
                     StartMessage = "混乱了！",
-                    OnStart= (Pokemon pokemon) =>
+                    OnStart = (Pokemon pokemon) =>
                     {
                         pokemon.StatusTime = Random.Range(1, 5);
                     },
@@ -300,7 +290,7 @@ public class ConditionsDB
                         if (pokemon.StatusTime <= 0)
                         {
                             pokemon.CureStatus();
-                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}从混乱中找回自我！");
+                            pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n从混乱中找回自我！");
                             return true;
                         }
                         pokemon.StatusTime--;
@@ -310,8 +300,8 @@ public class ConditionsDB
                             return true;
                         }
                         AudioManager.Instance.PlaySE(SFX.CFS);
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}不知所措！");
-                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}给了自己一拳！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n不知所措！");
+                        pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n给了自己一拳！");
                         pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.05f));
                         return false;
                     }

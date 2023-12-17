@@ -181,7 +181,14 @@ public class InventoryState : State<GameManager>
                     {
                         AudioManager.Instance.PlaySE(SFX.FIND_STRONGPOINT);
                         strongPoints = strongPoints.Substring(0, strongPoints.Length - 1);
-                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{strongPoints}的抗性较高！");
+                        if (strongPoints.Length > 15)
+                        {
+                            yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}竟然对所有元素反应的抗性都很高！");
+                        }
+                        else
+                        {
+                            yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{strongPoints}的抗性较高！");
+                        }
                     }
                     RunTurnState.I.SkipEnemyTurn = true;
                     _gameManager.StateMachine.Pop();

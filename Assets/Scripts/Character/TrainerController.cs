@@ -75,7 +75,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
         {
             if (meetBGM != BGM.NONE)
                 AudioManager.Instance.PlayMusicVolume(MeetBGM);
-            if (!IsGymLeader)
+            if (!IsGymLeader || !IsBoss)
             {
                 yield return EnableExclamation();
             }

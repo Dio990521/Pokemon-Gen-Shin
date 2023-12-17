@@ -430,13 +430,45 @@ public class RunTurnState : State<BattleSystem>
             float trainerBonus = (_isTrainerBattle) ? 1.5f : 1f;
 
             int expGain = Mathf.FloorToInt((expYield * enemyLevel * trainerBonus) / Random.Range(5.9f, 6.05f));
+
+            int modifier = 1;
+            if (GameManager.Instance.CurrentScene.SceneMusic == BGM.ABANDONED_SHIP)
+            {
+                modifier = 2;
+            }
+            else if (GameManager.Instance.CurrentScene.SceneMusic == BGM.CAVE)
+            {
+                modifier = 3;
+            }
+            else if (GameManager.Instance.CurrentScene.SceneMusic == BGM.SAND_TOWER)
+            {
+                modifier = 5;
+            }
+            expGain *= modifier;
             foreach (var pokemon in _playerParty.Pokemons)
             {
-                if (pokemon.Level < 100)
+
+                if (pokemon.Level < 100 && pokemon.Hp > 0)
                     pokemon.Exp += expGain;
             }
+            if (modifier == 1)
+            {
+                yield return _dialogueBox.TypeDialogue($"队伍中的所有宝可梦\n各自获得了{expGain}点经验值！");
+            }
+            else if (modifier == 2)
+            {
+                yield return _dialogueBox.TypeDialogue($"受到此区域的二倍增幅，队内宝可梦\n各自获得了{expGain}点经验值！");
+            }
+            else if (modifier == 3)
+            {
+                yield return _dialogueBox.TypeDialogue($"受到此区域的三倍增幅，队内宝可梦\n各自获得了{expGain}点经验值！");
+            }
+            else if (modifier == 5)
+            {
+                yield return _dialogueBox.TypeDialogue($"受到此区域的五倍增幅，队内宝可梦\n各自获得了{expGain}点经验值！");
+            }
 
-            yield return _dialogueBox.TypeDialogue($"队伍中的所有宝可梦\n各自获得了{expGain}点经验值！");
+
             yield return _playerUnit.Hud.SetExpSmooth();
 
             // Check level up

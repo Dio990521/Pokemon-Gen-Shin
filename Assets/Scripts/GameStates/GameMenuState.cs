@@ -67,6 +67,7 @@ public class GameMenuState : State<GameManager>
         else if (selection == 5)
         {
             // Setting Screen
+            _gameManager.GameMaster.gameObject.SetActive(true);
         }
         else if (selection == 6)
         {

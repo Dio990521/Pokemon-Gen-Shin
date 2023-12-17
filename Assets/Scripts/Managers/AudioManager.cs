@@ -76,6 +76,7 @@ public enum SFX
     HEAL_MOVE,
     POKE_COUNT1,
     POKE_COUNT2,
+    BADGE_CLEAR
 }
 
 public enum BGM

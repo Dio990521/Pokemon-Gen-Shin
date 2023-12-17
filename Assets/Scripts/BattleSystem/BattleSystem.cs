@@ -318,7 +318,8 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
-        if (pokeballItem.BallType != PokeballType.EX_Genshin && pokeballItem.BallType != PokeballType.Genshin
+        if (pokeballItem.BallType != PokeballType.Master && 
+            pokeballItem.BallType != PokeballType.EX_Genshin && pokeballItem.BallType != PokeballType.Genshin
             && _enemyUnit.pokemon.PokemonBase.IsHuman)
         {
             RunTurnState.I.EnemyContinue = false;

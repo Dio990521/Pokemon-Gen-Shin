@@ -15,7 +15,7 @@ public class BattleUnit : MonoBehaviour
     [SerializeField] private Sprite defaultPlayerSprite;
     [SerializeField] private Image moveEffectSprite;
     public Image BoostEffect;
-    public Action<int> OnBoostEffect;
+    public Action<int, bool> OnBoostEffect;
     [SerializeField] private Sprite _boostSprite;
     [SerializeField] private Sprite _boostDownSprite;
 
@@ -82,7 +82,7 @@ public class BattleUnit : MonoBehaviour
         hud.SetData(selectedPokemon, isPlayerUnit);
     }
 
-    public void PlayBoostAnim(int boost)
+    public void PlayBoostAnim(int boost, bool wait)
     {
         BoostEffect.gameObject.SetActive(true);
         BoostEffect.rectTransform.localPosition = new Vector2(0f, 0f);
@@ -105,6 +105,10 @@ public class BattleUnit : MonoBehaviour
         }
         else if (boost < 0)
         {
+            if (wait)
+            {
+                sequence.AppendInterval(0.5f);
+            }
             BoostEffect.sprite = _boostDownSprite;
             sequence.Append(BoostEffect.DOFade(0f, 0.001f));
             sequence.Append(BoostEffect.transform.DOLocalMoveY(-500f, 2f));

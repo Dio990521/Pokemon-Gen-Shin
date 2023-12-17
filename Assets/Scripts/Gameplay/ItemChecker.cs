@@ -42,7 +42,14 @@ public class ItemChecker : MonoBehaviour, ISavable
                 }
             }
             GameKeyManager.Instance.SetBoolValue(cutsceneName.ToString(), true);
-            yield return DialogueManager.Instance.ShowDialogue(successDialogue);
+            if (cutsceneName == CutsceneName.Âú×ãµÀ¹Ý»ÕÕÂÒªÇó)
+            {
+                yield return DialogueManager.Instance.ShowDialogue(successDialogue, SFX.BADGE_CLEAR, 3);
+            }
+            else
+            {
+                yield return DialogueManager.Instance.ShowDialogue(successDialogue);
+            }
         }
         else if (!Used && count != items.Count)
         {
