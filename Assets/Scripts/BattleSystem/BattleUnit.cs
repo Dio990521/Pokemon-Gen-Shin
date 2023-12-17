@@ -105,10 +105,10 @@ public class BattleUnit : MonoBehaviour
         }
         else if (boost < 0)
         {
-            if (wait)
-            {
-                sequence.AppendInterval(0.5f);
-            }
+            //if (wait)
+            //{
+            //    sequence.AppendInterval(0.5f);
+            //}
             BoostEffect.sprite = _boostDownSprite;
             sequence.Append(BoostEffect.DOFade(0f, 0.001f));
             sequence.Append(BoostEffect.transform.DOLocalMoveY(-500f, 2f));

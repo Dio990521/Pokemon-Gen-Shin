@@ -4,6 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ExBGM
+{
+    KIMIGAIREBA,
+    JIANJINUTAO
+}
+
 public enum SFX
 {
     CONFIRM,
@@ -148,6 +154,7 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] sfxClips;
+    [SerializeField] private AudioClip[] exBGMClips;
     [SerializeField] private AudioClip[] tiwateClips;
 
     [SerializeField] private float fadeDuration = 0.75f;

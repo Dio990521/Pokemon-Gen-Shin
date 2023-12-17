@@ -8,7 +8,7 @@ public class AbandonedShip : MonoBehaviour, IPlayerTriggerable
 
     public void OnPlayerTriggered(PlayerController player)
     {
-        if (Random.Range(1, 101) <= 5)
+        if (!player.AvoidWildPokemon && Random.Range(1, 101) <= 5)
         {
             player.Character.Animator.IsMoving = false;
             GameManager.Instance.StartBattle(BattleTrigger.Ship);

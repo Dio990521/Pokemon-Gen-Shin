@@ -21,7 +21,7 @@ public class GameClearChoice : MonoBehaviour, InteractableObject
 
         if (selectedChoice == 0)
         {
-            GameManager.Instance.GoToEnding();
+            GameManager.Instance.PlayEnding();
         }
 
     }

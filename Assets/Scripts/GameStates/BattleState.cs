@@ -44,6 +44,7 @@ public class BattleState : State<GameManager>
 
     public override void Exit(bool sfx = true)
     {
+        Debug.Log(GameManager.Instance.StateMachine.StateStack.Peek().ToString());
         StartCoroutine(DisableBattleCanvas());
         BattleSystem.OnBattleOver -= EndBattle;
         BossPokemon = null;
@@ -109,11 +110,11 @@ public class BattleState : State<GameManager>
         {
             Trainer.BattleLost();
             Trainer = null;
-            if (ActivateCutsceneAfterBattle != CutsceneName.None)
-            {
-                GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
-                ActivateCutsceneAfterBattle = CutsceneName.None;
-            }
+        }
+        if (won && ActivateCutsceneAfterBattle != CutsceneName.None)
+        {
+            GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);
+            ActivateCutsceneAfterBattle = CutsceneName.None;
         }
         _gameManager.StateMachine.Pop();
     }

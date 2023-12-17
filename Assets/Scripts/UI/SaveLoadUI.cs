@@ -124,6 +124,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("saveFile").Append(selectedItem);
             yield return Fader.FadeIn(1f);
+            VideoManager.Instance.Stop();
             GameManager.Instance.StateMachine.Pop();
             GameManager.Instance.StateMachine.Pop();
             yield return GameManager.Instance.LoadGame(stringBuilder.ToString());

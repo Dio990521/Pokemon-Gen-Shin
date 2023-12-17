@@ -5,6 +5,7 @@ using UnityEngine;
 using Game.Tool.Singleton;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine.Video;
 
 public class GameManager : Singleton<GameManager>, ISavable
 {
@@ -106,15 +107,15 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public IEnumerator NewGameTransition()
     {
-        yield return Fader.FadeIn(0.5f);
+        yield return AudioManager.Instance.StopMusic(true);
+        yield return Fader.FadeIn(2f);
         NewGameInit();
-        StateMachine.ChangeState(FreeRoamState.I);
-        //PauseGame(false);
-        playerController.transform.localPosition = new Vector3(-8.5f, -22.35f);
-        TitleUI.SetActive(false);
-        PlayerController.Character.Animator.SetFacingDirection(FacingDirection.Down);
-        yield return new WaitForSeconds(0.5f);
-        yield return Fader.FadeOut(0.5f);
+        yield return VideoManager.Instance.PlayOpenning();
+    }
+
+    public void PlayEnding()
+    {
+        StartCoroutine(VideoManager.Instance.PlayEnding());
     }
 
     public void GoToEnding()
@@ -124,8 +125,6 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public IEnumerator GoToEndingTransition()
     {
-        PauseGame(true);
-        yield return Fader.FadeIn(0.5f);
         playerController.transform.localPosition = new Vector3(-207.5f, 97.3f);
         EndingUI.SetActive(false);
         yield return new WaitForSeconds(0.5f);
@@ -199,6 +198,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         BattleState.I.IsSuperBoss = isSuperBoss;
         BattleState.I.Trigger = trigger;
         BattleState.I.BossPokemon = selectedPokemon;
+        BattleState.I.BossType = bossType;
         selectedPokemon.PokeballSpriteType = PokeballType.Guaishou;
         BattleState.I.BossPokemon.Init();
         if (activateCutsceneAfterBattle != CutsceneName.None)

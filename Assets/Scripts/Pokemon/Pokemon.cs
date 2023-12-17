@@ -386,7 +386,7 @@ public class Pokemon
                     if (!hasPlayDebuff)
                     {
                         AudioManager.Instance.PlaySE(SFX.BOOST_DOWN);
-                        OnBoostEffect?.Invoke(boost, hasPlayBuff);
+                        OnBoostEffect?.Invoke(boost, true);
                         hasPlayDebuff = true;
                     }
                     StatusChanges.Enqueue($"{pokemonBase.PokemonName}µÄ{stat}ÏÂ½µÁË£¡");

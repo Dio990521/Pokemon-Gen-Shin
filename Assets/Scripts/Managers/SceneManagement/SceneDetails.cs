@@ -29,11 +29,13 @@ public class SceneDetails : MonoBehaviour
             GameManager.Instance.SetCurrentScene(this);
             if (sceneMusic == BGM.TITLE)
             {
+                VideoManager.Instance.PlayLoopVideo(VIDEO.TITLE);
                 GameManager.Instance.TitleUI.SetActive(true);
                 GameManager.Instance.PauseGame(true);
             }
             else if (sceneMusic == BGM.ENDING_THEME)
             {
+                VideoManager.Instance.PlayLoopVideo(VIDEO.GAME_CLEAR);
                 GameManager.Instance.EndingUI.SetActive(true);
                 GameManager.Instance.PauseGame(true);
             }

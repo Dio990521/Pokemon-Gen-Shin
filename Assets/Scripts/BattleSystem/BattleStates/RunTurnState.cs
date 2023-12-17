@@ -313,7 +313,19 @@ public class RunTurnState : State<BattleSystem>
                 }
             }
 
-            if (targetUnit.pokemon.Hp <= 0)
+            if (!targetUnit.IsPlayerUnit && BattleState.I.BossType == BossType.cao
+&& !targetUnit.OnSecondPhase && targetUnit.pokemon.Hp <= 0)
+            {
+                targetUnit.OnSecondPhase = true;
+                yield return new WaitForSeconds(0.5f);
+                yield return _dialogueBox.TypeDialogue($"{targetUnit.pokemon.PokemonBase.PokemonName}进入了狂暴状态！！");
+                yield return new WaitForSeconds(0.25f);
+                targetUnit.pokemon.IncreaseHP(targetUnit.pokemon.MaxHp / 2, true);
+                yield return targetUnit.Hud.WaitForHPUpdate();
+                var bossMove = targetUnit.pokemon.BossSpecialMove;
+                yield return RunMove(_enemyUnit, _playerUnit, bossMove);
+            }
+            else if (targetUnit.pokemon.Hp <= 0)
             {
                 yield return HandlePokemonFainted(targetUnit);
             }
@@ -369,17 +381,7 @@ public class RunTurnState : State<BattleSystem>
         sourceUnit.pokemon.AfterTurn();
         yield return ShowStatusChanges(sourceUnit.pokemon);
         yield return sourceUnit.Hud.WaitForHPUpdate();
-        if (!sourceUnit.IsPlayerUnit && BattleState.I.BossType == BossType.cao && !sourceUnit.OnSecondPhase)
-        {
-            sourceUnit.OnSecondPhase = true;
-            yield return new WaitForSeconds(0.5f);
-            yield return _dialogueBox.TypeDialogue($"{sourceUnit.pokemon.PokemonBase.PokemonName}进入了狂暴状态！！");
-            yield return new WaitForSeconds(0.25f);
-            sourceUnit.pokemon.IncreaseHP(sourceUnit.pokemon.MaxHp / 2);
-            yield return sourceUnit.Hud.WaitForHPUpdate();
-            var move = sourceUnit.pokemon.BossSpecialMove;
-            yield return RunMove(_enemyUnit, _playerUnit, move);
-        }
+
         if (sourceUnit.pokemon.Hp <= 0)
         {
             yield return HandlePokemonFainted(sourceUnit);
@@ -393,7 +395,8 @@ public class RunTurnState : State<BattleSystem>
             return true;
         }
 
-        if (BattleState.I.BossType == BossType.langwang)
+        if (target.PokemonBase.PokemonName == "北风的狼王" &&
+            BattleState.I.BossType == BossType.langwang)
         {
             return false;
         }
