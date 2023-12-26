@@ -19484,7 +19484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: boss.level
-      value: 85
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: battleTrigger
@@ -42793,7 +42793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: boss.level
-      value: 10
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 2525527851288979690, guid: b4af9f2d905ff9a4cb315f7acd9cf5e6, type: 3}
       propertyPath: cutsceneCollider

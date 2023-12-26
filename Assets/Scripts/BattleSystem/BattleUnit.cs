@@ -298,28 +298,45 @@ public class BattleUnit : MonoBehaviour
                 ));
     }
 
-    public void PlayPerformMoveAnimation(List<Sprite> moveEffectSprites)
+    public IEnumerator PlayPerformMoveAnimation(MoveFX moveFX)
     {
-        if (moveEffectSprites.Count > 0)
+        if (moveFX.MoveEffectSprites.Count > 0)
         {
-            StartCoroutine(Animate(moveEffectSprites, 0.15f));
+            if (moveFX.MoveBGM != ExBGM.None)
+            {
+                AudioManager.Instance.PlayMusicVolume(moveFX.MoveBGM);
+            }
+            if (moveFX.MoveSfx != null)
+            {
+                AudioManager.Instance.PlaySEClip(moveFX.MoveSfx, 0.55f);
+            }
+            yield return Animate(moveFX, 0.05f);
         }
     }
 
-    private IEnumerator Animate(List<Sprite> moveEffectSprites, float frameRate)
+    private IEnumerator Animate(MoveFX moveFX, float frameRate)
     {
         int frame = 0;
-        Color imageColor = moveEffectSprite.color;
-        imageColor.a = 1f;
-        moveEffectSprite.color = imageColor;
-        while (frame >= 0 && frame < moveEffectSprites.Count)
+        moveEffectSprite.gameObject.SetActive(true);
+        moveEffectSprite.rectTransform.anchoredPosition = Vector3.zero;
+        moveEffectSprite.rectTransform.localPosition = Vector3.zero;
+
+        if (!isPlayerUnit && moveFX.IsBottom)
         {
-            moveEffectSprite.sprite = moveEffectSprites[frame];
+            var newLocalY = PokemonSprite.GetComponent<RectTransform>().rect.height / 2 - 80f;
+            moveEffectSprite.rectTransform.anchoredPosition = new Vector3(0, -newLocalY, 0);
+        }
+
+        moveEffectSprite.rectTransform.anchoredPosition += moveFX.PosOffset;
+        moveEffectSprite.rectTransform.localScale *= moveFX.ScaleFactor;
+
+        while (frame >= 0 && frame < moveFX.MoveEffectSprites.Count)
+        {
+            moveEffectSprite.sprite = moveFX.MoveEffectSprites[frame];
             yield return new WaitForSeconds(frameRate);
             frame++;
         }
-        imageColor.a = 0f;
-        moveEffectSprite.color = imageColor;
+        moveEffectSprite.gameObject.SetActive(false);
     }
 
     public void PlayHitAnimation()

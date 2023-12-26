@@ -303,9 +303,19 @@ public class Pokemon
         return PokemonBase.LearnableMoves.Where(x => x.Level == level).FirstOrDefault();
     }
 
-    public List<LearnableMove> GetLearnableMovesAtCurrentLevel()
+    public List<LearnableMove> GetAllLearnableMovesAtCurrentLevel()
     {
         return PokemonBase.LearnableMoves.Where(x => x.Level <= level).ToList();
+    }
+
+    public List<LearnableMove> GetLearnableMovesAtCurrentLevel()
+    {
+        HashSet<string> moveNames = new HashSet<string>();
+        foreach (var move in Moves)
+        {
+            moveNames.Add(move.MoveBase.MoveName);
+        }
+        return PokemonBase.LearnableMoves.Where(x => x.Level <= level && !moveNames.Contains(x.MoveBase.MoveName)).ToList();
     }
 
     public void LearnMove(MoveBase moveToLearn)
@@ -615,10 +625,17 @@ public class Pokemon
         OnHpChanged?.Invoke();
     }
 
-    public void IncreaseHP(int amount, bool revive=false)
+    public void IncreaseHP(int amount, bool revive=false, bool isPercentage=false)
     {
         if (Hp == 0 && !revive) return;
-        Hp = Mathf.Clamp(Hp + amount, 0, MaxHp);
+        if (isPercentage)
+        {
+            Hp = Mathf.Clamp(Hp + amount, 0, MaxHp);
+        }
+        else
+        {
+            Hp = (int)Mathf.Clamp(Hp + MaxHp * amount / 100f, 0, MaxHp);
+        }
         OnHpChanged?.Invoke();
     }
 

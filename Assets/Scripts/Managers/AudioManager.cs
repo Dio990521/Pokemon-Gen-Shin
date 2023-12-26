@@ -6,6 +6,7 @@ using UnityEngine;
 
 public enum ExBGM
 {
+    None,
     KIMIGAIREBA,
     JIANJINUTAO
 }
@@ -154,6 +155,7 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] sfxClips;
+    [SerializeField] private AudioClip[] exSfxClips;
     [SerializeField] private AudioClip[] exBGMClips;
     [SerializeField] private AudioClip[] tiwateClips;
 
@@ -197,6 +199,15 @@ public class AudioManager : Singleton<AudioManager>
         StartCoroutine(PlayerMusicAsync(id, loop, fade, fadeTime));
     }
 
+    public void PlayMusicVolume(ExBGM id, bool loop = true, bool fade = false, float volume = 0.85f)
+    {
+        if (musicPlayer.clip == musicClips[(int)id])
+        {
+            return;
+        }
+        StartCoroutine(PlayerMusicAsync(id, volume, loop, fade));
+    }
+
     public IEnumerator StopMusic(bool fade=false)
     {
         if (fade)
@@ -224,8 +235,24 @@ public class AudioManager : Singleton<AudioManager>
             StartCoroutine(UnPauseMusic(clip.length * 0.75f));
         }
         sfxPlayer.pitch = 1f;
-        
-        sfxPlayer.PlayOneShot(clip);
+        sfxPlayer.volume = 1f;
+        sfxPlayer.PlayOneShot(clip, 1f);
+    }
+
+    public void PlaySEClip(AudioClip sfx, float volumn=1f, bool pauseMusic = false)
+    {
+        if (sfxPlayer.clip == sfx)
+        {
+            return;
+        }
+        if (pauseMusic)
+        {
+            musicPlayer.Pause();
+            StartCoroutine(UnPauseMusic(sfx.length * 0.75f));
+        }
+        sfxPlayer.pitch = 1f;
+        sfxPlayer.volume = volumn;
+        sfxPlayer.PlayOneShot(sfx, 1f);
     }
 
     public void PlaySE(SFX id, float volume, bool pauseMusic = false)
@@ -288,13 +315,31 @@ public class AudioManager : Singleton<AudioManager>
             yield return musicPlayer.DOFade(0, fadeTime).WaitForCompletion();
         }
 
-        musicPlayer.clip = musicClips[(int)id]; ;
+        musicPlayer.clip = musicClips[(int)id];
         musicPlayer.loop = loop;
         musicPlayer.Play();
 
         if (fade)
         {
             yield return musicPlayer.DOFade(originalMusicVol, fadeTime).WaitForCompletion();
+        }
+    }
+
+    private IEnumerator PlayerMusicAsync(ExBGM id, float volume, bool loop, bool fade)
+    {
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(0, fadeDuration).WaitForCompletion();
+        }
+
+        musicPlayer.clip = musicClips[(int)id - 1];
+        musicPlayer.volume = volume;
+        musicPlayer.loop = loop;
+        musicPlayer.Play();
+
+        if (fade)
+        {
+            yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
         }
     }
 

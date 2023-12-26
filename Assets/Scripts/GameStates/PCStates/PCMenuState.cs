@@ -103,7 +103,7 @@ public class PCMenuState : State<GameManager>
             var selectedPokemon = PartyState.I.SelectedPokemon;
             if (selectedPokemon != null)
             {
-                var currentLearnableMoves = selectedPokemon.GetLearnableMovesAtCurrentLevel();
+                var currentLearnableMoves = selectedPokemon.GetAllLearnableMovesAtCurrentLevel();
                 if (currentLearnableMoves.Count > 0)
                 {
                     yield return DialogueManager.Instance.ShowDialogueText("选择想要找回的技能。", autoClose: false);

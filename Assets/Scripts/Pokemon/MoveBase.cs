@@ -12,6 +12,7 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] private PokemonType type;
     [SerializeField] private int power;
+    public bool IsPercentage;
     [SerializeField] private int accuracy;
     [SerializeField] private bool alwaysHits;
     [SerializeField] private int pp;
@@ -24,8 +25,6 @@ public class MoveBase : ScriptableObject
     [SerializeField] private List<SecondaryEffects> secondaryEffects;
 
     [SerializeField] private MoveFX moveFX;
-
-    public BGM MoveBGM = BGM.NONE;
 
     public int AccumulatePower;
 
