@@ -117,7 +117,7 @@ public class SceneDetails : MonoBehaviour
             operation.completed += (AsyncOperation op) =>
             {
                 savableEntities = GetSavableEntitiesInScene();
-                SavingSystem.I.RestoreEntityStates(savableEntities);
+                SavingSystem.Instance.RestoreEntityStates(savableEntities);
             };
 
         }
@@ -128,7 +128,7 @@ public class SceneDetails : MonoBehaviour
     {
         if (IsLoaded)
         {
-            SavingSystem.I.CaptureEntityStates(savableEntities);
+            SavingSystem.Instance.CaptureEntityStates(savableEntities);
             SceneManager.UnloadSceneAsync(gameObject.name);
             IsLoaded = false;
         }

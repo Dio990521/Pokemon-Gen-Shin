@@ -95,7 +95,7 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("saveFile").Append(selectedItem);
-            SavingSystem.I.Save(stringBuilder.ToString());
+            SavingSystem.Instance.Save(stringBuilder.ToString());
             _dataSlotUIs[selectedItem].GetComponent<Image>().color = Color.white;
             _dataSlotUIs[selectedItem].Scene.text = GameManager.Instance.CurrentScene.MapName;
             _dataSlotUIs[selectedItem].Date.text = System.DateTime.Now.ToString();

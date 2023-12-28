@@ -93,7 +93,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         partyScreen.Init();
         _storagePartyListUI.Init();
         _storageListUI.Init();
-        SavingSystem.I.ClearSavingData();
+        SavingSystem.Instance.ClearSavingData();
         foreach (var manager in Managers)
         {
             manager.GetComponent<IManager>().Init();
@@ -260,7 +260,7 @@ public class GameManager : Singleton<GameManager>, ISavable
     public IEnumerator LoadGame(string fileName)
     {
         PauseGame(true);
-        SavingSystem.I.Load(fileName);
+        SavingSystem.Instance.Load(fileName);
         CurrentScene.UnloadScene();
         CurrentScene.UnloadConnectedScenes();
         yield return new WaitForSeconds(1.5f);

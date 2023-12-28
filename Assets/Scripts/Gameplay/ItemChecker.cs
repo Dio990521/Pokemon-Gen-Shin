@@ -53,6 +53,10 @@ public class ItemChecker : MonoBehaviour, ISavable
         }
         else if (!Used && count != items.Count)
         {
+            if (GameManager.Instance.StateMachine.CurrentState == CutsceneState.I)
+            {
+                Used = true;
+            }
             yield return DialogueManager.Instance.ShowDialogue(failDialogue);
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Game.Tool.Singleton;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,13 +7,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SavingSystem : MonoBehaviour
+public class SavingSystem : Singleton<SavingSystem>
 {
-    public static SavingSystem I { get; private set; }
-    private void Awake()
-    {
-        I = this;
-    }
 
     Dictionary<string, object> gameState = new Dictionary<string, object>();
 
