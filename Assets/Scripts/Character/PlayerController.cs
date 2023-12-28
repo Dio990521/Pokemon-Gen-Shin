@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour, ISavable
 
     [SerializeField] private float _interactRadius;
     [SerializeField] private Vector3 _interactStepOffset;
-    [SerializeField] private TrailRenderer _trailRenderer;
+    [SerializeField] private AnimatedSprite _iceTrail;
 
     private Vector3 _interactPos;
     private Vector3 _faceDir;
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour, ISavable
     {
         get => character;
     }
-    public TrailRenderer TrailRenderer { get => _trailRenderer; set => _trailRenderer = value; }
+    public AnimatedSprite IceTrail { get => _iceTrail; set => _iceTrail = value; }
     public bool AvoidWildPokemon { get => _avoidWildPokemon; set => _avoidWildPokemon = value; }
 
     private void Awake()
@@ -123,11 +123,11 @@ public class PlayerController : MonoBehaviour, ISavable
 
         if (character.Animator.IsSurfing)
         {
-            _trailRenderer.gameObject.SetActive(true);
+            _iceTrail.gameObject.SetActive(true);
         }
         else
         {
-            _trailRenderer.gameObject.SetActive(false);
+            _iceTrail.gameObject.SetActive(false);
         }
 
         if (_avoidWildPokemon)

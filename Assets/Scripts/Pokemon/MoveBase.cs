@@ -25,6 +25,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] private List<SecondaryEffects> secondaryEffects;
 
     [SerializeField] private MoveFX moveFX;
+    [SerializeField] private bool allOutAttack;
+    [SerializeField] private bool goldExperience;
 
     public int AccumulatePower;
 
@@ -90,6 +92,8 @@ public class MoveBase : ScriptableObject
     }
 
     public MoveFX MoveFX { get => moveFX; set => moveFX = value; }
+    public bool AllOutAttack { get => allOutAttack; set => allOutAttack = value; }
+    public bool GoldExperience { get => goldExperience; set => goldExperience = value; }
 }
 
 public enum MoveCategory

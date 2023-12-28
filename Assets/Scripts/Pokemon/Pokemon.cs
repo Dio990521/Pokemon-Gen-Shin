@@ -410,7 +410,7 @@ public class Pokemon
     }
 
     // Calculate the damage when the pokemon get hurt
-    public DamageDetails TakeDamage(Move move, Pokemon attacker)
+    public DamageDetails TakeDamage(Move move, Pokemon attacker, bool decreaseHp=true)
     {
 
         DamageDetails damageDetails = new DamageDetails()
@@ -459,7 +459,8 @@ public class Pokemon
         {
             damage = 0;
         }
-        DecreaseHP(damage);
+        if (decreaseHp)
+            DecreaseHP(damage);
         damageDetails.Damage = damage;
         return damageDetails;
     }
@@ -628,7 +629,7 @@ public class Pokemon
     public void IncreaseHP(int amount, bool revive=false, bool isPercentage=false)
     {
         if (Hp == 0 && !revive) return;
-        if (isPercentage)
+        if (!isPercentage)
         {
             Hp = Mathf.Clamp(Hp + amount, 0, MaxHp);
         }

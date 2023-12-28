@@ -30611,7 +30611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505898021570298412, guid: 921f4cfe51c3b724ead355c338e11d04, type: 3}
       propertyPath: dialogue.lines.Array.data[0]
-      value: "\u4E1C\uFF1A\u81F3\u67AB\u6D77\u6EE9\u3002\u5357\uFF1A\u672A\u767D\u9547\u3002"
+      value: "\u5317\uFF1A\u5C0F\u63D0\u74E6\u7279\u3002\u5357\uFF1A\u672A\u767D\u9547\u3002"
       objectReference: {fileID: 0}
     - target: {fileID: 4005512374843776812, guid: 921f4cfe51c3b724ead355c338e11d04, type: 3}
       propertyPath: m_Name

@@ -227,6 +227,13 @@ public class RunTurnState : State<BattleSystem>
             if (move.MoveBase.Target == MoveTarget.Foe && move.MoveBase.MoveFX != null)
             {
                 yield return targetUnit.PlayPerformMoveAnimation(move.MoveBase.MoveFX);
+                if (move.MoveBase.GoldExperience)
+                {
+                    foreach (var pokemon in _playerParty.Pokemons)
+                    {
+                        pokemon.IncreaseHP(10, isPercentage: true);
+                    }
+                }
                 yield return new WaitForSeconds(0.5f);
             }
             else if (move.MoveBase.Target == MoveTarget.Self && move.MoveBase.MoveFX != null)
@@ -256,7 +263,7 @@ public class RunTurnState : State<BattleSystem>
                         {
                             pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
                         }
-                        yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了{move.MoveBase.Power}HP！");
+                        yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了HP！");
                     }
                     else
                     {
@@ -266,12 +273,12 @@ public class RunTurnState : State<BattleSystem>
                             {
                                 pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
                             }
-                            yield return _dialogueBox.TypeDialogue($"对方的宝可梦恢复了{move.MoveBase.Power}HP！");
+                            yield return _dialogueBox.TypeDialogue($"对方的宝可梦恢复了HP！");
                         }
                         else
                         {
                             _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
-                            yield return _dialogueBox.TypeDialogue($"对方恢复了{move.MoveBase.Power}HP！");
+                            yield return _dialogueBox.TypeDialogue($"对方恢复了HP！");
                         }
 
                     }
@@ -298,7 +305,7 @@ public class RunTurnState : State<BattleSystem>
                     yield return ShowDamageDetials(sourceUnit.pokemon, targetUnit.pokemon, damageDetails);
                 }
 
-                if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Status?.Id != ConditionID.jiejing && targetUnit.pokemon.Hp > 0)
+                if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Hp > 0)
                 {
                     yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit, targetUnit, move.MoveBase.Target, isElementReaction);
                 }

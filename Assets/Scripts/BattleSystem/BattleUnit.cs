@@ -300,17 +300,25 @@ public class BattleUnit : MonoBehaviour
 
     public IEnumerator PlayPerformMoveAnimation(MoveFX moveFX)
     {
-        if (moveFX.MoveEffectSprites.Count > 0)
+
+        if (moveFX.MoveBGM != null)
         {
-            if (moveFX.MoveBGM != ExBGM.None)
+            AudioManager.Instance.PlayMusicVolume(moveFX.MoveBGM, fade:true, volume: 0.65f);
+        }
+        if (moveFX.MoveSfx != null)
+        {
+            AudioManager.Instance.PlaySEClip(moveFX.MoveSfx, 0.55f);
+        }
+        if (moveFX.Video != null)
+        {
+            yield return VideoManager.Instance.PlayMoveVideo(moveFX.Video, moveFX.PauseMusic);
+        }
+        else
+        {
+            if (moveFX.MoveEffectSprites.Count > 0)
             {
-                AudioManager.Instance.PlayMusicVolume(moveFX.MoveBGM);
+                yield return Animate(moveFX, 0.05f);
             }
-            if (moveFX.MoveSfx != null)
-            {
-                AudioManager.Instance.PlaySEClip(moveFX.MoveSfx, 0.55f);
-            }
-            yield return Animate(moveFX, 0.05f);
         }
     }
 
@@ -319,7 +327,7 @@ public class BattleUnit : MonoBehaviour
         int frame = 0;
         moveEffectSprite.gameObject.SetActive(true);
         moveEffectSprite.rectTransform.anchoredPosition = Vector3.zero;
-        moveEffectSprite.rectTransform.localPosition = Vector3.zero;
+        moveEffectSprite.rectTransform.localScale = Vector3.one;
 
         if (!isPlayerUnit && moveFX.IsBottom)
         {

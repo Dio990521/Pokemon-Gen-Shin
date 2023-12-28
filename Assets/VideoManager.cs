@@ -38,6 +38,7 @@ public class VideoManager : Singleton<VideoManager>
         GameManager.Instance.PlayerController.transform.localPosition = new Vector3(-8.5f, -22.35f);
         GameManager.Instance.PlayerController.Character.Animator.SetFacingDirection(FacingDirection.Down);
         Stop();
+        _videoPlayer.targetTexture.Release();
         yield return new WaitForSeconds(0.5f);
         yield return Fader.FadeOut(1f);
     }
@@ -60,6 +61,7 @@ public class VideoManager : Singleton<VideoManager>
         }
         yield return Fader.FadeIn(1f);
         _videoTexture.gameObject.SetActive(false);
+        _videoPlayer.targetTexture.Release();
         Stop();
         yield return new WaitForSeconds(1f);
         GameManager.Instance.GoToEnding();
@@ -77,9 +79,30 @@ public class VideoManager : Singleton<VideoManager>
             yield return new WaitForFixedUpdate(); //跟FixedUpdate 一样根据固定帧 更新
         }
         yield return Fader.FadeIn(0.5f);
+        _videoPlayer.targetTexture.Release();
         _videoTexture.gameObject.SetActive(false);
     }
 
+    public IEnumerator PlayMoveVideo(VideoClip video, bool pauseMusic)
+    {
+        yield return Fader.FadeIn(0.25f);
+        if (pauseMusic)
+            AudioManager.Instance.PauseMusic((float)video.length + 1f);
+        _videoPlayer.clip = video;
+        _videoPlayer.isLooping = false;
+        yield return new WaitForSeconds(0.1f);
+        _videoTexture.gameObject.SetActive(true);
+        _videoPlayer.Play();
+        yield return Fader.FadeOut(0.25f);
+        while (_videoPlayer.isPlaying)
+        {
+            yield return new WaitForFixedUpdate(); //跟FixedUpdate 一样根据固定帧 更新
+        }
+        yield return Fader.FadeIn(0.25f);
+        _videoTexture.gameObject.SetActive(false);
+        _videoPlayer.targetTexture.Release();
+        yield return Fader.FadeOut(0.25f);
+    }
     public void PlayLoopVideo(VIDEO video)
     {
         _videoTexture.gameObject.SetActive(true);
@@ -93,6 +116,7 @@ public class VideoManager : Singleton<VideoManager>
     {
         _videoPlayer.Stop();
         _videoTexture.gameObject.SetActive(false);
+        _videoPlayer.targetTexture.Release();
     }
 
 }

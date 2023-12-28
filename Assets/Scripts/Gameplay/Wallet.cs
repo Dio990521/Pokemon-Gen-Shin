@@ -43,6 +43,12 @@ public class Wallet : MonoBehaviour, ISavable
         OnMoneyChanged?.Invoke();
     }
 
+    public void TakeMoneyPercentage(float percentage)
+    {
+        money = (int)(money * (1f - percentage));
+        OnMoneyChanged?.Invoke();
+    }
+
     public bool HasMoney(int amount)
     {
         return amount <= money;

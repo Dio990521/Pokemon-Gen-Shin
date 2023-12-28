@@ -73,6 +73,7 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable, IManager
         }
         playerParty.Pokemons.ForEach(p => p.Heal());
         playerParty.PartyUpdated();
+        Wallet.I.TakeMoneyPercentage(0.1f);
         player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         
 

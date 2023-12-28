@@ -4272,7 +4272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289475612508178].dialogue.lines.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289964772950023].dialogue.lines.Array.size
@@ -4408,7 +4408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289475612508178].dialogue.lines.Array.data[3]
-      value: "\u90A3\u6211\u4EEC\u8D76\u5FEB\u53BB\u53D8\u5F3A\uFF0C\u6536\u96C6\u9F50\u5FBD\u7AE0\u5427\uFF01"
+      value: "\u5C31\u5148\u4ECE\u6211\u4EEC\u6765\u7684\u90A3\u4E2A\u68EE\u6797\u5F00\u59CB\u5427\uFF01"
       objectReference: {fileID: 0}
     - target: {fileID: 2440885359551516975, guid: 8350d98931be9f545b07a49c3762e06a, type: 3}
       propertyPath: managedReferences[1340289964772950023].dialogue.lines.Array.data[0]

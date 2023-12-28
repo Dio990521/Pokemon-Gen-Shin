@@ -287,6 +287,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         _gameTimeSpend = (float)state;
     }
 
+#if UNITY_EDITOR
     private void OnGUI()
     {
         if (StateMachine == null) return;
@@ -298,6 +299,7 @@ public class GameManager : Singleton<GameManager>, ISavable
             GUILayout.Label(state.GetType().ToString(), style);
         }
     }
+#endif
 
     public Sprite GetPokeSprite(PokeballType type)
     {
@@ -370,6 +372,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         {
             GameKeyManager.Instance.SetIntValue(keyName, GameKeyManager.Instance.GetIntValue(keyName) + 1);
         }
+        CheckKey();
     }
 
     public void DeactivateKey()
@@ -383,10 +386,12 @@ public class GameManager : Singleton<GameManager>, ISavable
         {
             GameKeyManager.Instance.SetIntValue(keyName, GameKeyManager.Instance.GetIntValue(keyName) - 1);
         }
+        CheckKey();
     }
 
     public void CheckKey()
     {
+        GameMaster.KeyContent.text = "";
         foreach (var cutsceneName in System.Enum.GetValues(typeof(CutsceneName)))
         {
             GameMaster.KeyContent.text += (cutsceneName.ToString() + ": " + GameKeyManager.Instance.GetBoolValue(cutsceneName.ToString()) + "\n");

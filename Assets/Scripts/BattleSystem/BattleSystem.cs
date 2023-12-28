@@ -495,6 +495,7 @@ public class BattleSystem : MonoBehaviour
         return shakeCount;
     }
 
+#if UNITY_EDITOR
     private void OnGUI()
     {
         var style = new GUIStyle();
@@ -507,6 +508,6 @@ public class BattleSystem : MonoBehaviour
         }
         GUILayout.EndArea();
     }
-
+#endif
 
 }
