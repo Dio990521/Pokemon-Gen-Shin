@@ -85,6 +85,26 @@ public class ElementReactionUtil
         return PokemonType.None;
     }
 
+    public static ConditionID PokemonTypeToConditionID(PokemonType type)
+    {
+        switch (type)
+        {
+            case PokemonType.水:
+                return ConditionID.hydro;
+            case PokemonType.火:
+                return ConditionID.pyro;
+            case PokemonType.雷:
+                return ConditionID.electro;
+            case PokemonType.风:
+                return ConditionID.anemo;
+            case PokemonType.岩:
+                return ConditionID.geo;
+            case PokemonType.草:
+                return ConditionID.dendro;
+        }
+        return ConditionID.cryo;
+    }
+
     private static float[][] chart =
     {
         //                    Slp   Frz   Psn   Brn   Par   Cfs  Kuosan  Jiejing  Zhengfa  Ronghua  Zhanfang

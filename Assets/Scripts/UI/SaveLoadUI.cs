@@ -137,4 +137,9 @@ public class SaveLoadUI : SelectionUI<DataSlotUI>
         }
 
     }
+
+    public bool HasSaveFile()
+    {
+        return File.Exists(Path.Combine(Application.persistentDataPath, "pokemon-genshin-data.json"));
+    }
 }

@@ -1,3 +1,4 @@
+using Game.Tool;
 using PokeGenshinUtils.StateMachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,9 @@ public class BattleState : State<GameManager>
 
     public BossType BossType { get; set; }
     public TrainerController Trainer { get; set; }
+
+    public SuperTrainerController SuperTrainer { get; set; }
+
     public static BattleState I { get; private set; }
     public BattleSystem BattleSystem { get => _battleSystem; set => _battleSystem = value; }
 
@@ -57,6 +61,7 @@ public class BattleState : State<GameManager>
         _battleSystem.HandleUpdate();
     }
 
+
     private IEnumerator EnterBattle()
     {
 
@@ -73,14 +78,14 @@ public class BattleState : State<GameManager>
             }
             _battleSystem.StartBattle(playerParty, BossPokemon, Trigger);
         }
-        else if (Trainer == null)
+        else if (Trainer == null && SuperTrainer == null)
         {
             yield return EnterBattleTransition(TransitionType.WildBattle);
             Pokemon wildPokemon = _gameManager.CurrentScene.GetComponent<MapArea>().GetRandomWildPokemon(Trigger);
             var wildPokemonCopy = new Pokemon(wildPokemon.PokemonBase, wildPokemon.Level);
             _battleSystem.StartBattle(playerParty, wildPokemonCopy, Trigger);
         }
-        else
+        else if (Trainer != null)
         {
             if (Trainer.IsBoss)
             {
@@ -92,6 +97,34 @@ public class BattleState : State<GameManager>
             }
             PokemonParty trainerParty = Trainer.GetComponent<PokemonParty>();
             _battleSystem.StartTrainerBattle(playerParty, trainerParty, Trainer.BattleTrigger);
+        }
+        else if (SuperTrainer != null)
+        {
+            yield return EnterBattleTransition(TransitionType.BossBattle);
+            PokemonParty trainerParty = SuperTrainer.GetComponent<PokemonParty>();
+            if (SuperTrainer.IsXiaoyao)
+            {
+                SuperTrainer.XiaoyaoPokemons.Shuffle();
+                var pokemonBases = SuperTrainer.XiaoyaoPokemons.GetRange(0, SuperTrainer.BattleCount);
+                List<Pokemon> pokemons = new();
+                foreach (var pokemonBase in pokemonBases)
+                {
+                    pokemons.Add(new Pokemon(pokemonBase, 100));
+                }
+                trainerParty.Pokemons = pokemons;
+            }
+            else if (SuperTrainer.IsDoctor)
+            {
+                SuperTrainer.DoctorPokemons.Shuffle();
+                var pokemonBases = SuperTrainer.DoctorPokemons.GetRange(0, SuperTrainer.BattleCount);
+                List<Pokemon> pokemons = new();
+                foreach (var pokemonBase in pokemonBases)
+                {
+                    pokemons.Add(new Pokemon(pokemonBase, 100));
+                }
+                trainerParty.Pokemons = pokemons;
+            }
+            _battleSystem.StartTrainerBattle(playerParty, trainerParty, SuperTrainer.BattleTrigger);
         }
     }
 
@@ -111,6 +144,12 @@ public class BattleState : State<GameManager>
             Trainer.BattleLost();
             Trainer = null;
         }
+        else if (SuperTrainer != null && won)
+        {
+            SuperTrainer.BattleLost();
+            SuperTrainer = null;
+        }
+
         if (won && ActivateCutsceneAfterBattle != CutsceneName.None)
         {
             GameKeyManager.Instance.SetBoolValue(ActivateCutsceneAfterBattle.ToString(), true);

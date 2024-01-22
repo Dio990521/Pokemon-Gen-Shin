@@ -28,7 +28,6 @@ public class PokemonBase : ScriptableObject
 
     [Header("Evolution")]
     [SerializeField] private List<Evolution> evolutions;
-    [SerializeField] private bool _isEvoState;
 
     [Header("Sprites")]
     [SerializeField] private Sprite frontSprite;
@@ -97,10 +96,12 @@ public class PokemonBase : ScriptableObject
     public PassiveMoveBase PassiveMove { get => passiveMove; set => passiveMove = value; }
 
 
-    public bool IsEvoState { get => _isEvoState; set => _isEvoState = value; }
     public Achievement Achievement { get => _achievement; set => _achievement = value; }
     public bool IsLargePortrait { get => isLargePortrait; set => isLargePortrait = value; }
     public bool IsSlime { get => isSlime; set => isSlime = value; }
+
+    public BossType BossType = BossType.none;
+
 }
 
 

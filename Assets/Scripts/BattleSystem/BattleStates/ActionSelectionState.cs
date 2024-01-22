@@ -19,17 +19,20 @@ public class ActionSelectionState : State<BattleSystem>
 
     public override void Enter(BattleSystem owner)
     {
+        UseItemState.I.ItemUsed = false;
         _battleSystem = owner;
-        SelectionUI.gameObject.SetActive(true);
-        SelectionUI.ResetSelection();
-        SelectionUI.OnSelected += OnActionSelected;
         RunTurnState.I.SkipEnemyTurn = false;
-        StartCoroutine(_battleSystem.DialogueBox.TypeDialogue($"想要\n{_battleSystem.PlayerUnit.pokemon.PokemonBase.PokemonName}做什么？"));
+        StartCoroutine(_battleSystem.DialogueBox.TypeSelectActionDialogue($"想要\n{_battleSystem.PlayerUnit.pokemon.PokemonBase.PokemonName}做什么？",
+            SelectionUI));
+        _selectionUI.OnSelected += OnActionSelected;
     }
 
     public override void Execute()
     {
-        SelectionUI.HandleUpdate();
+        if (!_battleSystem.DialogueBox.IsTyping)
+        {
+            SelectionUI.HandleUpdate();
+        }
     }
 
     public override void Exit(bool sfx = true)

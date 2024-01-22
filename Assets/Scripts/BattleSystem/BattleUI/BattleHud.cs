@@ -176,6 +176,7 @@ public class BattleHud : MonoBehaviour
         {
             battlePokemon.OnStatusChanged -= UpdateStatus;
             battlePokemon.OnHpChanged -= UpdateHP;
+            battlePokemon.OnBuffChanged -= UpdateBuff;
         }
     }
 

@@ -21,8 +21,8 @@ public enum SFX
     NO,
     OPEN_DOOR,
     SURPRISE,
-    TRUCK,
-    TRUCK_END,
+    NEW_GAME,
+    DELETE_MOVE,
     SWITCH,
     CHEST,
     HEALTH_CENTER_IN,
@@ -76,7 +76,10 @@ public enum SFX
     HEAL_MOVE,
     POKE_COUNT1,
     POKE_COUNT2,
-    BADGE_CLEAR
+    BADGE_CLEAR,
+    USE_BOOST,
+    XUANNAGE,
+    LEARN_TM
 }
 
 public enum BGM
@@ -134,7 +137,6 @@ public enum BGM
     VICTORY_CHAMPION,
     EVOLUTION,
     EVOLUTION_CONGRAT,
-    JIANJINUTAO,
     ENDING_THEME,
     THE_END,
     NONE,
@@ -148,19 +150,25 @@ public class AudioManager : Singleton<AudioManager>
 
     [SerializeField] private AudioClip[] musicClips;
     [SerializeField] private AudioClip[] sfxClips;
-    [SerializeField] private AudioClip[] exSfxClips;
-    [SerializeField] private AudioClip[] exBGMClips;
     [SerializeField] private AudioClip[] tiwateClips;
 
     [SerializeField] private float fadeDuration = 0.75f;
-    private float originalMusicVol;
     public bool IsPlayingTiwate;
 
     private bool _isPausing;
 
-    private void Start()
+    public AudioSource MusicPlayer { get => musicPlayer; set => musicPlayer = value; }
+    public AudioSource SfxPlayer { get => sfxPlayer; set => sfxPlayer = value; }
+
+
+    public void ChangeMusicPlayerVol(float volume)
     {
-        originalMusicVol = musicPlayer.volume;
+        musicPlayer.volume = volume;
+    }
+
+    public void ChangeSfxPlayerVol(float volume)
+    {
+        sfxPlayer.volume = volume;
     }
 
     public void PlayTiwateMusic()
@@ -174,20 +182,28 @@ public class AudioManager : Singleton<AudioManager>
         StartCoroutine(PlayerTiwateMusicAsync(index, true, true));
     }
 
-    public void PlayMusicVolume(BGM id, bool loop=true, bool fade=false, float volume = 0.85f)
+    public void PlayMusicVolume(BGM id, bool loop=true, bool fade=false, float volume = -1f)
     {
         if (musicPlayer.clip == musicClips[(int)id])
         {
             return;
         }
+        if (volume < 0)
+        {
+            volume = OptionState.I.OptionMenuUI.BGMSlider.value;
+        }
         StartCoroutine(PlayerMusicAsync(id, volume, loop, fade));
     }
 
-    public void PlayMusicVolume(AudioClip bgm, bool loop = true, bool fade = false, float volume = 0.85f)
+    public void PlayMusicVolume(AudioClip bgm, bool loop = true, bool fade = false, float volume = -1f)
     {
         if (musicPlayer.clip == bgm)
         {
             return;
+        }
+        if (volume < 0)
+        {
+            volume = OptionState.I.OptionMenuUI.BGMSlider.value;
         }
         StartCoroutine(PlayerMusicAsync(bgm, volume, loop, fade));
     }
@@ -234,11 +250,11 @@ public class AudioManager : Singleton<AudioManager>
             StartCoroutine(UnPauseMusic(clip.length * 0.75f));
         }
         sfxPlayer.pitch = 1f;
-        sfxPlayer.volume = 1f;
+        sfxPlayer.volume = OptionState.I.OptionMenuUI.SFXSlider.value;
         sfxPlayer.PlayOneShot(clip, 1f);
     }
 
-    public void PlaySEClip(AudioClip sfx, float volumn=1f, bool pauseMusic = false)
+    public void PlaySEClip(AudioClip sfx, float volume=-1f, bool pauseMusic = false)
     {
         if (sfxPlayer.clip == sfx)
         {
@@ -250,15 +266,12 @@ public class AudioManager : Singleton<AudioManager>
             StartCoroutine(UnPauseMusic(sfx.length * 0.75f));
         }
         sfxPlayer.pitch = 1f;
-        sfxPlayer.volume = volumn;
+        if (volume < 0)
+        {
+            volume = OptionState.I.OptionMenuUI.SFXSlider.value;
+        }
+        sfxPlayer.volume = volume;
         sfxPlayer.PlayOneShot(sfx, 1f);
-    }
-
-    public void PlaySE(SFX id, float volume, bool pauseMusic = false)
-    {
-        sfxPlayer.pitch = 1f;
-        AudioClip clip = sfxClips[(int)id];
-        sfxPlayer.PlayOneShot(clip, volume);
     }
 
     private IEnumerator UnPauseMusic(float delay)
@@ -266,9 +279,10 @@ public class AudioManager : Singleton<AudioManager>
         if (_isPausing) yield break;
         _isPausing = true;
         yield return new WaitForSeconds(delay);
+        var prevVolume = musicPlayer.volume;
         musicPlayer.volume = 0;
         musicPlayer.UnPause();
-        yield return musicPlayer.DOFade(originalMusicVol, fadeDuration);
+        yield return musicPlayer.DOFade(prevVolume, fadeDuration);
         _isPausing = false;
     }
 
@@ -286,7 +300,7 @@ public class AudioManager : Singleton<AudioManager>
 
         if (fade)
         {
-            yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
+            yield return musicPlayer.DOFade(OptionState.I.OptionMenuUI.BGMSlider.value, fadeDuration).WaitForCompletion();
         }
     }
 
@@ -321,7 +335,7 @@ public class AudioManager : Singleton<AudioManager>
 
         if (fade)
         {
-            yield return musicPlayer.DOFade(originalMusicVol, fadeDuration).WaitForCompletion();
+            yield return musicPlayer.DOFade(OptionState.I.OptionMenuUI.BGMSlider.value, fadeDuration).WaitForCompletion();
         }
     }
 
@@ -338,7 +352,7 @@ public class AudioManager : Singleton<AudioManager>
 
         if (fade)
         {
-            yield return musicPlayer.DOFade(originalMusicVol, fadeTime).WaitForCompletion();
+            yield return musicPlayer.DOFade(OptionState.I.OptionMenuUI.BGMSlider.value, fadeTime).WaitForCompletion();
         }
     }
 

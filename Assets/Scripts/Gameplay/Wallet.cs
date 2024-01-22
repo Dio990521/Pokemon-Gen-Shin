@@ -49,6 +49,18 @@ public class Wallet : MonoBehaviour, ISavable
         OnMoneyChanged?.Invoke();
     }
 
+    public bool TryTakeYuanshiPercentage(float percentage)
+    {
+        var inventory = Inventory.GetInventory();
+        if (inventory.HasItem(yuanshi))
+        {
+            inventory.RemoveItem(yuanshi, (int)(inventory.GetItemCount(yuanshi) * percentage));
+            OnMoneyChanged?.Invoke();
+            return true;
+        }
+        return false;
+    }
+
     public bool HasMoney(int amount)
     {
         return amount <= money;

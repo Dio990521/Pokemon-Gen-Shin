@@ -152,6 +152,31 @@ public class CharacterAnimator : MonoBehaviour
         }
     }
 
+    public void SetFacingDirectionToTarget(Character target)
+    {
+        var dir = (target.transform.position - transform.position).normalized;
+        int dirX = (int)dir.x;
+        int dirY = (int)dir.y;
+
+        if (dirX > 0 && dirY == 0)
+        {
+            MoveX = 1;
+        }
+        else if (dirX < 0 && dirY == 0)
+        {
+            MoveX = -1;
+        }
+        else if (dirX == 0 && dirY > 0)
+        {
+            MoveY = 1;
+        }
+        else if (dirX == 0 && dirY < 0)
+        {
+            MoveY = -1;
+        }
+
+    }
+
 }
 
 public enum FacingDirection { Left, Right, Up, Down, None, ToPlayer }

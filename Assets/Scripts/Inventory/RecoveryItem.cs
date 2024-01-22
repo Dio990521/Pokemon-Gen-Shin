@@ -46,10 +46,13 @@ public class RecoveryItem : ItemBase
         }
 
         // No other items can be used on fainted pokemon
-        if (pokemon.Hp == 0 || pokemon.Hp == pokemon.MaxHp)
+        if (pokemon.Hp == 0 || (pokemon.Hp == pokemon.MaxHp && hpAmount > 0)
+            || (pokemon.Hp == pokemon.MaxHp && restoreMaxHp))
         {
             return false;
         }
+
+        var used = false;
 
         // Restore HP
         if (restoreMaxHp)
@@ -59,36 +62,38 @@ public class RecoveryItem : ItemBase
                 return false;
             }
             pokemon.IncreaseHP(pokemon.MaxHp);
+            used = true;
         }
 
-        pokemon.IncreaseHP(hpAmount);
+        if (hpAmount > 0)
+        {
+            pokemon.IncreaseHP(hpAmount);
+            used = true;
+        }
 
         // Recover Status
         if (recoverAllStatus || status != ConditionID.none)
         {
-            if (pokemon.Status == null && pokemon.ElementStatus == null)
+            if (pokemon.Status == null)
             {
-                return false;
+                return used;
             }
 
             if (recoverAllStatus)
             {
                 pokemon.CureStatus();
-                pokemon.CureElementStatus();
+                used = true;
             }
             else
             {
                 if (pokemon.Status.Id == status)
                 {
                     pokemon.CureStatus();
-                }
-                else if (pokemon.ElementStatus.Id == status)
-                {
-                    pokemon.CureElementStatus();
+                    used = true;
                 }
                 else
                 {
-                    return false;
+                    return used;
                 }
             }
         }

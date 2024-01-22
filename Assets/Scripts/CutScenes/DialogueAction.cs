@@ -9,6 +9,8 @@ public class DialogueAction : CutsceneAction
 
     public override IEnumerator Play()
     {
-        yield return DialogueManager.Instance.ShowDialogue(dialogue);
+        if (dialogue.AfterCutsceneActivate == CutsceneName.None ||
+            GameKeyManager.Instance.GetBoolValue(dialogue.AfterCutsceneActivate.ToString()))
+            yield return DialogueManager.Instance.ShowDialogue(dialogue);
     }
 }

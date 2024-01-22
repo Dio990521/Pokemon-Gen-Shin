@@ -35,18 +35,27 @@ public class PokemonParty : MonoBehaviour
 
     public Pokemon GetHealthyPokemon()
     {
-        return pokemons.Where(x => x.Hp > 0).FirstOrDefault();
+        var nextPokemon = pokemons.Where(x => x.Hp > 0).FirstOrDefault();
+        if (nextPokemon != null && nextPokemon.PokemonBase.BossType != BossType.none)
+        {
+            BattleState.I.BossType = nextPokemon.PokemonBase.BossType;
+        }
+        return nextPokemon;
     }
 
     public bool AddPokemonToParty(Pokemon newPokemon)
     {
-        newPokemon.Exp = newPokemon.PokemonBase.GetExpForLevel(newPokemon.Level - 1) +
+        newPokemon.Exp = newPokemon.PokemonBase.GetExpForLevel(newPokemon.Level) +
             UnityEngine.Random.Range(0, newPokemon.GetNextLevelExpLeft() / 2);
         newPokemon.CureElementStatus();
         newPokemon.CureStatus();
+        newPokemon.ResetStatBoost();
         if (pokemons.Count < 6)
         {
-            AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
+            if (newPokemon.PokemonBase.Achievement != Achievement.None)
+            {
+                AchievementManager.Instance.Complete(newPokemon.PokemonBase.Achievement, newPokemon.PokemonBase.PokemonName);
+            }
             pokemons.Add(newPokemon);
             OnUpdated?.Invoke();
             return true;

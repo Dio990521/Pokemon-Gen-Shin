@@ -96,12 +96,6 @@ public class PartyState : State<GameManager>
         int choice = PartyMenuState.I.Selection;
         if (choice == 0)
         {
-            // Pokemon Info
-            PokemonInfoState.I.SelectedPokemon = SelectedPokemon;
-            _gameManager.StateMachine.Push(PokemonInfoState.I);
-        }
-        else if (choice == 1)
-        {
             if (!inBattle)
             {
                 // Swap Pokemon
@@ -125,6 +119,13 @@ public class PartyState : State<GameManager>
 
             }
         }
+        else if (choice == 1)
+        {
+            // Pokemon Info
+            PokemonInfoState.I.SelectedPokemon = SelectedPokemon;
+            _gameManager.StateMachine.Push(PokemonInfoState.I);
+        }
+         
     }
 
 

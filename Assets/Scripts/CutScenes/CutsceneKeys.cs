@@ -75,7 +75,9 @@ public enum CutsceneName
     获得钟莉,
     准备返回提瓦特,
     入室抢劫博士,
-    激活dcz
+    激活dcz,
+    最开始就往海滩走,
+    最终战没打小遥
 }
 
 public enum PuzzleName

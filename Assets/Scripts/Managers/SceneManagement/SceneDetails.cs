@@ -31,9 +31,10 @@ public class SceneDetails : MonoBehaviour
             {
                 VideoManager.Instance.PlayLoopVideo(VIDEO.TITLE);
                 GameManager.Instance.TitleUI.SetActive(true);
+                GameManager.Instance.SetLoadButton();
                 GameManager.Instance.PauseGame(true);
             }
-            else if (sceneMusic == BGM.ENDING_THEME)
+            else if (gameObject.name == "End")
             {
                 VideoManager.Instance.PlayLoopVideo(VIDEO.GAME_CLEAR);
                 GameManager.Instance.EndingUI.SetActive(true);

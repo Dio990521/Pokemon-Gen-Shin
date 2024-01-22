@@ -10,6 +10,9 @@ public class ShopBuyingState : State<GameManager>
     [SerializeField] private ShopUI shopUI;
 
     public List<ItemBase> AvailableItems { get; set; }
+    public List<PokemonBase> BuyablePokemons { get; set; }
+
+
     public static ShopBuyingState I { get; private set; }
 
     private GameManager _gameManager;

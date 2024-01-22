@@ -10,7 +10,7 @@ public class UseItemState : State<GameManager>
     [SerializeField] private InventoryUI _inventoryUI;
     private Inventory _inventory;
 
-    public bool ItemUsed { get; private set; }
+    public bool ItemUsed;
 
     public static UseItemState I { get; private set; }
 
@@ -60,6 +60,7 @@ public class UseItemState : State<GameManager>
                 var boostItem = item as BoostItem;
                 if (boostItem.IsExBoost)
                 {
+                    AudioManager.Instance.PlaySE(SFX.USE_BOOST);
                     pokemon.AddExStatusBias(boostItem.BoostValue);
                     yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}突破了自我！");
                 }
@@ -67,6 +68,7 @@ public class UseItemState : State<GameManager>
                 {
                     if (pokemon.TryAddBias(boostItem.BoostValue))
                     {
+                        AudioManager.Instance.PlaySE(SFX.USE_BOOST);
                         yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}好像变强了！");
                         _inventory.UseItem(item, _partyScreen.SelectedMember);
                     }
@@ -119,6 +121,7 @@ public class UseItemState : State<GameManager>
         if (pokemon.Moves.Count < PokemonBase.MaxNumOfMoves)
         {
             pokemon.LearnMove(tmItem.Move);
+            AudioManager.Instance.PlaySE(SFX.LEARN_TM, true);
             yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}习得了新技能\n{tmItem.Move.MoveName}！");
             _inventory.RemoveItem(tmItem);
         }
@@ -143,6 +146,7 @@ public class UseItemState : State<GameManager>
             {
                 // Forget the selected move and learn new move
                 var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
+                AudioManager.Instance.PlaySE(SFX.DELETE_MOVE, true);
                 yield return DialogueManager.Instance.ShowDialogueText($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
                 pokemon.Moves[moveIndex] = new Move(tmItem.Move);
                 _inventory.RemoveItem(tmItem);

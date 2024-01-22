@@ -47,7 +47,7 @@ public class BattleSystem : MonoBehaviour
     public int currentMove;
     public int SelectedMove { get; set; }
 
-    public bool IsBattleOver { get; private set; }
+    public bool IsBattleOver;
 
     public static event Action<bool> OnBattleOver;
 
@@ -117,7 +117,7 @@ public class BattleSystem : MonoBehaviour
             _enemyUnit.SetUp(WildPokemon);
             _playerUnit.UnitEnterAnimation();
             _enemyUnit.UnitEnterAnimation();
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.25f);
             if (!BattleState.I.IsSuperBoss)
             {
                 yield return _dialogueBox.TypeDialogue($"野生的{_enemyUnit.pokemon.PokemonBase.PokemonName}出现了！");
@@ -181,6 +181,7 @@ public class BattleSystem : MonoBehaviour
             }
 
         }
+
         _partyScreen.Init();
         var playerPokemon = PlayerParty.GetHealthyPokemon();
         yield return _playerUnit.PlayerThrowBallAnimation(this, playerPokemon);
@@ -195,6 +196,41 @@ public class BattleSystem : MonoBehaviour
         IsBattleOver = false;
         EscapeAttempts = 0;
 
+        bool battleHasSlime = false;
+        if (IsTrainerBattle)
+        {
+            foreach (var pokemon in TrainerParty.Pokemons)
+            {
+                if (pokemon.PokemonBase.IsSlime)
+                {
+                    pokemon.SetSlimeElementStatus(ElementReactionUtil.PokemonTypeToConditionID(pokemon.PokemonBase.Type1));
+                    if (pokemon.PokemonBase.Type1 != PokemonType.风 && pokemon.PokemonBase.Type1 != PokemonType.岩)
+                        battleHasSlime = true;
+                }
+            }
+        }
+        else
+        {
+            if (_enemyUnit.pokemon.PokemonBase.IsSlime)
+            {
+                _enemyUnit.pokemon.SetSlimeElementStatus(ElementReactionUtil.PokemonTypeToConditionID(_enemyUnit.pokemon.PokemonBase.Type1));
+                if (_enemyUnit.pokemon.PokemonBase.Type1 != PokemonType.风 && _enemyUnit.pokemon.PokemonBase.Type1 != PokemonType.岩)
+                    battleHasSlime = true;
+            }
+        }
+
+        foreach (var pokemon in PlayerParty.Pokemons)
+        {
+            if (pokemon.PokemonBase.IsSlime)
+            {
+                pokemon.SetSlimeElementStatus(ElementReactionUtil.PokemonTypeToConditionID(pokemon.PokemonBase.Type1));
+                if (pokemon.PokemonBase.Type1 != PokemonType.风 && pokemon.PokemonBase.Type1 != PokemonType.岩)
+                    battleHasSlime = true;
+            }
+        }
+
+        if (battleHasSlime)
+            yield return _dialogueBox.TypeDialogue($"拥有元素精通特性的宝可梦\n将开始持续附着对应元素！");
 
         StateMachine.ChangeState(ActionSelectionState.I);
     }
@@ -212,8 +248,13 @@ public class BattleSystem : MonoBehaviour
                 yield return _dialogueBox.TypeDialogue($"{trainer.DialogueAfterBattle.Lines[0]}");
                 if (trainer.WinMoney > 0)
                 {
-                    Wallet.I.AddMoney(trainer.WinMoney, false);
-                    yield return _dialogueBox.TypeDialogue($"你抢走了对方{trainer.WinMoney}摩拉！");
+                    var money = trainer.WinMoney;
+                    if (trainer is SuperTrainerController superTrainer)
+                    {
+                        money *= superTrainer.BattleCount;
+                    }
+                    Wallet.I.AddMoney(money, false);
+                    yield return _dialogueBox.TypeDialogue($"你抢走了对方{money}摩拉！");
                 }
                 if (!Wallet.I.IsUnlimited && trainer.IsGymLeader)
                 {
@@ -318,7 +359,7 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
-        if (pokeballItem.BallType != PokeballType.Master && 
+        if (pokeballItem.BallType != PokeballType.Master && pokeballItem.BallType != PokeballType.FiveFive &&
             pokeballItem.BallType != PokeballType.EX_Genshin && pokeballItem.BallType != PokeballType.Genshin
             && _enemyUnit.pokemon.PokemonBase.IsHuman)
         {
@@ -328,6 +369,7 @@ public class BattleSystem : MonoBehaviour
             yield break;
         }
 
+        Inventory.GetInventory().UseItem(pokeballItem, null);
 
         yield return _dialogueBox.TypeDialogue($"{player.PlayerName}扔出了{pokeballItem.ItemName}！");
         if (pokeballItem.BallType == PokeballType.Beast)

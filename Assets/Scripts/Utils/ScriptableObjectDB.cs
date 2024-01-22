@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+//using UnityEngine.AddressableAssets;
 
 public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
 {
@@ -12,10 +13,27 @@ public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
     {
         objects = new Dictionary<string, T>();
         string className = typeof(T).Name;
+        Debug.Log($"{className}开始加载数据");
         StringBuilder loadPath = new StringBuilder();
-        loadPath.Append("Prefabs/");
+        loadPath.Append("ScriptableObjects/");
         loadPath.Append(className.Substring(0, className.Length - 4));
         loadPath.Append("s");
+        //AssetLabelReference assetLabelReference = new();
+        //assetLabelReference.labelString = loadPath.ToString();
+        //Addressables.LoadAssetsAsync<T>(assetLabelReference, (obj) =>
+        //{
+        //    if (objects.ContainsKey(obj.name))
+        //    {
+        //        Debug.LogError($"There are 2 objects with the same name: {obj.name}");
+        //    }
+        //    else
+        //    {
+        //        objects[obj.name] = obj;
+        //    }
+        //}).Completed += (handle) =>
+        //{
+        //    Debug.Log($"{className}初始化完成！" + " 已加载数据量： " + objects?.Count);
+        //};
         var objectArray = Resources.LoadAll<T>(loadPath.ToString());
         foreach (var obj in objectArray)
         {
@@ -26,7 +44,6 @@ public class ScriptableObjectDB<T> : MonoBehaviour where T : ScriptableObject
             }
             objects[obj.name] = obj;
         }
-        //Debug.Log($"{className}初始化完成！" + " 已加载数据量： " + objects?.Count);
     }
 
     public static T GetObjectByName(string name)

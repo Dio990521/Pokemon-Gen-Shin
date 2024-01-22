@@ -31,8 +31,6 @@ public class Healer : MonoBehaviour
             // No
             yield return DialogueManager.Instance.ShowDialogueText($"ÄÇÄã¿ì¹ö¡£");
         }
-
-
-        
+ 
     }
 }

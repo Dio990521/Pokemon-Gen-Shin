@@ -9,7 +9,6 @@ public class BossBattle : MonoBehaviour, IPlayerTriggerable
     [SerializeField] private BattleTrigger battleTrigger;
     [SerializeField] private CutsceneName activateCutsceneName;
     [SerializeField] private BoxCollider2D cutsceneCollider;
-    [SerializeField] private BossType _bossType;
     public bool TriggerRepeatedly => true;
 
     private void Start()
@@ -56,7 +55,7 @@ public class BossBattle : MonoBehaviour, IPlayerTriggerable
         if (selectedChoice == 0)
         {
             BattleSystem.OnBattleOver += ActivateCutscene;
-            GameManager.Instance.StartBossBattle(battleTrigger, boss, _bossType, activateCutsceneName, true);
+            GameManager.Instance.StartBossBattle(battleTrigger, boss, boss.PokemonBase.BossType, activateCutsceneName, true);
         }
         else
         {

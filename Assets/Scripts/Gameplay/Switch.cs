@@ -19,6 +19,7 @@ public class Switch : MonoBehaviour, InteractableObject, ISavable
         if (!Used)
         {
             Used = true;
+            AudioManager.Instance.PlaySE(SFX.SWITCH);
             yield return DialogueManager.Instance.ShowDialogueText("你按下了开关！");
             OnPuzzleChange?.Invoke();
         }

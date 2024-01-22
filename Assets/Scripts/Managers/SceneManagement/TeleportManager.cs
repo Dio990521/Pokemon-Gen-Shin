@@ -57,7 +57,7 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable, IManager
         return teleIndex;
     }
 
-    public IEnumerator GameOverTransport()
+    public IEnumerator GameOverTransport(bool takeMoney=true)
     {
         yield return AudioManager.Instance.StopMusic(true);
         GameManager.Instance.PauseGame(true);
@@ -73,7 +73,8 @@ public class TeleportManager : Singleton<TeleportManager>, ISavable, IManager
         }
         playerParty.Pokemons.ForEach(p => p.Heal());
         playerParty.PartyUpdated();
-        Wallet.I.TakeMoneyPercentage(0.1f);
+        if (takeMoney)
+            Wallet.I.TakeMoneyPercentage(0.1f);
         player.Character.Animator.SetFacingDirection(FacingDirection.Down);
         
 

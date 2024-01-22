@@ -8,20 +8,24 @@ public class Lock : MonoBehaviour, InteractableObject
     [SerializeField] private ItemBase _keyItem;
     [SerializeField] private int _total;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _boxCollider;
 
     public PuzzleName PuzzleName;
 
     private void Awake()
     {
         _animator = GetComponentInChildren<Animator>();
+        _boxCollider  = GetComponentInChildren<BoxCollider2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     private void Start()
     {
         if (GameKeyManager.Instance.GetIntValue(PuzzleName.ToString()) == 1)
         {
-            GetComponent<SpriteRenderer>().enabled = false;
-            GetComponent<BoxCollider2D>().enabled = false;
+            _boxCollider.enabled = false;
+            _spriteRenderer.enabled = false;
         }
     }
 

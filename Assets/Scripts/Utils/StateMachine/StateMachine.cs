@@ -23,7 +23,9 @@ namespace PokeGenshinUtils.StateMachine
 
         public void Push(State<T> newState)
         {
+#if UNITY_EDITOR
             Debug.Log("Push: " + newState.ToString());
+#endif
             StateStack.Push(newState);
             CurrentState = newState;
             CurrentState.Enter(_owner);
@@ -32,13 +34,16 @@ namespace PokeGenshinUtils.StateMachine
         public IEnumerator PushAndWait(State<T> newState)
         {
             var oldState = CurrentState;
+#if UNITY_EDITOR
             Debug.Log("Push and wait: " + newState.ToString());
+#endif
             Push(newState);
             yield return new WaitUntil(() => CurrentState == oldState);
         }
 
         public void Pop(bool sfx=true)
         {
+#if UNITY_EDITOR
             if (StateStack.Count > 0)
             {
                 Debug.Log("Pop: " + StateStack.Peek().ToString());
@@ -47,6 +52,7 @@ namespace PokeGenshinUtils.StateMachine
             {
                 Debug.Log("Empty Stack cannot pop!!");
             }
+#endif
             StateStack.Pop();
             CurrentState.Exit(sfx);
             CurrentState = StateStack.Peek();
@@ -54,7 +60,9 @@ namespace PokeGenshinUtils.StateMachine
 
         public void ChangeState(State<T> newState)
         {
+#if UNITY_EDITOR
             Debug.Log("Change state: " + newState.ToString());
+#endif
             if (CurrentState != null)
             {
                 StateStack.Pop();

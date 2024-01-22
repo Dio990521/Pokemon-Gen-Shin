@@ -91,6 +91,19 @@ public class CutsceneEditor : Editor
 
         }
 
+        using (var scope = new GUILayout.HorizontalScope())
+        {
+            if (GUILayout.Button("MoveToTarget"))
+            {
+                cutscene.AddAction(new MoveToActorAction());
+            }
+            if (GUILayout.Button("ActivateKey"))
+            {
+                cutscene.AddAction(new ActivateKeyAction());
+            }
+
+        }
+
         base.OnInspectorGUI();
     }
 }

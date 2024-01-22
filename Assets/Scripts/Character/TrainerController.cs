@@ -22,7 +22,7 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     [SerializeField] private CutsceneName _activateCutsceneNameWin;
 
-    private Character character;
+    protected Character character;
     private bool _isBattleLost = false;
     private Vector3 _exclamationPos;
 
@@ -58,12 +58,14 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
 
     private void Start()
     {
-        SetFovRotation(character.Animator.DefaultDirection);
+        if (character != null)
+            SetFovRotation(character.Animator.DefaultDirection);
     }
 
     private void Update()
     {
-        character.HandleUpdate();
+        if (character != null)
+            character.HandleUpdate();
     }
 
     public IEnumerator Interact(Transform initiator)
@@ -89,7 +91,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
     public void BattleLost()
     {
         IsBattleLost = true;
-        fov.SetActive(false);
+        if (fov != null)
+            fov.SetActive(false);
         if (_activateCutsceneNameWin != CutsceneName.None && !GameKeyManager.Instance.GetBoolValue(_activateCutsceneNameWin.ToString()))
         {
             GameKeyManager.Instance.SetBoolValue(_activateCutsceneNameWin.ToString(), true);
@@ -148,7 +151,8 @@ public class TrainerController : MonoBehaviour, InteractableObject, ISavable
             angle = 270;
         }
 
-        fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
+        if (fov != null)
+            fov.transform.eulerAngles = new Vector3(0f, 0f, angle);
     }
 
     public object CaptureState()

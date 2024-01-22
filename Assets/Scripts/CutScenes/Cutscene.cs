@@ -38,6 +38,10 @@ public class Cutscene : MonoBehaviour, IPlayerTriggerable
         {
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
         }
+        else if (disableAfterCutscene != CutsceneName.None && GameKeyManager.Instance.GetBoolValue(disableAfterCutscene.ToString()))
+        {
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     public IEnumerator Play()

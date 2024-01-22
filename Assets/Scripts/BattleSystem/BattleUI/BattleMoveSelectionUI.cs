@@ -41,6 +41,14 @@ public class BattleMoveSelectionUI : SelectionUI<TextSlot>
         var move = _moves[selectedItem];
         _ppText.text = $"PP {move.PP} / {move.MoveBase.PP}";
         _typeText.text = $"属性/{move.MoveBase.Type}";
+        if (move.MoveBase.AlwaysHits)
+        {
+            _typeText.text += "、必中";
+        }
+        if (move.MoveBase.Priority > 0)
+        {
+            _typeText.text += "、先手";
+        }
 
         if (move.PP == 0)
         {

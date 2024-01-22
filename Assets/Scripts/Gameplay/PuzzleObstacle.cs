@@ -18,8 +18,8 @@ public class PuzzleObstacle : MonoBehaviour
     {
         _animator = GetComponentInChildren<Animator>();
         _boxCollider = GetComponent<BoxCollider2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        if (GameKeyManager.Instance.GetIntValue(_puzzleName.ToString()) != _total)
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        if (GameKeyManager.Instance.GetIntValue(_puzzleName.ToString()) != _total-1)
         {
             foreach (var gameObject in _switches)
             {
@@ -35,8 +35,14 @@ public class PuzzleObstacle : MonoBehaviour
         }
         else
         {
-            _boxCollider.enabled = false;
-            _spriteRenderer.enabled = false;
+            if (_boxCollider!= null)
+            {
+                _boxCollider.enabled = false;
+            }
+            if (_spriteRenderer != null)
+            {
+                _spriteRenderer.enabled = false;
+            }
         }
     }
 
@@ -61,14 +67,18 @@ public class PuzzleObstacle : MonoBehaviour
         var cur = GameKeyManager.Instance.GetIntValue(_puzzleName.ToString());
         if (cur == _total - 1)
         {
-            StartCoroutine(DialogueManager.Instance.ShowDialogueText($"放置了所有的宝珠！\n砂之塔解锁了！"));
-            UnlockAnim();
-
+            StartCoroutine(Unlock());
         }
         else
         {
             GameKeyManager.Instance.SetIntValue(_puzzleName.ToString(), cur + 1);
         }
+    }
+
+    private IEnumerator Unlock()
+    {
+        yield return DialogueManager.Instance.ShowDialogueText($"放置了所有的宝珠！\n砂之塔解锁了！");
+        UnlockAnim();
     }
 
     private void UnlockAnim()

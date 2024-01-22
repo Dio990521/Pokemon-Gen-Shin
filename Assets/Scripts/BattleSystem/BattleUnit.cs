@@ -252,7 +252,7 @@ public class BattleUnit : MonoBehaviour
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
         pokeball.sprite = GameManager.Instance.GetPokeSprite(playerPokemon.PokeballSpriteType);
         var sequence = DOTween.Sequence();
-        sequence.Append(pokeball.transform.DOJump(_pokemonSprite.transform.position, 4f, 1, 1.5f));
+        sequence.Append(pokeball.transform.DOJump(_pokemonSprite.transform.position - new Vector3(-2f, 5f, 0), 8f, 1, 1.5f));
         sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));
         Destroy(pokeballObj, 1.6f);
         yield return null;
@@ -271,7 +271,7 @@ public class BattleUnit : MonoBehaviour
         var pokeball = pokeballObj.GetComponent<SpriteRenderer>();
         pokeball.sprite = GameManager.Instance.GetPokeSprite(playerFirstPokemon.PokeballSpriteType);
         var sequence = DOTween.Sequence();
-        sequence.Append(pokeball.transform.DOJump(defaultPos, 4f, 1, 1.5f));
+        sequence.Append(pokeball.transform.DOJump(defaultPos - new Vector3(-2f, 5f, 0), 8f, 1, 1.5f));
         sequence.Join(pokeball.transform.DORotate(new Vector3(0f, 0f, 360 * 20), 1.5f, RotateMode.LocalAxisAdd));
         _pokemonSprite.transform.localPosition = defaultPos;
         Destroy(pokeballObj, 1.6f);
@@ -303,11 +303,11 @@ public class BattleUnit : MonoBehaviour
 
         if (moveFX.MoveBGM != null)
         {
-            AudioManager.Instance.PlayMusicVolume(moveFX.MoveBGM, fade:true, volume: 0.65f);
+            AudioManager.Instance.PlayMusicVolume(moveFX.MoveBGM, fade:true, volume: OptionState.I.OptionMenuUI.BGMSlider.value * 0.7f);
         }
         if (moveFX.MoveSfx != null)
         {
-            AudioManager.Instance.PlaySEClip(moveFX.MoveSfx, 0.55f);
+            AudioManager.Instance.PlaySEClip(moveFX.MoveSfx, OptionState.I.OptionMenuUI.SFXSlider.value * 0.6f);
         }
         if (moveFX.Video != null)
         {
@@ -317,7 +317,7 @@ public class BattleUnit : MonoBehaviour
         {
             if (moveFX.MoveEffectSprites.Count > 0)
             {
-                yield return Animate(moveFX, 0.05f);
+                yield return Animate(moveFX, 0.055f);
             }
         }
     }

@@ -67,7 +67,10 @@ public class GameMenuState : State<GameManager>
         else if (selection == 5)
         {
             // Setting Screen
+#if UNITY_EDITOR
             _gameManager.GameMaster.gameObject.SetActive(true);
+#endif
+            _gameManager.StateMachine.Push(OptionState.I);
         }
         else if (selection == 6)
         {

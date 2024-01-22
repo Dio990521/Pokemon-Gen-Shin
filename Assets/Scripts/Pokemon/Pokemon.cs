@@ -37,6 +37,8 @@ public class Pokemon
     public int Exp { get; set; }
     public List<Move> Moves { get; set; }
 
+    public HashSet<string> LearnedMoveNames;
+
     public Move BossSpecialMove;
     public Move CurrentMove { get; set; }
     public Dictionary<Stat, int> Stats { get; private set; }
@@ -73,6 +75,8 @@ public class Pokemon
         }
 
         Moves = saveData.Moves.Select(s => new Move(s)).ToList();
+        SetLearnedMoves();
+
         CalculateStats();
         StatusChanges = new Queue<string>();
         ResetStatBoost();
@@ -104,6 +108,8 @@ public class Pokemon
                 break;
             }
         }
+        SetLearnedMoves();
+
         if (pokemonBase.BossSpecialMove.MoveBase != null)
         {
             BossSpecialMove = new Move(pokemonBase.BossSpecialMove.MoveBase);
@@ -142,9 +148,28 @@ public class Pokemon
         return saveData;
     }
 
+    public void SetLearnedMoves()
+    {
+        if (LearnedMoveNames == null)
+        {
+            LearnedMoveNames = new HashSet<string>();
+        }
+        else
+        {
+            LearnedMoveNames.Clear();
+        }
+        foreach (var move in pokemonBase.LearnableMoves)
+        {
+            if (move.Level <= level)
+            {
+                LearnedMoveNames.Add(move.MoveBase.MoveName);
+            }
+        }
+    }
+
 
     // Calculate the pokemon's status by based status
-    private void CalculateStats()
+    public void CalculateStats()
     {
         Stats = new Dictionary<Stat, int>
             {
@@ -280,6 +305,7 @@ public class Pokemon
     public void Evolve(Evolution evolution)
     {
         pokemonBase = evolution.EvolvesInto;
+        AchievementManager.Instance.Complete(evolution.EvolvesInto.Achievement, evolution.EvolvesInto.PokemonName);
         CalculateStats();
     }
 
@@ -310,18 +336,15 @@ public class Pokemon
 
     public List<LearnableMove> GetLearnableMovesAtCurrentLevel()
     {
-        HashSet<string> moveNames = new HashSet<string>();
-        foreach (var move in Moves)
-        {
-            moveNames.Add(move.MoveBase.MoveName);
-        }
-        return PokemonBase.LearnableMoves.Where(x => x.Level <= level && !moveNames.Contains(x.MoveBase.MoveName)).ToList();
+        return PokemonBase.LearnableMoves.Where(x => x.Level <= level && !LearnedMoveNames.Contains(x.MoveBase.MoveName)).ToList();
     }
 
     public void LearnMove(MoveBase moveToLearn)
     {
         if (Moves.Count > PokemonBase.MaxNumOfMoves) return;
-        Moves.Add(new Move(moveToLearn));
+        var newMove = new Move(moveToLearn);
+        Moves.Add(newMove);
+        SetLearnedMoves();
     }
 
     public bool HasMove(MoveBase moveToCheck)
@@ -330,7 +353,7 @@ public class Pokemon
     }
 
     // Reset all status to the default state
-    private void ResetStatBoost()
+    public void ResetStatBoost()
     {
         StatBoosts = new Dictionary<Stat, int>()
         {
@@ -349,7 +372,7 @@ public class Pokemon
     {
         int statVal = Stats[stat];
         int boost = StatBoosts[stat];
-        var boostValues = new float[] { 1f, 1.25f, 1.5f, 1.75f, 2f, 2.25f, 2.5f }; // 小幅 1 中幅2 大幅3 最大幅 6
+        var boostValues = new float[] { 1f, 1.16f, 1.32f, 1.48f, 1.64f, 1.8f, 2f }; // 小幅 1 中幅2 大幅3 最大幅 6
         statVal = (boost >= 0) ? Mathf.FloorToInt(statVal * boostValues[boost]) 
             : Mathf.FloorToInt(statVal / boostValues[-boost]);
 
@@ -532,60 +555,60 @@ public class Pokemon
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPsn = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.brn)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsBrn = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.par)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsPar = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.slp)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsSlp = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.confusion)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsCfs = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.frz)
         {
             CureElementStatus();
             SetStatus(elementReactionRes);
             damageDetails.IsFrz = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhanfang)
         {
             CureElementStatus();
             damageDetails.IsZhanfang = true;
-            return 1.25f * effectiveness;
+            return 1.3f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.zhengfa)
         {
             CureElementStatus();
             damageDetails.IsZhengfa = true;
-            return 1.75f * effectiveness;
+            return 1.8f * effectiveness;
         }
         else if (elementReactionRes == ConditionID.ronghua)
         {
             CureElementStatus();
             damageDetails.IsRonghua = true;
-            return 1.75f * effectiveness;
+            return 1.8f * effectiveness;
         }
         SetElementStatus(attackerElement);
         return effectiveness;
@@ -640,11 +663,12 @@ public class Pokemon
         OnHpChanged?.Invoke();
     }
 
-    public void SetStatus(ConditionID conditionId)
+    public void SetStatus(ConditionID conditionId, bool isSecondEffect=false)
     {
         Status = ConditionsDB.Conditions[conditionId];
         Status?.OnStart?.Invoke(this);
-        StatusChanges.Enqueue($"{pokemonBase.PokemonName}{Status.StartMessage}");
+        if (isSecondEffect)
+            StatusChanges.Enqueue($"{pokemonBase.PokemonName}{Status.StartMessage}");
         OnStatusChanged?.Invoke();
     }
 
@@ -656,8 +680,8 @@ public class Pokemon
 
     public void SetElementStatus(ConditionID conditionId, bool putongMove=false)
     {
-        if (pokemonBase.IsSlime && ElementReactionUtil.ConditionIDToPokemonType(conditionId) == pokemonBase.Type1) return;
         if (Status?.Id == ConditionID.jiejing) return;
+        if (pokemonBase.IsSlime && pokemonBase.Type1 != PokemonType.风 && pokemonBase.Type1 != PokemonType.岩) return;
         var prevElementStatus = ElementStatus;
         if (conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
         ElementStatus = ConditionsDB.Conditions[conditionId];
@@ -666,15 +690,24 @@ public class Pokemon
         {
             if (!putongMove)
             {
-                StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");
+                //StatusChanges.Enqueue($"{pokemonBase.PokemonName}{ElementStatus.StartMessage}");
             }
         }
 
         OnStatusChanged?.Invoke();
     }
 
+    public void SetSlimeElementStatus(ConditionID conditionId)
+    {
+        if (conditionId == ConditionID.geo || conditionId == ConditionID.anemo) return;
+        ElementStatusTime = 100000;
+        ElementStatus = ConditionsDB.Conditions[conditionId];
+        OnStatusChanged?.Invoke();
+    }
+
     public void CureElementStatus()
     {
+        if (pokemonBase.IsSlime && pokemonBase.Type1 != PokemonType.风 && pokemonBase.Type1 != PokemonType.岩) return;
         ElementStatus = null;
         OnStatusChanged?.Invoke();
     }

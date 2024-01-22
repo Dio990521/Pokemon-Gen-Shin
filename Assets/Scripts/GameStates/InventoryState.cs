@@ -41,7 +41,6 @@ public class InventoryState : State<GameManager>
 
     public override void Exit(bool sfx)
     {
-        //AudioManager.Instance.PlaySE(SFX.CANCEL);
         _inventoryUI.SelectedCategory = 0;
         _inventoryUI.PrevCategory = -1;
         _inventoryUI.gameObject.SetActive(false);
@@ -95,7 +94,6 @@ public class InventoryState : State<GameManager>
 
             if (SelectedItem is PokeballItem)
             {
-                _inventory.UseItem(SelectedItem, null);
                 _gameManager.StateMachine.Pop();
                 yield break;
             }
@@ -138,6 +136,39 @@ public class InventoryState : State<GameManager>
                 }
                 yield break;
             }
+            else if (SelectedItem is EscapeItem)
+            {
+                yield return DialogueManager.Instance.ShowDialogueText($"确定要抛弃10%的原石\n强制逃离这场战斗吗？", waitForInput: false, autoClose: false);
+                ChoiceState.I.Choices = new List<string>() { "润！", "算了" };
+                yield return GameManager.Instance.StateMachine.PushAndWait(ChoiceState.I);
+
+                int selectedChoice = ChoiceState.I.Selection;
+
+                if (selectedChoice == 0)
+                {
+                    if (prevState == BattleState.I)
+                    {
+                        if (Wallet.I.TryTakeYuanshiPercentage(0.1f))
+                        {
+                            _gameManager.StateMachine.Pop();
+                            var battleSystem = BattleState.I.BattleSystem;
+                            battleSystem.IsBattleOver = true;
+                            battleSystem.DialogueBox.TypeDialogue("强行逃跑了！");
+                            AudioManager.Instance.PlaySE(SFX.ESCAPE);
+                            yield return Fader.FadeIn(1f);
+                            yield return TeleportManager.Instance.GameOverTransport(false);
+                            yield return battleSystem.BattleOver(false);
+                        }
+                        else
+                        {
+                            yield return DialogueManager.Instance.ShowDialogueText($"掏不出原石！\n看来只能继续战斗了！", autoClose: true);
+                        }
+
+                    }
+                        
+                }
+                yield break;
+            }
 
             if (SelectedItem is PaimengItem)
             {
@@ -174,7 +205,7 @@ public class InventoryState : State<GameManager>
                     {
                         AudioManager.Instance.PlaySE(SFX.FIND_WEAKPOINT);
                         weakPoints = weakPoints.Substring(0, weakPoints.Length - 1);
-                        yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{weakPoints}的抗性较差！");
+                        yield return battleSystem.DialogueBox.TypeDialogue($"{weakPoints}可对{enemy.PokemonName}造成更高伤害！");
                     }
                     if (strongPoints.Length > 0)
                     {
@@ -186,7 +217,7 @@ public class InventoryState : State<GameManager>
                         }
                         else
                         {
-                            yield return battleSystem.DialogueBox.TypeDialogue($"{enemy.PokemonName}对{strongPoints}的抗性较高！");
+                            yield return battleSystem.DialogueBox.TypeDialogue($"{strongPoints}对{enemy.PokemonName}的伤害较低！");
                         }
                     }
                     RunTurnState.I.SkipEnemyTurn = true;

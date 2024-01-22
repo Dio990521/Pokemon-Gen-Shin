@@ -17,18 +17,24 @@ public class MoveBase : ScriptableObject
     [SerializeField] private bool alwaysHits;
     [SerializeField] private int pp;
     [SerializeField] private int priority;
+    public bool CureAllStatus;
+    public bool CureAllElementStatus;
 
     [SerializeField] private MoveCategory category;
     [SerializeField] private MoveEffects effects;
     [SerializeField] private MoveTarget target;
 
+
     [SerializeField] private List<SecondaryEffects> secondaryEffects;
 
     [SerializeField] private MoveFX moveFX;
     [SerializeField] private bool allOutAttack;
-    [SerializeField] private bool goldExperience;
-
     public int AccumulatePower;
+
+    [Header("攻击后恢复百分比生命")]
+    [SerializeField] private bool goldExperience;
+    [SerializeField] private int goldExperienceValue;
+
 
     public string MoveName
     {
@@ -94,6 +100,7 @@ public class MoveBase : ScriptableObject
     public MoveFX MoveFX { get => moveFX; set => moveFX = value; }
     public bool AllOutAttack { get => allOutAttack; set => allOutAttack = value; }
     public bool GoldExperience { get => goldExperience; set => goldExperience = value; }
+    public int GoldExperienceValue { get => goldExperienceValue; set => goldExperienceValue = value; }
 }
 
 public enum MoveCategory
@@ -101,7 +108,7 @@ public enum MoveCategory
     Physical,
     Special,
     Status,
-    Healing
+    Healing,
 }
 
 public enum MoveTarget

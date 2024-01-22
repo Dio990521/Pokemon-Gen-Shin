@@ -46,4 +46,9 @@ public class LoadState : State<GameManager>
     {
         _gameManager.StateMachine.Pop();
     }
+
+    public bool HasSaveFile()
+    {
+        return _saveLoadUI.HasSaveFile();
+    }
 }

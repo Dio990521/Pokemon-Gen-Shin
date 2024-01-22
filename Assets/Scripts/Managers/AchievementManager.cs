@@ -63,7 +63,10 @@ public class AchievementManager : Singleton<AchievementManager>, ISavable, IMana
 
     public void Complete(Achievement key, string name)
     {
-        _data[key].Add(name);
+        if (key != Achievement.None)
+        {
+            _data[key].Add(name);
+        }
     }
 
     public bool HasComplete(Achievement key, string name)

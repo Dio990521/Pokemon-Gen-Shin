@@ -160,7 +160,7 @@ public class Inventory : MonoBehaviour, ISavable
 
         var itemSlot = currentSlots.First(slot => slot.Item == item);
         itemSlot.Count -= countToRemove;
-        if (itemSlot.Count == 0)
+        if (itemSlot.Count <= 0)
         {
             currentSlots.Remove(itemSlot);
         }

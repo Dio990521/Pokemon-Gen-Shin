@@ -33,6 +33,7 @@ public class CuttableTree : MonoBehaviour, InteractableObject, ISavable
 
             if (selectedChoice == 0)
             {
+                boxCollider.enabled = false;
                 Cut = true;
                 yield return DialogueManager.Instance.ShowDialogueText($"{pokemonWithCut.PokemonBase.PokemonName}使出浑身力气的一击！");
                 AudioManager.Instance.PlaySE(SFX.CUT_TREE);
@@ -43,7 +44,6 @@ public class CuttableTree : MonoBehaviour, InteractableObject, ISavable
                     yield return new WaitForSeconds(0.1f);
                 }
                 spriteRenderer.enabled = false;
-                boxCollider.enabled = false;
             }
 
         }

@@ -162,7 +162,7 @@ public class ConditionsDB
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.05f));
+                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.1f));
                         AudioManager.Instance.PlaySE(SFX.PSN);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n正遭受超载的折磨！");
                     }
@@ -191,7 +191,7 @@ public class ConditionsDB
                     },
                     OnAfterTurn = (Pokemon pokemon) =>
                     {
-                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.07f));
+                        pokemon.DecreaseHP((int)(pokemon.MaxHp * 0.15f));
                         AudioManager.Instance.PlaySE(SFX.BRN);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n正在燃烧！");
                     }
@@ -271,7 +271,7 @@ public class ConditionsDB
                         AudioManager.Instance.PlaySE(SFX.SLP);
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n睡的很香！");
                         pokemon.StatusChanges.Enqueue($"{pokemon.PokemonBase.PokemonName}\n的HP恢复了一点！");
-                        pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.1f));
+                        pokemon.IncreaseHP((int)(pokemon.MaxHp * 0.15f));
                         return false;
                     }
                 }

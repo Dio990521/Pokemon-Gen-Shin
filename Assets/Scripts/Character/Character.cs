@@ -189,10 +189,6 @@ public class Character : MonoBehaviour
             animator.MoveX = Mathf.Clamp(xDiff, -1f, 1f);
             animator.MoveY = Mathf.Clamp(yDiff, -1f, 1f); 
         }
-        else
-        {
-            Debug.LogError("Error in LookTowards: you can't ask the character to look diagonally");
-        }
 
     }
 

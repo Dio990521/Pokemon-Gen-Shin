@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Tool
 {
-    public class DevelopmentToos
+    public static class DevelopmentToos
     {
 
         /// <summary>
@@ -114,6 +114,21 @@ namespace Game.Tool
         public static void WTF(object message)
         {
             Debug.LogFormat($"日志内容:<color=#ff0000> --->   {message}   <--- </color>");
+        }
+
+        private static System.Random rng = new System.Random();
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

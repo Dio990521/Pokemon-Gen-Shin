@@ -138,6 +138,7 @@ public class PCMenuState : State<GameManager>
                     {
                         // Forget the selected move and learn new move
                         var selevtedMove = selectedPokemon.Moves[moveIndex].MoveBase;
+                        AudioManager.Instance.PlaySE(SFX.DELETE_MOVE, true);
                         yield return DialogueManager.Instance.ShowDialogueText($"{selectedPokemon.PokemonBase.PokemonName}อüต๔มห{selevtedMove.MoveName}ฃก", autoClose: false);
                         selectedPokemon.Moves[moveIndex] = new Move(selectedLearnableMove.MoveBase);
                     }

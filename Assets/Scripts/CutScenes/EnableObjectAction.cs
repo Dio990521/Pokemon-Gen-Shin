@@ -9,6 +9,16 @@ public class EnableObjectAction : CutsceneAction
     public override IEnumerator Play()
     {
         go.SetActive(true);
+        var collider = go.GetComponent<Collider2D>();
+        var spriteRenderer = go.GetComponent<SpriteRenderer>();
+        if (collider != null)
+        {
+            collider.enabled = true;
+        }
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.enabled = true;
+        }
         yield break;
     }
 

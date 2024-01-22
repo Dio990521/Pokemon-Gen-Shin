@@ -11,7 +11,7 @@ public class HiddenChest : Pickup
     protected override void Awake()
     {
         base.Awake();
-        if (GameKeyManager.Instance.GetIntValue(_puzzleName.ToString()) != _total)
+        if (GameKeyManager.Instance.GetIntValue(_puzzleName.ToString()) != _total-1)
         {
             _spriteRenderer.enabled = false;
             _boxCollider.enabled = false;

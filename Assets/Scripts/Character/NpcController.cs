@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCController : MonoBehaviour, InteractableObject, ISavable
+public class NPCController : MonoBehaviour, InteractableObject
 {
 
     [SerializeField] List<Dialogue> dialogues;
-
-    [Header("Quests")]
-    [SerializeField] private QuestBase questToStart;
-    [SerializeField] private QuestBase questToComplete;
 
     [Header("Movement")]
     [SerializeField] List<Vector2> movementPattern;
@@ -22,7 +18,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
     private int currentPattern = 0;
     private ItemGiver itemGiver;
     private PokemonGiver pokemonGiver;
-    private Quest activeQuest;
     private Healer healer;
     private Merchant merchant;
     private ItemChecker checker;
@@ -61,14 +56,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             if (character != null)
                 character.LookTowards(initiator.position);
 
-            if (questToComplete != null)
-            {
-                var quest = new Quest(questToComplete);
-                yield return quest.CompleteQuest();
-                questToComplete = null;
-
-            }
-
             if (gameObject.TryGetComponent(out TrainerController trainerController) && !trainerController.IsBattleLost)
             {
                 if (GameManager.Instance.StateMachine.CurrentState == CutsceneState.I)
@@ -88,30 +75,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
             else if (pokemonGiver != null && pokemonGiver.CanBeGiven())
             {
                 yield return pokemonGiver.GivePokemon(initiator.GetComponent<PlayerController>());
-            }
-            else if (questToStart != null)
-            {
-                activeQuest = new Quest(questToStart);
-                yield return activeQuest.StartQuest();
-                questToStart = null;
-
-                if (activeQuest.CanBeCompleted())
-                {
-                    yield return activeQuest.CompleteQuest();
-                    activeQuest = null;
-                }
-            }
-            else if (activeQuest != null)
-            {
-                if (activeQuest.CanBeCompleted())
-                {
-                    yield return activeQuest.CompleteQuest();
-                    activeQuest = null;
-                }
-                else
-                {
-                    yield return DialogueManager.Instance.ShowDialogue(activeQuest.Base.InProgressDialogue);
-                }
             }
             else if (healer != null)
             {
@@ -191,41 +154,6 @@ public class NPCController : MonoBehaviour, InteractableObject, ISavable
         npcState = NPCState.Idle;
     }
 
-    public object CaptureState()
-    {
-        NPCQuestSaveData saveData = new NPCQuestSaveData();
-        saveData.activeQuest = activeQuest?.GetSaveData();
-        
-        if (questToStart != null)
-        {
-            saveData.questToStart = (new Quest(questToStart)).GetSaveData();
-        }
-        if (questToComplete != null)
-        {
-            saveData.questToComplete = (new Quest(questToComplete)).GetSaveData();
-        }
-
-        return saveData;
-    }
-
-    public void RestoreState(object state)
-    {
-        NPCQuestSaveData saveData = state as NPCQuestSaveData;
-        if (saveData != null)
-        {
-            activeQuest = (saveData.activeQuest != null) ? new Quest(saveData.activeQuest) : null;
-            questToStart = (saveData.questToStart != null) ? new Quest(saveData.questToStart).Base : null;
-            questToComplete = (saveData.questToComplete != null) ? new Quest(saveData.questToComplete).Base : null;
-        }
-    }
-}
-
-[System.Serializable]
-public class NPCQuestSaveData
-{
-    public QuestSaveData activeQuest;
-    public QuestSaveData questToStart;
-    public QuestSaveData questToComplete;
 }
 
 public enum NPCState { Idle, Walking, Dialog }

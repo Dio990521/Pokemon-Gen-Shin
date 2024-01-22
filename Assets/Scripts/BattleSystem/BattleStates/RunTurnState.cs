@@ -77,8 +77,10 @@ public class RunTurnState : State<BattleSystem>
             else // 之前未使用蓄力技能
             {
                 _enemyUnit.pokemon.CurrentMove = _enemyUnit.pokemon.GetRandomMove();
-                // 如果使用了蓄力技能
-                if (_enemyUnit.pokemon.CurrentMove.MoveBase.AccumulatePower > 0)
+                // 如果使用了蓄力技能, 并且可以行动
+                if (_enemyUnit.pokemon.Status?.Id != ConditionID.slp &&
+                    _enemyUnit.pokemon.Status?.Id != ConditionID.frz &&
+                    _enemyUnit.pokemon.CurrentMove.MoveBase.AccumulatePower > 0)
                 {
                     _enemyUnit.CurAccumulatePower = _enemyUnit.pokemon.CurrentMove.MoveBase.AccumulatePower - 1;
                     yield return _dialogueBox.TypeDialogue($"{_enemyUnit.pokemon.PokemonBase.PokemonName}开始蓄力！！");
@@ -172,7 +174,7 @@ public class RunTurnState : State<BattleSystem>
             }
 
             // Enemy Turn
-            if (!SkipEnemyTurn)
+            if (!SkipEnemyTurn && !_battleSystem.IsBattleOver)
             {
                 if (!_enemyUnit.IsAccumulating)
                 {
@@ -229,10 +231,28 @@ public class RunTurnState : State<BattleSystem>
                 yield return targetUnit.PlayPerformMoveAnimation(move.MoveBase.MoveFX);
                 if (move.MoveBase.GoldExperience)
                 {
-                    foreach (var pokemon in _playerParty.Pokemons)
+                    if (sourceUnit.IsPlayerUnit)
                     {
-                        pokemon.IncreaseHP(10, isPercentage: true);
+                        foreach (var pokemon in _playerParty.Pokemons)
+                        {
+                            pokemon.IncreaseHP(move.MoveBase.GoldExperienceValue, isPercentage: true);
+                        }
                     }
+                    else
+                    {
+                        if (_isTrainerBattle)
+                        {
+                            foreach (var pokemon in _trainerParty.Pokemons)
+                            {
+                                pokemon.IncreaseHP(move.MoveBase.GoldExperienceValue, isPercentage: true);
+                            }
+                        }
+                        else
+                        {
+                            sourceUnit.pokemon.IncreaseHP(move.MoveBase.GoldExperienceValue, isPercentage: true);
+                        }
+                    }
+
                 }
                 yield return new WaitForSeconds(0.5f);
             }
@@ -257,33 +277,38 @@ public class RunTurnState : State<BattleSystem>
                 if (move.MoveBase.Category == MoveCategory.Healing)
                 {
                     AudioManager.Instance.PlaySE(SFX.HEAL_MOVE);
-                    if (sourceUnit.IsPlayerUnit)
+
+                    if (move.MoveBase.Power > 0)
                     {
-                        foreach (var pokemon in _playerParty.Pokemons)
+                        if (sourceUnit.IsPlayerUnit)
                         {
-                            pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
-                        }
-                        yield return _dialogueBox.TypeDialogue($"己方所有宝可梦恢复了HP！");
-                    }
-                    else
-                    {
-                        if (_isTrainerBattle)
-                        {
-                            foreach (var pokemon in _trainerParty.Pokemons)
+                            foreach (var pokemon in _playerParty.Pokemons)
                             {
                                 pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
                             }
-                            yield return _dialogueBox.TypeDialogue($"对方的宝可梦恢复了HP！");
+                            yield return _dialogueBox.TypeDialogue($"己方所有宝可梦\n恢复了HP！");
                         }
                         else
                         {
-                            _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
-                            yield return _dialogueBox.TypeDialogue($"对方恢复了HP！");
+                            if (_isTrainerBattle)
+                            {
+                                foreach (var pokemon in _trainerParty.Pokemons)
+                                {
+                                    pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
+                                }
+                                yield return _dialogueBox.TypeDialogue($"对方的宝可梦\n恢复了HP！");
+                            }
+                            else
+                            {
+                                _enemyUnit.pokemon.IncreaseHP(move.MoveBase.Power, isPercentage: move.MoveBase.IsPercentage);
+                                yield return _dialogueBox.TypeDialogue($"对方恢复了HP！");
+                            }
+
                         }
 
                     }
-
                     yield return new WaitForSeconds(1f);
+
                 }
                 else
                 {
@@ -305,27 +330,98 @@ public class RunTurnState : State<BattleSystem>
                     yield return ShowDamageDetials(sourceUnit.pokemon, targetUnit.pokemon, damageDetails);
                 }
 
-                if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.Effects != null && targetUnit.pokemon.Hp > 0)
+                if (move.MoveBase.Effects != null && targetUnit.pokemon.Hp > 0)
                 {
                     yield return RunMoveEffects(move.MoveBase, move.MoveBase.Effects, sourceUnit, targetUnit, move.MoveBase.Target, isElementReaction);
                 }
             }
 
-            if (targetUnit.pokemon.ElementStatus == null && move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0
-                && targetUnit.pokemon.Hp > 0)
+            if (move.MoveBase.CureAllElementStatus)
+            {
+                if (sourceUnit.IsPlayerUnit)
+                {
+                    foreach (var pokemon in _playerParty.Pokemons)
+                    {
+                        if (pokemon.PokemonBase.IsSlime ||
+                            pokemon.PokemonBase.IsSlime &&
+                            (pokemon.PokemonBase.Type1 == PokemonType.风 ||
+                pokemon.PokemonBase.Type1 == PokemonType.岩)) continue;
+                        pokemon.CureElementStatus();
+                    }
+                    yield return _dialogueBox.TypeDialogue($"己方所有宝可梦的\n元素附着解除了！");
+                }
+                else
+                {
+                    if (_isTrainerBattle)
+                    {
+                        foreach (var pokemon in _trainerParty.Pokemons)
+                        {
+                            if (pokemon.PokemonBase.IsSlime
+                                || pokemon.PokemonBase.IsSlime
+                                && (pokemon.PokemonBase.Type1 == PokemonType.风 ||
+                pokemon.PokemonBase.Type1 == PokemonType.岩)) continue;
+                            pokemon.CureElementStatus();
+                        }
+                        yield return _dialogueBox.TypeDialogue($"对方宝可梦的\n元素附着解除了！");
+                    }
+                    else
+                    {
+                        if (!_enemyUnit.pokemon.PokemonBase.IsSlime
+                            || _enemyUnit.pokemon.PokemonBase.IsSlime
+                            && (_enemyUnit.pokemon.PokemonBase.Type1 == PokemonType.风 ||
+                _enemyUnit.pokemon.PokemonBase.Type1 == PokemonType.岩))
+                        {
+                            _enemyUnit.pokemon.CureElementStatus();
+                            yield return _dialogueBox.TypeDialogue($"对方的元素附着解除了！");
+                        }
+                    }
+
+                }
+            }
+
+            if (move.MoveBase.CureAllStatus)
+            {
+                if (sourceUnit.IsPlayerUnit)
+                {
+                    foreach (var pokemon in _playerParty.Pokemons)
+                    {
+                        pokemon.CureStatus();
+                    }
+                    yield return _dialogueBox.TypeDialogue($"己方所有宝可梦的\n元素反应状态解除了！");
+                }
+                else
+                {
+                    if (_isTrainerBattle)
+                    {
+                        foreach (var pokemon in _trainerParty.Pokemons)
+                        {
+                            pokemon.CureStatus();
+                        }
+                        yield return _dialogueBox.TypeDialogue($"对方宝可梦的\n元素反应状态解除了！");
+                    }
+                    else
+                    {
+                        _enemyUnit.pokemon.CureStatus();
+                        yield return _dialogueBox.TypeDialogue($"对方的元素反应状态解除了！");
+                    }
+
+                }
+            }
+
+            if (move.MoveBase.SecondaryEffects != null && move.MoveBase.SecondaryEffects.Count > 0)
             {
                 foreach (var secondary in move.MoveBase.SecondaryEffects)
                 {
                     var rnd = UnityEngine.Random.Range(1, 101);
                     if (rnd <= secondary.Chance)
                     {
-                        yield return RunMoveEffects(move.MoveBase, secondary, sourceUnit, targetUnit, secondary.Target);
+                        yield return RunMoveEffects(move.MoveBase, secondary, sourceUnit, targetUnit, secondary.Target, isSecondEffect:true);
                     }
                 }
             }
 
-            if (!targetUnit.IsPlayerUnit && BattleState.I.BossType == BossType.cao
-&& !targetUnit.OnSecondPhase && targetUnit.pokemon.Hp <= 0)
+            if (!targetUnit.IsPlayerUnit && BattleState.I.BossType == BossType.cao 
+                && !targetUnit.OnSecondPhase && targetUnit.pokemon.Hp <= 0)
             {
                 targetUnit.OnSecondPhase = true;
                 yield return new WaitForSeconds(0.5f);
@@ -347,9 +443,11 @@ public class RunTurnState : State<BattleSystem>
         }
     }
 
-    private IEnumerator RunMoveEffects(MoveBase moveBase, MoveEffects effects, BattleUnit source, BattleUnit target, MoveTarget moveTarget, bool isElementReaction=false)
+
+    private IEnumerator RunMoveEffects(MoveBase moveBase, MoveEffects effects, BattleUnit source, BattleUnit target, MoveTarget moveTarget
+        , bool isElementReaction=false, bool isSecondEffect=false)
     {
-        if (effects.Boosts != null)
+        if (effects.Boosts?.Count > 0)
         {
             if (moveTarget == MoveTarget.Self)
             {
@@ -365,11 +463,11 @@ public class RunTurnState : State<BattleSystem>
         {
             if (moveTarget == MoveTarget.Self)
             {
-                source.pokemon.SetStatus(effects.Status);
+                source.pokemon.SetStatus(effects.Status, isSecondEffect);
             }
             else
             {
-                target.pokemon.SetStatus(effects.Status);
+                target.pokemon.SetStatus(effects.Status, isSecondEffect);
             }
         }
 
@@ -553,6 +651,7 @@ public class RunTurnState : State<BattleSystem>
                     {
                         // Forget the selected move and learn new move
                         var selevtedMove = pokemon.Moves[moveIndex].MoveBase;
+                        AudioManager.Instance.PlaySE(SFX.DELETE_MOVE, true);
                         yield return _dialogueBox.TypeDialogue($"{pokemon.PokemonBase.PokemonName}忘掉了{selevtedMove.MoveName}！");
                         pokemon.Moves[moveIndex] = new Move(newMove.MoveBase);
                     }
@@ -578,8 +677,6 @@ public class RunTurnState : State<BattleSystem>
                 yield return Fader.FadeIn(1f);
                 yield return TeleportManager.Instance.GameOverTransport();
                 yield return _battleSystem.BattleOver(false);
-                
-
             }
         }
         else

@@ -6,6 +6,7 @@ using Game.Tool.Singleton;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>, ISavable
 {
@@ -30,6 +31,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public GameObject TitleUI;
     public GameObject EndingUI;
+    public Button LoadButton;
 
     public List<GameObject> Managers;
 
@@ -56,12 +58,11 @@ public class GameManager : Singleton<GameManager>, ISavable
     protected override void Awake()
     {
         base.Awake();
-        Application.backgroundLoadingPriority = ThreadPriority.Low;
         ConditionsDB.Init();
         PokemonDB.Init();
         MoveDB.Init();
         ItemDB.Init();
-        QuestDB.Init();
+        //QuestDB.Init();
         PassiveMoveDB.Init();
         NewGameInit();
         //Cursor.lockState = CursorLockMode.Locked;
@@ -102,6 +103,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void NewGame()
     {
+        AudioManager.Instance.PlaySE(SFX.NEW_GAME);
         StartCoroutine(NewGameTransition());
     }
 
@@ -110,11 +112,13 @@ public class GameManager : Singleton<GameManager>, ISavable
         yield return AudioManager.Instance.StopMusic(true);
         yield return Fader.FadeIn(2f);
         NewGameInit();
+        StateMachine.Push(VideoCutsceneState.I);
         yield return VideoManager.Instance.PlayOpenning();
     }
 
     public void PlayEnding()
     {
+        StateMachine.Push(VideoCutsceneState.I);
         StartCoroutine(VideoManager.Instance.PlayEnding());
     }
 
@@ -126,13 +130,14 @@ public class GameManager : Singleton<GameManager>, ISavable
     public IEnumerator GoToEndingTransition()
     {
         playerController.transform.localPosition = new Vector3(-207.5f, 97.3f);
-        EndingUI.SetActive(false);
+        EndingUI.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         yield return Fader.FadeOut(0.5f);
     }
 
     public void OpenLoadScene()
     {
+        AudioManager.Instance.PlaySE(SFX.MENU);
         StateMachine.Push(LoadState.I);
     }
 
@@ -141,8 +146,15 @@ public class GameManager : Singleton<GameManager>, ISavable
         StartCoroutine(BackToTitleTransition());
     }
 
+    public void SetLoadButton()
+    {
+        if (LoadButton != null)
+            LoadButton.interactable = LoadState.I.HasSaveFile();
+    }
+
     public IEnumerator BackToTitleTransition()
     {
+        Time.timeScale = 1f;
         PauseGame(true);
         yield return Fader.FadeIn(0.5f);
         playerController.transform.localPosition = new Vector3(-178.5f, 171.3f);
@@ -216,6 +228,14 @@ public class GameManager : Singleton<GameManager>, ISavable
         StateMachine.Push(BattleState.I);
     }
 
+    public void StartTrainerBattle(SuperTrainerController trainer)
+    {
+        AudioManager.Instance.PlayMusicVolume(trainer.StartBGM);
+        BattleState.I.SuperTrainer = trainer;
+        BattleState.I.BossPokemon = null;
+        StateMachine.Push(BattleState.I);
+    }
+
     public void OnEnterTrainersView(TrainerController trainer)
     {
         StartCoroutine(trainer.TriggerTrainerBattle(playerController));
@@ -260,12 +280,12 @@ public class GameManager : Singleton<GameManager>, ISavable
     public IEnumerator LoadGame(string fileName)
     {
         PauseGame(true);
+        yield return new WaitForSeconds(1.5f);
         SavingSystem.Instance.Load(fileName);
         CurrentScene.UnloadScene();
         CurrentScene.UnloadConnectedScenes();
-        yield return new WaitForSeconds(1.5f);
-        yield return CurrentScene.LoadScene();
         yield return new WaitForSeconds(1f);
+        yield return CurrentScene.LoadScene();
     }
 
     public IEnumerator RefreshScene()
@@ -311,7 +331,10 @@ public class GameManager : Singleton<GameManager>, ISavable
         foreach (var pokemon in PartyScreen.Pokemons)
         {
             if (pokemon.Level < 100)
+            {
                 pokemon.Level += 1;
+                pokemon.CalculateStats();
+            }
         }
     }
 
@@ -320,6 +343,7 @@ public class GameManager : Singleton<GameManager>, ISavable
         foreach (var pokemon in PartyScreen.Pokemons)
         {
             pokemon.Level = Mathf.Clamp(pokemon.Level + 5, 0, 100);
+            pokemon.CalculateStats();
         }
     }
 
@@ -330,7 +354,7 @@ public class GameManager : Singleton<GameManager>, ISavable
 
     public void AddYuanshi()
     {
-        Wallet.I.AddMoney(10000);
+        Inventory.GetInventory().AddItem(Wallet.I.Yuanshi, 10000);
     }
 
     public void MoveDown()
@@ -402,4 +426,20 @@ public class GameManager : Singleton<GameManager>, ISavable
             GameMaster.KeyContent.text += (cutsceneName.ToString() + ": " + GameKeyManager.Instance.GetIntValue(cutsceneName.ToString()) + "\n");
         }
     }
+
+    public void ChangeTimeScale(float scale)
+    {
+        Time.timeScale = scale;
+    }
+
+    public void TimeScaleDouble()
+    {
+        Time.timeScale = 2f;
+    }
+
+    public void TimeScaleNormal()
+    {
+        Time.timeScale = 1f;
+    }
+
 }

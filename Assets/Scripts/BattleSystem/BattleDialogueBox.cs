@@ -1,3 +1,4 @@
+using PokeGenshinUtils.SelectionUI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,7 @@ public class BattleDialogueBox : MonoBehaviour
     [SerializeField] private Image noSelector;
 
     public bool IsChoiceBoxEnabled => choiceBox.activeSelf;
+    public bool IsTyping;
 
     public void SetDialogue(string dialogue)
     {
@@ -33,13 +35,29 @@ public class BattleDialogueBox : MonoBehaviour
     // Show dialogue texts by one character after one character
     public IEnumerator TypeDialogue(string dialogue, float duration=1f)
     {
+        IsTyping = true;
         dialogueText.text = "";
         foreach (var letter in dialogue.ToCharArray())
         {
             dialogueText.text += letter;
             yield return new WaitForSeconds(1f / lettersPerSecond);
         }
+        IsTyping = false;
+        yield return new WaitForSeconds(duration);
+    }
 
+    public IEnumerator TypeSelectActionDialogue(string dialogue, ActionSelectionUI selectionUI, float duration = 1f)
+    {
+        IsTyping = true;
+        dialogueText.text = "";
+        foreach (var letter in dialogue.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(1f / lettersPerSecond);
+        }
+        IsTyping = false;
+        selectionUI.gameObject.SetActive(true);
+        selectionUI.ResetSelection();
         yield return new WaitForSeconds(duration);
     }
 
